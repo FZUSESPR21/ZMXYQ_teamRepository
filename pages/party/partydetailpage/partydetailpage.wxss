@@ -137,6 +137,20 @@ page{
   flex-direction: row;
   margin-bottom: -50px;
 }
+.user-message
+{
+  width: 612rpx; 
+  height: 92rpx;
+  display: block; 
+  box-sizing: border-box;
+}
+.comment-box{
+  width: 100%;
+  min-height: 50px;
+  position: fixed;
+  bottom: 0px;
+  background-color: #1a237e;
+}
 @font-face {
   font-family: 'iconfont';  /* project id 2516567 */
   src: url('//at.alicdn.com/t/font_2516567_l12dxau5v3.eot');

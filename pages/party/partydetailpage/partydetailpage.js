@@ -20,12 +20,32 @@ Page({
       },
    
      ],
+     partyCommentList:[
+      {
+        userID:0,
+      },
+      {
+        userID:0,
+      },
+      {
+        userID:0,
+      },
+      {
+        userID:0,
+      }, {
+        userID:0,
+      }, {
+        userID:0,
+      }, {
+        userID:0,
+      }, {
+        userID:0,
+      }, {
+        userID:0,
+      },
+    ],
   },
-  commentList:[
-    {
-      
-    }
-  ],
+  
 
  
 })

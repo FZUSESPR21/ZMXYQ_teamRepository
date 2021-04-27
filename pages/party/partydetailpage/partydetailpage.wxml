@@ -7,7 +7,7 @@
   <view class="partydetailview">
     <text class="partydetailtitle">拼局详情</text>
     <view
-      style="width: 612rpx; height: 92rpx; display: block; box-sizing: border-box;">
+    class="user-message">
       <van-image round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg">
       </van-image>
       <text style="position: relative; left: 26rpx; top: -62rpx">文本</text>
@@ -46,9 +46,24 @@
     class="comment-list-scroll"
     scroll-y="true" bindscroll="onScroll" bindscrolltoupper="onTopRefresh"
     bindscrolltolower="onBottomRefresh">
-    <view>暂无评论</view>
+    <view style="comment-view" wx:for="{{partyCommentList}}">
+      <view>
+        <view
+      class="user-message">
+      <van-image round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg">
+      </van-image>
+      <text style="position: relative; left: 26rpx; top: -62rpx">文本</text>
+      <text style="position: relative; left: -38rpx; top: -8rpx">时间</text>
+    </view>
+     <text>content</text>
+      </view>
+    
+    </view>
 </scroll-view>
 </view>
+</view>
+<view class="comment-box">
+  
 </view>
 
 

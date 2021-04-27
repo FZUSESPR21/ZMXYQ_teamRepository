@@ -1,7 +1,7 @@
 {
   "usingComponents": {
   },
-  "navigationBarTitleText": "拼局详情"
-
+  "navigationBarTitleText": "拼局详情",
+  "navigationBarBackgroundColor": "#ffffff"
 
 }
