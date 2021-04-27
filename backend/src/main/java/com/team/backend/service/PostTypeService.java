@@ -1,11 +1,11 @@
 package com.team.backend.service;
 
-import com.team.backend.model.PostType;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.team.backend.model.PostType;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author yangyu

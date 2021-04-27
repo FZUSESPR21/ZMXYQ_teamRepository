@@ -1,11 +1,11 @@
 package com.team.backend.mapper;
 
-import com.team.backend.model.PostReward;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.team.backend.model.PostReward;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author yangyu
