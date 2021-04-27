@@ -1,0 +1,45 @@
+<!--pages/party/partydetailpage/partydetailpage.wxml-->
+<!-- <view>
+<van-button color="#ff9100" class="returnbutton">单色按钮</van-button>
+</view> -->
+
+<view class="wrapper">
+  <view class="partydetailview">
+    <text class="partydetailtitle">拼局详情</text>
+    <view
+      style="width: 612rpx; height: 92rpx; display: block; box-sizing: border-box;">
+      <van-image round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg">
+      </van-image>
+      <text style="position: relative; left: 26rpx; top: -62rpx">文本</text>
+      <text style="position: relative; left: -38rpx; top: -8rpx">时间</text>
+    </view>
+    <view class="partydetailcontent">
+      大家好你们好
+    </view>
+    <view class="joinbutton">加入拼局</view>
+    <view class="sharebutton">加入拼局</view>
+  </view>
+<view class="partymemberview">
+  <text class="partydetailtitle">局内成员</text>
+  <view class="partymemberlist" wx:for="{{partyMemberList}}">
+    <view class="partymemberlistitem">
+      <!-- {{item.userName}} -->
+      <van-image
+  round
+  width="3rem"
+  height="3rem"
+  src="https://img.yzcdn.cn/vant/cat.jpeg"
+>
+</van-image>
+<view class="partyMemberListitemlabel">
+  局长
+</view>
+    </view>
+
+  </view>
+  
+</view>
+</view>
+
+
+
