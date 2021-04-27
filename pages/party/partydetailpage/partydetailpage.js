@@ -8,10 +8,24 @@ Page({
      partyMemberList:[
        {
          userName:"222",
+         state:true,
        },
-
+       {
+        userName:"222",
+        state:true,
+      },
+      {
+        userName:"222",
+        state:false,
+      },
+   
      ],
   },
+  commentList:[
+    {
+      
+    }
+  ],
 
  
 })

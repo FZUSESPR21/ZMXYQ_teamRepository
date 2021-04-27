@@ -16,19 +16,21 @@
     <view class="partydetailcontent">
       大家好你们好
     </view>
-    <view class="joinbutton">加入拼局</view>
-    <view class="sharebutton">加入拼局</view>
+    <view class="party-detail-operation">
+      <view class="joinbutton">加入拼局</view>
+    <view class="share-button"><text class="iconfont icon-share"></text></view>
+    </view>
   </view>
 <view class="partymemberview">
   <text class="partydetailtitle">局内成员</text>
-  <view class="partymemberlist" wx:for="{{partyMemberList}}">
-    <view class="partymemberlistitem">
+  <view class="partymemberlist">
+    <view class="partymemberlistitem" wx:for="{{partyMemberList}}">
       <!-- {{item.userName}} -->
       <van-image
   round
   width="3rem"
   height="3rem"
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
+  src="{{item.state?'https://img.yzcdn.cn/vant/cat.jpeg':'https://sm.ms/image/Yzvtu9bfQsHkVwm'}}"
 >
 </van-image>
 <view class="partyMemberListitemlabel">
@@ -37,7 +39,15 @@
     </view>
 
   </view>
-  
+  </view>
+  <view class="party-comment-list">
+    <text class="partydetailtitle">拼局评论</text>
+    <scroll-view 
+    class="comment-list-scroll"
+    scroll-y="true" bindscroll="onScroll" bindscrolltoupper="onTopRefresh"
+    bindscrolltolower="onBottomRefresh">
+    <view>暂无评论</view>
+</scroll-view>
 </view>
 </view>
 
