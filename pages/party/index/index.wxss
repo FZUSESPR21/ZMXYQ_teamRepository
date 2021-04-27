@@ -1,1 +1,15 @@
 /* pages/party/index/index.wxss */
+page,view,text,swiper,swiper-item,image,navigator,button{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+page{
+  background-color: #ffe680;
+}
+
+.button-style {
+  margin: 30rpx;
+  width: 300rpx;
+}
