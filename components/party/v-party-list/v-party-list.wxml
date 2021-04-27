@@ -1,0 +1,25 @@
+<!--components/party_list/party_list.wxml-->
+<view class="party_list">
+      <!-- 下拉框开始 -->
+      <view class = "dropdown-menu">
+        <van-dropdown-menu>
+          <van-dropdown-item bind:change="onChange" value="{{ value1 }}" options="{{ option1 }}" />
+      </van-dropdown-menu>
+      </view>
+      <!-- 下拉框结束 -->
+
+      <!-- 组局列表开始 -->
+      <scroll-view scroll-y>
+        <v-party-item wx:for="{{partyList}}" 
+          partyID = "{{item.aprtyID}}"
+          partyType = "{{item.partyType}}"
+          content = "{{item.description}}"
+          publisherName = "{{item.publisher.username}}"
+          publisherSex = "{{item.publisher.sex}}"
+          time= "{{item.gmtCreate}}"
+          peopleCnt = "{{item.peopleCnt}}"
+          nowPeopleCnt = "{{item.nowPeopleCnt}}">
+        </v-party-item>
+      </scroll-view>
+      <!-- 组局列表结束 -->
+  </view>

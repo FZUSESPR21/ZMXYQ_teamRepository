@@ -1,6 +1,0 @@
-<!--components/party_list/party_list.wxml-->
-<view class="party_list">
-      <van-dropdown-menu>
-        <van-dropdown-item bind:change="onChange" value="{{ value1 }}" options="{{ option1 }}" />
-      </van-dropdown-menu>
-  </view>

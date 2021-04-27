@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "v-party-item": "../../../components/party/v-party-item/v-party-item"
+  },
+  "navigationBarTitleText": "我参与的组局"
+}

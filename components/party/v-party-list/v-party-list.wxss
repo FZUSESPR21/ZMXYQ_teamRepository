@@ -1,0 +1,13 @@
+/* components/party_list/party_list.wxss */
+page,view,text,swiper,swiper-item,image,navigator,button{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.dropdown-menu{
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  border-radius: 15px;
+}
+

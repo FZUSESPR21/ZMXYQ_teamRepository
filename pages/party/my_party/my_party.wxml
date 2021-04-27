@@ -1,0 +1,17 @@
+<!--pages/party/my_party/my_party.wxml-->
+<page>
+    <!-- 我的组局列表开始 -->
+    <scroll-view scroll-y>
+        <v-party-item wx:for="{{partyList}}" 
+          partyID = "{{item.aprtyID}}"
+          partyType = "{{item.partyType}}"
+          content = "{{item.description}}"
+          publisherName = "{{item.publisher.username}}"
+          publisherSex = "{{item.publisher.sex}}"
+          time= "{{item.gmtCreate}}"
+          peopleCnt = "{{item.peopleCnt}}"
+          nowPeopleCnt = "{{item.nowPeopleCnt}}">
+        </v-party-item>
+      </scroll-view>
+      <!-- 我的组局列表结束 -->
+</page>
