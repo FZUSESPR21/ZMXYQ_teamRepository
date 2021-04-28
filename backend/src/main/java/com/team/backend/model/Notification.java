@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -24,32 +23,34 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="TreeHole对象", description="")
-public class TreeHole implements Serializable {
+@ApiModel(value="Notification对象", description="")
+public class Notification implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    @ApiModelProperty(value = "树洞ID")
+    @ApiModelProperty(value = "消息表ID")
       @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "用户ID")
-    private Long fromId;
+    @ApiModelProperty(value = "消息对应类表中的ID")
+    private Long sourceId;
 
-    @ApiModelProperty(value = "树洞内容")
-    private String message;
+    @ApiModelProperty(value = "消息对应类型(0:评论,1:点赞,2:赞赏,3:收藏)")
+    private Integer type;
+
+    @ApiModelProperty(value = "消息是否已读(0:未读,1:已读)")
+    private Integer isRead;
 
     @ApiModelProperty(value = "创建时间")
       @TableField(fill = FieldFill.INSERT)
     private Date gmtCreate;
 
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty(value = "最近一次修改时间")
       @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 
     @ApiModelProperty(value = "逻辑删除")
-    @TableLogic
-    private Integer deleted;
+    private Integer delete;
 
 
 }

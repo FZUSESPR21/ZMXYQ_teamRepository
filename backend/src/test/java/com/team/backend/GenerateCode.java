@@ -63,7 +63,8 @@ public class GenerateCode {
 
     // 策略配置
     StrategyConfig strategy = new StrategyConfig();
-    strategy.setInclude("admin", "black_list", "party", "party_comment", "party_participants",
+    strategy.setInclude("admin", "black_list", "notification", "party", "party_comment",
+        "party_participants",
         "party_type", "post", "post_comment", "post_eye_on", "post_like",
         "post_reward", "post_type", "private_chat", "report", "tree_hole", "user"); // 设置要映射的表名
     strategy.setNaming(NamingStrategy.underline_to_camel);

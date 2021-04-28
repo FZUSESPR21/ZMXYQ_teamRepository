@@ -1,6 +1,6 @@
 package com.team.backend.service;
 
-import com.team.backend.model.PostComment;
+import com.team.backend.model.Notification;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author yangyu
  * @since 2021-04-28
  */
-public interface PostCommentService extends IService<PostComment> {
+public interface NotificationService extends IService<Notification> {
 
 }
