@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author yangyu
@@ -24,32 +24,32 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PostLike对象", description="")
+@ApiModel(value = "PostLike对象", description = "")
 public class PostLike implements Serializable {
 
-    private static final long serialVersionUID=1L;
+  private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "ID")
-      @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @ApiModelProperty(value = "ID")
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "创建时间")
-      @TableField(fill = FieldFill.INSERT)
-    private Date gmtCreate;
+  @ApiModelProperty(value = "创建时间")
+  @TableField(fill = FieldFill.INSERT)
+  private Date gmtCreate;
 
-    @ApiModelProperty(value = "最近一次修改时间")
-      @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date gmtModified;
+  @ApiModelProperty(value = "最近一次修改时间")
+  @TableField(fill = FieldFill.INSERT_UPDATE)
+  private Date gmtModified;
 
-    @ApiModelProperty(value = "逻辑删除")
-    @TableLogic
-    private Integer deleted;
+  @ApiModelProperty(value = "逻辑删除")
+  @TableLogic
+  private Integer deleted;
 
-    @ApiModelProperty(value = "被赞帖子ID，外键")
-    private Long postId;
+  @ApiModelProperty(value = "被赞帖子ID，外键")
+  private Long postId;
 
-    @ApiModelProperty(value = "点赞用户ID，外键")
-    private Long idFrom;
+  @ApiModelProperty(value = "点赞用户ID，外键")
+  private Long idFrom;
 
 
 }

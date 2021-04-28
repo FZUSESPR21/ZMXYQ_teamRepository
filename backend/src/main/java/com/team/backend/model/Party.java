@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author yangyu
@@ -24,41 +24,41 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Party对象", description="")
+@ApiModel(value = "Party对象", description = "")
 public class Party implements Serializable {
 
-    private static final long serialVersionUID=1L;
+  private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "组局ID")
-      @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @ApiModelProperty(value = "组局ID")
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "组局描述")
-    private String description;
+  @ApiModelProperty(value = "组局描述")
+  private String description;
 
-    @ApiModelProperty(value = "发布者ID")
-    private Long publisherId;
+  @ApiModelProperty(value = "发布者ID")
+  private Long publisherId;
 
-    @ApiModelProperty(value = "组局类型ID")
-    private Long partyTypeId;
+  @ApiModelProperty(value = "组局类型ID")
+  private Long partyTypeId;
 
-    @ApiModelProperty(value = "组局人数限定")
-    private Integer peopleCnt;
+  @ApiModelProperty(value = "组局人数限定")
+  private Integer peopleCnt;
 
-    @ApiModelProperty(value = "图片url链接")
-    private String imageUrls;
+  @ApiModelProperty(value = "图片url链接")
+  private String imageUrls;
 
-    @ApiModelProperty(value = "创建时间")
-      @TableField(fill = FieldFill.INSERT)
-    private Date gmtCreate;
+  @ApiModelProperty(value = "创建时间")
+  @TableField(fill = FieldFill.INSERT)
+  private Date gmtCreate;
 
-    @ApiModelProperty(value = "修改时间")
-      @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date gmtModified;
+  @ApiModelProperty(value = "修改时间")
+  @TableField(fill = FieldFill.INSERT_UPDATE)
+  private Date gmtModified;
 
-    @ApiModelProperty(value = "逻辑删除")
-    @TableLogic
-    private Integer deleted;
+  @ApiModelProperty(value = "逻辑删除")
+  @TableLogic
+  private Integer deleted;
 
 
 }

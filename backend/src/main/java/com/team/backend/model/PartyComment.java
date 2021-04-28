@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author yangyu
@@ -24,41 +24,41 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PartyComment对象", description="")
+@ApiModel(value = "PartyComment对象", description = "")
 public class PartyComment implements Serializable {
 
-    private static final long serialVersionUID=1L;
+  private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "组局评论ID")
-      @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+  @ApiModelProperty(value = "组局评论ID")
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
 
-    @ApiModelProperty(value = "内容")
-    private String information;
+  @ApiModelProperty(value = "内容")
+  private String information;
 
-    @ApiModelProperty(value = "对应组局ID")
-    private Long partyId;
+  @ApiModelProperty(value = "对应组局ID")
+  private Long partyId;
 
-    @ApiModelProperty(value = "父评论ID")
-    private Long preId;
+  @ApiModelProperty(value = "父评论ID")
+  private Long preId;
 
-    @ApiModelProperty(value = "评论者ID")
-    private Long idFrom;
+  @ApiModelProperty(value = "评论者ID")
+  private Long idFrom;
 
-    @ApiModelProperty(value = "评论状态0(正常状态）,1（举报过多被挂起），2（已被删除）")
-    private Integer status;
+  @ApiModelProperty(value = "评论状态0(正常状态）,1（举报过多被挂起），2（已被删除）")
+  private Integer status;
 
-    @ApiModelProperty(value = "创建时间")
-      @TableField(fill = FieldFill.INSERT)
-    private Date gmtCreate;
+  @ApiModelProperty(value = "创建时间")
+  @TableField(fill = FieldFill.INSERT)
+  private Date gmtCreate;
 
-    @ApiModelProperty(value = "逻辑删除")
-    @TableLogic
-    private Integer deleted;
+  @ApiModelProperty(value = "逻辑删除")
+  @TableLogic
+  private Integer deleted;
 
-    @ApiModelProperty(value = "最近一次修改时间")
-      @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date gmtModified;
+  @ApiModelProperty(value = "最近一次修改时间")
+  @TableField(fill = FieldFill.INSERT_UPDATE)
+  private Date gmtModified;
 
 
 }
