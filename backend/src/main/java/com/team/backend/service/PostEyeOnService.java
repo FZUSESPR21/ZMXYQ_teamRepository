@@ -21,6 +21,6 @@ public interface PostEyeOnService extends IService<PostEyeOn> {
    *
    * @param eyeOn 需要保证成员变量postId,idFrom有值
    */
-  void collectPost(PostEyeOn eyeOn);
+  boolean collectPost(PostEyeOn eyeOn);
 
 }

@@ -20,6 +20,6 @@ public interface PostLikeService extends IService<PostLike> {
    *
    * @param postLike 需保证成员变量postId,idFrom有值
    */
-  void likePost(PostLike postLike);
+  boolean likePost(PostLike postLike);
 
 }

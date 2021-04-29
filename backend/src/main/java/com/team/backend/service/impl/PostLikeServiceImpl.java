@@ -23,7 +23,13 @@ public class PostLikeServiceImpl extends ServiceImpl<PostLikeMapper, PostLike> i
   private PostLikeMapper postLikeMapper;
 
   @Override
-  public void likePost(PostLike postLike) {
-    postLikeMapper.insert(postLike);
+  public boolean likePost(PostLike postLike) {
+    boolean result = false;
+    if (postLike.getPostId() != null && postLike.getIdFrom() != null) {
+      if (postLikeMapper.insert(postLike) == 1) {
+        result = true;
+      }
+    }
+    return result;
   }
 }

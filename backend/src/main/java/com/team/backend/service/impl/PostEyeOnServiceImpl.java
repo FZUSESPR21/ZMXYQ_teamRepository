@@ -23,7 +23,13 @@ public class PostEyeOnServiceImpl extends ServiceImpl<PostEyeOnMapper, PostEyeOn
   private PostEyeOnMapper eyeOnMapper;
 
   @Override
-  public void collectPost(PostEyeOn postEyeOn) {
-    eyeOnMapper.insert(postEyeOn);
+  public boolean collectPost(PostEyeOn postEyeOn) {
+    boolean result = false;
+    if (postEyeOn.getPostId() != null && postEyeOn.getIdFrom() != null) {
+      if(eyeOnMapper.insert(postEyeOn) == 1) {
+        result = true;
+      }
+    }
+    return result;
   }
 }
