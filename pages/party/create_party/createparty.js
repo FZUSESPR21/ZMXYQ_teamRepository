@@ -14,6 +14,7 @@ Page({
     value1: 0,
     select: false,
     tihuoWay: '门店自提',
+    memberNum:0
   },
 
   /**
@@ -27,6 +28,27 @@ Page({
         select:!this.data.select
     })
 },
+  addmemberOp(e)
+  {
+    if(this.data.memberNum<12)
+    {
+      this.setData({
+        memberNum:this.data.memberNum+1
+      })
+    }
+   
+  }
+  ,
+  delmemberOp(e)
+  {
+    if(this.data.memberNum>0)
+    {
+      this.setData({
+        memberNum:this.data.memberNum-1
+      })
+    }
+  }
+  ,
   mySelect(e) {
    var name = e.currentTarget.dataset.name
    this.setData({
