@@ -1,0 +1,164 @@
+/* pages/party/create_party/createparty.wxss */
+page{
+  background-color: #1a237e;
+}
+.main{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.party-theme-view
+{
+  width: 700rpx;
+  height: 300rpx;
+  margin-top: 40rpx;
+  z-index:9999；
+}
+.list-msg2 {
+  margin-top: 20rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 4rpx solid black;
+  padding: 0 10rpx;
+  background-color: #fff;
+  border-radius: 0.4rem;
+  box-shadow: 2rpx 2rpx gray ;
+}
+.select_box {
+  background-color: #fff;
+  width: 93%;
+  height: 180rpx;
+  z-index:9999; 
+  animation: myfirst 0.5s;
+  border-bottom-right-radius: 0.4rem;
+  border-bottom-left-radius: 0.4rem;
+  position: fixed;
+  border-bottom: 4rpx solid black;
+}
+.select_one:last-child
+{
+  border-bottom: none;
+}
+.select_one {
+  height: 60rpx;
+  line-height: 60rpx;
+  border-bottom: 1px solid #ccc;
+  z-index: 1000;
+  width: 100%;
+  border-left: 4rpx solid black;
+  border-right: 4rpx solid black;
+}
+.party-view-title
+{
+  color: #fff;
+  font-weight: bold;
+  font-size: 40rpx;
+}
+.party-detail-view{
+  margin-top: -140rpx;
+  z-index: 0;
+}
+.party-detail-content{
+  min-height: 600rpx;
+  background-color: #fff;
+  box-shadow: 2rpx 2rpx gray ;
+  border-radius: 0.4rem;
+  border: 4rpx solid black;
+  margin-top: 10rpx;
+  z-index: 0;
+}
+.party-detaile-content-input{
+  width: 90%;
+  margin: 0 auto;
+  min-height: 400rpx;
+  margin-top: 20rpx;
+}
+.party-detail-content-image
+{
+  margin-left: 40rpx;
+}
+.party-member-limited-view
+{
+  margin-top: 10rpx;
+  display: flex;
+  flex-direction: column;
+}
+.party-member-view{
+  min-height: 100rpx;
+  background-color: #fff;
+  box-shadow: 2rpx 2rpx gray ;
+  border-radius: 0.4rem;
+  border: 4rpx solid black;
+  line-height: 100rpx;
+  display: flex;
+  flex-direction: row;
+}
+.member-title{
+  width: 200rpx;
+  font-weight: bold;
+  padding-left: 50rpx;
+}
+.member-stepper{
+  width: 200rpx;
+  display: flex;
+  margin-left: 200rpx;
+  align-items: center;
+  justify-content: center;
+}
+.party-member-limited-view
+{
+  margin-top: 10rpx;
+  display: flex;
+  flex-direction: column;
+}
+.party-member-view{
+  min-height: 100rpx;
+  background-color: #fff;
+  box-shadow: 2rpx 2rpx gray ;
+  border-radius: 0.4rem;
+  border: 4rpx solid black;
+  line-height: 100rpx;
+  display: flex;
+  flex-direction: row;
+}
+.member-title{
+  width: 200rpx;
+  font-weight: bold;
+  padding-left: 50rpx;
+}
+.member-stepper-button{
+  width: 30%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  border-radius: 0.4rem;
+  border: 4rpx solid #1a237e;
+  justify-content: center;
+  font-size: 40rpx;
+  font-weight: bold;
+  box-shadow: 2rpx 2rpx gray ;
+}
+.member-stepper-content{
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+.create-button{
+  margin-top: 50rpx;
+  background-color: #fff;
+  border-radius: 0.4rem;
+  box-shadow: 2rpx 2rpx gray ;
+}
+@keyframes myfirst {
+  from {
+      height: 0rpx;
+  }
+
+  to {
+      height: 180rpx;
+  }
+}
