@@ -15,7 +15,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface PostEyeOnService extends IService<PostEyeOn> {
 
   /**
-   * Collect post.
+   * 收藏帖子
+   *
+   * Service方法
    *
    * @param eyeOn 需要保证成员变量postId,idFrom有值
    */

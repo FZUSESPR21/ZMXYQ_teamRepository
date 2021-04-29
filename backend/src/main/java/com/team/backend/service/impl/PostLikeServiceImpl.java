@@ -4,6 +4,7 @@ import com.team.backend.model.PostLike;
 import com.team.backend.mapper.PostLikeMapper;
 import com.team.backend.service.PostLikeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,4 +19,11 @@ import org.springframework.stereotype.Service;
 public class PostLikeServiceImpl extends ServiceImpl<PostLikeMapper, PostLike> implements
     PostLikeService {
 
+  @Resource
+  private PostLikeMapper postLikeMapper;
+
+  @Override
+  public void likePost(PostLike postLike) {
+    postLikeMapper.insert(postLike);
+  }
 }

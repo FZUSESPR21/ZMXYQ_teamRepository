@@ -13,4 +13,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface PostLikeService extends IService<PostLike> {
 
+  /**
+   * 点赞评论
+   *
+   * Service方法
+   *
+   * @param postLike 需保证成员变量postId,idFrom有值
+   */
+  void likePost(PostLike postLike);
+
 }
