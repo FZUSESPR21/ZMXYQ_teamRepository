@@ -6,6 +6,7 @@ import com.team.backend.model.User;
 import com.team.backend.mapper.UserMapper;
 import com.team.backend.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.team.backend.util.UserLegal;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
@@ -28,25 +29,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   @Autowired
   UserMapper userMapper;
 
-  // 上传身份验证图片
+  // 用户上传图片
   public Result<String> identifyImg(File file) throws IOException {
 
     Result<String> result = new Result<>();
-
-    // 判断用户上传图片是否存在
-    if (!file.exists() || file.length() < 1) {
-      result.setCode(ExceptionInfo.valueOf("USER_IMG_NULL").getCode());
-      result.setMessage(ExceptionInfo.valueOf("USER_IMG_NULL").getMessage());
-      result.setData("");
-      return result;
-    }
-
-    //判断用户上传照片是否为图片
-    ImageInputStream imageInputStream = ImageIO.createImageInputStream(file);
-    Iterator iterator = ImageIO.getImageReaders(imageInputStream);
-    if (!iterator.hasNext()) {
-      result.setCode(ExceptionInfo.valueOf("USER_NOT_IMG").getCode());
-      result.setMessage(ExceptionInfo.valueOf("USER_NOT_IMG").getMessage());
+    UserLegal userLegal = new UserLegal();
+    String msg = userLegal.imgLegal(file);
+    if (!msg.equals("OK")){
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
       result.setData("");
       return result;
     }
@@ -55,6 +46,79 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData("图片的url");
+    return result;
+  }
+
+  public Result<Integer> identifyUser(User user) {
+
+    Result<Integer> result = new Result<>();
+    UserLegal userLegal = new UserLegal();
+    String msg = userLegal.idLegal(user.getId());
+
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户是否已存在
+    User sqlUser = userMapper.selectById(user.getId());
+    if (sqlUser.getId().equals(user.getId())){
+      result.setCode(ExceptionInfo.valueOf("USER_ID_EXISTED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_ID_EXISTED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户名是否合法
+    msg = userLegal.usernameLegal(user.getUsername());
+    if (!msg.equals("OK")){
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    msg = userLegal.urlLegal(user.getUserIconUrl());
+    if (!msg.equals("OK")){
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断学校名是否合法
+    msg = userLegal.schoolLegal(user.getSchool());
+    if (!msg.equals("OK")){
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户性别合法性
+    msg = userLegal.sexLegal(user.getSex());
+    if (!msg.equals("OK")){
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户出生日期合法性
+    msg = userLegal.birthdayLegal(user.getBirthday());
+    if (!msg.equals("OK")){
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    user.setStatus(0);// 用户状态默认为未审核
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(userMapper.insert(user));
     return result;
   }
 }

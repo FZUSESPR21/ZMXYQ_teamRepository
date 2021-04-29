@@ -21,6 +21,18 @@ public enum ExceptionInfo {
 
   USER_IMG_NULL(6000, "图片不存在"),
   USER_NOT_IMG(6001, "用户上传文件非图片"),
+  USER_ID_NULL(6002, "用户ID为空"),
+  USER_ID_BELOW0(6003, "用户ID小于0"),
+  USER_ID_EXISTED(6004, "用户ID已存在"),
+  USER_NAME_NULL(6005,"用户名为空"),
+  USER_NAME_LENGTH(6005,"用户名长度大于20个字节"),
+  USER_NOT_URL(6006,"url不合法"),
+  USER_SCHOOL_NULL(6007,"学校为空"),
+  USER_SCHOOL_LENGTH(6008,"学校名字大于50个字节"),
+  USER_SCHOOL_CHINESE(6009,"学校名字包含非中文字符"),
+  USER_SEX_LEGAL(6010,"性别不合法，只能为0或1"),
+  USER_BIRTHDAY_NULL(6011,"用户出生日期为空"),
+  USER_NOT_BIRTHDAY(6012,"用户出生日期不合法"),
   ;
 
   private Integer code;
