@@ -14,11 +14,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
  *
- * </p>
- *
- * @author yangyu
+ * @author ccreater
  * @since 2021-04-28
  */
 @Data
