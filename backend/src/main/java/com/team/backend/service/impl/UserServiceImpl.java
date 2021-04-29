@@ -121,4 +121,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setData(userMapper.insert(user));
     return result;
   }
+
+  // 获取用户审核状态
+  public Result<Integer> identifyStatus(Long id){
+
+    Result<Integer> result = new Result<>();
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    User user = userMapper.selectById(id);
+    result.setData(user.getStatus());
+    return result;
+  }
 }
