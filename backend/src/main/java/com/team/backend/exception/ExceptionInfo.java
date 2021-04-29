@@ -17,7 +17,11 @@ import lombok.Getter;
 @Getter
 public enum ExceptionInfo {
 
-  OK(200, "ok");
+  OK(200, "ok"),
+
+  USER_IMG_NULL(6000, "图片不存在"),
+  USER_NOT_IMG(6001, "用户上传文件非图片"),
+  ;
 
   private Integer code;
   private String message;
