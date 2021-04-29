@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "返回前端结果实体类",description = "")
+@ApiModel(value = "返回前端结果实体类", description = "")
 public class Result<T> {
 
   @ApiModelProperty(value = "信息代码")

@@ -11,19 +11,16 @@ import lombok.Getter;
  */
 
 /**
- * 60: 用户异常
- * 61: 帖子异常
- * 62: 组局异常
+ * 60: 用户异常 61: 帖子异常 62: 组局异常
  */
 @AllArgsConstructor
 @Getter
 public enum ExceptionInfo {
 
-  OK(200,"ok");
+  OK(200, "ok");
 
   private Integer code;
   private String message;
-
 
 
 }
