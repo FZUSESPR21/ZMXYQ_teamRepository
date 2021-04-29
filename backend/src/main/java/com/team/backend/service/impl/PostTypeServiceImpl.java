@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author yangyu
- * @since 2021-04-26
+ * @since 2021-04-28
  */
 @Service
-public class PostTypeServiceImpl extends ServiceImpl<PostTypeMapper, PostType> implements PostTypeService {
+public class PostTypeServiceImpl extends ServiceImpl<PostTypeMapper, PostType> implements
+    PostTypeService {
 
 }

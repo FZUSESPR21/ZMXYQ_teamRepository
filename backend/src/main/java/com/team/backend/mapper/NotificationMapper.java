@@ -1,6 +1,6 @@
 package com.team.backend.mapper;
 
-import com.team.backend.model.PostEyeOn;
+import com.team.backend.model.Notification;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author yangyu
  * @since 2021-04-28
  */
-public interface PostEyeOnMapper extends BaseMapper<PostEyeOn> {
+public interface NotificationMapper extends BaseMapper<Notification> {
 
 }

@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -24,29 +23,23 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "Post对象", description = "")
-public class Post implements Serializable {
+@ApiModel(value = "Notification对象", description = "")
+public class Notification implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @ApiModelProperty(value = "帖文ID")
+  @ApiModelProperty(value = "消息表ID")
   @TableId(value = "id", type = IdType.AUTO)
   private Long id;
 
-  @ApiModelProperty(value = "发布者ID，外键")
-  private Long publisherId;
+  @ApiModelProperty(value = "消息对应类表中的ID")
+  private Long sourceId;
 
-  @ApiModelProperty(value = "帖子状态：0(正常状态）,1（举报过多被挂起），2（已被删除）")
-  private Integer status;
+  @ApiModelProperty(value = "消息对应类型(0:评论,1:点赞,2:赞赏,3:收藏)")
+  private Integer type;
 
-  @ApiModelProperty(value = "帖子类型ID，外键")
-  private Long postTypeId;
-
-  @ApiModelProperty(value = "帖子文本内容")
-  private String message;
-
-  @ApiModelProperty(value = "帖子图片URL")
-  private String imageUrls;
+  @ApiModelProperty(value = "消息是否已读(0:未读,1:已读)")
+  private Integer isRead;
 
   @ApiModelProperty(value = "创建时间")
   @TableField(fill = FieldFill.INSERT)
@@ -57,8 +50,7 @@ public class Post implements Serializable {
   private Date gmtModified;
 
   @ApiModelProperty(value = "逻辑删除")
-  @TableLogic
-  private Integer deleted;
+  private Integer delete;
 
 
 }
