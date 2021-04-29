@@ -9,8 +9,16 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author yangyu
+ * @author Tars
  * @since 2021-04-28
  */
 public interface PostEyeOnService extends IService<PostEyeOn> {
+
+  /**
+   * Collect post.
+   *
+   * @param eyeOn 需要保证成员变量postId,idFrom有值
+   */
+  void collectPost(PostEyeOn eyeOn);
 
 }
