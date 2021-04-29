@@ -1,0 +1,13 @@
+.main{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.comment-area
+{
+ width: 80%;
+}
+.parentComment-view
+{
+  border: 1rpx solid gray;
+}

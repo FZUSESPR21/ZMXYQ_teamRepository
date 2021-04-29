@@ -1,0 +1,9 @@
+<!--pages/components/comment.wxml-->
+<view class="main">
+  <view class="comment-area">
+    <view class="parentComment-view" wx:for="{{parentComments}}">
+  {{item}}
+</view>
+  </view>
+
+</view>
