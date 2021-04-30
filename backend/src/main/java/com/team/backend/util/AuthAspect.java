@@ -1,5 +1,6 @@
 package com.team.backend.util;
 
+import com.team.backend.model.Admin;
 import com.team.backend.model.User;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -39,7 +40,7 @@ public class AuthAspect {
     try {
       Field f=clazz.getDeclaredField("admin");
       f.setAccessible(true);
-      User user=(User)session.getAttribute("admin");
+      Admin user=(Admin)session.getAttribute("admin");
       f.set(obj, user);
 
     } catch (NoSuchFieldException | IllegalAccessException e) {}

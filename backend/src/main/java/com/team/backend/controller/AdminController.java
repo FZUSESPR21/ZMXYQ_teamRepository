@@ -32,8 +32,9 @@ public class AdminController {
   private AdminServiceImpl adminServiceImpl;
 
   @PostMapping("/login")
-  public Response login(@RequestParam(value = "adminId") String nickname,
-      @RequestParam(value = "password") String password) {
+  public Response login(@RequestBody Map<String, Object> map) {
+    String nickname = (String) map.get("adminId");
+    String password = (String) map.get("password");
     int code = 0;
     if (admin == null) {
       admin = adminServiceImpl.login(nickname, password);
@@ -48,15 +49,18 @@ public class AdminController {
   }
 
   @PostMapping("/changepsw")
-  public Response changePwd(
-      @RequestParam(value = "adminId", required = false, defaultValue = "") String nickname,
-      @RequestParam String oldPassword, @RequestParam String newPassword) {
+  public Response changePwd(@RequestBody Map<String, Object> map) {
+    String nickname = (String) map.get("adminId");
+    String newPassword = (String) map.get("newPassword");
+    String oldPassword = (String) map.get("oldPassword");
     int code = 0;
-    if (nickname == "" && admin != null) {
-      nickname = admin.getNickname();
-    } else {
-      code = 1;
-      return new Response(code, "", null);
+    if (nickname == "" || nickname == null ) {
+      if(admin != null){
+        nickname = admin.getNickname();
+      } else {
+        code = 1;
+        return new Response(code, "", null);
+      }
     }
     if (adminServiceImpl.changePwd(nickname, oldPassword, newPassword) && code == 0) {
       code = 0;
@@ -68,20 +72,26 @@ public class AdminController {
   }
 
   @PostMapping("/register")
-  public Response register(@RequestBody Map<String,Object> map) {
+  public Response register(@RequestBody Map<String, Object> map) {
     //(@RequestParam(value = "adminId") String nickname,
     //      @RequestParam(value = "password") String password)
-    String nickname = (String)map.get("adminId");
-    String password = (String)map.get("password");
-    Admin admin = adminServiceImpl.register(nickname,password);
+    String nickname = (String) map.get("adminId");
+    String password = (String) map.get("password");
+    Admin admin = adminServiceImpl.register(nickname, password);
     int code = 0;
-    if(admin == null){
+    if (admin == null) {
       code = 1;
-    }else{
-      session.setAttribute("admin",admin);
+    } else {
+      session.setAttribute("admin", admin);
 
     }
     return new Response(code, "", null);
+  }
+
+  @RequestMapping("/logout")
+  public Response logout(){
+    session.setAttribute("admin",null);
+    return new Response(0,"");
   }
 
 }

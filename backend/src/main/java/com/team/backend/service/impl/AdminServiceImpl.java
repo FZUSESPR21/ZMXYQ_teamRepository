@@ -1,10 +1,16 @@
 package com.team.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.backend.model.Admin;
 import com.team.backend.mapper.AdminMapper;
 import com.team.backend.service.AdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import java.nio.charset.StandardCharsets;
+import com.team.backend.util.Log;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Hex;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.List;
@@ -21,61 +27,59 @@ import org.springframework.stereotype.Service;
  * @author ccreater
  * @since 2021-04-28
  */
+
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
 
   @Autowired
   private AdminMapper adminMapper;
-  private String nickname;
-  private String password;
 
-  private boolean processInput(String nickname, String password) {
-    this.nickname = nickname.trim();
-    this.password = password.trim();
+  private Admin processInput(String nickname, String password) {
+    nickname = nickname.trim();
+    password = password.trim();
     if (StringUtils.isBlank(nickname) || StringUtils.isBlank(password)) {
-      return false;
+      return null;
     }
     try {
-      this.password += "AA546ADF546safd35444sfd";
+      password += "AA546ADF546safd35444sfd";
       byte[] bytesOfPassword = password.getBytes("UTF-8");
       MessageDigest md = MessageDigest.getInstance("MD5");
-      StringBuffer buf = new StringBuffer("");
-      byte[] b=md.digest(bytesOfPassword);
-      int i;
-      for (int offset = 0; offset < b.length; offset++) {
-        i = b[offset];
-        if (i < 0)
-          i += 256;
-        if (i < 16)
-          buf.append("0");
-        buf.append(Integer.toHexString(i));
-      }
-      this.password = buf.toString();
+      password = Hex.encodeHexString(md.digest(bytesOfPassword));
     } catch (Exception e) {
-      return false;
+      Log.error(e);
+      return null;
     }
-    return true;
+    return new Admin(nickname,password);
   }
 
   public Admin login(String nickname, String password) {
-    if (!processInput(nickname, password)) {
+    Admin input = processInput(nickname, password);
+    if (input==null) {
+      log.debug("nickname or password is null");
       return null;
     }
+    nickname = input.getNickname();
+    password = input.getPassword();
     Map<String, String> condition = new HashMap<>();
-    condition.put("nickname", this.nickname);
-    condition.put("password", this.password);
-    return adminMapper.selectOne(query().allEq(condition));
+    condition.put("nickname", nickname);
+    condition.put("password", password);
+    return getOne((Wrapper<Admin>) new QueryWrapper().allEq(condition));
   }
 
   public Admin register(String nickname, String password) {
-    if (!processInput(nickname, password)) {
+    Admin input = processInput(nickname, password);
+    if (input==null) {
+      log.debug("nickname or password is null");
       return null;
     }
+    nickname = input.getNickname();
+    password = input.getPassword();
     List<Admin> adminList = adminMapper.selectList(null);
     if (adminList.size() > 0) {
+      log.debug("Admin already exists");
       return null;
     } else {
-      Admin admin = new Admin(this.nickname, this.password);
+      Admin admin = new Admin(nickname, password);
       adminMapper.insert(admin);
       return admin;
     }
@@ -85,14 +89,19 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     Admin admin = login(nickname, oldPassword);
     if (admin == null) {
       // user not exist
+      log.debug("user not exist");
       return false;
     }
-    if (!processInput(nickname, newPassword)) {
+    Admin input = processInput(nickname, newPassword);
+    if (input==null) {
       // new Password format error
+      log.debug("new Password format error");
       return false;
     }
-    admin.setPassword(this.password);
+    nickname = input.getNickname();
+    newPassword = input.getPassword();
+    admin.setPassword(newPassword);
     updateById(admin);
-    return false;
+    return true;
   }
 }
