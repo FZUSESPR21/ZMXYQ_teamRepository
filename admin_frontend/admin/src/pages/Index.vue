@@ -7,7 +7,7 @@
         <el-menu-item index="3" style="display:inline"><router-link to="/index/party" style="text-decoration:none">组局审核</router-link></el-menu-item>
         <el-menu-item index="4" style="display:inline">登出</el-menu-item>
     </el-menu>
-    <div id = "Main">
+    <div class = "Main">
       <router-view/>
     </div>
   </div>
@@ -31,6 +31,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.index{
+  min-height: 100%;
+}
 
+.main{
+  min-height: 100%;
+}
     
 </style>
