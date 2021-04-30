@@ -4,6 +4,7 @@ import com.team.backend.model.Admin;
 import com.team.backend.mapper.AdminMapper;
 import com.team.backend.service.AdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
       this.password += "AA546ADF546safd35444sfd";
       byte[] bytesOfPassword = password.getBytes("UTF-8");
       MessageDigest md = MessageDigest.getInstance("MD5");
-      this.password = md.digest(bytesOfPassword).toString();
+      StringBuffer buf = new StringBuffer("");
+      byte[] b=md.digest(bytesOfPassword);
+      int i;
+      for (int offset = 0; offset < b.length; offset++) {
+        i = b[offset];
+        if (i < 0)
+          i += 256;
+        if (i < 16)
+          buf.append("0");
+        buf.append(Integer.toHexString(i));
+      }
+      this.password = buf.toString();
     } catch (Exception e) {
       return false;
     }

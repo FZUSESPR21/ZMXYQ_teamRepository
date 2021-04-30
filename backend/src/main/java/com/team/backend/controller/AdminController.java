@@ -4,9 +4,11 @@ package com.team.backend.controller;
 import com.team.backend.model.Admin;
 import com.team.backend.service.impl.AdminServiceImpl;
 import com.team.backend.util.Response;
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,8 +68,11 @@ public class AdminController {
   }
 
   @PostMapping("/register")
-  public Response register(@RequestParam(value = "adminId") String nickname,
-      @RequestParam(value = "password") String password) {
+  public Response register(@RequestBody Map<String,Object> map) {
+    //(@RequestParam(value = "adminId") String nickname,
+    //      @RequestParam(value = "password") String password)
+    String nickname = (String)map.get("adminId");
+    String password = (String)map.get("password");
     Admin admin = adminServiceImpl.register(nickname,password);
     int code = 0;
     if(admin == null){
