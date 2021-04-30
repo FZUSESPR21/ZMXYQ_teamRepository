@@ -43,6 +43,21 @@
             </el-table-column>
           </el-table>
         </el-card>
+        <!-- 表格定义结束 -->
+
+        <!-- 分页定义开始 -->
+        <div class="block">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            :page-size="100"
+            layout="prev, pager, next, jumper"
+            :total="totalCnt">
+          </el-pagination>
+        </div>
+        <!-- 分页定义结束 -->
+        
   </div>
 </template>
 
@@ -51,7 +66,9 @@ export default {
   name: "school-card",
   data() {
     return {
-      myData:[]
+      myData:[],
+      currentPage: 1,  //分页用到，当前页面
+      totalCnt:100  //总条数
     };
   },
   created() {
@@ -118,8 +135,14 @@ export default {
     },
     pass(id, index){
         this.myData.splice(index,1);
-    }
-
+    },
+    //以下方法为实现分页功能
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      }
   }
 };
 </script>
