@@ -32,5 +32,17 @@ public class AuthAspect {
 
     } catch (NoSuchFieldException | IllegalAccessException e) {}
   }
+  @Before("execution(* com.team.backend.controller.AdminController.*(..))")
+  public void setAdmin(JoinPoint pjp){
+    Object obj = pjp.getTarget();
+    Class clazz=obj.getClass();
+    try {
+      Field f=clazz.getDeclaredField("admin");
+      f.setAccessible(true);
+      User user=(User)session.getAttribute("admin");
+      f.set(obj, user);
+
+    } catch (NoSuchFieldException | IllegalAccessException e) {}
+  }
 
 }

@@ -27,53 +27,55 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
   private AdminMapper adminMapper;
   private String nickname;
   private String password;
-  private boolean processInput(String nickname, String password){
+
+  private boolean processInput(String nickname, String password) {
     this.nickname = nickname.trim();
     this.password = password.trim();
-    if(StringUtils.isBlank(nickname) || StringUtils.isBlank(password)){
+    if (StringUtils.isBlank(nickname) || StringUtils.isBlank(password)) {
       return false;
     }
-    try{
+    try {
       this.password += "AA546ADF546safd35444sfd";
       byte[] bytesOfPassword = password.getBytes("UTF-8");
       MessageDigest md = MessageDigest.getInstance("MD5");
       this.password = md.digest(bytesOfPassword).toString();
-    }catch(Exception e){
+    } catch (Exception e) {
       return false;
     }
     return true;
   }
+
   public Admin login(String nickname, String password) {
-    if(!processInput(nickname,password)){
+    if (!processInput(nickname, password)) {
       return null;
     }
-    Map<String, String> condition= new HashMap<>();
-    condition.put("nickname",this.nickname);
-    condition.put("password",this.password);
+    Map<String, String> condition = new HashMap<>();
+    condition.put("nickname", this.nickname);
+    condition.put("password", this.password);
     return adminMapper.selectOne(query().allEq(condition));
   }
 
-  public Admin register(String nickname,String password){
-    if(!processInput(nickname,password)){
+  public Admin register(String nickname, String password) {
+    if (!processInput(nickname, password)) {
       return null;
     }
     List<Admin> adminList = adminMapper.selectList(null);
-    if(adminList.size()>0){
+    if (adminList.size() > 0) {
       return null;
-    }else{
-      Admin admin = new Admin(this.nickname,this.password);
+    } else {
+      Admin admin = new Admin(this.nickname, this.password);
       adminMapper.insert(admin);
       return admin;
     }
   }
 
   public boolean changePwd(String nickname, String oldPassword, String newPassword) {
-    Admin admin = login(nickname,oldPassword);
-    if(admin == null){
+    Admin admin = login(nickname, oldPassword);
+    if (admin == null) {
       // user not exist
       return false;
     }
-    if(!processInput(nickname,newPassword)){
+    if (!processInput(nickname, newPassword)) {
       // new Password format error
       return false;
     }
