@@ -1,8 +1,13 @@
 package com.team.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.backend.exception.ExceptionInfo;
+import com.team.backend.mapper.PartyCommentMapper;
+import com.team.backend.mapper.PostCommentMapper;
 import com.team.backend.mapper.PostMapper;
+import com.team.backend.model.PartyComment;
 import com.team.backend.model.Post;
+import com.team.backend.model.PostComment;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
 import com.team.backend.mapper.UserMapper;
@@ -12,6 +17,7 @@ import com.team.backend.util.UserLegal;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +39,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Autowired
   PostMapper postMapper;
+
+  @Autowired
+  PostCommentMapper postCommentMapper;
+
+  @Autowired
+  PartyCommentMapper partyCommentMapper;
 
   // 用户上传图片
   public Result<String> identifyImg(File file) throws IOException {
@@ -165,4 +177,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setData(postMapper.deleteById(id));
     return result;
   }
+
+  // 查询个人帖文
+  public Result<List<Post>> postList(Long id) {
+
+    Result<List<Post>> result = new Result<>();
+
+    QueryWrapper<Post> wrapper = new QueryWrapper<>();
+    wrapper.eq("publisher_id", id);
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(postMapper.selectList(wrapper));
+    return result;
+  }
+
+
 }
