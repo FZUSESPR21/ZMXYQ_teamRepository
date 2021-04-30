@@ -192,5 +192,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     return result;
   }
 
+  // 查询个人帖子评论
+  public Result<List<PostComment>> PostCommentList(Long id) {
+
+    Result<List<PostComment>> result = new Result<>();
+
+    QueryWrapper<PostComment> wrapper = new QueryWrapper<>();
+    wrapper.eq("id_from", id);
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(postCommentMapper.selectList(wrapper));
+    return result;
+  }
+
+  // 查询个人组局评论
+  public Result<List<PartyComment>> PartyCommentList(Long id) {
+
+    Result<List<PartyComment>> result = new Result<>();
+
+    QueryWrapper<PartyComment> wrapper = new QueryWrapper<>();
+    wrapper.eq("id_from", id);
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(partyCommentMapper.selectList(wrapper));
+    return result;
+  }
+
 
 }
