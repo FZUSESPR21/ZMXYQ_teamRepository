@@ -16,10 +16,11 @@ public interface PostEyeOnService extends IService<PostEyeOn> {
 
   /**
    * 收藏帖子
-   *
+   * <p>
    * Service方法
    *
    * @param eyeOn 需要保证成员变量postId,idFrom有值
+   * @return the boolean 是否处理成功
    */
   boolean collectPost(PostEyeOn eyeOn);
 

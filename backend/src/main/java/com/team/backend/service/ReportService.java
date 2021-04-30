@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ReportService extends IService<Report> {
 
+  boolean reportPost(Report report);
+
 }
