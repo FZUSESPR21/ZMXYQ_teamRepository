@@ -220,5 +220,57 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     return result;
   }
 
+  // 删除个人帖子评论
+  public Result<Integer> PostCommentDeleted(Long id) {
 
+    Result<Integer> result = new Result<>();
+
+    if (id == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_POST_COMMENT_ID_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_POST_COMMENT_ID_NULL").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断数据库是否存在这条评论
+    PostComment postComment = postCommentMapper.selectById(id);
+    if (postComment == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_POST_COMMENT_DELETED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_POST_COMMENT_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(postCommentMapper.deleteById(id));
+    return result;
+  }
+
+  // 删除个人组局评论
+  public Result<Integer> PartyCommentDeleted(Long id) {
+
+    Result<Integer> result = new Result<>();
+
+    if (id == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_PARTY_COMMENT_ID_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_PARTY_COMMENT_ID_NULL").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断数据库是否存在这条评论
+    PartyComment partyComment = partyCommentMapper.selectById(id);
+    if (partyComment == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_PARTY_COMMENT_DELETED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_PARTY_COMMENT_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(partyCommentMapper.deleteById(id));
+    return result;
+  }
 }
