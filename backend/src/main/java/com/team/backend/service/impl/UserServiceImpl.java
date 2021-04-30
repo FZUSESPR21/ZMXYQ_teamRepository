@@ -1,8 +1,13 @@
 package com.team.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.backend.exception.ExceptionInfo;
+import com.team.backend.mapper.PartyCommentMapper;
+import com.team.backend.mapper.PostCommentMapper;
 import com.team.backend.mapper.PostMapper;
+import com.team.backend.model.PartyComment;
 import com.team.backend.model.Post;
+import com.team.backend.model.PostComment;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
 import com.team.backend.mapper.UserMapper;
@@ -12,6 +17,7 @@ import com.team.backend.util.UserLegal;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +39,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Autowired
   PostMapper postMapper;
+
+  @Autowired
+  PostCommentMapper postCommentMapper;
+
+  @Autowired
+  PartyCommentMapper partyCommentMapper;
 
   // 用户上传图片
   public Result<String> identifyImg(File file) throws IOException {
@@ -163,6 +175,102 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(postMapper.deleteById(id));
+    return result;
+  }
+
+  // 查询个人帖文
+  public Result<List<Post>> postList(Long id) {
+
+    Result<List<Post>> result = new Result<>();
+
+    QueryWrapper<Post> wrapper = new QueryWrapper<>();
+    wrapper.eq("publisher_id", id);
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(postMapper.selectList(wrapper));
+    return result;
+  }
+
+  // 查询个人帖子评论
+  public Result<List<PostComment>> PostCommentList(Long id) {
+
+    Result<List<PostComment>> result = new Result<>();
+
+    QueryWrapper<PostComment> wrapper = new QueryWrapper<>();
+    wrapper.eq("id_from", id);
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(postCommentMapper.selectList(wrapper));
+    return result;
+  }
+
+  // 查询个人组局评论
+  public Result<List<PartyComment>> PartyCommentList(Long id) {
+
+    Result<List<PartyComment>> result = new Result<>();
+
+    QueryWrapper<PartyComment> wrapper = new QueryWrapper<>();
+    wrapper.eq("id_from", id);
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(partyCommentMapper.selectList(wrapper));
+    return result;
+  }
+
+  // 删除个人帖子评论
+  public Result<Integer> PostCommentDeleted(Long id) {
+
+    Result<Integer> result = new Result<>();
+
+    if (id == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_POST_COMMENT_ID_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_POST_COMMENT_ID_NULL").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断数据库是否存在这条评论
+    PostComment postComment = postCommentMapper.selectById(id);
+    if (postComment == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_POST_COMMENT_DELETED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_POST_COMMENT_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(postCommentMapper.deleteById(id));
+    return result;
+  }
+
+  // 删除个人组局评论
+  public Result<Integer> PartyCommentDeleted(Long id) {
+
+    Result<Integer> result = new Result<>();
+
+    if (id == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_PARTY_COMMENT_ID_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_PARTY_COMMENT_ID_NULL").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断数据库是否存在这条评论
+    PartyComment partyComment = partyCommentMapper.selectById(id);
+    if (partyComment == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_PARTY_COMMENT_DELETED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_PARTY_COMMENT_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(partyCommentMapper.deleteById(id));
     return result;
   }
 }
