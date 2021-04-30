@@ -35,6 +35,10 @@ public enum ExceptionInfo {
   USER_NOT_BIRTHDAY(6012, "用户出生日期不合法"),
   USER_POST_ID_NULL(6013, "个人帖子ID为空"),
   USER_POST_DELETED(6014, "不存在此条帖文"),
+  USER_POST_COMMENT_ID_NULL(6015,"个人帖文评论ID为空"),
+  USER_POST_COMMENT_DELETED(6016,"不存在此条帖文评论"),
+  USER_PARTY_COMMENT_ID_NULL(6017,"个人组局评论ID为空"),
+  USER_PARTY_COMMENT_DELETED(6018,"不存在此条组局评论"),
   ;
 
   private Integer code;

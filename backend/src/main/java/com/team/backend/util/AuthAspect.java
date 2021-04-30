@@ -1,5 +1,6 @@
 package com.team.backend.util;
 
+import com.team.backend.model.Admin;
 import com.team.backend.model.User;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,6 +29,18 @@ public class AuthAspect {
       Field f=clazz.getDeclaredField("user");
       f.setAccessible(true);
       User user=(User)session.getAttribute("user");
+      f.set(obj, user);
+
+    } catch (NoSuchFieldException | IllegalAccessException e) {}
+  }
+  @Before("execution(* com.team.backend.controller.AdminController.*(..))")
+  public void setAdmin(JoinPoint pjp){
+    Object obj = pjp.getTarget();
+    Class clazz=obj.getClass();
+    try {
+      Field f=clazz.getDeclaredField("admin");
+      f.setAccessible(true);
+      Admin user=(Admin)session.getAttribute("admin");
       f.set(obj, user);
 
     } catch (NoSuchFieldException | IllegalAccessException e) {}
