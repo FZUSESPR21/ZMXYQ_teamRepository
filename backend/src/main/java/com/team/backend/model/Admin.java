@@ -50,6 +50,12 @@ public class Admin implements Serializable {
 
   @ApiModelProperty(value = "头像")
   private String adminIconUrl;
+  public Admin(String nickname,String password){
+    this.nickname = nickname;
+    this.password = password;
+    this.deleted = 0;
+    this.adminIconUrl = "/favicon.ico";
+  }
 
 
 }
