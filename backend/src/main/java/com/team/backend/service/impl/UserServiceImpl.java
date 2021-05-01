@@ -2,11 +2,14 @@ package com.team.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.backend.exception.ExceptionInfo;
+import com.team.backend.mapper.BlackListMapper;
 import com.team.backend.mapper.PartyCommentMapper;
 import com.team.backend.mapper.PostCommentMapper;
 import com.team.backend.mapper.PostEyeOnMapper;
 import com.team.backend.mapper.PostMapper;
+import com.team.backend.model.BlackList;
 import com.team.backend.model.PartyComment;
+import com.team.backend.model.PersonalBlackItem;
 import com.team.backend.model.PersonalCollection;
 import com.team.backend.model.Post;
 import com.team.backend.model.PostComment;
@@ -52,6 +55,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Autowired
   PostEyeOnMapper postEyeOnMapper;
+
+  @Autowired
+  BlackListMapper blackListMapper;
 
   // 用户上传图片
   public Result<String> identifyImg(File file) throws IOException {
@@ -397,7 +403,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   }
 
   // 删除个人收藏
-  public Result<Integer> deleteCollection(Long id){
+  public Result<Integer> deleteCollection(Long id) {
 
     Result<Integer> result = new Result<>();
 
@@ -422,5 +428,59 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setData(postEyeOnMapper.deleteById(id));
     return result;
   }
+
+  // 查询黑名单
+  public Result<List<PersonalBlackItem>> listBlack(Long id) {
+
+    Result<List<PersonalBlackItem>> result = new Result<>();
+    List<PersonalBlackItem> blackItemList = new LinkedList<>();
+
+    QueryWrapper<BlackList> wrapper = new QueryWrapper<>();
+
+    wrapper.eq("user_id", id);
+    List<BlackList> blackLists = blackListMapper.selectList(wrapper);
+    for (BlackList blackList : blackLists) {
+      PersonalBlackItem blackItem = new PersonalBlackItem();
+      blackItem.setId(blackList.getId());
+      blackItem.setBeUserId(blackList.getBeUserId());
+      User user = userMapper.selectById(blackList.getBeUserId());
+      blackItem.setIconUrl(user.getUserIconUrl());
+      blackItem.setNickName(user.getUsername());
+      blackItemList.add(blackItem);
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(blackItemList);
+    return result;
+  }
+
+  // 删除黑名单
+  public Result<Integer> deleteBlack(Long id) {
+
+    Result<Integer> result = new Result<>();
+
+    if (id == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_BLACK_ID_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_BLACK_ID_NULL").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断数据库是否存在这条黑名单
+    BlackList blackList = blackListMapper.selectById(id);
+    if (blackList == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_BLACK_DELETED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_BLACK_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(blackListMapper.deleteById(id));
+    return result;
+  }
+
 
 }
