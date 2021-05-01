@@ -35,6 +35,7 @@ public class Admin implements Serializable {
 
   @ApiModelProperty(value = "逻辑删除")
   @TableLogic
+  @TableField(fill = FieldFill.INSERT)
   private Integer deleted;
 
   @ApiModelProperty(value = "管理员ID")

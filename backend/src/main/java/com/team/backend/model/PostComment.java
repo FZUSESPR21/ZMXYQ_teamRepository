@@ -43,6 +43,7 @@ public class PostComment implements Serializable {
 
   @ApiModelProperty(value = "逻辑删除")
   @TableLogic
+  @TableField(fill = FieldFill.INSERT)
   private Integer deleted;
 
   @ApiModelProperty(value = "所属评论ID，外键")

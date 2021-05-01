@@ -43,6 +43,7 @@ public class PostType implements Serializable {
 
   @ApiModelProperty(value = "逻辑删除")
   @TableLogic
+  @TableField(fill = FieldFill.INSERT)
   private Integer deleted;
 
   @ApiModelProperty(value = "帖子类型父类ID，外键")
