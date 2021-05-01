@@ -27,9 +27,19 @@
               width="160">
             </el-table-column>
             <el-table-column
-              prop="imageUrls"
               label="校园卡图片"
               width="500">
+              <template slot-scope="scope">
+                <el-image
+                  :src="scope.row.imageUrls"
+                  fit="contain"
+                  lazy
+                >
+                <div slot="error" class="image-slot">
+                  <span>无图片</span>
+                </div>
+                </el-image>
+              </template>
             </el-table-column>
             <el-table-column
               label="操作"
@@ -72,11 +82,21 @@ export default {
     };
   },
   created() {
-    this.myData = [
+    this.getData();
+  },
+  methods: {
+    unPass(id, index){
+        this.myData.splice(index,1);
+    },
+    pass(id, index){
+        this.myData.splice(index,1);
+    },
+    getData(){
+        this.myData = [
           {           
           "userID":"12345",           
           "userName":"阿伟",           
-          "imageUrls":"图片路径1", 
+          "imageUrls":"https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG",
           "gmtCreate":"2021/4/28 18:00:01"         
           },  
           {           
@@ -127,14 +147,7 @@ export default {
           "imageUrls":"图片路径1", 
           "gmtCreate":"2021/4/28 18:00:01"         
           }
-    ]
-  },
-  methods: {
-    unPass(id, index){
-        this.myData.splice(index,1);
-    },
-    pass(id, index){
-        this.myData.splice(index,1);
+      ]
     },
     //以下方法为实现分页功能
       handleSizeChange(val) {
