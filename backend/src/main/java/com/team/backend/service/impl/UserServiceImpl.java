@@ -396,4 +396,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     return result;
   }
 
+  // 删除个人收藏
+  public Result<Integer> deleteCollection(Long id){
+
+    Result<Integer> result = new Result<>();
+
+    if (id == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_COLLECTION_ID_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_COLLECTION_ID_NULL").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断数据库是否存在这条收藏
+    PostEyeOn postEyeOn = postEyeOnMapper.selectById(id);
+    if (postEyeOn == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_COLLECTION_DELETED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_COLLECTION_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(postEyeOnMapper.deleteById(id));
+    return result;
+  }
+
 }

@@ -40,6 +40,8 @@ public enum ExceptionInfo {
   USER_PARTY_COMMENT_ID_NULL(6017, "个人组局评论ID为空"),
   USER_PARTY_COMMENT_DELETED(6018, "不存在此条组局评论"),
   USER_NOT_EXISTED(6019, "用户不存在"),
+  USER_COLLECTION_ID_NULL(6020,"收藏ID为空"),
+  USER_COLLECTION_DELETED(6021,"不存在此条个人收藏"),
   ;
 
   private Integer code;
