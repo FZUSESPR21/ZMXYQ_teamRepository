@@ -273,4 +273,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setData(partyCommentMapper.deleteById(id));
     return result;
   }
+
+  // 查询个人信息
+  public Result<User> queryUser(Long id){
+
+    Result<User> result = new Result<>();
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    User user = userMapper.selectById(id);
+    result.setData(user);
+    return result;
+  }
 }
