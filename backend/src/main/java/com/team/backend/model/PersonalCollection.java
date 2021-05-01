@@ -29,6 +29,9 @@ public class PersonalCollection implements Serializable {
   @ApiModelProperty(value = "发帖人用户名/昵称")
   private String nickName;
 
+  @ApiModelProperty(value = "发帖人头像地址")
+  private String iconUrl;
+
   @ApiModelProperty(value = "帖子内容")
   private String postContent;
 

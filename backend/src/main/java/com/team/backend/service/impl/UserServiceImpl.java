@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.mapper.PartyCommentMapper;
 import com.team.backend.mapper.PostCommentMapper;
+import com.team.backend.mapper.PostEyeOnMapper;
 import com.team.backend.mapper.PostMapper;
 import com.team.backend.model.PartyComment;
+import com.team.backend.model.PersonalCollection;
 import com.team.backend.model.Post;
 import com.team.backend.model.PostComment;
+import com.team.backend.model.PostEyeOn;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
 import com.team.backend.mapper.UserMapper;
@@ -17,6 +20,7 @@ import com.team.backend.util.UserLegal;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
@@ -45,6 +49,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Autowired
   PartyCommentMapper partyCommentMapper;
+
+  @Autowired
+  PostEyeOnMapper postEyeOnMapper;
 
   // 用户上传图片
   public Result<String> identifyImg(File file) throws IOException {
@@ -357,6 +364,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(userMapper.updateById(user));
+    return result;
+  }
+
+  // 查询个人收藏
+  public Result<List<PersonalCollection>> listCollection(Long id) {
+
+    Result<List<PersonalCollection>> result = new Result<>();
+    List<PersonalCollection> collectionList = new LinkedList<>();
+
+    QueryWrapper<PostEyeOn> wrapper = new QueryWrapper<>();
+
+    wrapper.eq("id_from", id);
+    List<PostEyeOn> postEyeOns = postEyeOnMapper.selectList(wrapper);
+    for (PostEyeOn postEyeOn : postEyeOns) {
+      PersonalCollection collection = new PersonalCollection();
+      collection.setId(postEyeOn.getId());
+      collection.setPostId(postEyeOn.getPostId());
+      Post post = postMapper.selectById(postEyeOn.getPostId());
+      User user = userMapper.selectById(post.getPublisherId());
+      collection.setNickName(user.getUsername());
+      collection.setIconUrl(user.getUserIconUrl());
+      collection.setPostContent(post.getMessage());
+      collection.setPostTime(post.getGmtCreate());
+      collectionList.add(collection);
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(collectionList);
     return result;
   }
 
