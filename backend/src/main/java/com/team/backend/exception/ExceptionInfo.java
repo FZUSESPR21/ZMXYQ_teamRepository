@@ -44,8 +44,9 @@ public enum ExceptionInfo {
   USER_COLLECTION_DELETED(6022, "不存在此条个人收藏"),
   USER_BLACK_ID_NULL(6023, "黑名单ID为空"),
   USER_BLACK_DELETED(6024, "不存在此条黑名单记录"),
-  USER_TREE_HOLE_NULL(6025,"树洞内容为空"),
-
+  USER_TREE_HOLE_NULL(6025, "树洞内容为空"),
+  USER_TREE_HOLE_DELETED(6026, "不存在此条树洞记录"),
+  USER_TREE_HOLE_ID_NULL(6027, "树洞ID为空"),
   ;
 
   private Integer code;
