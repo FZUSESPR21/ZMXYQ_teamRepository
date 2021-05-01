@@ -66,6 +66,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     return result;
   }
 
+  // 提交用户验证信息
   public Result<Integer> identifyUser(User user) {
 
     Result<Integer> result = new Result<>();
@@ -275,7 +276,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   }
 
   // 查询个人信息
-  public Result<User> queryUser(Long id){
+  public Result<User> queryUser(Long id) {
 
     Result<User> result = new Result<>();
 
@@ -285,4 +286,78 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setData(user);
     return result;
   }
+
+  // 修改个人信息
+  public Result<Integer> updateUser(User user) {
+
+    Result<Integer> result = new Result<>();
+    UserLegal userLegal = new UserLegal();
+    String msg = userLegal.idLegal(user.getId());
+
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户是否不存在
+    User sqlUser = userMapper.selectById(user.getId());
+    if (sqlUser == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_EXISTED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_EXISTED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户名是否合法
+    msg = userLegal.usernameLegal(user.getUsername());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    msg = userLegal.urlLegal(user.getUserIconUrl());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断学校名是否合法
+    msg = userLegal.schoolLegal(user.getSchool());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户性别合法性
+    msg = userLegal.sexLegal(user.getSex());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户出生日期合法性
+    msg = userLegal.birthdayLegal(user.getBirthday());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(userMapper.updateById(user));
+    return result;
+  }
+
 }
