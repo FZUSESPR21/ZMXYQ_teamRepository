@@ -37,7 +37,6 @@
   局长
 </view>
     </view>
-
   </view>
   </view>
   <view class="party-comment-list">
@@ -46,19 +45,7 @@
     class="comment-list-scroll"
     scroll-y="true" bindscroll="onScroll" bindscrolltoupper="onTopRefresh"
     bindscrolltolower="onBottomRefresh">
-    <view style="comment-view" wx:for="{{partyCommentList}}">
-      <view>
-        <view
-      class="user-message">
-      <van-image round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg">
-      </van-image>
-      <text style="position: relative; left: 26rpx; top: -62rpx">文本</text>
-      <text style="position: relative; left: -38rpx; top: -8rpx">时间</text>
-    </view>
-     <text>content</text>
-      </view>
-    
-    </view>
+    <v-comment></v-comment>
 </scroll-view>
 </view>
 </view>

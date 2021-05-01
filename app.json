@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/party/create_party/createparty",
     "pages/party/partydetailpage/partydetailpage",
+    "pages/party/create_party/createparty",
     "pages/post/index/index",
     "pages/message/index/index",
     "pages/add_post/index/index",
@@ -27,7 +27,8 @@
     "van-cell": "@vant/weapp/cell/index",
   "van-cell-group": "@vant/weapp/cell-group/index",
   "van-switch": "@vant/weapp/switch/index",
-  "van-uploader": "@vant/weapp/uploader/index"
+  "van-uploader": "@vant/weapp/uploader/index",
+  "v-comment":"/components/v-comment/v-comment"
   },
   "tabBar": {
     "list": [
