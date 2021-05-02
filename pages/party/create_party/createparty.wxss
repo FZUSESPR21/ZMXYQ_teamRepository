@@ -149,7 +149,7 @@ page{
 }
 .create-button{
   margin-top: 50rpx;
-  background-color: #fff;
+  background-color: #C5CAE9;
   border-radius: 0.4rem;
   box-shadow: 2rpx 2rpx gray ;
   margin-bottom: 50rpx;

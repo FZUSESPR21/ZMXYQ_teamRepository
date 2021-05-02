@@ -11,5 +11,10 @@ Page({
     wx.navigateTo({
       url: '../my_party/my_party'
     })
+  },
+  createparty:function(){
+    wx.navigateTo({
+      url: '../create_party/createparty.wxml'
+    })
   }
 })

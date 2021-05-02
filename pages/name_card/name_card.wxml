@@ -1,0 +1,16 @@
+<!--pages/name_card/name_card.wxml-->
+<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" > 
+        <view class="card-item">
+            <view class="card-source">
+                <a>
+                    <view class="avatar">
+                        <image src="../../images/smile.png"></image>
+                    </view>
+                    <text class="v-name">昵称</text>
+                    <text class="v-time">时间</text>
+                </a>
+                <image class="item-more" mode="aspectFit" src="../../images/更多.png"></image>    
+            </view>
+        </view>
+</scroll-view> 
+

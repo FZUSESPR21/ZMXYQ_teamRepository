@@ -1,0 +1,31 @@
+<view class="main">
+<view class="comment-area">
+<view class="parentComment-view" wx:for="{{parentComments}}">
+  <van-image
+  round
+  width="2.5rem"
+  height="2.5rem"
+  src="https://img.yzcdn.cn/vant/cat.jpeg"
+  class="comment-publisher-view-head"
+/>
+<view class="comment-content-view">
+  <view class="comment-publisher-view-message">
+  <view class="comment-publisher-view-message-name">1</view>
+  <view class="comment-publisher-view-message-time">2</view>
+</view>
+<view class="comment-content-view-text">你们好</view>
+<view class="comment-content-more"> 
+  <view  wx:if="{{hasMoreComments}}" bindtap="showMoreContents" class="comment-content-more-button">
+    {{moreButtonContent}}<image src="../../static/icons/down arrow.png" class="down"></image>
+  </view>
+  <view wx:if="{{hasMoreComments}}" class="more-comment-view" wx:for="{{childComments}}">
+    {{item}}
+  </view>
+ </view>
+</view>
+
+ 
+
+</view>
+</view>
+</view>
