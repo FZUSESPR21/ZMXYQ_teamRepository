@@ -1,0 +1,40 @@
+.post_main{
+    padding: 0 25rpx;
+}
+
+.post_item{
+    margin: 15rpx 0;
+    border-bottom: 1rpx solid rgba(206, 198, 198, 0.55);
+}
+
+.post_item .txt{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.user{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.content{
+    font-size: 30rpx;
+}
+
+.nickname{
+    color: #696969;
+    font-size: 25rpx;
+}
+
+.time{
+    color: #afafaf;
+    font-size: 24rpx;
+}
+
+.info{
+    display: flex;
+    padding-top: 20rpx;
+    justify-content: space-between;
+}
