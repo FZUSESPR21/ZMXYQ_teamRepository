@@ -28,6 +28,7 @@
   "van-cell-group": "@vant/weapp/cell-group/index",
   "van-switch": "@vant/weapp/switch/index",
   "van-uploader": "@vant/weapp/uploader/index",
+  "van-notify": "@vant/weapp/notify/index",
   "v-comment":"/components/v-comment/v-comment"
   },
   "tabBar": {
