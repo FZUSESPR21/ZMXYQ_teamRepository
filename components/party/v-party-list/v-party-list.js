@@ -8,9 +8,6 @@ Component({
   },
 
   /**
-   * 组件的初始数据
-   */
-  /**
    * 页面的初始数据
    */
   data: {
@@ -39,92 +36,50 @@ Component({
       { text: '其他', value: 8 },
     ],
     value1: -2,
-    partyList: [  
-      {
-              "partyID" : 123,
-              "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
-              "publisher": {
-                  "username": "张三",
-                  "sex":"男"
-              },
-              "peopleCnt": 6,
-              "nowPeopleCnt": 3,
-              "partyType": "组局",
-              "gmtCreate": "1h前"
-    },{
-      "partyID" : 123,
-      "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
-      "publisher": {
-          "username": "张三",
-                          "sex":"男"
-      },
-      "peopleCnt": 6,
-      "nowPeopleCnt": 3,
-      "partyType": "组局",
-      "gmtCreate": "1h前"
-},{
-  "partyID" : 123,
-  "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
-  "publisher": {
-      "username": "张三",
-                      "sex":"男"
-  },
-  "peopleCnt": 6,
-  "nowPeopleCnt": 3,
-  "partyType": "组局",
-  "gmtCreate": "1h前"
-},{
-  "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
-  "publisher": {
-      "username": "张三",
-      "sex":"男"
-  },
-  "peopleCnt": 6,
-  "nowPeopleCnt": 3,
-  "partyType": "组局",
-  "gmtCreate": "1h前"
-}
-],
-one:{
-  "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
-  "publisher": {
-      "username": "张三",
-      "sex":"男"
-  },
-  "peopleCnt": 6,
-  "nowPeopleCnt": 3,
-  "partyType": "组局",
-  "gmtCreate": "1h前"
+    partyList: [],
 },
 
-},
-
-
- /*监听数据变化*/
- observers:  {
-   'value1': function(){
-    //选择发生了变化，改变列表展示得内容
-   } 
- },
+    attached: function () {
+    for(let i = 0; i < 10; i++)
+    {
+      let partyList = this.data.partyList;
+      partyList.push({
+        "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
+        "publisher": {
+            "username": "张三",
+            "sex":"男"
+        },
+        "peopleCnt": 6,
+        "nowPeopleCnt": 3,
+        "partyType": "组局",
+        "gmtCreate": "1h前"
+      });
+      this.setData({
+        partyList
+      })
+     }    
+  },
 
   /**
    * 组件的方法列表
    */
   methods: {
     onChange: function ({detail}) {
-      this.setData({
-        value1 : detail
-      });
       let partyList = this.data.partyList;
-      partyList.push(this.data.one);
-      partyList.push(this.data.one);
-      partyList.push(this.data.one);
-      partyList.push(this.data.one);
-      partyList.push(this.data.one);
-      partyList.push(this.data.one);
+      partyList.push({
+        "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
+        "publisher": {
+            "username": "张三",
+            "sex":"男"
+        },
+        "peopleCnt": 6,
+        "nowPeopleCnt": 3,
+        "partyType": "组局",
+        "gmtCreate": "1h前"
+      });
       this.setData({
         partyList
-      })
+      });
      }
   }
 })
