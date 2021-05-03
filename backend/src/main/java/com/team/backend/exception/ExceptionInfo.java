@@ -25,7 +25,7 @@ public enum ExceptionInfo {
   USER_ID_BELOW0(6003, "用户ID小于0"),
   USER_ID_EXISTED(6004, "用户ID已存在"),
   USER_NAME_NULL(6005, "用户名为空"),
-  USER_NAME_LENGTH(6006, "用户名长度大于20个字节"),
+  USER_NAME_LENGTH(6006, "用户名超过15个字符"),
   USER_NOT_URL(6007, "url不合法"),
   USER_SCHOOL_NULL(6008, "学校为空"),
   USER_SCHOOL_LENGTH(6009, "学校名字大于50个字节"),

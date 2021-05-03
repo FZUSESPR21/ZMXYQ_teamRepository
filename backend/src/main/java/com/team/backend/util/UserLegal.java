@@ -43,7 +43,7 @@ public class UserLegal {
       return "USER_NAME_NULL";
     }
     // 用户名长度过长
-    if (username.length() > 20) {
+    if (username.length() > 15) {
       return "USER_NAME_LENGTH";
     }
 
