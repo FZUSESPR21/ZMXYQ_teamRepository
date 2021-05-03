@@ -1,20 +1,18 @@
 <page>
-    <view class="search-image" bindtap="searchParty"> 
+    <view class="search-image"> 
       <van-image
         round
         width="100rpx"
         height="100rpx"
         src="/static/icons/search.png"
-        
+        catchtap="searchParty"
       />
     </view>
 
     <view class="my-buttons">
-      <van-button round icon="friends" color="linear-gradient(to right, #4bb0ff, #6149f6)" custom-class = "button-style" bindtap="goToMyParty">我的组局</van-button>
-      <van-button round icon="/static/icons/add_party.png"  color="linear-gradient(to right, #ff9999, #ff0000)" custom-class = "button-style" bindtap="createParty">发起组局</van-button>
+        <van-button round icon="friends" color="linear-gradient(to right, #4bb0ff, #6149f6)" custom-class = "button-style" bindtap="goToMyParty">我的组局</van-button>
+        <van-button round icon="/static/icons/add_party.png"  color="linear-gradient(to right, #ff9999, #ff0000)" custom-class = "button-style" bindtap="createParty">发起组局</van-button>
     </view>
 
-    <view class="party-list" bindtap="jjj">
       <v-party-list></v-party-list>
-    </view>
 </page>

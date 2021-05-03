@@ -10,9 +10,9 @@ page{
   background-color: #ffe680;
 }
 
-.party-list{
+/* .party-list{
   z-index: 0;
-}
+} */
 
 .my-buttons{
   position: fixed;
@@ -28,9 +28,9 @@ page{
 }
 
 .search-image{
-  position:fixed;
-  z-index:1;
-  bottom:50rpx;
-  left:600rpx;
+  position: fixed;
+  z-index: 2;
+  bottom: 50rpx;
+  left: 600rpx;
 }
 
