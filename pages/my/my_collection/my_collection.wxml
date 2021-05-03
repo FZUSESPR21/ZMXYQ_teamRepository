@@ -1,0 +1,21 @@
+<view class="post_main">
+    <navigator class="post_item" wx:for="{{5}}"
+               bindtouchstart="handleTouchStart"
+               bindtouchend="handleTouchEnd"
+               bindlongpress="handleLongPress"
+               bindtap="handleClick">
+        <view class="txt">
+            <view class="content">
+                这是贴文内容这是贴文内容这是贴文内容这是贴文内容这是贴文内容这是贴文内容。
+            </view>
+            <view class="info">
+                <view class="user">
+                    <van-image round width="1.2rem" height="1.2rem" src="https://img.yzcdn.cn/vant/cat.jpeg"></van-image>
+                    <view class="nickname">Camouflage</view>
+                </view>
+
+                <view class="time">24分钟前</view>
+            </view>
+        </view>
+    </navigator>
+</view>

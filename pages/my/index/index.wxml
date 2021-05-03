@@ -1,2 +1,76 @@
-<!--pages/my/index/index.wxml-->
-<text>pages/my/index/index.wxml</text>
+<view class="wrap">
+<view class="my-wrap">
+    <view class="head">
+    <van-image class="head-image" round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg"></van-image>
+    <view class="head-z">
+        <view class="head-name"><text>Camouflage</text></view>
+        <view class="head-school"><text>福州大学</text></view>
+    </view>
+    </view>
+
+    <view class="body">
+    <view class="rpz">
+        <text>人品值</text>
+        <text class="number">619</text>
+    </view>
+
+    <view class="tz">
+        <text>帖子</text>
+        <text class="number">1</text>
+    </view>
+
+    <view class="sc">
+        <text>收藏</text>
+        <text class="number">0</text>
+    </view>
+
+    <view class="pl">
+        <text>评论</text>
+        <text class="number">200</text>
+    </view>
+    </view>
+</view>
+
+<view>
+    <van-cell-group style="margin:20rpx">
+<!--        <van-cell title="单元格" value="内容" />-->
+<!--        <van-cell title="单元格" is-link value="内容" arrow-direction="down" />-->
+<!--        <van-cell title="单元格" value="内容" label="描述信息" border="{{ false }}" />-->
+        <van-cell icon="shop" border is-link >
+            <view slot="title">
+                <view class="van-cell-text">社区规范</view>
+            </view>
+        </van-cell>
+        <van-cell icon="shop" border is-link >
+            <view slot="title">
+                <view class="van-cell-text">我的树洞</view>
+            </view>
+        </van-cell>
+        <van-cell icon="shop" border is-link >
+            <view slot="title">
+                <view class="van-cell-text">邀请校友</view>
+            </view>
+        </van-cell>
+<!--        <van-cell center title="单元格" value="内容" label="描述信息" />-->
+<!--        <van-cell title="单元格">-->
+<!--            <van-icon slot="right-icon" name="search" class="custom-icon" />-->
+<!--        </van-cell>-->
+    </van-cell-group>
+    <van-cell-group style="margin:20rpx">
+        <van-cell icon="shop" border is-link >
+            <view slot="title">
+                <view class="van-cell-text">拉黑列表</view>
+            </view>
+        </van-cell>
+    </van-cell-group>
+
+    <van-cell-group>
+        <van-cell icon="shop" border is-link >
+            <view slot="title">
+                <view class="van-cell-text">意见反馈</view>
+            </view>
+        </van-cell>
+    </van-cell-group>
+
+</view>
+</view>
