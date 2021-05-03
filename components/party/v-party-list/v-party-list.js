@@ -117,6 +117,11 @@ one:{
       });
       let partyList = this.data.partyList;
       partyList.push(this.data.one);
+      partyList.push(this.data.one);
+      partyList.push(this.data.one);
+      partyList.push(this.data.one);
+      partyList.push(this.data.one);
+      partyList.push(this.data.one);
       this.setData({
         partyList
       })

@@ -1,9 +1,17 @@
 <page>
-  <view class="party-index">
+    <view class="search-image"> 
+      <van-image
+        round
+        width="100rpx"
+        height="100rpx"
+        src="/static/icons/search.png"
+      />
+    </view>
     <view class="my-buttons">
       <van-button round icon="friends" color="linear-gradient(to right, #4bb0ff, #6149f6)" custom-class = "button-style" bindtap="goToMyParty">我的组局</van-button>
       <van-button round icon="/static/icons/add_party.png"  color="linear-gradient(to right, #ff9999, #ff0000)" custom-class = "button-style" bindtap="createParty">发起组局</van-button>
     </view>
-    <v-party-list></v-party-list>
-  </view>
+    <view class="party-list">
+      <v-party-list></v-party-list>
+    </view>
 </page>

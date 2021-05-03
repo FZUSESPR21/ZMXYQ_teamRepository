@@ -6,10 +6,23 @@ page,view,text,swiper,swiper-item,image,navigator,button{
 }
 
 page{
+  position: relative;
   background-color: #ffe680;
 }
 
+.party-list{
+  z-index: 0;
+}
+
 .button-style {
-  margin: 30rpx;
+  margin:  20rpx 35rpx;
   width: 300rpx;
 }
+
+.search-image{
+  position:fixed;
+  z-index:1;
+  top:750rpx;
+  left:600rpx;
+}
+
