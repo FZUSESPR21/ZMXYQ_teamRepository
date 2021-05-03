@@ -30,7 +30,7 @@ page{
 .search-image{
   position:fixed;
   z-index:1;
-  top:750rpx;
+  bottom:50rpx;
   left:600rpx;
 }
 
