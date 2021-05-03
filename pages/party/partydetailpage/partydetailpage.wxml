@@ -17,8 +17,8 @@
       大家好你们好
     </view>
     <view class="party-detail-operation">
-      <view class="joinbutton">加入拼局</view>
-    <view class="share-button"><text class="iconfont icon-share"></text></view>
+      <view class="joinbutton" bindtap="joinparty">加入拼局</view>
+      <van-notify id="van-notify" />
     </view>
   </view>
 <view class="partymemberview">
