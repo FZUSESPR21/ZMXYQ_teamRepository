@@ -12,9 +12,9 @@ Page({
       url: '../my_party/my_party'
     })
   },
-  createparty:function(){
+  createParty:function(){
     wx.navigateTo({
-      url: '../create_party/createparty.wxml'
+      url: '../create_party/createparty'
     })
   }
 })
