@@ -1,0 +1,27 @@
+<view class="wrap">
+<van-cell title="头像" is-link center border title-class="title">
+    <view>
+        <image class="img" src="https://img.yzcdn.cn/vant/cat.jpeg"></image>
+    </view>
+</van-cell>
+
+<van-cell
+        title-class="title"
+        value-class="value"
+        is-link
+        title="昵称"
+        value="Camouflage"
+        link-type="navigateTo"
+        url="/pages/dashboard/index"
+/>
+
+<van-cell
+        class="change"
+        title-class="title"
+        is-link
+        title="修改个人资料卡片"
+        link-type="navigateTo"
+        url="/pages/dashboard/index"
+/>
+</view>
+<!--        {{imageURL}}-->

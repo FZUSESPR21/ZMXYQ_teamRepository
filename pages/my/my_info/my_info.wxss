@@ -1,0 +1,23 @@
+.wrap{
+    background-color: #f6f7f9;
+}
+
+.img{
+    width:140rpx;
+    height:140rpx;
+    border-radius: 5%;
+}
+
+.title{
+    color: black;
+    font-weight: bold;
+}
+
+.value{
+    color: #888888;
+    font-size: 25rpx;
+}
+
+.change{
+    background-color: white;
+}
