@@ -9,7 +9,8 @@
       <!-- 下拉框结束 -->
 
       <!-- 组局列表开始 -->
-      <scroll-view scroll-y>
+      <view class="list">
+        <scroll-view scroll-y>
         <v-party-item wx:for="{{partyList}}" 
           partyID = "{{item.aprtyID}}"
           partyType = "{{item.partyType}}"
@@ -21,5 +22,6 @@
           nowPeopleCnt = "{{item.nowPeopleCnt}}">
         </v-party-item>
       </scroll-view>
+      </view>
       <!-- 组局列表结束 -->
   </view>
