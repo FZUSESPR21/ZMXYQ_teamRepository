@@ -86,6 +86,11 @@ export default {
   },
   methods: {
     unPass(id, index){
+                this.axios.get('http://ccreater.top:61234/api/admin/post').then((response)=>{
+            console.log(response.data);
+      }).catch((response)=>{
+        console.log(response);
+      });
         this.myData.splice(index,1);
     },
     pass(id, index){
@@ -171,7 +176,5 @@ export default {
 .box-card{
   max-height: 100%;
 }
-
-
 
 </style>

@@ -23,7 +23,6 @@ export default {
   created() {},
   methods: {
     handleSelect(key, keyPath) {
-        console.log(key, keyPath);
     }
     }
 };
