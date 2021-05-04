@@ -48,6 +48,9 @@ public class Party implements Serializable {
   @ApiModelProperty(value = "图片url链接")
   private String imageUrls;
 
+  @ApiModelProperty(value = "组局审核")
+  private Integer status;
+
   @ApiModelProperty(value = "创建时间")
   @TableField(fill = FieldFill.INSERT)
   private Date gmtCreate;

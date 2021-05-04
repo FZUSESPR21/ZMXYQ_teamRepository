@@ -104,4 +104,5 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     updateById(admin);
     return true;
   }
+
 }
