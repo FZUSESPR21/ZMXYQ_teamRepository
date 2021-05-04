@@ -67,14 +67,28 @@ public class UserLegal {
     return "OK";
   }
 
-  // 判断url的合法性
-  public String urlLegal(String url) {
+  // 判断头像url的合法性
+  public String iconUrlLegal(String url) {
     if (url != null && url != "") {
       Pattern pattern = Pattern.compile(
           "^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
       if (!pattern.matcher(url).matches()) {
         return "USER_NOT_URL";
       }
+    }
+
+    return "OK";
+  }
+
+  // 判断证件照url的合法性
+  public String imgUrlLegal(String url) {
+    if (url == null || url == "") {
+      return "USER_IMG_URL_NULL";
+    }
+    Pattern pattern = Pattern.compile(
+        "^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
+    if (!pattern.matcher(url).matches()) {
+      return "USER_NOT_IMG_URL";
     }
 
     return "OK";
@@ -110,78 +124,12 @@ public class UserLegal {
 
     // 判断性别值是否为0或1
     if (sex != null) {
-      if (sex != 0 && sex != 1) {
+      if (sex != 0 && sex != 1 && sex != 2) {
         return "USER_SEX_LEGAL";
       }
     }
 
     return "OK";
   }
-
-  // 判断用户出生日期合法性
-  public String birthdayLegal(Date date){
-
-    // 判断出生日期是否为空
-    if (date==null){
-      return "USER_BIRTHDAY_NULL";
-    }
-
-    // 判断日期是否合法
-    if (!isDate(date)){
-      return "USER_NOT_BIRTHDAY";
-    }
-
-    return "OK";
-  }
-
-  // 日期合法性函数
-  public boolean isDate(Date date) {
-
-    SimpleDateFormat formater = new SimpleDateFormat();
-    formater.applyPattern("yyyy-MM-dd");
-    String time = formater.format(date);
-    String[] dataSubs = time.split("-");    //以-号为标志，分隔年月日
-
-    int year = Integer.valueOf(dataSubs[0]);
-    int month = Integer.valueOf(dataSubs[1]);
-    int day = Integer.valueOf(dataSubs[2]);
-
-    ///计算闰年的2月份
-    if (dataSubs[0].endsWith("00")) {         //如果年份为100的整数
-      if (year % 400 == 0) {    //能被400整除，即闰年
-        //月份
-        if (month == 2) { //2月份有29号
-          if (day > 0 && day < 30) {
-            return true;
-          }
-        }
-      }
-    } else {
-      if (year % 4 == 0) {  //能被4整除，即闰年
-        //月份
-        if (month == 2) { //2月份有29号
-          if (day > 0 && day < 30) {
-            return true;
-          }
-        }
-      }
-    }
-    //计算平年的各月份
-    if (month == 2) { //2月份无29号
-      if (day > 0 && day < 29) {
-        return true;
-      }
-    } else if (month == 4 || month == 6 || month == 9 || month == 11) {          //4,6,9,11月份
-      if (day > 0 && day < 31) {
-        return true;
-      }
-    } else {                         //剩余的月份
-      if (day > 0 && day < 32) {
-        return true;
-      }
-    }
-    return false;
-  }
-
 
 }
