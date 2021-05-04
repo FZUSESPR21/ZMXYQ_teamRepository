@@ -54,6 +54,7 @@ public class PartyComment implements Serializable {
 
   @ApiModelProperty(value = "逻辑删除")
   @TableLogic
+  @TableField(fill = FieldFill.INSERT)
   private Integer deleted;
 
   @ApiModelProperty(value = "最近一次修改时间")

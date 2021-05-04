@@ -43,6 +43,7 @@ public class PostLike implements Serializable {
 
   @ApiModelProperty(value = "逻辑删除")
   @TableLogic
+  @TableField(fill = FieldFill.INSERT)
   private Integer deleted;
 
   @ApiModelProperty(value = "被赞帖子ID，外键")

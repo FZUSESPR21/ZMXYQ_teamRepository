@@ -2,6 +2,7 @@ package com.team.backend.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -17,7 +18,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "返回前端结果实体类", description = "")
-public class Result<T> {
+public class Result<T> implements Serializable {
 
   @ApiModelProperty(value = "信息代码")
   private Integer code;

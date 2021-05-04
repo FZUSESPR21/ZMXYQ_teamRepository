@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -18,7 +19,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author yangyu
- * @since 2021-04-28
+ * @since 2021-05-02
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -50,7 +51,12 @@ public class Notification implements Serializable {
   private Date gmtModified;
 
   @ApiModelProperty(value = "逻辑删除")
-  private Integer delete;
+  @TableField(fill = FieldFill.INSERT)
+  @TableLogic
+  private Integer deleted;
+
+  @ApiModelProperty(value = "接收消息的用户ID")
+  private Long userId;
 
 
 }

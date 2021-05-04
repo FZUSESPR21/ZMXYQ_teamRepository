@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author yangyu
- * @since 2021-04-28
+ * @since 2021-05-02
  */
 public interface NotificationMapper extends BaseMapper<Notification> {
 

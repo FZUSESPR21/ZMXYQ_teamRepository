@@ -43,6 +43,7 @@ public class PostReward implements Serializable {
 
   @ApiModelProperty(value = "逻辑删除")
   @TableLogic
+  @TableField(fill = FieldFill.INSERT)
   private Integer deleted;
 
   @ApiModelProperty(value = "被赞赏帖子ID，外键")

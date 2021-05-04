@@ -63,9 +63,13 @@ public class GenerateCode {
 
     // 策略配置
     StrategyConfig strategy = new StrategyConfig();
-    strategy.setInclude("admin", "black_list", "notification", "party", "party_comment",
-        "party_participants", "party_type", "post", "post_comment", "post_eye_on", "post_like",
-        "post_reward", "post_type", "private_chat", "report", "tree_hole", "user"); // 设置要映射的表名
+    /**
+     * 数据库表
+     * "admin", "black_list", "notification", "party", "party_comment",
+     *         "party_participants", "party_type", "post", "post_comment", "post_eye_on", "post_like",
+     *         "post_reward", "post_type", "private_chat", "report", "tree_hole", "user"
+     */
+    strategy.setInclude("notification"); // 设置要映射的表名
     strategy.setNaming(NamingStrategy.underline_to_camel);
     strategy.setColumnNaming(NamingStrategy.underline_to_camel);
     strategy.setEntityLombokModel(true); // 自动lombok；
@@ -74,9 +78,11 @@ public class GenerateCode {
     // 自动填充配置
     TableFill gmtCreate = new TableFill("gmt_create", FieldFill.INSERT);
     TableFill gmtModified = new TableFill("gmt_modified", FieldFill.INSERT_UPDATE);
+    TableFill deleted = new TableFill("deleted", FieldFill.INSERT);
     ArrayList<TableFill> tableFills = new ArrayList<>();
     tableFills.add(gmtCreate);
     tableFills.add(gmtModified);
+    tableFills.add(deleted);
     strategy.setTableFillList(tableFills);
 
 //        // 乐观锁

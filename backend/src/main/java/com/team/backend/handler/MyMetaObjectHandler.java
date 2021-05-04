@@ -23,6 +23,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     log.info("start insert fill ....");
     this.setFieldValByName("gmtCreate", new Date(), metaObject);
     this.setFieldValByName("gmtModified", new Date(), metaObject);
+    this.setFieldValByName("deleted", 0, metaObject);
   }
 
   // 更新时的填充策略

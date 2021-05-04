@@ -2,12 +2,18 @@ package com.team.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.backend.exception.ExceptionInfo;
+import com.team.backend.mapper.BlackListMapper;
 import com.team.backend.mapper.PartyCommentMapper;
 import com.team.backend.mapper.PostCommentMapper;
+import com.team.backend.mapper.PostEyeOnMapper;
 import com.team.backend.mapper.PostMapper;
+import com.team.backend.model.BlackList;
 import com.team.backend.model.PartyComment;
+import com.team.backend.model.PersonalBlackItem;
+import com.team.backend.model.PersonalCollection;
 import com.team.backend.model.Post;
 import com.team.backend.model.PostComment;
+import com.team.backend.model.PostEyeOn;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
 import com.team.backend.mapper.UserMapper;
@@ -17,6 +23,7 @@ import com.team.backend.util.UserLegal;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
@@ -46,6 +53,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   @Autowired
   PartyCommentMapper partyCommentMapper;
 
+  @Autowired
+  PostEyeOnMapper postEyeOnMapper;
+
+  @Autowired
+  BlackListMapper blackListMapper;
+
   // 用户上传图片
   public Result<String> identifyImg(File file) throws IOException {
 
@@ -66,6 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     return result;
   }
 
+  // 提交用户验证信息
   public Result<Integer> identifyUser(User user) {
 
     Result<Integer> result = new Result<>();
@@ -273,4 +287,200 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setData(partyCommentMapper.deleteById(id));
     return result;
   }
+
+  // 查询个人信息
+  public Result<User> queryUser(Long id) {
+
+    Result<User> result = new Result<>();
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    User user = userMapper.selectById(id);
+    result.setData(user);
+    return result;
+  }
+
+  // 修改个人信息
+  public Result<Integer> updateUser(User user) {
+
+    Result<Integer> result = new Result<>();
+    UserLegal userLegal = new UserLegal();
+    String msg = userLegal.idLegal(user.getId());
+
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户是否不存在
+    User sqlUser = userMapper.selectById(user.getId());
+    if (sqlUser == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_EXISTED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_EXISTED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户名是否合法
+    msg = userLegal.usernameLegal(user.getUsername());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    msg = userLegal.urlLegal(user.getUserIconUrl());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断学校名是否合法
+    msg = userLegal.schoolLegal(user.getSchool());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户性别合法性
+    msg = userLegal.sexLegal(user.getSex());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断用户出生日期合法性
+    msg = userLegal.birthdayLegal(user.getBirthday());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(userMapper.updateById(user));
+    return result;
+  }
+
+  // 查询个人收藏
+  public Result<List<PersonalCollection>> listCollection(Long id) {
+
+    Result<List<PersonalCollection>> result = new Result<>();
+    List<PersonalCollection> collectionList = new LinkedList<>();
+
+    QueryWrapper<PostEyeOn> wrapper = new QueryWrapper<>();
+
+    wrapper.eq("id_from", id);
+    List<PostEyeOn> postEyeOns = postEyeOnMapper.selectList(wrapper);
+    for (PostEyeOn postEyeOn : postEyeOns) {
+      PersonalCollection collection = new PersonalCollection();
+      collection.setId(postEyeOn.getId());
+      collection.setPostId(postEyeOn.getPostId());
+      Post post = postMapper.selectById(postEyeOn.getPostId());
+      User user = userMapper.selectById(post.getPublisherId());
+      collection.setNickName(user.getUsername());
+      collection.setIconUrl(user.getUserIconUrl());
+      collection.setPostContent(post.getMessage());
+      collection.setPostTime(post.getGmtCreate());
+      collectionList.add(collection);
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(collectionList);
+    return result;
+  }
+
+  // 删除个人收藏
+  public Result<Integer> deleteCollection(Long id) {
+
+    Result<Integer> result = new Result<>();
+
+    if (id == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_COLLECTION_ID_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_COLLECTION_ID_NULL").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断数据库是否存在这条收藏
+    PostEyeOn postEyeOn = postEyeOnMapper.selectById(id);
+    if (postEyeOn == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_COLLECTION_DELETED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_COLLECTION_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(postEyeOnMapper.deleteById(id));
+    return result;
+  }
+
+  // 查询黑名单
+  public Result<List<PersonalBlackItem>> listBlack(Long id) {
+
+    Result<List<PersonalBlackItem>> result = new Result<>();
+    List<PersonalBlackItem> blackItemList = new LinkedList<>();
+
+    QueryWrapper<BlackList> wrapper = new QueryWrapper<>();
+
+    wrapper.eq("user_id", id);
+    List<BlackList> blackLists = blackListMapper.selectList(wrapper);
+    for (BlackList blackList : blackLists) {
+      PersonalBlackItem blackItem = new PersonalBlackItem();
+      blackItem.setId(blackList.getId());
+      blackItem.setBeUserId(blackList.getBeUserId());
+      User user = userMapper.selectById(blackList.getBeUserId());
+      blackItem.setIconUrl(user.getUserIconUrl());
+      blackItem.setNickName(user.getUsername());
+      blackItemList.add(blackItem);
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(blackItemList);
+    return result;
+  }
+
+  // 删除黑名单
+  public Result<Integer> deleteBlack(Long id) {
+
+    Result<Integer> result = new Result<>();
+
+    if (id == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_BLACK_ID_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_BLACK_ID_NULL").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断数据库是否存在这条黑名单
+    BlackList blackList = blackListMapper.selectById(id);
+    if (blackList == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_BLACK_DELETED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_BLACK_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(blackListMapper.deleteById(id));
+    return result;
+  }
+
+
 }
