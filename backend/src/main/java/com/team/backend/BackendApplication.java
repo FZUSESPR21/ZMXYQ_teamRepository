@@ -2,7 +2,9 @@ package com.team.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
+@ServletComponentScan("com.team.backend.filter")
 @SpringBootApplication
 public class BackendApplication {
 
