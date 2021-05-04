@@ -45,7 +45,7 @@
     class="comment-list-scroll"
     scroll-y="true" bindscroll="onScroll" bindscrolltoupper="onTopRefresh"
     bindscrolltolower="onBottomRefresh">
-    <v-comment></v-comment>
+    <v-comment ></v-comment>
 </scroll-view>
 </view>
 </view>

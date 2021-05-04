@@ -1,5 +1,5 @@
 <!--pages/name_card/name_card.wxml-->
-<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" > 
+<!-- <scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" > 
         <view class="card-item">
             <view class="card-source">
                 <a>
@@ -12,5 +12,6 @@
                 <image class="item-more" mode="aspectFit" src="../../images/更多.png"></image>    
             </view>
         </view>
-</scroll-view> 
+</scroll-view> -->
+<v-name-card></v-name-card>
 

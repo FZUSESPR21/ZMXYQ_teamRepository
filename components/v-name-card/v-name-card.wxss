@@ -1,0 +1,74 @@
+/* components/v-name-card.wxss */
+.name-card-view{
+  width: 50%;
+  display: flex;
+}
+.comment-publisher-view-message{
+  display: flex;
+  flex-direction: row;
+}
+.comment-publisher-view-message-name{
+  max-width: 400rpx;
+  overflow: hidden;
+}
+.popup-publisher-detail
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.popup-publisher-head
+{
+  margin-left: 150rpx;
+  margin-top: 50rpx;
+}
+.popup-publisher-detail-message
+{
+  display: flex;
+  flex-direction: row;
+}
+.popup-publisher-detail-message-row{
+  display: flex;
+  flex-direction: column;
+  width: 300rpx;
+  margin-left: 0rpx;
+  margin-top: 50rpx;
+}
+.popup-publisher-detail-message-name
+{
+  font-size: 60rpx;
+}
+.popup-publisher-detail-message-school
+{
+  margin-top: 20rpx;
+}
+.popup-publisher-operation
+{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20rpx;
+}
+.popup-publisher-block
+{
+  width: 200rpx;
+  height: 100rpx;
+  border:2px solid #1a237e;
+  border-radius: 2rem;
+  color:#1a237e ;
+  text-align: center;
+  line-height: 100rpx;
+  font-weight: bold;
+  margin-right: 30rpx;
+}
+.popup-publisher-chat{
+  width: 400rpx;
+  height: 100rpx;
+  border:2px solid #1a237e;
+  border-radius: 2rem;
+  color:#fff ;
+  text-align: center;
+  line-height: 100rpx;
+  font-weight: bold;
+  background-color: #1a237e;
+}
