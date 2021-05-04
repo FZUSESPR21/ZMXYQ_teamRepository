@@ -25,14 +25,14 @@ public enum ExceptionInfo {
   USER_ID_BELOW0(6003, "用户ID小于0"),
   USER_ID_EXISTED(6004, "用户ID已存在"),
   USER_NAME_NULL(6005, "用户名为空"),
-  USER_NAME_LENGTH(6006, "用户名长度大于20个字节"),
-  USER_NOT_URL(6007, "url不合法"),
+  USER_NAME_LENGTH(6006, "用户名超过15个字符"),
+  USER_NOT_URL(6007, "头像url不合法"),
   USER_SCHOOL_NULL(6008, "学校为空"),
   USER_SCHOOL_LENGTH(6009, "学校名字大于50个字节"),
   USER_SCHOOL_CHINESE(6010, "学校名字包含非中文字符"),
   USER_SEX_LEGAL(6011, "性别不合法，只能为0或1"),
-  USER_BIRTHDAY_NULL(6012, "用户出生日期为空"),
-  USER_NOT_BIRTHDAY(6013, "用户出生日期不合法"),
+  USER_IMG_URL_NULL(6012, "证件照url为空"),
+  USER_NOT_IMG_URL(6013, "证件照url不合法"),
   USER_POST_ID_NULL(6014, "个人帖子ID为空"),
   USER_POST_DELETED(6015, "不存在此条帖文"),
   USER_POST_COMMENT_ID_NULL(6016, "个人帖文评论ID为空"),
@@ -47,6 +47,7 @@ public enum ExceptionInfo {
   USER_TREE_HOLE_NULL(6025, "树洞内容为空"),
   USER_TREE_HOLE_DELETED(6026, "不存在此条树洞记录"),
   USER_TREE_HOLE_ID_NULL(6027, "树洞ID为空"),
+  USER_NOT_BELONG(6028, "用户不存在此条记录"),
   ;
 
   private Integer code;
