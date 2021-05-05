@@ -2,6 +2,8 @@
 .name-card-view{
   width: 50%;
   display: flex;
+  margin-top: 10rpx;
+  margin-left:10rpx;
 }
 .comment-publisher-view-message{
   display: flex;
@@ -39,7 +41,7 @@
 {
   font-size: 60rpx;
 }
-.popup-publisher-detail-message-school
+.popup-publisher-detail-message-gender
 {
   margin-top: 20rpx;
 }

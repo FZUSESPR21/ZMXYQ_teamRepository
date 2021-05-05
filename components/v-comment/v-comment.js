@@ -15,14 +15,15 @@ Component({
    */
   data: {
   parentComments:[
-    "1","2","3"
+    "1","2","3","4"
   ],
   childComments:[
     "1","2","3"
   ],
     hasMoreComments:true,
     isMoreCommentsShowed:false,
-    moreButtonContent:"查看3条更多回复"
+    moreButtonContent:"查看更多回复",
+    iconSrc:"../../static/icons/down arrow.png"
   },
 
   /**
@@ -33,17 +34,19 @@ Component({
   {
    this.setData({
      isMoreCommentsShowed:!this.data.isMoreCommentsShowed
-   })
+   });
    if(this.data.isMoreCommentsShowed==true)
    {
      this.setData({
-       moreButtonContent:"收起更多回复"
+       moreButtonContent:"收起更多回复",
+       iconSrc:"../../static/icons/up.png"
      })
    }
    else
    {
      this.setData({
-       isMoreCommentsShowed:"查看更多回复"
+       moreButtonContent:"查看更多回复",
+       iconSrc:"../../static/icons/down arrow.png"
      })
    }
   }

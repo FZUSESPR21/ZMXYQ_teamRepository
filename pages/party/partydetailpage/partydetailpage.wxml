@@ -2,17 +2,13 @@
 <!-- <view>
 <van-button color="#ff9100" class="returnbutton">单色按钮</van-button>
 </view> -->
-
+<page-meta>
+  <navigation-bar background-color="#1a237e"></navigation-bar>
+</page-meta>
 <view class="wrapper">
   <view class="partydetailview">
     <text class="partydetailtitle">拼局详情</text>
-    <view
-    class="user-message">
-      <van-image round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg">
-      </van-image>
-      <text style="position: relative; left: 26rpx; top: -62rpx">文本</text>
-      <text style="position: relative; left: -38rpx; top: -8rpx">时间</text>
-    </view>
+    <v-name-card class="user-message"></v-name-card>
     <view class="partydetailcontent">
       大家好你们好
     </view>
@@ -45,7 +41,7 @@
     class="comment-list-scroll"
     scroll-y="true" bindscroll="onScroll" bindscrolltoupper="onTopRefresh"
     bindscrolltolower="onBottomRefresh">
-    <v-comment ></v-comment>
+    <v-comment></v-comment>
 </scroll-view>
 </view>
 </view>

@@ -1,42 +1,28 @@
 <!--components/v-name-card.wxml-->
 <view class="name-card-view" bindtap="Popup">
-  <van-image
-  round
-  width="2.5rem"
-  height="2.5rem"
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
-  class="comment-publisher-view-head"
-/>
+  <van-image round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg"
+    class="comment-publisher-view-head" />
   <view class="comment-publisher-view-message">
-  <view class="comment-publisher-view-message-name">1</view>
-  <view class="comment-publisher-view-message-time">2</view>
-  <van-popup
-  show="{{ showPopUp }}"
-  position="bottom"
-  custom-style="height: 30%;"
->
- <view class="popup-publisher-detail">
-   <view class="popup-publisher-detail-message">
-    <view class="popup-publisher-detail-message-row">
-      <view class="popup-publisher-detail-message-name">用户1</view>
-     <view class="popup-publisher-detail-message-school">学校</view>
-    </view>
-    
-    <van-image
-  round
-  width="5rem"
-  height="5rem"
-  src="https://img.yzcdn.cn/vant/cat.jpeg"
-  class="popup-publisher-head"
-/>
-   </view>
-  <view class="popup-publisher-operation">
-    <view class="popup-publisher-block">拉黑</view>
-    <view class="popup-publisher-chat">发起私聊</view>
-    <view></view>
-  </view>
- </view>
-  </van-popup>
+    <view class="comment-publisher-view-message-name">1</view>
+    <view class="comment-publisher-view-message-time">2</view>
+    <van-popup show="{{ showPopUp }}" position="bottom" custom-style="height: 30%;">
+      <view class="popup-publisher-detail">
+        <view class="popup-publisher-detail-message">
+          <view class="popup-publisher-detail-message-row">
+            <view class="popup-publisher-detail-message-name">用户1</view>
+            <view class="popup-publisher-detail-message-gender">男</view>
+          </view>
 
-</view>
+          <van-image round width="5rem" height="5rem" src="https://img.yzcdn.cn/vant/cat.jpeg"
+            class="popup-publisher-head" />
+        </view>
+        <view class="popup-publisher-operation">
+          <view class="popup-publisher-block">拉黑</view>
+          <view class="popup-publisher-chat">发起私聊</view>
+          <view></view>
+        </view>
+      </view>
+    </van-popup>
+
+  </view>
 </view>

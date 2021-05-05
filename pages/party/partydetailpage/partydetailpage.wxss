@@ -109,6 +109,7 @@ page{
   justify-content: center; 
   align-items:center;
   margin-top: 30rpx;
+  margin-bottom: 200rpx;
 }
 .comment-list-scroll{
   min-height: 100rpx;
@@ -139,10 +140,7 @@ page{
 }
 .user-message
 {
-  width: 612rpx; 
-  height: 92rpx;
-  display: block; 
-  box-sizing: border-box;
+  margin-right: 500rpx;
 }
 .comment-box{
   width: 100%;
