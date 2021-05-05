@@ -42,6 +42,10 @@ public enum ExceptionInfo {
   USER_NOT_EXISTED(6019, "用户不存在"),
   USER_COLLECTION_ID_NULL(6020,"收藏ID为空"),
   USER_COLLECTION_DELETED(6021,"不存在此条个人收藏"),
+  POST_IMAGE_FOLDER_NOT_CREATED(6501,"文件夹未创建"),
+  POST_IMAGE_CONTENT_EMPTY(6502,"Base64字符串或存储文件名为空"),
+  POST_IMAGE_STORE_PATH_NOT_FOUND(6503,"未找到图片存储位置"),
+  POST_IMAGE_STORE_FAIL(6504,"图片文件存储失败"),
   ;
 
   private Integer code;
