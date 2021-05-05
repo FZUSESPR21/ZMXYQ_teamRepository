@@ -48,6 +48,7 @@ public enum ExceptionInfo {
   USER_TREE_HOLE_DELETED(6026, "不存在此条树洞记录"),
   USER_TREE_HOLE_ID_NULL(6027, "树洞ID为空"),
   USER_NOT_BELONG(6028, "用户不存在此条记录"),
+  USER_NOT_LOGIN(6029, "用户未登录"),
   ;
 
   private Integer code;
