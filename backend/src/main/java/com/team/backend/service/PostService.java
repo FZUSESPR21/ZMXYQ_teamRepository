@@ -1,6 +1,11 @@
 package com.team.backend.service;
 
+import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.model.Post;
+
+import java.util.ArrayList;
+
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.team.backend.model.User;
 
@@ -23,5 +28,16 @@ public interface PostService extends IService<Post> {
    *        province,city,school,userIconUrl
    */
   User getPostPublisher(Long publisherId);
+
+  /**
+   * 发布校友圈帖子
+   * 
+   * @param userId 用户ID
+   * @param postTheme 帖子主题ID
+   * @param message 帖子文字内容
+   * @param imgUrls 帖子图片URL,多个URl之间用;分隔
+   * @return ExceptionInfo 包含处理结果信息
+   */
+  ExceptionInfo publishPost(Long userId,Long postTheme,String message,String imgUrls);
 
 }

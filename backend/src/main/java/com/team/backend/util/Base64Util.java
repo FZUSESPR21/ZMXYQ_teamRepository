@@ -7,16 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.HashMap;
 import java.util.Map;
-import javax.activation.MimetypesFileTypeMap;
-import org.springframework.util.MimeType;
-import org.springframework.util.MimeTypeUtils;
 
 
 /**
