@@ -1,15 +1,36 @@
-// pages/my/my_info/my_info.js
+// pages/my/tree_hole/tree_hole.js
+// import Dialog from '../../../node_modules/@vant/weapp/dist/dialog/dialog';
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    fileList: [
-      {
-        url: 'https://img.yzcdn.cn/vant/leaf.jpg',
-      },
-    ]
+
+  },
+
+  onClose(event) {
+    const { position, instance } = event.detail;
+    switch (position) {
+      case 'left':
+      case 'cell':
+        instance.close();
+        break;
+      case 'right':
+        Dialog.confirm({
+          message: '确定删除吗？',
+        }).then(() => {
+          instance.close();
+        });
+        break;
+    }
+  },
+
+  goToHoleDetail:function (){
+    wx.navigateTo({
+      url: '../hole_detail/hole_detail'
+    })
   },
 
   /**

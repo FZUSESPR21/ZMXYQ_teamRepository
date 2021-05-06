@@ -1,7 +1,10 @@
 <view class="wrap">
 <van-cell title="头像" is-link center border title-class="title">
     <view>
-        <image class="img" src="https://img.yzcdn.cn/vant/cat.jpeg"></image>
+
+        <van-uploader maxcount="1" bind:after-read="afterRead">
+            <image class="img" src="https://img.yzcdn.cn/vant/cat.jpeg"></image>
+        </van-uploader>
     </view>
 </van-cell>
 
@@ -12,7 +15,7 @@
         title="昵称"
         value="Camouflage"
         link-type="navigateTo"
-        url="/pages/dashboard/index"
+        url="../ch_nickname/ch_nickname"
 />
 
 <van-cell
@@ -21,7 +24,7 @@
         is-link
         title="修改个人资料卡片"
         link-type="navigateTo"
-        url="/pages/dashboard/index"
+        url="../modify_info/modify_info"
 />
 </view>
 <!--        {{imageURL}}-->
