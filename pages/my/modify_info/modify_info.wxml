@@ -1,0 +1,33 @@
+<view>
+    <van-cell title="性别" value="{{sex}}" is-link bind:click="showSex">
+    </van-cell>
+    <van-cell title="生日" value="{{picktime}}" is-link bind:click="showBirthday">
+    </van-cell>
+<!--<van-datetime-picker-->
+<!--        type="date"-->
+<!--        value="{{ currentDate }}"-->
+<!--        bind:input="onInput"-->
+<!--        min-date="{{ minDate }}"-->
+<!--        max-date="{{ maxDate }}"-->
+<!--        formatter="{{ formatter }}"-->
+<!--/>-->
+</view>
+
+<van-popup show="{{show1 }}" position="bottom" bind:close="onClose1">
+    <van-datetime-picker
+            type="date"
+            value="{{currentDate}}"
+            bind:confirm="onConfirm"
+            bind:cancel="onCancel1"
+            min-date="{{minDate}}"
+            max-date="{{maxDate}}"
+            bind:input="onInput"
+            formatter="{{ formatter }}"/>
+</van-popup>
+
+<van-action-sheet
+        show="{{ show2 }}"
+        actions="{{ actions }}"
+        bind:close="onClose2"
+        bind:select="onSelect2"
+/>
