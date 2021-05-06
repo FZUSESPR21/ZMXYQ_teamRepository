@@ -95,7 +95,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 判断用户是否已存在
     User sqlUser = userMapper.selectById(user.getId());
-    if (sqlUser.getId().equals(user.getId())) {
+    if (sqlUser != null && sqlUser.getId().equals(user.getId())) {
       result.setCode(ExceptionInfo.valueOf("USER_ID_EXISTED").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_ID_EXISTED").getMessage());
       result.setData(0);
@@ -111,7 +111,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       return result;
     }
 
-    msg = userLegal.urlLegal(user.getUserIconUrl());
+    // 判断头像url是否合法
+    msg = userLegal.iconUrlLegal(user.getUserIconUrl());
+    if (!msg.equals("OK")) {
+      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断证件照url是否合法
+    msg = userLegal.imgUrlLegal(user.getCertificateImageUrl());
     if (!msg.equals("OK")) {
       result.setCode(ExceptionInfo.valueOf(msg).getCode());
       result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
@@ -130,15 +140,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 判断用户性别合法性
     msg = userLegal.sexLegal(user.getSex());
-    if (!msg.equals("OK")) {
-      result.setCode(ExceptionInfo.valueOf(msg).getCode());
-      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
-      result.setData(0);
-      return result;
-    }
-
-    // 判断用户出生日期合法性
-    msg = userLegal.birthdayLegal(user.getBirthday());
     if (!msg.equals("OK")) {
       result.setCode(ExceptionInfo.valueOf(msg).getCode());
       result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
@@ -167,7 +168,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
   // 删除个人帖文
-  public Result<Integer> postDeleted(Long id) {
+  public Result<Integer> postDeleted(Long userId, Long id) {
 
     Result<Integer> result = new Result<>();
 
@@ -186,6 +187,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       result.setData(0);
       return result;
     }
+
+    if (!post.getPublisherId().equals(userId)) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
+      result.setData(0);
+      return result;
+    }
+
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(postMapper.deleteById(id));
@@ -235,7 +244,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   }
 
   // 删除个人帖子评论
-  public Result<Integer> PostCommentDeleted(Long id) {
+  public Result<Integer> PostCommentDeleted(Long userId, Long id) {
 
     Result<Integer> result = new Result<>();
 
@@ -255,6 +264,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       return result;
     }
 
+    // 判断该评论是否属于当前用户
+    if (!postComment.getIdFrom().equals(userId)) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
+      result.setData(0);
+      return result;
+    }
+
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(postCommentMapper.deleteById(id));
@@ -262,7 +279,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   }
 
   // 删除个人组局评论
-  public Result<Integer> PartyCommentDeleted(Long id) {
+  public Result<Integer> PartyCommentDeleted(Long userId, Long id) {
 
     Result<Integer> result = new Result<>();
 
@@ -278,6 +295,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if (partyComment == null) {
       result.setCode(ExceptionInfo.valueOf("USER_PARTY_COMMENT_DELETED").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_PARTY_COMMENT_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    // 判断该评论是否属于当前用户
+    if (!partyComment.getIdFrom().equals(userId)) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
       result.setData(0);
       return result;
     }
@@ -332,7 +357,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       return result;
     }
 
-    msg = userLegal.urlLegal(user.getUserIconUrl());
+    msg = userLegal.iconUrlLegal(user.getUserIconUrl());
     if (!msg.equals("OK")) {
       result.setCode(ExceptionInfo.valueOf(msg).getCode());
       result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
@@ -351,15 +376,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 判断用户性别合法性
     msg = userLegal.sexLegal(user.getSex());
-    if (!msg.equals("OK")) {
-      result.setCode(ExceptionInfo.valueOf(msg).getCode());
-      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
-      result.setData(0);
-      return result;
-    }
-
-    // 判断用户出生日期合法性
-    msg = userLegal.birthdayLegal(user.getBirthday());
     if (!msg.equals("OK")) {
       result.setCode(ExceptionInfo.valueOf(msg).getCode());
       result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
@@ -403,7 +419,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   }
 
   // 删除个人收藏
-  public Result<Integer> deleteCollection(Long id) {
+  public Result<Integer> deleteCollection(Long userId, Long id) {
 
     Result<Integer> result = new Result<>();
 
@@ -416,9 +432,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 判断数据库是否存在这条收藏
     PostEyeOn postEyeOn = postEyeOnMapper.selectById(id);
+    System.out.println(postEyeOn);
     if (postEyeOn == null) {
       result.setCode(ExceptionInfo.valueOf("USER_COLLECTION_DELETED").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_COLLECTION_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    if (!postEyeOn.getIdFrom().equals(userId)) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
       result.setData(0);
       return result;
     }
@@ -456,7 +480,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   }
 
   // 删除黑名单
-  public Result<Integer> deleteBlack(Long id) {
+  public Result<Integer> deleteBlack(Long userId,Long id) {
 
     Result<Integer> result = new Result<>();
 
@@ -472,6 +496,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if (blackList == null) {
       result.setCode(ExceptionInfo.valueOf("USER_BLACK_DELETED").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_BLACK_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    if (!blackList.getUserId().equals(userId)) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
       result.setData(0);
       return result;
     }
