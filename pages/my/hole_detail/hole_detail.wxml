@@ -1,0 +1,7 @@
+<view>
+    <view class="hole-detail">
+        <textarea class="hole-detail-text" placeholder="树洞内容" maxlength="-1"></textarea>
+    </view>
+
+    <button class="button">保存</button>
+</view>

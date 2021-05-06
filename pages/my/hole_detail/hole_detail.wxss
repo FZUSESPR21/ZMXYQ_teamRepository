@@ -1,0 +1,26 @@
+.hole-detail{
+    min-height: 700rpx;
+    width:700rpx;
+    background-color: #fff;
+    box-shadow: 2rpx 2rpx black ;
+    border-radius: 0.4rem;
+    border: 10rpx solid #f2774d;
+    margin: 10rpx auto 20rpx;
+    z-index: 0;
+}
+
+.hole-detail-text{
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 20rpx;
+    min-height: 670rpx;
+}
+
+.button{
+    background-color: #f2774d;
+    font-size: 35rpx;
+    color: white;
+    width: 600rpx;
+    border-radius: 50rpx;
+    margin-top: 40rpx;
+}
