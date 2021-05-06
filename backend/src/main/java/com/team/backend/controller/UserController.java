@@ -87,6 +87,15 @@ public class UserController {
   @PostMapping("/data/update")
   public Result<Integer> updateUser(User user) {
 
+    User nowUser = null;
+
+    if (nowUser == null) {
+      Result<Integer> result = new Result<>();
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
+      return result;
+    }
+
     return userService.updateUser(user);
   }
 
