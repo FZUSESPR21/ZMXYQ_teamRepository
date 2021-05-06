@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @since 2021-05-02
  */
 @Service
-public class Base64ImageService {
+public class Base64ImageServiceImpl {
   public ExceptionInfo saveImage(String source,String fileName) {
     ExceptionInfo info = ExceptionInfo.POST_IMAGE_STORE_FAIL;
     String[] sourceOrigin = source.split(",");
