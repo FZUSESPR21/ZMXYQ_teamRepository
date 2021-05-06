@@ -2,9 +2,11 @@ package com.team.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.team.backend.mapper.PartyMapper;
 import com.team.backend.mapper.PostMapper;
 import com.team.backend.model.Admin;
 import com.team.backend.mapper.AdminMapper;
+import com.team.backend.model.Party;
 import com.team.backend.model.Post;
 import com.team.backend.service.AdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -38,6 +40,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
   private AdminMapper adminMapper;
   @Autowired
   private PostMapper postMapper;
+  @Autowired
+  private PartyMapper partyMapper;
 
   private Admin processInput(String nickname, String password) {
     nickname = nickname.trim();
@@ -111,9 +115,6 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
   }
 
   public List<Map<String,Object>> getUncheckedPostList(int order){
-    //default size 6
-    int size = 6;
-
     QueryWrapper<Post> wrapper = new QueryWrapper<Post>();
     Map<String,Object> map = new HashMap<>();
     map.put("status",0);
@@ -127,6 +128,28 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     return postMapper.selectMaps(wrapper);
 
+  }
+  public void confirmPost(long id,int pass){
+    if(pass==0){
+      Post post = postMapper.selectById(id);
+      post.setStatus(1);
+      postMapper.updateById(post);
+    }
+  }
+
+  public List<Map<String,Object>> getUncheckedParty(int order){
+    QueryWrapper<Party> wrapper = new QueryWrapper<>();
+    Map<String,Object> map = new HashMap<>();
+    map.put("status",0);
+    map.put("deleted",0);
+    wrapper.allEq(map);
+    if(order==0){
+      wrapper.orderByAsc("gmt_create");
+    }else{
+      wrapper.orderByDesc("gmt_create");
+    }
+
+    return partyMapper.selectMaps(wrapper);
   }
 
 }

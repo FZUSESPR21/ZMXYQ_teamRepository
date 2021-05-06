@@ -5,11 +5,13 @@ import com.team.backend.model.Admin;
 import com.team.backend.model.User;
 import com.team.backend.service.PostService;
 import com.team.backend.service.impl.AdminServiceImpl;
+import com.team.backend.service.impl.PartyServiceImpl;
 import com.team.backend.service.impl.PostServiceImpl;
 import com.team.backend.util.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class AdminController {
   private AdminServiceImpl adminServiceImpl;
   @Autowired
   private PostServiceImpl postServiceImpl;
+  @Autowired
+  private PartyServiceImpl partyServiceImpl;
 
   @PostMapping("/login")
   public Response login(@RequestBody Map<String, Object> map) {
@@ -142,6 +146,62 @@ public class AdminController {
     return new Response(0, "", data);
 
   }
+  @PostMapping("/postconfirm")
+  public Response postConfirm(@RequestBody Map<String, Object> map) {
+    String id = (String)map.get("postID");
+    int pass = (int)map.get("pass");
+    if(pass!=1&&pass!=0){
+      return new Response(1,"pass值不正确");
+    }
+    try{
+      adminServiceImpl.confirmPost(Long.parseLong(id),pass);
+      return new Response(0,"");
+    }catch (Exception e){
+      return new Response(1,e.getMessage());
+    }
+  }
+
+  @PostMapping("/party")
+  public Response getUncheckedPartyList(@RequestBody Map<String, Object> map) {
+    int pageIndex = 0;
+    int order = 0;
+    try {
+      pageIndex = (int) map.get("pageIndex");
+      order = (int) map.get("order");
+    } catch (Exception e) {
+      return new Response(1, "参数不合法");
+    }
+    List<Map<String, Object>> parties = adminServiceImpl.getUncheckedPostList(order);
+    Map<String, Object> data = new HashMap<>();
+    data.put("count", parties.size());
+    int fromIndex = pageIndex * 6;
+    int toIndex = (pageIndex + 1) * 6;
+    if (fromIndex >= parties.size() || fromIndex < 0) {
+      return new Response(1, "pageIndex非法");
+    } else {
+      if (toIndex >= parties.size()) {
+        toIndex = parties.size() - 1;
+      }
+    }
+    parties = parties.subList(fromIndex, toIndex+1);
+    List<Map<String,Object>> mes = new ArrayList<>();
+
+    for(Map<String,Object> party : parties){
+      Map<String,Object> tmp = new HashMap<>();
+      tmp.put("publisherId",party.get("publisher_id"));
+      tmp.put("postID",party.get("id"));
+      tmp.put("publisherName",partyServiceImpl.getPartyPublisher((long)party.get("publisher_id")).getUsername());
+      tmp.put("message",party.get("message"));
+      tmp.put("imageUrls",party.get("image_urls"));
+      tmp.put("gmtCreate",party.get("gmt_create"));
+      mes.add(tmp);
+    }
+
+    data.put("mes", mes);
+    return new Response(0, "", data);
+
+  }
+
 
 }
 

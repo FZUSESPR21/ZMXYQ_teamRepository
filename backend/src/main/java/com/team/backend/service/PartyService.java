@@ -2,6 +2,7 @@ package com.team.backend.service;
 
 import com.team.backend.model.Party;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.team.backend.model.User;
 
 /**
  * <p>
@@ -12,5 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-04-28
  */
 public interface PartyService extends IService<Party> {
-
+  User getPartyPublisher(Long publisherId);
 }
