@@ -54,6 +54,8 @@ public enum ExceptionInfo {
   POST_IMAGE_STORE_FAIL(6104,"图片文件存储失败"),
   POST_PUBLISH_INFO_LOST(6105,"发帖信息缺失"),
   POST_PUBLISH_INSERT_FAIL(6106,"发帖信息存储失败"),
+  POST_LIKE_POST_FAIL(6107,"点赞帖子失败，请检查用户ID和帖子ID有效性"),
+  POST_LIKE_ALREADY(6108,"帖子点赞记录已存在，请勿重复点赞"),
   ;
 
   private Integer code;
