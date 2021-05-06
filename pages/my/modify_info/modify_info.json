@@ -2,5 +2,9 @@
   "navigationBarBackgroundColor": "#f2774d",
   "navigationBarTitleText": "修改资料",
   "navigationBarTextStyle": "white",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-popup": "@vant/weapp/popup/index"
+  }
 }

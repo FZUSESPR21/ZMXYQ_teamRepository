@@ -58,7 +58,7 @@ Page({
 
   onConfirm(event) {
     var timeValue = this.timeFormat(new Date(event.detail), "yyyy-MM-dd");
-    this.setData({ picktime: timeValue, show: false });
+    this.setData({ picktime: timeValue, show1: false });
     var myEventDetail = {
       val: timeValue
     }
