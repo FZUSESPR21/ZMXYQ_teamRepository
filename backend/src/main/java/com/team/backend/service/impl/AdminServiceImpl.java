@@ -4,16 +4,19 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.backend.mapper.PartyMapper;
 import com.team.backend.mapper.PostMapper;
+import com.team.backend.mapper.UserMapper;
 import com.team.backend.model.Admin;
 import com.team.backend.mapper.AdminMapper;
 import com.team.backend.model.Party;
 import com.team.backend.model.Post;
+import com.team.backend.model.User;
 import com.team.backend.service.AdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.team.backend.util.Log;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
 import java.security.MessageDigest;
@@ -36,6 +39,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
 
+  @Resource
+  private UserMapper userMapper;
   @Autowired
   private AdminMapper adminMapper;
   @Autowired
@@ -150,6 +155,37 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
     return partyMapper.selectMaps(wrapper);
+  }
+
+  public void confirmParty(long id,int pass){
+    if(pass==0){
+      Party party = partyMapper.selectById(id);
+      party.setStatus(1);
+      partyMapper.updateById(party);
+    }
+  }
+
+  public List<Map<String,Object>> getUncheckedUser(int order){
+    QueryWrapper<User> wrapper = new QueryWrapper<>();
+    Map<String,Object> map = new HashMap<>();
+    map.put("status",0);
+    map.put("deleted",0);
+    wrapper.allEq(map);
+    if(order==0){
+      wrapper.orderByAsc("gmt_create");
+    }else{
+      wrapper.orderByDesc("gmt_create");
+    }
+
+    return userMapper.selectMaps(wrapper);
+  }
+
+  public void confirmUser(long id,int pass){
+    if(pass==0){
+      User user = userMapper.selectById(id);
+      user.setStatus(1);
+      userMapper.updateById(user);
+    }
   }
 
 }
