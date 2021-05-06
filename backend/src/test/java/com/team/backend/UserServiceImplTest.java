@@ -355,19 +355,19 @@ public class UserServiceImplTest {
   }
 
   @Test
-  void deleteCollectionTest(){
+  void deleteCollectionTest() {
 
     Result<Integer> result = new Result<>();
 
     result.setCode(ExceptionInfo.valueOf("USER_COLLECTION_ID_NULL").getCode());
     result.setMessage(ExceptionInfo.valueOf("USER_COLLECTION_ID_NULL").getMessage());
     result.setData(0);
-    Assertions.assertEquals(result,userService.deleteCollection(123456L, null));
+    Assertions.assertEquals(result, userService.deleteCollection(123456L, null));
 
     result.setCode(ExceptionInfo.valueOf("USER_COLLECTION_DELETED").getCode());
     result.setMessage(ExceptionInfo.valueOf("USER_COLLECTION_DELETED").getMessage());
     result.setData(0);
-    Assertions.assertEquals(result,userService.deleteCollection(123456L, 999999999L));
+    Assertions.assertEquals(result, userService.deleteCollection(123456L, 999999999L));
 
     result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
     result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
@@ -382,7 +382,7 @@ public class UserServiceImplTest {
   }
 
   @Test
-  void listBlackTest(){
+  void listBlackTest() {
 
     Result<List<PersonalBlackItem>> result = userService.listBlack(123456L);
     System.out.println(result);
@@ -390,29 +390,29 @@ public class UserServiceImplTest {
   }
 
   @Test
-  void deleteBlackTest(){
+  void deleteBlackTest() {
 
     Result<Integer> result = new Result<>();
 
     result.setCode(ExceptionInfo.valueOf("USER_BLACK_ID_NULL").getCode());
     result.setMessage(ExceptionInfo.valueOf("USER_BLACK_ID_NULL").getMessage());
     result.setData(0);
-    Assertions.assertEquals(result,userService.deleteBlack(123456L, null));
+    Assertions.assertEquals(result, userService.deleteBlack(123456L, null));
 
     result.setCode(ExceptionInfo.valueOf("USER_BLACK_DELETED").getCode());
     result.setMessage(ExceptionInfo.valueOf("USER_BLACK_DELETED").getMessage());
     result.setData(0);
-    Assertions.assertEquals(result,userService.deleteBlack(123456L, 999999999L));
+    Assertions.assertEquals(result, userService.deleteBlack(123456L, 999999999L));
 
     result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
     result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
     result.setData(0);
-    Assertions.assertEquals(result,userService.deleteBlack(999999999L, 1L));
+    Assertions.assertEquals(result, userService.deleteBlack(999999999L, 1L));
 
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(1);
-    Assertions.assertEquals(result,userService.deleteBlack(123456L, 2L));
+    Assertions.assertEquals(result, userService.deleteBlack(123456L, 2L));
   }
 
 

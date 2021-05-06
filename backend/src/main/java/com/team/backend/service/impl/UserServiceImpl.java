@@ -480,7 +480,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   }
 
   // 删除黑名单
-  public Result<Integer> deleteBlack(Long userId,Long id) {
+  public Result<Integer> deleteBlack(Long userId, Long id) {
 
     Result<Integer> result = new Result<>();
 
