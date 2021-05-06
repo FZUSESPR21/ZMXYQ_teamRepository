@@ -79,9 +79,11 @@ page{
    margin-top: 30rpx;
 }
 .partydetailtitle{
-  margin-right: 480rpx;
-  margin-bottom: 40rpx;
+  margin-right: 400rpx;
+  margin-bottom: 20rpx;
   font-weight: bold;
+  width: 30%;
+  font-size: 36rpx;
 }
 .joinbutton{
   width: 100px;
@@ -193,5 +195,15 @@ page{
  margin-left: 30rpx;
  line-height: 70rpx;
  
+}
+.more
+{
+  width: 32px;
+  height: 32px;
+}
+.party-detail-bar{
+   display: flex;
+   flex-direction: row;
+   width: 90%;
 }
 

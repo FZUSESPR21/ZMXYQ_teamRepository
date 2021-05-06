@@ -4,6 +4,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
+     publisherId:{
+      type:Number,
+      value:0,
+     },
      publisherName:{
        type:String,
        value:""
@@ -39,7 +43,20 @@ Component({
   methods: {
     Popup() {
       this.setData({ showPopUp: !this.data.showPopUp });
+      
     },
+    getPublisherMessage:function(e)
+    {
+     wx.request({
+       url: 'http://xx.com/api/alumnicycle/posts/publishermsg',
+       method:"POST",
+       data:{
+         publisherId:0
+       },
+       success:function(res){
 
+       }
+     })
+    },
   }
 })

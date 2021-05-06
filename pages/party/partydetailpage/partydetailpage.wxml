@@ -7,10 +7,16 @@
 </page-meta>
 <view class="wrapper">
   <view class="partydetailview">
-    <text class="partydetailtitle">拼局详情</text>
+    <view class="party-detail-bar">  
+      <text class="partydetailtitle">拼局详情</text>
+      <image src="../../../static/icons/more.png" class="more" id="morebutton" bindtap="onTap"></image>
+      <v-popover id='popover'>
+    <v-popover-item bindtap='editParty' hasline>修改</v-popover-item>
+  </v-popover>
+  </view>
     <v-name-card class="user-message"></v-name-card>
     <view class="partydetailcontent">
-      大家好你们好
+      {{partyDetailContent}}
     </view>
     <view class="party-detail-operation">
       <view class="joinbutton" bindtap="joinparty">加入拼局</view>
@@ -48,7 +54,7 @@
 <view class="comment-box">
 <form action="" class="input-form">
   <textarea  confirm-type="send" class="message-area" placeholder="请输入你要的评论"></textarea>
-  <button class="send-button">发送</button>
+  <button class="send-button" bindtap="sendcomment">发送</button>
 </form>
   
 </view>
