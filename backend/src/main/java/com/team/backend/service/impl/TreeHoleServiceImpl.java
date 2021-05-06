@@ -76,6 +76,15 @@ public class TreeHoleServiceImpl extends ServiceImpl<TreeHoleMapper, TreeHole> i
       return result;
     }
 
+    // 判断数据库是否存在这条树洞
+    TreeHole sqlTreeHole = treeHoleMapper.selectById(treeHole.getId());
+    if (sqlTreeHole == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_TREE_HOLE_DELETED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_TREE_HOLE_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
     if (treeHole.getMessage() == null || treeHole.getMessage() == "") {
       result.setCode(ExceptionInfo.valueOf("USER_TREE_HOLE_NULL").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_TREE_HOLE_NULL").getMessage());
@@ -83,11 +92,9 @@ public class TreeHoleServiceImpl extends ServiceImpl<TreeHoleMapper, TreeHole> i
       return result;
     }
 
-    // 判断数据库是否存在这条树洞
-    TreeHole sqlTreeHole = treeHoleMapper.selectById(treeHole.getId());
-    if (sqlTreeHole == null) {
-      result.setCode(ExceptionInfo.valueOf("USER_TREE_HOLE_DELETED").getCode());
-      result.setMessage(ExceptionInfo.valueOf("USER_TREE_HOLE_DELETED").getMessage());
+    if (!sqlTreeHole.getFromId().equals(treeHole.getFromId())) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
       result.setData(0);
       return result;
     }
@@ -99,7 +106,7 @@ public class TreeHoleServiceImpl extends ServiceImpl<TreeHoleMapper, TreeHole> i
   }
 
   // 删除树洞
-  public Result<Integer> deleteTreeHole(Long id) {
+  public Result<Integer> deleteTreeHole(Long userId, Long id) {
 
     Result<Integer> result = new Result<>();
 
@@ -115,6 +122,13 @@ public class TreeHoleServiceImpl extends ServiceImpl<TreeHoleMapper, TreeHole> i
     if (sqlTreeHole == null) {
       result.setCode(ExceptionInfo.valueOf("USER_TREE_HOLE_DELETED").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_TREE_HOLE_DELETED").getMessage());
+      result.setData(0);
+      return result;
+    }
+
+    if (!sqlTreeHole.getFromId().equals(userId)) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
       result.setData(0);
       return result;
     }
