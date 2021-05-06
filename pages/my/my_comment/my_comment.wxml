@@ -1,0 +1,31 @@
+<view>
+<!--    <scroll-view class="wkNav" scroll-x>-->
+<!--        <view class="box">-->
+<!--            <block>-->
+<!--                校友圈-->
+<!--            </block>-->
+<!--            <block>-->
+<!--                组团-->
+<!--            </block>-->
+<!--        </view>-->
+<!--    </scroll-view>-->
+    <van-tabs active="{{ active }}" bind:change="onChange" color="#f2774d" line-width="50%">
+
+        <van-tab title="校友圈">
+            <view class="post_main">
+                <navigator class="post_item" wx:for="{{5}}">
+                    <view class="txt">
+                        <view class="content">
+                            这是我的评论内容这是我的评论内容这是我的评论内容这是我的评论内容
+                        </view>
+                        <view class="info">
+                            <view class="nickname">Camouflage</view>
+                            <view class="time">24分钟前</view>
+                        </view>
+                    </view>
+                </navigator>
+            </view>
+        </van-tab>
+        <van-tab title="组团">内容</van-tab>
+    </van-tabs>
+</view>
