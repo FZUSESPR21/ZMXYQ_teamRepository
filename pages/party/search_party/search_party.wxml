@@ -1,0 +1,30 @@
+<!--pages/party/my_party/party_search.wxml-->
+<page>
+    <view class="search-view">
+      <van-search
+        model:value="{{ value }}"
+        background="#ffe680"
+        label=""
+        placeholder="请输入搜索关键词"
+        use-action-slot
+        bind:change="onChange"
+        bind:search="onSearch"
+      >
+      <van-button round type="info" size="small" slot="action" bind:tap="getData">搜索</van-button>
+      </van-search>
+    </view>
+    <!-- 我的组局列表开始 -->
+    <scroll-view scroll-y>
+        <v-party-item wx:for="{{partyList}}" 
+          partyID = "{{item.aprtyID}}"
+          partyType = "{{item.partyType}}"
+          content = "{{item.description}}"
+          publisherName = "{{item.publisher.username}}"
+          publisherSex = "{{item.publisher.sex}}"
+          time= "{{item.gmtCreate}}"
+          peopleCnt = "{{item.peopleCnt}}"
+          nowPeopleCnt = "{{item.nowPeopleCnt}}">
+        </v-party-item>
+      </scroll-view>
+      <!-- 我的组局列表结束 -->
+</page>

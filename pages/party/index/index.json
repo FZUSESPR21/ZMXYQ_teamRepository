@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "v-party-list" : "../../../components/party/v-party-list/v-party-list"
+    "v-party-list" : "../../../components/party/v-party-list/v-party-list",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-image": "@vant/weapp/image/index"
   }
 }

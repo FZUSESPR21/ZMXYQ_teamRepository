@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "van-icon": "@vant/weapp/icon/index",
+    "van-image": "@vant/weapp/image/index",
+    "v-party-item": "../../../components/party/v-party-item/v-party-item",
+    "van-search": "@vant/weapp/search/index"
+  },
+  "navigationBarTitleText": "组局搜索"
+}

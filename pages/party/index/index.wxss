@@ -6,10 +6,31 @@ page,view,text,swiper,swiper-item,image,navigator,button{
 }
 
 page{
+  position: relative;
+  background-color: #ffe680;
+}
+
+/* .party-list{
+  z-index: 0;
+} */
+
+.my-buttons{
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: 150rpx;
   background-color: #ffe680;
 }
 
 .button-style {
-  margin: 30rpx;
+  margin:  20rpx 35rpx;
   width: 300rpx;
 }
+
+.search-image{
+  position: fixed;
+  z-index: 2;
+  bottom: 50rpx;
+  left: 600rpx;
+}
+

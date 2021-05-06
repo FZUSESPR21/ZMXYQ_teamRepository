@@ -12,9 +12,20 @@ Page({
       url: '../my_party/my_party'
     })
   },
-  createparty:function(){
+  createParty:function(){
     wx.navigateTo({
-      url: '../create_party/createparty.wxml'
+      url: '../create_party/createparty'
     })
+  },
+
+  searchParty:function(){
+    console.log(1);
+    wx.navigateTo({
+      url: '../search_party/search_party'
+    });
+  },
+
+  jjj:function(){
+    console.log("jjj");
   }
 })

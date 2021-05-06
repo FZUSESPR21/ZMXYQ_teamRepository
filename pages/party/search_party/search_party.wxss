@@ -1,0 +1,4 @@
+/* pages/party/search-party/search-party.wxss */
+page{
+  background-color: #ffe680;
+}

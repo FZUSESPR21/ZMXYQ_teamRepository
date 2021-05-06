@@ -14,19 +14,44 @@ Page({
     value1: 0,
     select: false,
     tihuoWay: '门店自提',
-    memberNum:0
+    memberNum:0,
+    fileList: [],
+    partyDetailContent:"1111",
+    buttonOperation:"创建组局(消耗50人品)"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // console.log(options.partyDetailContent)
+    this.setData({
+      partyDetailContent:options.partyDetailContent,
+      memberNum:options.partyMemberCnt,
+      buttonOperation:options.operation
+    })
   },
   bindShowMsg() {
     this.setData({
         select:!this.data.select
     })
+},
+
+afterRead(event) {
+  const { file } = event.detail;
+  // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+  wx.uploadFile({
+    url: 'https://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
+    filePath: file.url,
+    name: 'file',
+    formData: { user: 'test' },
+    success(res) {
+      // 上传完成需要更新 fileList
+      const { fileList = [] } = this.data;
+      fileList.push({ ...file, url: res.data });
+      this.setData({ fileList });
+    },
+  });
 },
   addmemberOp(e)
   {
@@ -55,6 +80,25 @@ Page({
        tihuoWay: name,
        select: false
    })
+},
+createparty:function(e){
+  
+  //  wx.request({
+  //    url: 'http://xx.com/api//alumnicycle/party/add',
+  //    method:"POST",
+  //    data:{
+  //      userId:0,
+  //      description:"",
+  //      images:[],
+  //      peopleCnt:0,
+  //      partyTypeID:0
+  //    },
+  //    success(res)
+  //    {
+  //     Notify({ type: 'success', message: '创建拼局成功' });
+  //    },
+
+  //  })
 },
   /**
    * 生命周期函数--监听页面初次渲染完成

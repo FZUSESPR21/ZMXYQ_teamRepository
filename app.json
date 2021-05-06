@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/name_card/name_card",
     "pages/party/partydetailpage/partydetailpage",
     "pages/party/create_party/createparty",
     "pages/post/index/index",
@@ -28,7 +29,10 @@
   "van-cell-group": "@vant/weapp/cell-group/index",
   "van-switch": "@vant/weapp/switch/index",
   "van-uploader": "@vant/weapp/uploader/index",
-  "v-comment":"/components/v-comment/v-comment"
+  "van-notify": "@vant/weapp/notify/index",
+  "v-comment":"/components/v-comment/v-comment",
+  "van-popup": "@vant/weapp/popup/index",
+  "v-name-card":"/components/v-name-card/v-name-card"
   },
   "tabBar": {
     "list": [
