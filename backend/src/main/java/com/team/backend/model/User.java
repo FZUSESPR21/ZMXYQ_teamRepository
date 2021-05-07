@@ -30,7 +30,7 @@ public class User implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "用户ID(使用微信提供的openID)")
-  @TableId(value = "id", type = IdType.INPUT)
+  @TableId(value = "id", type = IdType.AUTO)
   private Long id;
 
   @ApiModelProperty(value = "用户名")
@@ -82,5 +82,7 @@ public class User implements Serializable {
   @TableField(fill = FieldFill.INSERT)
   private Integer deleted;
 
+  @ApiModelProperty(value = "微信提供的OpenID")
+  private Long openId;
 
 }
