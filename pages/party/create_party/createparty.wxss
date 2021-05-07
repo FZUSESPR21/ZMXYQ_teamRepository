@@ -70,6 +70,9 @@ page{
   border: 4rpx solid black;
   margin-top: 10rpx;
   z-index: 0;
+  text-overflow:ellipsis;
+  word-wrap:break-word;
+  max-width: 700rpx;
 }
 .party-detaile-content-input{
   width: 90%;

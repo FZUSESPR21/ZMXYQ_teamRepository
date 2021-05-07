@@ -12,19 +12,21 @@
       <image src="../../../static/icons/more.png" class="more" id="morebutton" bindtap="onTap"></image>
       <v-popover id='popover'>
     <v-popover-item bindtap='editParty' hasline>修改</v-popover-item>
+    <v-popover-item bindtap='disbandParty' hasline>解散</v-popover-item>
   </v-popover>
+  <van-dialog id="van-dialog" />
   </view>
     <v-name-card class="user-message"></v-name-card>
     <view class="partydetailcontent">
       {{partyDetailContent}}
     </view>
     <view class="party-detail-operation">
-      <view class="joinbutton" bindtap="joinparty">加入拼局</view>
+      <view class="joinbutton" bindtap="joinParty">{{buttonContent}}</view>
       <van-notify id="van-notify" />
     </view>
   </view>
 <view class="partymemberview">
-  <text class="partydetailtitle">局内成员</text>
+  <text class="party-detail-title2">局内成员</text>
   <view class="partymemberlist">
     <view class="partymemberlistitem" wx:for="{{partyMemberList}}">
       <!-- {{item.userName}} -->
@@ -32,7 +34,7 @@
   round
   width="3rem"
   height="3rem"
-  src="{{item.state?'https://img.yzcdn.cn/vant/cat.jpeg':'https://sm.ms/image/Yzvtu9bfQsHkVwm'}}"
+  src="{{item.state?'https://img.yzcdn.cn/vant/cat.jpeg':'../../../static/icons/add_post.png'}}"
 >
 </van-image>
 <view class="partyMemberListitemlabel">
@@ -42,7 +44,7 @@
   </view>
   </view>
   <view class="party-comment-list">
-    <text class="partydetailtitle">拼局评论</text>
+    <text class="party-detail-title2">拼局评论</text>
     <scroll-view 
     class="comment-list-scroll"
     scroll-y="true" bindscroll="onScroll" bindscrolltoupper="onTopRefresh"

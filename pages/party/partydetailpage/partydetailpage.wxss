@@ -73,23 +73,22 @@ page{
   width: 612rpx;
   background: #ffffff; 
   min-height: 100rpx; 
-  height: 152rpx;
+  height: 100rpx;
    display: block; 
    box-sizing: border-box;
    margin-top: 30rpx;
 }
 .partydetailtitle{
-  margin-right: 400rpx;
+  margin-right: 300rpx;
   margin-bottom: 20rpx;
   font-weight: bold;
-  width: 30%;
+  width: 40%;
   font-size: 36rpx;
 }
 .joinbutton{
   width: 100px;
   height: 60rpx;
-  margin-left: 400rpx;
-  margin-bottom: -50rpx;
+  margin-left: 50vw;
   background-color: #fbc02d;
   border-radius: 3rem;
  text-align: center;
@@ -121,24 +120,13 @@ page{
   align-items:center;
   
 }
-.share-button{
-  width: 100rpx;
-  height: 60rpx;
-  margin-bottom: -100rpx;
- margin-right:100rpx;
-  background-color: #fbc02d;
-  border-radius: 3rem;
- text-align: center;
- color: #ffffff;
- font-weight: bold;
- line-height:60rpx;
- margin-left: 20px;
-}
 .party-detail-operation{
   height: 100rpx;
   display: flex;
   flex-direction: row;
-  margin-bottom: -50px;
+  align-items: center;
+  margin-top: 20rpx;
+  margin-bottom: -50rpx;
 }
 .user-message
 {
@@ -206,4 +194,10 @@ page{
    flex-direction: row;
    width: 90%;
 }
-
+.party-detail-title2{
+  margin-right:350rpx;
+  margin-bottom: 20rpx;
+  font-weight: bold;
+  width: 40%;
+  font-size: 36rpx;
+}

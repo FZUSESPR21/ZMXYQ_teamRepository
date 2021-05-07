@@ -6,7 +6,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   border: 3px #ddd solid;
-  border-radius: 0.5em;
   box-shadow: 1px 1px 1px #ddd;
 }
 .popover-item-hover {

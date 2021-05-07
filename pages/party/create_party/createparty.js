@@ -5,19 +5,35 @@ Page({
    * 页面的初始数据
    */
   data: {
-    option1: [
-      { text: '全部商品', value: 0 },
-      { text: '新款商品', value: 1 },
-      { text: '活动商品', value: 2 },
+    option1: [{
+        text: '全部商品',
+        value: 0
+      },
+      {
+        text: '新款商品',
+        value: 1
+      },
+      {
+        text: '活动商品',
+        value: 2
+      },
     ],
-    themeArray:["重庆分店","东莞南城分店","东莞总店","东莞总店","东莞总店"],
+    themeArray: ["重庆分店", "东莞南城分店", "东莞总店", "东莞总店", "东莞总店"],
     value1: 0,
     select: false,
     tihuoWay: '门店自提',
-    memberNum:0,
-    fileList: [],
-    partyDetailContent:"1111",
-    buttonOperation:"创建组局(消耗50人品)"
+    memberNum: 0,
+    fileList: [{
+        url: 'http://iph.href.lu/60x60?text=default',
+        name: '图片2',
+        isImage: true,
+        deletable: true,
+      },
+
+
+    ],
+    partyDetailContent: "1111",
+    buttonOperation: "创建组局(消耗50人品)"
   },
 
   /**
@@ -26,80 +42,102 @@ Page({
   onLoad: function (options) {
     // console.log(options.partyDetailContent)
     this.setData({
-      partyDetailContent:options.partyDetailContent,
-      memberNum:options.partyMemberCnt,
-      buttonOperation:options.operation
+      partyDetailContent: options.partyDetailContent,
+      memberNum: options.partyMemberCnt,
+      buttonOperation: options.operation
     })
   },
-  bindShowMsg() {
+  bindShowMsg: function () {
     this.setData({
-        select:!this.data.select
+      select: !this.data.select
     })
-},
+  },
 
-afterRead(event) {
-  const { file } = event.detail;
-  // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-  wx.uploadFile({
-    url: 'https://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
-    filePath: file.url,
-    name: 'file',
-    formData: { user: 'test' },
-    success(res) {
-      // 上传完成需要更新 fileList
-      const { fileList = [] } = this.data;
-      fileList.push({ ...file, url: res.data });
-      this.setData({ fileList });
-    },
-  });
-},
-  addmemberOp(e)
+  afterRead: function (event) {
+    const _this = this;
+    console.log(event);
+    this.setData({
+      fileList: _this.data.fileList.concat(event.detail.file)
+    });
+
+  },
+  submitImage:function (e)
   {
-    if(this.data.memberNum<12)
+    const file=this.data.fileList;
+    file.forEach(function(e)
     {
+      //FileSystemManager().readFile()
+var FSM = wx.getFileSystemManager(); 
+let _this = this;
+    //获取图片
+    wx.chooseImage({
+      count: 9,
+      success: function(res) {
+        //循环将得到的图片转换为Base64
+        for (let r in res.tempFilePaths) {
+          console.log(res.tempFilePaths[r])
+          FSM.readFile({
+            filePath: res.tempFilePaths[r],
+            encoding: "base64",
+            success: function(data) {
+              console.log(data.data)
+            }
+          });
+        }
+      },
+    })
+    })
+  },
+  deleteImage: function (e) {
+    const index = e.detail.index; //获取到点击要删除的图片的下标
+    const deletImageList = this.data.fileList //用一个变量将本地的图片数组保存起来
+    deletImageList.splice(index, 1) //删除下标为index的元素，splice的返回值是被删除的元素
+    this.setData({
+      fileList: deletImageList
+    })
+  },
+  addmemberOp(e) {
+    if (this.data.memberNum < 12) {
       this.setData({
-        memberNum:this.data.memberNum+1
+        memberNum: this.data.memberNum + 1
       })
     }
-   
-  }
-  ,
-  delmemberOp(e)
-  {
-    if(this.data.memberNum>0)
-    {
+
+  },
+  delmemberOp(e) {
+    if (this.data.memberNum > 0) {
       this.setData({
-        memberNum:this.data.memberNum-1
+        memberNum: this.data.memberNum - 1
       })
     }
-  }
-  ,
+  },
   mySelect(e) {
-   var name = e.currentTarget.dataset.name
-   this.setData({
-       tihuoWay: name,
-       select: false
-   })
-},
-createparty:function(e){
-  
-  //  wx.request({
-  //    url: 'http://xx.com/api//alumnicycle/party/add',
-  //    method:"POST",
-  //    data:{
-  //      userId:0,
-  //      description:"",
-  //      images:[],
-  //      peopleCnt:0,
-  //      partyTypeID:0
-  //    },
-  //    success(res)
-  //    {
-  //     Notify({ type: 'success', message: '创建拼局成功' });
-  //    },
+    var name = e.currentTarget.dataset.name
+    this.setData({
+      tihuoWay: name,
+      select: false
+    })
+  },
+  createparty: function (e) {
 
-  //  })
-},
+    //  wx.request({
+    //    url: 'http://xx.com/api//alumnicycle/party/add',
+    //    method:"POST",
+    //    data:{
+    //      userId:0,
+    //      description:"",
+    //      images:[],
+    //      peopleCnt:0,
+    //      partyTypeID:0
+    //    },
+    //    success(res)
+    //    {
+    //     Notify({ type: 'success', message: '创建拼局成功' });
+    //    },
+
+    //  })
+    this.submitImage();
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
