@@ -43,7 +43,7 @@ public class UserController {
   @Autowired
   TreeHoleServiceImpl treeHoleService;
 
-  @PostMapping
+  @PostMapping("/login")
   public Result<Integer> login(HttpServletRequest request, String code) {
 
     HttpSession session = request.getSession();
