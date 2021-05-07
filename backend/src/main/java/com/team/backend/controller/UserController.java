@@ -15,6 +15,9 @@ import com.team.backend.service.impl.UserServiceImpl;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +42,18 @@ public class UserController {
 
   @Autowired
   TreeHoleServiceImpl treeHoleService;
+
+  @PostMapping
+  public Result<Integer> login(HttpServletRequest request, String code) {
+
+    HttpSession session = request.getSession();
+    Map<String, Object> map = userService.login(code);
+    User user = (User) map.get("user");
+    Result<Integer> result = (Result<Integer>) map.get("result");
+
+    session.setAttribute("user", user);
+    return result;
+  }
 
   // 无需鉴权
   @PostMapping("/upload/img")

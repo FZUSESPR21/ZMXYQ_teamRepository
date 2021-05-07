@@ -83,6 +83,6 @@ public class User implements Serializable {
   private Integer deleted;
 
   @ApiModelProperty(value = "微信提供的OpenID")
-  private Long openId;
+  private String openId;
 
 }
