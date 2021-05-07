@@ -2,29 +2,29 @@
 <view class="my-wrap">
     <view class="head">
     <van-image class="head-image" round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg"></van-image>
-    <view class="head-z">
+    <view class="head-z" bindtap="">
         <view class="head-name"><text>Camouflage</text></view>
         <view class="head-school"><text>福州大学</text></view>
     </view>
     </view>
 
     <view class="body">
-    <view class="rpz">
+    <view class="rpz" bindtap="goToMyPost">
         <text>人品值</text>
         <text class="number">619</text>
     </view>
 
-    <view class="tz">
+    <view class="tz" bindtap="goToMyPost">
         <text>帖子</text>
         <text class="number">1</text>
     </view>
 
-    <view class="sc">
+    <view class="sc" bindtap="goToMyPost">
         <text>收藏</text>
         <text class="number">0</text>
     </view>
 
-    <view class="pl">
+    <view class="pl" bindtap="goToMyPost">
         <text>评论</text>
         <text class="number">200</text>
     </view>

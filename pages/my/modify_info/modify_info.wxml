@@ -1,0 +1,41 @@
+<page>
+    <view>
+        <van-cell title="性别" value="{{sex}}" is-link bind:click="showSex">
+        </van-cell>
+        <van-cell title="生日" value="{{picktime}}" is-link bind:click="showBirthday">
+        </van-cell>
+        <van-cell title="家乡" value="{{region[0] + region[1]}}" is-link bind:click="showRegion">
+        </van-cell>
+    </view>
+
+    <van-popup show="{{show1 }}" position="bottom" bind:close="onClose1">
+        <van-datetime-picker
+                type="date"
+                value="{{currentDate}}"
+                bind:confirm="onConfirm"
+                bind:cancel="onCancel1"
+                min-date="{{minDate}}"
+                max-date="{{maxDate}}"
+                bind:input="onInput"
+                formatter="{{ formatter }}"/>
+    </van-popup>
+
+    <van-action-sheet
+            show="{{ show2 }}"
+            actions="{{ actions }}"
+            bind:close="onClose2"
+            bind:select="onSelect2"
+    />
+
+    <van-popup show="{{show3}}" position="bottom" bind:close="onClose3">
+        <van-area 
+            area-list="{{ areaList }}" 
+            bind:cancel="onCancel3"
+            columns-num="{{ 2 }}" 
+            bind:confirm="confirmRegion"/>
+    </van-popup>
+
+    <view>
+        <van-button type="warning" size="normal" custom-class="van-button1" bindtap="handleSave">保存修改</van-button>
+    </view>
+</page>
