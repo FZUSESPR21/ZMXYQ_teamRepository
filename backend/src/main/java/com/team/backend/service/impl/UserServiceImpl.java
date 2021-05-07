@@ -1,5 +1,6 @@
 package com.team.backend.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.mapper.BlackListMapper;
@@ -19,15 +20,16 @@ import com.team.backend.model.User;
 import com.team.backend.mapper.UserMapper;
 import com.team.backend.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.team.backend.util.HttpRequestUtil;
 import com.team.backend.util.UserLegal;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -58,6 +60,56 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Autowired
   BlackListMapper blackListMapper;
+
+
+  @Value("${wxMini.appId}")
+  private String appId;
+
+  @Value("${wxMini.secret}")
+  private String secret;
+
+  // 用户登录验证
+  public Map<String, Object> login(String code) {
+
+    Result<Integer> result = new Result<>();
+    Map<String, Object> map = new HashMap<>();
+
+    if (code == null || code == "") {
+      result.setCode(ExceptionInfo.valueOf("USER_CODE_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_CODE_NULL").getMessage());
+      map.put("result", result);
+      map.put("user", new User());
+      return map;
+    }
+
+    String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appId + "&secret=" + secret
+        + "&js_code=" + code + "&grant_type=authorization_code";
+    String wxResult = HttpRequestUtil.httpRequest(url, "GET", null);
+    JSONObject jsonObject = JSONObject.parseObject(wxResult);
+    String openId = jsonObject.getString("openid");
+
+    QueryWrapper<User> wrapper = new QueryWrapper<>();
+    wrapper.eq("open_id", openId);
+
+    User user = userMapper.selectOne(wrapper);
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    // 当前用户为新用户
+    if (user == null) {
+      user.setOpenId(openId);
+      result.setData(userMapper.insert(user));
+      user = userMapper.selectOne(wrapper);
+      map.put("result", result);
+      map.put("user", user);
+      return map;
+    }
+
+    // 当前用户已存在
+    result.setData(0);
+    map.put("result", result);
+    map.put("user", user);
+    return map;
+  }
 
   // 用户上传图片
   public Result<String> identifyImg(File file) throws IOException {
@@ -150,7 +202,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     user.setStatus(0);// 用户状态默认为未审核
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    result.setData(userMapper.insert(user));
+    result.setData(userMapper.updateById(user));
     return result;
   }
 
@@ -480,7 +532,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   }
 
   // 删除黑名单
-  public Result<Integer> deleteBlack(Long userId,Long id) {
+  public Result<Integer> deleteBlack(Long userId, Long id) {
 
     Result<Integer> result = new Result<>();
 

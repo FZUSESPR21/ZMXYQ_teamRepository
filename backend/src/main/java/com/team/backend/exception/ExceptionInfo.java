@@ -48,12 +48,17 @@ public enum ExceptionInfo {
   USER_TREE_HOLE_DELETED(6026, "不存在此条树洞记录"),
   USER_TREE_HOLE_ID_NULL(6027, "树洞ID为空"),
   USER_NOT_BELONG(6028, "用户不存在此条记录"),
-  POST_IMAGE_FOLDER_NOT_CREATED(6101,"文件夹未创建"),
-  POST_IMAGE_CONTENT_EMPTY(6102,"Base64字符串或存储文件名为空"),
-  POST_IMAGE_STORE_PATH_NOT_FOUND(6103,"未找到图片存储位置"),
-  POST_IMAGE_STORE_FAIL(6104,"图片文件存储失败"),
-  POST_PUBLISH_INFO_LOST(6105,"发帖信息缺失"),
-  POST_PUBLISH_INSERT_FAIL(6106,"发帖信息存储失败"),
+  USER_NOT_LOGIN(6029, "用户未登录"),
+  USER_CODE_NULL(6030, "微信授权码为空"),
+
+  POST_IMAGE_FOLDER_NOT_CREATED(6101, "文件夹未创建"),
+  POST_IMAGE_CONTENT_EMPTY(6102, "Base64字符串或存储文件名为空"),
+  POST_IMAGE_STORE_PATH_NOT_FOUND(6103, "未找到图片存储位置"),
+  POST_IMAGE_STORE_FAIL(6104, "图片文件存储失败"),
+  POST_PUBLISH_INFO_LOST(6105, "发帖信息缺失"),
+  POST_PUBLISH_INSERT_FAIL(6106, "发帖信息存储失败"),
+  POST_LIKE_POST_FAIL(6107, "点赞帖子失败，请检查用户ID和帖子ID有效性"),
+  POST_LIKE_ALREADY(6108, "帖子点赞记录已存在，请勿重复点赞"),
   ;
 
   private Integer code;
