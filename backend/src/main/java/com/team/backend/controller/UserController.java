@@ -62,11 +62,20 @@ public class UserController {
     return userService.identifyImg(file);
   }
 
-  // 无需鉴权
   @PostMapping("/identify/submit")
-  public Result<Integer> identifySubmit(User user) {
+  public Result<Integer> identifySubmit(User user1) {
 
-    return userService.identifyUser(user);
+    User user = null;
+
+    if (user == null) {
+      Result<Integer> result = new Result<>();
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
+      return result;
+    }
+
+    user1.setId(user.getId());
+    return userService.identifyUser(user1);
   }
 
   @PostMapping("/identify/status")
@@ -100,18 +109,19 @@ public class UserController {
   }
 
   @PostMapping("/data/update")
-  public Result<Integer> updateUser(User user) {
+  public Result<Integer> updateUser(User user1) {
 
-    User nowUser = null;
+    User user = null;
 
-    if (nowUser == null) {
+    if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
       return result;
     }
 
-    return userService.updateUser(user);
+    user1.setId(user.getId());
+    return userService.updateUser(user1);
   }
 
   @GetMapping("/collect/list")

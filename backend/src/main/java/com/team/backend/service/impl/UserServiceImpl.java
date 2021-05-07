@@ -68,7 +68,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   @Value("${wxMini.secret}")
   private String secret;
 
-
+  // 用户登录验证
   public Map<String, Object> login(String code) {
 
     Result<Integer> result = new Result<>();
@@ -202,7 +202,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     user.setStatus(0);// 用户状态默认为未审核
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    result.setData(userMapper.insert(user));
+    result.setData(userMapper.updateById(user));
     return result;
   }
 
