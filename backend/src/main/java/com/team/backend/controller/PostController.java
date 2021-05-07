@@ -34,6 +34,7 @@ public class PostController {
   @PostMapping("/image")
   public Result savePostImage(@RequestBody Map<String,Object> requestMap
       , HttpServletRequest request) {
+        request.getSession();
         String base64Source = (String)requestMap.get("base64Str");
         String fileName = (String)requestMap.get("filename");
         ExceptionInfo info = imageService.saveImage(base64Source,fileName);
