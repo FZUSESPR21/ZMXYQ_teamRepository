@@ -104,6 +104,12 @@
       <version>5.7.1</version>
       <scope>test</scope>
     </dependency>
+    <!-- 引入阿里巴巴fastjson依赖 -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.47</version>
+    </dependency>
 
   </dependencies>
 
