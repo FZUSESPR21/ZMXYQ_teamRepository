@@ -55,21 +55,8 @@ Page({
   },
 
   onChange: function ({detail}) {
-    let partyList = this.data.partyList;
-    partyList.push({
-      "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
-      "publisher": {
-          "username": "张三",
-          "sex":"男"
-      },
-      "peopleCnt": 6,
-      "nowPeopleCnt": 3,
-      "partyType": "组局",
-      "gmtCreate": "1h前"
-    });
-    this.setData({
-      partyList
-    });
+      ;
+      // 调用接口
    },
 
    onClose: function () {
