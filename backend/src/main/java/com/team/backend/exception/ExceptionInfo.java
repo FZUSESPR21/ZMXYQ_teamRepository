@@ -50,6 +50,7 @@ public enum ExceptionInfo {
   USER_NOT_BELONG(6028, "用户不存在此条记录"),
   USER_NOT_LOGIN(6029, "用户未登录"),
   USER_CODE_NULL(6030, "微信授权码为空"),
+  USER_ICON_URL_NULL(6031, "用户头像url为空"),
 
   POST_IMAGE_FOLDER_NOT_CREATED(6101, "文件夹未创建"),
   POST_IMAGE_CONTENT_EMPTY(6102, "Base64字符串或存储文件名为空"),

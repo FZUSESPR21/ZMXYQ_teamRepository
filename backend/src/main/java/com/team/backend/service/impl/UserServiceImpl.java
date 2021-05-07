@@ -147,9 +147,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 判断用户是否已存在
     User sqlUser = userMapper.selectById(user.getId());
-    if (sqlUser != null && sqlUser.getId().equals(user.getId())) {
-      result.setCode(ExceptionInfo.valueOf("USER_ID_EXISTED").getCode());
-      result.setMessage(ExceptionInfo.valueOf("USER_ID_EXISTED").getMessage());
+    if (sqlUser == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_EXISTED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_EXISTED").getMessage());
       result.setData(0);
       return result;
     }
