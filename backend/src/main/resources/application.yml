@@ -23,7 +23,7 @@ mybatis-plus:
       logic-not-delete-value: 0
 
 # 微信小程序配置
-# 正式：wxbc7325a534e7461c ; 25e1f70d9703b0c33679b43923afdbf0
+# 正式：appId:wxbc7325a534e7461c ; secret:25e1f70d9703b0c33679b43923afdbf0
 wxMini:
   appId: wx5cb3151fe9a79b35
   secret: 6f6dc11730700a996d1731e9718c5a86
