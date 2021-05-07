@@ -1,4 +1,4 @@
-
+import { areaList } from '../../../static/@vant/area-data/lib/index';
 Page({
 
   /**
@@ -10,8 +10,10 @@ Page({
     minDate: new Date(1950,1,1),
     show1: false,
     show2: false,
-    picktime:"请选择",
-    sex:"请选择",
+    show3: false,
+    areaList,
+    picktime:"",
+    sex:"",
     formatter(type, value) {
       if (type === 'year') {
         return `${value}年`;
@@ -31,7 +33,8 @@ Page({
       {
         name: '女',
       },
-    ]
+    ],
+    region: [],
   },
 
   timeFormat(date, fmt) {
@@ -54,6 +57,10 @@ Page({
 
   showSex() {
     this.setData({ show2: true });
+  },
+
+  showRegion() {
+    this.setData({ show3: true });
   },
 
   onConfirm(event) {
@@ -81,6 +88,14 @@ Page({
     this.setData({ show2: false });
   },
 
+  onCancel3() {
+    this.setData({ show3: false });
+  },
+
+  onClose3() {
+    this.setData({ show3: false });
+  },
+
   onSelect2(res){
     this.setData({
       sex:res.detail.name
@@ -93,59 +108,31 @@ Page({
     });
   },
 
+  confirmRegion(event){
+    let midRegion = [];
+    midRegion[0] = event.detail.values[0].name;
+    midRegion[1] = event.detail.values[1].name;
+    this.setData({
+      region: midRegion,
+      show3: false
+    });
+  },
+
+  /*
+  保存修改
+  */
+ handleSave(){
+   console.log("保存");
+ },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+      this.setData({
+        sex: "男",
+        picktime: "1999-09-09",
+        region: ["福建省", "福州市"]
+      });
   }
 })
