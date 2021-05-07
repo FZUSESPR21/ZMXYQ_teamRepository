@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+     partyID: "none",
      partyDetailContent:"你们好",
      partyMemberList:[
        {
@@ -29,6 +30,18 @@ Page({
      hasjoined:false,
      buttonContent:"加入拼局"
   },
+
+  /*
+  生命周期函数
+  */
+  onLoad: function (options) {
+    console.log(options.partyID);
+    this.setData({
+      partyID: options.partyID
+    });
+    console.log(this.data.partyID);
+  },
+
   joinParty:function(e)
   {
     if(this.data.partyMemmberCntNow<this.data.partyMemmberCnt)
@@ -78,32 +91,32 @@ Page({
     // })
   },
   getPartyDetail:function(e){
-    wx.request({
-      url: 'http://xx.com/api/alumnicycle/party/partymes',
-      method:'GET',
-      data:{
-        id:1
-      },
-      success:function(res)
-      {
+    // wx.request({
+    //   url: 'http://xx.com/api/alumnicycle/party/partymes',
+    //   method:'GET',
+    //   data:{
+    //     id:1
+    //   },
+    //   success:function(res)
+    //   {
  
-      }
+    //   }
  
-    });
+    // });
   },
   getPartyCommentList:function(e){
-    wx.request({
-      url: 'http://xx.com/api/alumnicycle/party-comment/commentlsit',
-      method:'POST',
-      data:{
-        'partyId':'1'
-      }
-      ,
-      success:function(res)
-      {
-        this.data.partyCommentList=res.data;
-      }
-    })
+    // wx.request({
+    //   url: 'http://xx.com/api/alumnicycle/party-comment/commentlsit',
+    //   method:'POST',
+    //   data:{
+    //     'partyId':'1'
+    //   }
+    //   ,
+    //   success:function(res)
+    //   {
+    //     this.data.partyCommentList=res.data;
+    //   }
+    // })
   },
   onReady: function () {
     this.getPartyDetail ();
@@ -112,21 +125,21 @@ Page({
   },
   sendComment:function(e)
   {
-    wx.request({
-      url: 'http://xx.com/api/alumnicycle/party-comment/comment',
-      method:"POST",
-      data:{
-        content:"",
-        userId:0,
-        partyId:0,
-        preId:""
-      },
-      success:function(res)
-      {
-        Notify({ type: 'success', message: '评论成功' });
-      }
+    // wx.request({
+    //   url: 'http://xx.com/api/alumnicycle/party-comment/comment',
+    //   method:"POST",
+    //   data:{
+    //     content:"",
+    //     userId:0,
+    //     partyId:0,
+    //     preId:""
+    //   },
+    //   success:function(res)
+    //   {
+    //     Notify({ type: 'success', message: '评论成功' });
+    //   }
 
-    })
+    // })
   },
   onTap: function (e) {
     // 获取按钮元素的坐标信息
