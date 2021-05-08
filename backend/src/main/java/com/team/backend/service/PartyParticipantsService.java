@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-04-28
  */
 public interface PartyParticipantsService extends IService<PartyParticipants> {
-
+    //将参与者移出组局
 }
