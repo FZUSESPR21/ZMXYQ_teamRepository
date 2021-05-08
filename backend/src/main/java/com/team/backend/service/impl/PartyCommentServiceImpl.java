@@ -4,14 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.team.backend.exception.ExceptionInfo;
-import com.team.backend.model.PartyComment;
+import com.team.backend.mapper.NotificationMapper;
+import com.team.backend.mapper.PostCommentMapper;
+import com.team.backend.model.*;
 import com.team.backend.mapper.PartyCommentMapper;
-import com.team.backend.model.Result;
 import com.team.backend.service.PartyCommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**

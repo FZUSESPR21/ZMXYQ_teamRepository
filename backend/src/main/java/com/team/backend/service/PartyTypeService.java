@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-04-28
  */
 public interface PartyTypeService extends IService<PartyType> {
-
+    //根据组局类型ID获取组局
 }

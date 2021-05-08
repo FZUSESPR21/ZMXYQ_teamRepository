@@ -12,5 +12,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-04-28
  */
 public interface PartyCommentService extends IService<PartyComment> {
+    //组局评论
 
+
+    //获取组局评论列表
 }

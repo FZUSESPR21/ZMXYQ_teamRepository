@@ -2,20 +2,17 @@ package com.team.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.backend.exception.ExceptionInfo;
-import com.team.backend.mapper.PartyCommentMapper;
-import com.team.backend.mapper.PartyMapper;
-import com.team.backend.mapper.PartyParticipantsMapper;
-import com.team.backend.model.Party;
-import com.team.backend.model.PartyType;
-import com.team.backend.mapper.PartyTypeMapper;
-import com.team.backend.model.Result;
+import com.team.backend.mapper.*;
+import com.team.backend.model.*;
 import com.team.backend.service.PartyTypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
+import java.lang.Long;
 
 /**
  * <p>
@@ -27,7 +24,8 @@ import java.util.List;
  */
 @Service
 public class PartyTypeServiceImpl extends ServiceImpl<PartyTypeMapper, PartyType> implements
-        PartyTypeService {
+    PartyTypeService {
+
     @Autowired
     PartyCommentMapper partyCommentMapper;
 
