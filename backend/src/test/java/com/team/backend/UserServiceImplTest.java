@@ -49,19 +49,13 @@ public class UserServiceImplTest {
     result.setData(0);
     Assertions.assertEquals(result, userService.identifyUser(user));
 
-    user.setId(1L);// 数据库已存在一条ID为1L的记录
-    result.setCode(ExceptionInfo.valueOf("USER_ID_EXISTED").getCode());
-    result.setMessage(ExceptionInfo.valueOf("USER_ID_EXISTED").getMessage());
+    user.setId(9999999999L);// 数据库不存在此条记录
+    result.setCode(ExceptionInfo.valueOf("USER_NOT_EXISTED").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_NOT_EXISTED").getMessage());
     result.setData(0);
     Assertions.assertEquals(result, userService.identifyUser(user));
 
     user.setId(123456L);
-
-    user.setUsername(null);
-    result.setCode(ExceptionInfo.valueOf("USER_NAME_NULL").getCode());
-    result.setMessage(ExceptionInfo.valueOf("USER_NAME_NULL").getMessage());
-    result.setData(0);
-    Assertions.assertEquals(result, userService.identifyUser(user));
 
     user.setUsername("");
     result.setCode(ExceptionInfo.valueOf("USER_NAME_NULL").getCode());
@@ -78,8 +72,8 @@ public class UserServiceImplTest {
     user.setUsername("会飞的abc是可爱的小猪猪呀");
 
     user.setUserIconUrl("");
-    result.setCode(ExceptionInfo.valueOf("USER_IMG_URL_NULL").getCode());
-    result.setMessage(ExceptionInfo.valueOf("USER_IMG_URL_NULL").getMessage());
+    result.setCode(ExceptionInfo.valueOf("USER_ICON_URL_NULL").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_ICON_URL_NULL").getMessage());
     result.setData(0);
     Assertions.assertEquals(result, userService.identifyUser(user));
 
@@ -281,12 +275,6 @@ public class UserServiceImplTest {
 
     user.setId(1L);
 
-    user.setUsername(null);
-    result.setCode(ExceptionInfo.valueOf("USER_NAME_NULL").getCode());
-    result.setMessage(ExceptionInfo.valueOf("USER_NAME_NULL").getMessage());
-    result.setData(0);
-    Assertions.assertEquals(result, userService.updateUser(user));
-
     user.setUsername("");
     result.setCode(ExceptionInfo.valueOf("USER_NAME_NULL").getCode());
     result.setMessage(ExceptionInfo.valueOf("USER_NAME_NULL").getMessage());
@@ -302,8 +290,8 @@ public class UserServiceImplTest {
     user.setUsername("会飞的xyz是可爱的小猪猪呀");
 
     user.setUserIconUrl("");
-    result.setCode(ExceptionInfo.valueOf("USER_SCHOOL_NULL").getCode());
-    result.setMessage(ExceptionInfo.valueOf("USER_SCHOOL_NULL").getMessage());
+    result.setCode(ExceptionInfo.valueOf("USER_ICON_URL_NULL").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_ICON_URL_NULL").getMessage());
     result.setData(0);
     Assertions.assertEquals(result, userService.updateUser(user));
 

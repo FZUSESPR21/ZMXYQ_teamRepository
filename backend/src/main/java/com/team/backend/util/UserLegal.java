@@ -39,14 +39,15 @@ public class UserLegal {
   public String usernameLegal(String username) {
 
     // 用户名为空
-    if (username == null || username == "") {
-      return "USER_NAME_NULL";
+    if (username != null) {
+      if (username == "") {
+        return "USER_NAME_NULL";
+      }
+      // 用户名长度过长
+      if (username.length() > 15) {
+        return "USER_NAME_LENGTH";
+      }
     }
-    // 用户名长度过长
-    if (username.length() > 15) {
-      return "USER_NAME_LENGTH";
-    }
-
     return "OK";
   }
 
@@ -69,7 +70,10 @@ public class UserLegal {
 
   // 判断头像url的合法性
   public String iconUrlLegal(String url) {
-    if (url != null && url != "") {
+    if (url != null) {
+      if (url == "") {
+        return "USER_ICON_URL_NULL";
+      }
       Pattern pattern = Pattern.compile(
           "^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
       if (!pattern.matcher(url).matches()) {
@@ -82,13 +86,15 @@ public class UserLegal {
 
   // 判断证件照url的合法性
   public String imgUrlLegal(String url) {
-    if (url == null || url == "") {
-      return "USER_IMG_URL_NULL";
-    }
-    Pattern pattern = Pattern.compile(
-        "^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
-    if (!pattern.matcher(url).matches()) {
-      return "USER_NOT_IMG_URL";
+    if (url != null) {
+      if (url == "") {
+        return "USER_IMG_URL_NULL";
+      }
+      Pattern pattern = Pattern.compile(
+          "^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
+      if (!pattern.matcher(url).matches()) {
+        return "USER_NOT_IMG_URL";
+      }
     }
 
     return "OK";
@@ -97,25 +103,29 @@ public class UserLegal {
   // 判断用户学校名合法性
   public String schoolLegal(String school) {
 
-    // 判断学校名是否为空
-    if (school == null || school == "") {
-      return "USER_SCHOOL_NULL";
-    }
+    if (school != null) {
 
-    // 判断学校名的长度是否过长
-    if (school.length() > 50) {
-      return "USER_SCHOOL_LENGTH";
-    }
+      // 判断学校名是否为空
+      if (school == "") {
+        return "USER_SCHOOL_NULL";
+      }
 
-    //判断学校名是否存在非中文字符
-    int n = 0;
-    for (int i = 0; i < school.length(); i++) {
-      n = (int) school.charAt(i);
+      // 判断学校名的长度是否过长
+      if (school.length() > 50) {
+        return "USER_SCHOOL_LENGTH";
+      }
 
-      if (!(19968 <= n && n < 40869)) {
-        return "USER_SCHOOL_CHINESE";
+      //判断学校名是否存在非中文字符
+      int n = 0;
+      for (int i = 0; i < school.length(); i++) {
+        n = (int) school.charAt(i);
+
+        if (!(19968 <= n && n < 40869)) {
+          return "USER_SCHOOL_CHINESE";
+        }
       }
     }
+
     return "OK";
   }
 
