@@ -4,6 +4,8 @@ import com.team.backend.model.Party;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * <p>
  * Mapper 接口
@@ -14,5 +16,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public interface PartyMapper extends BaseMapper<Party> {
-
+    //    List<Party> selectByMyWrapper(@Param(Constants.WRAPPER) Wrapper<Party> partyWrapper);
+    List<Party> selectByMyWrapper();
 }
