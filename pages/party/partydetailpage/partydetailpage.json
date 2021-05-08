@@ -1,5 +1,7 @@
 {
   "usingComponents": {
+    "v-popover":"../../../components/v-popover/v-popover",
+    "v-popover-item":"../../../components/v-popover/v-popover-item"
   },
   "navigationBarTitleText": "拼局详情",
   "navigationBarBackgroundColor": "#ffffff"

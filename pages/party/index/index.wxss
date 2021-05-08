@@ -5,8 +5,8 @@ page,view,text,swiper,swiper-item,image,navigator,button{
   box-sizing: border-box;
 }
 
+
 page{
-  position: relative;
   background-color: #ffe680;
 }
 
@@ -44,5 +44,17 @@ page{
   position: absolute;
   margin-top: 300rpx;
   z-index: -1;
+  width: 100%;
+  min-height: 100rpx;
 }
+
+
+.scroll-view{
+    position: absolute;
+    height: 900rpx;
+}
+
+
+
+
 

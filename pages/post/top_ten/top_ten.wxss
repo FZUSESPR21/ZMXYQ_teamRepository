@@ -1,0 +1,20 @@
+/* pages/post/top_ten/top_ten.wxss */
+
+.col2{
+  background-color: brown;
+}
+
+.swiper{
+  display: flex;
+  flex-wrap: nowrap;
+  width: 40%;
+  height: 200rpx;
+}
+
+.swiper-item{
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: brown;
+  height: 100%;
+}
+
