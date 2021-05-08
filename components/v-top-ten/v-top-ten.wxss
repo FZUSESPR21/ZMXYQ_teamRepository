@@ -1,0 +1,56 @@
+
+.top-ten{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 150rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.top-ten-text{
+  display: flex;
+  font-size: medium;
+  color: #ffffff;
+  margin: 10% 0;
+}
+
+.van-icon-fire{
+  display: flex;
+}
+
+.left{
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  height: 100%;
+  background-color: #ff471a;
+  border-top-left-radius: 20rpx;
+  border-bottom-left-radius: 20rpx;
+}
+
+.swiper{
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 100%;
+}
+
+.swiper-item{
+  display: flex;
+  flex-direction: row;
+  background-color: #f2f2f2;
+  height: 100%;
+  border-top-right-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+}
+
+.swiper-item-text{
+  display: flex;
+  border: none;
+}
+
+
+
+
+

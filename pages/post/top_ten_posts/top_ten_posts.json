@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "v-top-ten":"../../../components/v-top-ten/v-top-ten"
+  }
+}
