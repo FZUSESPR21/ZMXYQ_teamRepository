@@ -1,6 +1,5 @@
 package com.team.backend.filter;
 
-import com.team.backend.model.Admin;
 import com.team.backend.model.User;
 import java.io.IOException;
 import javax.servlet.Filter;
