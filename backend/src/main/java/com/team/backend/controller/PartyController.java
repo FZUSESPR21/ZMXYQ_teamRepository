@@ -204,6 +204,6 @@ public class PartyController {
     }
     return result;
   }
-
+  //PARTY部分的controller层
 }
 
