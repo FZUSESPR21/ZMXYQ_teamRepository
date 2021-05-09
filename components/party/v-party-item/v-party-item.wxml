@@ -1,28 +1,30 @@
 <!--components/party/party_item/party_item.wxml-->
-<view class = "party-item">
-  <van-row custom-class = "panel1">
-    <!-- 左边标签开始 -->
-    <van-col span="3" custom-class = "col1" >
-      <text decode="{{true}}">\n&emsp;{{partyType[0]}}\n\n&emsp;{{partyType[1]}}</text>
-    </van-col>
-     <!-- 左边标签结束 -->
+<navigator url = "{{url}}">
+  <view class = "party-item">
+    <van-row custom-class = "panel1">
+      <!-- 左边标签开始 -->
+      <van-col span="3" custom-class = "col1" >
+        <text decode="{{true}}">\n&emsp;{{partyType[0]}}\n\n&emsp;{{partyType[1]}}</text>
+      </van-col>
+      <!-- 左边标签结束 -->
 
-     <!-- 右边标签开始 -->
-    <van-col span="21" custom-class = "col2">
-      <!-- 内容开始 -->
-      <view class = "content">
-        <text class = "content-text">{{content}}</text>
-      </view>
-      <!-- 内容结束 -->
+      <!-- 右边标签开始 -->
+      <van-col span="21" custom-class = "col2">
+        <!-- 内容开始 -->
+        <view class = "content">
+          <text class = "content-text">{{content}}</text>
+        </view>
+        <!-- 内容结束 -->
 
-        <!-- 局长，时间，人数-->
-      <view>
-        <text decode="{{true}}" class = "other-mes-text">局长：{{publisherName}}&emsp;</text>
-        <text decode="{{true}}" class = "other-mes-text">人数：{{peopleCnt}}/{{nowPeopleCnt}}&emsp;</text>
-        <text decode="{{true}}" class = "other-mes-text">{{time}}&emsp;</text>
-      </view>
-      <!-- 局长时间结束人数 -->
-    </van-col>
-    <!-- 右边标签结束 -->
-</van-row>
-</view>
+          <!-- 局长，时间，人数-->
+        <view>
+          <text decode="{{true}}" class = "other-mes-text">局长：{{publisherName}}&emsp;</text>
+          <text decode="{{true}}" class = "other-mes-text">人数：{{peopleCnt}}/{{nowPeopleCnt}}&emsp;</text>
+          <text decode="{{true}}" class = "other-mes-text">{{time}}&emsp;</text>
+        </view>
+        <!-- 局长时间结束人数 -->
+      </van-col>
+      <!-- 右边标签结束 -->
+  </van-row>
+  </view>
+</navigator>

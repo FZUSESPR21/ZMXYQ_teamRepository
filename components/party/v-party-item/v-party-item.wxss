@@ -56,3 +56,4 @@ page,view,text,swiper,swiper-item,image,navigator,button{
   padding: 6rpx;
   text-shadow: none; 
 }
+

@@ -1,0 +1,22 @@
+<navigator class = "top-ten" url = "../top_ten_posts/top_ten_posts">
+    <!-- 左边 -->
+    <view class="left">
+      <text decode="{{true}}" class="top-ten-text">Top-10{{partyType[1]}}</text>
+      <van-icon class="van-icon-fire" name="fire" color="#ffffff" />
+    </view>
+    <!-- 左边 -->
+
+    <!-- 右边 -->
+    <swiper autoplay="true" vertical="true" interval="3000" duration="2000"  class="swiper">
+      <swiper-item wx:for="{{topTen}}" wx:for-index="index" wx:for-item="item" wx:key="key" class="swiper-item">
+        <view>
+          <text class="swiper-item-text">{{item}}</text>
+        </view>
+      </swiper-item>
+  </swiper>
+  <!-- 右边 -->
+</navigator>
+
+
+
+

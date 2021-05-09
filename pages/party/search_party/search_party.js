@@ -15,6 +15,7 @@ getData:function(){
   {
     let partyList = this.data.partyList;
     partyList.push({
+      "partyID": "12345",
       "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
       "publisher": {
           "username": "张三",
@@ -30,11 +31,4 @@ getData:function(){
     })
    }
 },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-  }
-
 })

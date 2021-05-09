@@ -23,7 +23,8 @@
           publisherSex = "{{item.publisher.sex}}"
           time= "{{item.gmtCreate}}"
           peopleCnt = "{{item.peopleCnt}}"
-          nowPeopleCnt = "{{item.nowPeopleCnt}}">
+          nowPeopleCnt = "{{item.nowPeopleCnt}}"
+          url = "../partydetailpage/partydetailpage?partyID={{item.partyID}}">
         </v-party-item>
       </scroll-view>
       <!-- 我的组局列表结束 -->

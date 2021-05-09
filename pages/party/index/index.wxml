@@ -1,18 +1,42 @@
-<page>
-    <view class="search-image"> 
-      <van-image
-        round
-        width="100rpx"
-        height="100rpx"
-        src="/static/icons/search.png"
-        catchtap="searchParty"
-      />
-    </view>
 
-    <view class="my-buttons">
-        <van-button round icon="friends" color="linear-gradient(to right, #4bb0ff, #6149f6)" custom-class = "button-style" bindtap="goToMyParty">我的组局</van-button>
-        <van-button round icon="/static/icons/add_party.png"  color="linear-gradient(to right, #ff9999, #ff0000)" custom-class = "button-style" bindtap="createParty">发起组局</van-button>
-    </view>
+  <view class="search-image"> 
+    <van-image
+      round
+      width="100rpx"
+      height="100rpx"
+      src="/static/icons/search.png"
+      catchtap="searchParty"
+    />
+  </view>
 
-      <v-party-list></v-party-list>
-</page>
+  <view class="my-buttons">
+      <van-button round icon="friends" color="linear-gradient(to right, #4bb0ff, #6149f6)" custom-class = "button-style" bindtap="goToMyParty">我的组局</van-button>
+      <van-button round icon="/static/icons/add_party.png"  color="linear-gradient(to right, #ff9999, #ff0000)" custom-class = "button-style" bindtap="createParty">发起组局</van-button>
+  </view>
+
+    <!-- 下拉框开始 -->
+    <view class = "dropdown-menu" style="z-index: {{zIndex}}">
+      <van-dropdown-menu>
+        <van-dropdown-item  bind:open="onOpen" bind:closed="onClose" bind:change="onChange" value="{{ value1 }}" options="{{ option1 }}" />
+    </van-dropdown-menu>
+    </view>
+    <!-- 下拉框结束 -->
+
+
+    <!-- 组局列表开始 -->
+  <view class="list">
+      <scroll-view scroll-y class="scroll-view">
+      <v-party-item wx:for="{{partyList}}" 
+      partyID = "{{item.aprtyID}}"
+      partyType = "{{item.partyType}}"
+      content = "{{item.description}}"
+      publisherName = "{{item.publisher.username}}"
+      publisherSex = "{{item.publisher.sex}}"
+      time= "{{item.gmtCreate}}"
+      peopleCnt = "{{item.peopleCnt}}"
+      nowPeopleCnt = "{{item.nowPeopleCnt}}"
+      url = "../partydetailpage/partydetailpage?partyID={{item.partyID}}">
+      </v-party-item>
+    </scroll-view>
+</view>
+<!-- 组局列表结束 -->

@@ -1,7 +1,9 @@
 {
   "usingComponents": {
-    "v-party-list" : "../../../components/party/v-party-list/v-party-list",
     "van-icon": "@vant/weapp/icon/index",
-    "van-image": "@vant/weapp/image/index"
+    "van-image": "@vant/weapp/image/index",
+    "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
+    "van-dropdown-item": "@vant/weapp/dropdown-item/index",
+    "v-party-item": "../../../components/party/v-party-item/v-party-item"
   }
 }

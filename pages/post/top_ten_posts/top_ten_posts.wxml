@@ -1,0 +1,5 @@
+<!--pages/post/top_ten_posts/top_ten_posts.wxml-->
+<view>
+  <v-top-ten></v-top-ten>
+</view>
+

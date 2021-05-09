@@ -11,7 +11,8 @@ Component({
     publisherSex: String,
     time: String,
     peopleCnt: Number,
-    nowPeopleCnt: Number
+    nowPeopleCnt: Number,
+    url: String
   },
 
   /**
