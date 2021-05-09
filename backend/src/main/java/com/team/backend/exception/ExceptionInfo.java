@@ -71,6 +71,9 @@ public enum ExceptionInfo {
   PARTY_NOT_EXISTED(6205, "该组局记录不存在"),
   PARTY_TYPE_NOT_EXISTED(6206, "不存在该组局类型"),
   PARTY_NOT_AVAILABLE(6207, "该组局已满员"),
+  PARTY_NOTCONTAIN_USER(6208, "当前用户没有参与该组局"),
+  PARTY_NOTBELONGTO_USER(6209, "该组局不属于当前用户"),
+  PARTY_SEARCHMAS_NULL(6210, "组局搜索条件为空"),
   ;
 
   private Integer code;

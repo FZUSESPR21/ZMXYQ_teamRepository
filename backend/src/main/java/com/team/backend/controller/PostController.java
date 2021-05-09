@@ -69,7 +69,7 @@ public class PostController {
    *
    * @param requestMap the request map
    * @param request    the request
-   * @return the result
+   * @return the resul
    */
   @PostMapping("/publish")
   public Result publishPost(@RequestBody Map<String,Object> requestMap
