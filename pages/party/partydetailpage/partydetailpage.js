@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    partyID:0,
      partyDetailContent:"你们好",
      partyMemberList:[
        {
@@ -29,6 +30,18 @@ Page({
      hasjoined:false,
      buttonContent:"加入拼局"
   },
+
+  /*
+  生命周期函数
+  */
+ onLoad: function (options) {
+  console.log(options.partyID);
+  this.setData({
+    partyID: options.partyID
+  });
+  console.log(this.data.partyID);
+},
+
   // 加入或退出组局函数
   joinParty:function(e)
   {
