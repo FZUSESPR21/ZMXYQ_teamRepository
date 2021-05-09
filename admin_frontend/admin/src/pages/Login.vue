@@ -2,7 +2,7 @@
   <div class="login" clearfix>
     <div class="login-wrap">
       <el-row type="flex" justify="center">
-        <el-form ref="loginForm" :model="user" :rules="rules" status-icon label-width="80px">
+        <el-form ref="loginForm" :model="user"  status-icon label-width="80px">
           <h3>登录</h3>
           <hr>
           <el-form-item prop="username" label="用户名">
@@ -36,12 +36,40 @@ export default {
   methods: {
     doLogin() {
       if (!this.user.username) {
-        this.$message.error("请输入用户名！");
+        this.$message.error("用户名不能为空！");
         return;
       }
       else if (!this.user.password) {
-        this.$message.error("请输入密码！");
+        this.$message.error("密码不能为空！");
         return;
+      }
+      else
+      {
+        let that = this;
+        this.$axios
+          .post('/login',{
+            adminId: that.user.username,
+            password: that.user.password
+          }
+          )
+          .then(function(response){
+            console.log(response);
+            if(response.status != 200){
+              that.showMessageBox("网络错误，请稍后重试！", "Error"); 
+            }
+            else if(response.data.code == 1){
+              that.showMessageBox("用户不存在！", "Error");
+            }
+            else if(response.data.code == 2){
+              that.showMessageBox("密码错误！", "Error");
+            }
+            else{
+              that.$router.push({name: 'Index'});  //跳转页面
+            }
+          })
+          .catch(function (error) { // 请求失败处理
+            console.log(error);
+          });
       }
     }
   }

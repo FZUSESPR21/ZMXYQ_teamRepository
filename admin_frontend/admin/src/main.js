@@ -10,7 +10,20 @@ import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
-Vue.use(VueAxios,axios);
+axios.defaults.baseURL = "http://ccreater.top:61112/api/admin";
+Vue.prototype.$axios = axios;
+// 定义全局函数，弹出弹出框
+Vue.prototype.showMessageBox = function(message, title){
+  this.$alert(message, title, {
+    confirmButtonText: '确定',
+    callback: action => {
+      this.$message({
+        type: 'info',
+        message: `action: ${ action }`
+      });
+    }
+  });
+}
 
 
 /* eslint-disable no-new */
