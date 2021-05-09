@@ -69,6 +69,16 @@ page{
       margin-top: -10px;
       z-index: 1;
 }
+.delete-button{
+  width:40rpx;
+   height: 40rpx;
+  border-radius: 5rem;
+  z-index: 1;
+  position: absolute;
+  margin-left: 100rpx;
+  margin-top: -100rpx;
+}
+
 .partydetailcontent{
   width: 612rpx;
   background: #ffffff; 
@@ -200,4 +210,8 @@ page{
   font-weight: bold;
   width: 40%;
   font-size: 36rpx;
+}
+.delete-button-icon{
+  height: 20px;
+  width: 20px;
 }

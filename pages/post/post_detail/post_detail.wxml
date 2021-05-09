@@ -1,0 +1,54 @@
+<!--pages/post_detail/post_detail.wxml-->
+<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" >
+  
+  <block wx:for="6" wx:for-index="idx" wx:for-item="item" data-idx="6">
+      <view class="feed-item">
+          <view class="feed-source">
+              <a>
+                  <view class="avatar">
+                      <image src="../../../static/icons/smile.png"></image>
+                  </view>
+                  <text class="name">昵称    </text>
+                  <text class="time">时间 </text>
+              </a>
+              <image class="item-more" mode="aspectFit" src="../../../static/icons/moreInfo.png"></image>
+          </view>
+          <view class="feed-content">
+              <view class="question" >
+                  <a class="question-link">
+                      <text class = "title">标题</text>
+                      <text class = "content"> 贴文具体内容\n</text>
+                      <image class="img" src="../../../static/icons/img.png"  ></image>
+                  </a>
+              </view>
+
+              <view class="answer-body">
+                  <view class="answer-actions" bindtap="bindItemTap">
+                    <view class="actions">
+                      <image class="mark" src="../../../static/icons/mark.png" ></image>
+                          <a class="iconIntro">收藏  </a>
+                      </view>
+                      <view class="actions">
+                        <image class="agree" src="../../../static/icons/agree.png" ></image>
+                          <a class="iconIntro">点赞  </a>
+                      </view>
+                      <view class="actions">
+                          <image class="reward" src="../../../static/icons/reward.png" ></image>
+                          <a class="iconIntro">赞赏  </a>
+                      </view>
+                      <view class="actions">
+                          <image class="share" src="../../../static/icons/share.png" ></image>
+                          <a class="iconIntro">分享  </a>
+                      </view>      
+                      <view class="v-btn">
+                        <image class="comment" src="../../../static/icons/comment.png" ></image>
+                        评论
+                    </view> 
+                  </view>
+              </view>
+          </view>
+        
+      </view>
+  </block>
+</scroll-view> 
+

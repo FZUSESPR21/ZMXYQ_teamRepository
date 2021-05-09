@@ -28,7 +28,7 @@
 <view class="partymemberview">
   <text class="party-detail-title2">局内成员</text>
   <view class="partymemberlist">
-    <view class="partymemberlistitem" wx:for="{{partyMemberList}}">
+    <view class="partymemberlistitem" wx:for="{{partyMemberList}}" wx:for-item='item' wx:for-index='index'>
       <!-- {{item.userName}} -->
       <van-image
   round
@@ -40,6 +40,7 @@
 <view class="partyMemberListitemlabel">
   局长
 </view>
+<view class="delete-button" wx:if="{{item.inTheParty}}"><image src="../../../static/icons/delete.png" class="delete-button-icon" bindtap="moveOffMember" data-index="{{index}}"></image></view>
     </view>
   </view>
   </view>

@@ -32,6 +32,7 @@ Page({
 
 
     ],
+    base64fileList:[],
     partyDetailContent: "1111",
     buttonOperation: "创建组局(消耗50人品)"
   },
@@ -81,12 +82,29 @@ let _this = this;
             encoding: "base64",
             success: function(data) {
               console.log(data.data)
+              wx.request({
+                url: 'http://192.168.50.167:8088/api/post/image',
+                data:{
+                  base64Str:'data:image/jpeg;base64,'+data.data,
+                  filename:"111"
+                },
+                method:"POST",
+                success:function(e)
+                {
+                  console.log(e);
+                },
+                fail:function(e)
+                {
+                  console.log(e);
+                }
+              })
             }
           });
         }
       },
     })
     })
+    console.log(this.data.base64fileList);
   },
   deleteImage: function (e) {
     const index = e.detail.index; //获取到点击要删除的图片的下标

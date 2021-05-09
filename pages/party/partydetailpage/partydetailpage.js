@@ -10,16 +10,16 @@ Page({
      partyDetailContent:"你们好",
      partyMemberList:[
        {
-         userName:"222",
-         state:true,
+        participantsID:0,
+        inTheParty:true
        },
        {
-        userName:"222",
-        state:true,
+        participantsID:0,
+        inTheParty:true
       },
       {
-        userName:"222",
-        state:false,
+        participantsID:0,
+        inTheParty:true
       },
    
      ],
@@ -29,41 +29,44 @@ Page({
      hasjoined:false,
      buttonContent:"加入拼局"
   },
+  // 加入或退出组局函数
   joinParty:function(e)
   {
-    if(this.data.partyMemmberCntNow<this.data.partyMemmberCnt)
-    {
+    
     if(this.data.hasjoined==false)
     {
-      this.setData({
-        buttonContent:"退出组局",
-        hasjoined:true
-      })
-      Notify({ type: 'success', message: '加入拼局成功' });
-      this.setData({
-        partyMemberList:this.data.partyMemberList.concat({
-          userName:"222",
-          state:true
-        }),
-        partyMemmberCntNow:this.data.partyMemmberCntNow+1
-      })
+      if(this.data.partyMemmberCntNow<this.data.partyMemmberCnt)
+      {
+        this.setData({
+          buttonContent:"退出组局",
+          hasjoined:true
+        });
+        Notify({ type: 'success', message: '加入拼局成功' });
+        this.setData({
+          partyMemberList:this.data.partyMemberList.concat({
+            userName:"222",
+            state:true
+          }),
+          partyMemmberCntNow:this.data.partyMemmberCntNow+1
+        })
+      }
+      else{
+        Dialog.alert({
+          message: '组局人数已经达到上限',
+        }).then(() => {
+          // on close
+        });
+      }
+     
     }
     else{
       this.setData({
         buttonContent:"加入组局",
         hasjoined:false
       })
-      const memberList=this.data.partyMemberList;
+      
       Notify({ type: 'success', message: '退出拼局成功' });
     }
-  }
-  else{
-    Dialog.alert({
-      message: '组局人数已经达到上限',
-    }).then(() => {
-      // on close
-    });
-  }
     // wx.request({
     //   url: 'http://xx.com/api/alumnicycle/party/partymes',
     //   methods:"get",
@@ -76,7 +79,20 @@ Page({
     //   }
       
     // })
+     // wx.request({
+    //   url: 'http://xx.com/api/alumnicycle/party/exit',
+    //   methods:"POST",
+    //   data:{
+    //     'partyId':1
+    //   },
+    //   success:function(res)
+    //   {
+    //     Notify({ type: 'success', message: '加入拼局成功' });
+    //   }
+      
+    // })
   },
+  // 获取组局详情
   getPartyDetail:function(e){
     wx.request({
       url: 'http://xx.com/api/alumnicycle/party/partymes',
@@ -91,6 +107,7 @@ Page({
  
     });
   },
+  // 获取评论列表函数
   getPartyCommentList:function(e){
     wx.request({
       url: 'http://xx.com/api/alumnicycle/party-comment/commentlsit',
@@ -110,6 +127,7 @@ Page({
     this.getPartyCommentList();
     this.popover = this.selectComponent('#popover');
   },
+  // 发送评论函数
   sendComment:function(e)
   {
     wx.request({
@@ -128,6 +146,7 @@ Page({
 
     })
   },
+  //气泡小组件获取位置函数
   onTap: function (e) {
     // 获取按钮元素的坐标信息
     var id = 'morebutton' // 或者 e.target.id 获取点击元素的 ID 值
@@ -145,6 +164,7 @@ Page({
     // 调用自定义组件 popover 中的 onHide 方法
     this.popover.onHide();
   },
+  // 解散组局函数
   disbandParty:function(e)
   {
     Dialog.confirm({
@@ -168,6 +188,43 @@ Page({
         // on cancel
       });
       this.popover.onHide();
+  },
+  // 将参与者移除组局函数
+  moveOffMember:function(e)
+  {
+    
+    Dialog.confirm({
+      message: '确定要移除该成员吗',
+    })
+      .then(() => {
+        let deleteIndex=e.currentTarget.dataset.index;
+        this.moveOff(deleteIndex);
+      })
+      .catch(() => {
+        // on cancel
+      });
+  },
+  moveOff:function(deleteIndex)
+  {
+     // wx.request({
+        //   url: 'http://xx.com/api/alumnicycle/party-participants/moveoff',
+        //   method:"POST",
+        //   data:{
+        //     partyId:0,
+        //     userId:0
+        //   },
+        //   success:function(res)
+        //   {
+
+        //   }
+        // })
+        // // on confirm
+        console.log(deleteIndex);
+    let newMemberList=this.data.partyMemberList;
+    newMemberList.splice(deleteIndex,1);
+   this.setData({
+     partyMemberList:newMemberList
+   });
   }
  
 })
