@@ -7,7 +7,6 @@
             border
             style="width: 100%"
             :default-sort = "{prop: 'time', order: 'descending'}"
-            @row-click="getDetails"
           >
             <el-table-column
               fixed
@@ -97,62 +96,77 @@ export default {
         this.myData.splice(index,1);
     },
     getData(){
-        this.myData = [
-          {           
-          "userID":"12345",           
-          "userName":"阿伟",           
-          "imageUrls":"https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG",
-          "gmtCreate":"2021/4/28 18:00:01"         
-          },  
-          {           
-          "userID":"123456",           
-          "userName":"阿伟",           
-          "imageUrls":"图片路径1", 
-          "gmtCreate":"2021/4/28 18:00:01"         
-          },  
-          {           
-          "userID":"123457",           
-          "userName":"阿伟",           
-          "imageUrls":"图片路径1", 
-          "gmtCreate":"2021/4/28 18:00:01"         
-          },  
-          {           
-          "userID":"123458",           
-          "userName":"阿伟",           
-          "imageUrls":"图片路径1", 
-          "gmtCreate":"2021/4/28 18:00:01"         
-          },  
-          {           
-          "userID":"123459",           
-          "userName":"阿伟",           
-          "imageUrls":"图片路径1", 
-          "gmtCreate":"2021/4/28 18:00:01"         
-          },  
-          {           
-          "userID":"123454",           
-          "userName":"阿伟",           
-          "imageUrls":"图片路径1", 
-          "gmtCreate":"2021/4/28 18:00:01"         
-          },
-          {           
-          "userID":"123454",           
-          "userName":"阿伟",           
-          "imageUrls":"图片路径1", 
-          "gmtCreate":"2021/4/28 18:00:01"         
-          },
-          {           
-          "userID":"123454",           
-          "userName":"阿伟",           
-          "imageUrls":"图片路径1", 
-          "gmtCreate":"2021/4/28 18:00:01"         
-          },
-          {           
-          "userID":"123454",           
-          "userName":"阿伟",           
-          "imageUrls":"图片路径1", 
-          "gmtCreate":"2021/4/28 18:00:01"         
-          }
-      ]
+      let that = this;
+      this.$axios.get('/authority', {
+            params: {
+              pageIndex: 1,
+              order: 1
+            },
+            withCredentials: true,
+            credentials: 'include'
+            })
+            .then( function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+      //   this.myData = [
+      //     {           
+      //     "userID":"12345",           
+      //     "userName":"阿伟",           
+      //     "imageUrls":"https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG",
+      //     "gmtCreate":"2021/4/28 18:00:01"         
+      //     },  
+      //     {           
+      //     "userID":"123456",           
+      //     "userName":"阿伟",           
+      //     "imageUrls":"图片路径1", 
+      //     "gmtCreate":"2021/4/28 18:00:01"         
+      //     },  
+      //     {           
+      //     "userID":"123457",           
+      //     "userName":"阿伟",           
+      //     "imageUrls":"图片路径1", 
+      //     "gmtCreate":"2021/4/28 18:00:01"         
+      //     },  
+      //     {           
+      //     "userID":"123458",           
+      //     "userName":"阿伟",           
+      //     "imageUrls":"图片路径1", 
+      //     "gmtCreate":"2021/4/28 18:00:01"         
+      //     },  
+      //     {           
+      //     "userID":"123459",           
+      //     "userName":"阿伟",           
+      //     "imageUrls":"图片路径1", 
+      //     "gmtCreate":"2021/4/28 18:00:01"         
+      //     },  
+      //     {           
+      //     "userID":"123454",           
+      //     "userName":"阿伟",           
+      //     "imageUrls":"图片路径1", 
+      //     "gmtCreate":"2021/4/28 18:00:01"         
+      //     },
+      //     {           
+      //     "userID":"123454",           
+      //     "userName":"阿伟",           
+      //     "imageUrls":"图片路径1", 
+      //     "gmtCreate":"2021/4/28 18:00:01"         
+      //     },
+      //     {           
+      //     "userID":"123454",           
+      //     "userName":"阿伟",           
+      //     "imageUrls":"图片路径1", 
+      //     "gmtCreate":"2021/4/28 18:00:01"         
+      //     },
+      //     {           
+      //     "userID":"123454",           
+      //     "userName":"阿伟",           
+      //     "imageUrls":"图片路径1", 
+      //     "gmtCreate":"2021/4/28 18:00:01"         
+      //     }
+      // ]
     },
     //以下方法为实现分页功能
       handleSizeChange(val) {

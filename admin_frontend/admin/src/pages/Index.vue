@@ -18,6 +18,7 @@ export default {
   name: "index",
   data() {
     return {
+      activeIndex: "0"
     };
   },
   created() {},

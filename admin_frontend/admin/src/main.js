@@ -11,6 +11,7 @@ import VueAxios from 'vue-axios'
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 axios.defaults.baseURL = "http://ccreater.top:61112/api/admin";
+axios.defaults.withCredentials = true; // 允许携带cookie
 Vue.prototype.$axios = axios;
 // 定义全局函数，弹出弹出框
 Vue.prototype.showMessageBox = function(message, title){
