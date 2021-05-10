@@ -27,3 +27,6 @@ wxMini:
 wxMiniReal:
   appId: wxbc7325a534e7461c
   secret: 25e1f70d9703b0c33679b43923afdbf0
+
+test:
+  istest: 1

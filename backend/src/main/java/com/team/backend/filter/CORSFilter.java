@@ -1,0 +1,51 @@
+package com.team.backend.filter;
+
+/**
+ * @author : ccreater
+ * @ClassName : com.team.backend.filter.CORSFilter
+ * @Description : 类描述
+ * @date : 2021-05-10 10:28 Copyright  2021 ccreater. All rights reserved.
+ */
+
+import com.team.backend.model.User;
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
+
+/**
+ * @author : ccreater
+ * @ClassName : com.team.backend.filter.UserAuthFilter
+ * @Description : 类描述
+ * @date : 2021-05-07 21:04 Copyright  2021 ccreater. All rights reserved.
+ */
+@WebFilter(urlPatterns = "/*", filterName = "corsFilter")
+public class CORSFilter implements Filter {
+  @Override
+  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+      FilterChain filterChain) throws IOException, ServletException {
+    HttpServletResponse response = (HttpServletResponse) servletResponse;
+    HttpServletRequest request = (HttpServletRequest) servletRequest;
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Credentials", "true");
+    response.setHeader("Access-Control-Allow-Methods",
+        "ACL, CANCELUPLOAD, CHECKIN, CHECKOUT, COPY, DELETE, GET, HEAD, LOCK, MKCALENDAR, MKCOL, MOVE, OPTIONS, POST, PROPFIND, PROPPATCH, PUT, REPORT, SEARCH, UNCHECKOUT, UNLOCK, UPDATE, VERSION-CONTROL");
+    response.setHeader("Access-Control-Max-Age", "3600");
+    response.setHeader("Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization");
+
+    if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+      response.setStatus(HttpServletResponse.SC_OK);
+    } else {
+      filterChain.doFilter(servletRequest, servletResponse);
+    }
+  }
+
+}
