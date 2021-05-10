@@ -1,5 +1,6 @@
 package com.team.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -50,9 +51,10 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
   @Override
   public boolean commentPost(PostComment postComment) {
     boolean result = false;
-    if (postComment.getIdFrom() != null && postComment.getIdTo() != null
+    if (postComment !=null && postComment.getIdFrom() != null && postComment.getIdTo() != null
         && postComment.getPostId() != null && postComment.getPreId() != null
         && !StringUtils.isBlank(postComment.getMessage())) {
+      postComment.setStatus(0);
       if (postCommentMapper.insert(postComment) == 1) {
         if (postComment.getIdTo() <= 0) {//idTo传入小于等于0，表明是一级评论，数据库中preId与Id相同
           UpdateWrapper<PostComment> updateWrapper = new UpdateWrapper<>();
@@ -60,10 +62,16 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
           updateWrapper.set("pre_id", postComment.getId());
           updateWrapper.set("id_to",-1);
         }
+        //添加评论消息记录
         Notification notification = new Notification();
         notification.setType(0);//消息对应类型(0:评论,1:点赞,2:赞赏,3:收藏)
         notification.setIsRead(0);
         notification.setSourceId(postComment.getId());
+        QueryWrapper<Post> postWrapper = new QueryWrapper<>();
+        postWrapper.eq("id",postComment.getPostId());
+        postWrapper.select("publisher_id");
+        Post post = postMapper.selectOne(postWrapper);
+        notification.setUserId(post.getPublisherId());
         if (notificationMapper.insert(notification) == 1) {
           result = true;
         }

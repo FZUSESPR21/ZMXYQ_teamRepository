@@ -62,6 +62,8 @@ public enum ExceptionInfo {
   POST_LIKE_ALREADY(6108, "帖子点赞记录已存在，请勿重复点赞"),
   POST_ID_NULL(6109, "帖子ID为空"),
   POST_NOT_EXISTED(6110, "不存在该条帖子"),
+  POST_COMMENT_INFO_LOST(6111,"帖子评论信息缺失"),
+  POST_COMMENT_POST_FAIL(6112,"评论帖子失败，请检查参数有效性"),
 
   PARTY_DESCRIPTION_NULL(6200, "组局描述为空"),
   PARTY_IMAGEURLS_NULL(6201, "组局图片为空"),
