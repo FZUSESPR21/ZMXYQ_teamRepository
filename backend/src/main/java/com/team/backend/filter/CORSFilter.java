@@ -7,7 +7,6 @@ package com.team.backend.filter;
  * @date : 2021-05-10 10:28 Copyright  2021 ccreater. All rights reserved.
  */
 
-import com.team.backend.model.User;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,14 +16,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
- * @author : ccreater
- * @ClassName : com.team.backend.filter.UserAuthFilter
+ * @author : yangyu
+ * @ClassName : com.team.backend.filter.CORSFilter
  * @Description : 类描述
- * @date : 2021-05-07 21:04 Copyright  2021 ccreater. All rights reserved.
+ * @date : 2021-05-07 21:04 Copyright  2021 yangyu. All rights reserved.
  */
 @WebFilter(urlPatterns = "/*", filterName = "corsFilter")
 public class CORSFilter implements Filter {
