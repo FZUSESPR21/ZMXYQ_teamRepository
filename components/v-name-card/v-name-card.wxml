@@ -1,6 +1,6 @@
 <!--components/v-name-card.wxml-->
 <view class="name-card-view" bindtap="Popup">
-  <van-image round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg"
+  <van-image round width="2.8rem" height="2.8rem" src="https://img.yzcdn.cn/vant/cat.jpeg"
     class="comment-publisher-view-head" />
   <view class="comment-publisher-view-message">
     <view class="comment-publisher-view-message-name">1</view>
