@@ -48,7 +48,7 @@
                     
                 </view>
                 <view>
-                    <view class="v-btn"><image class="comment" src="../../static/icons/comment.png" ></image><text>评论</text></view>         
+                        
                     
                 </view>  
                         </view>    

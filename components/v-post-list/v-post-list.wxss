@@ -64,13 +64,13 @@
   margin-left:3px;
   margin-right:5px;
 }
-.comment{
+/* .comment{
   width: 16px;
   height: 16px;
   margin-top: 8rpx;
   margin-left: 8rpx;
   margin-right: 20rpx;
-}
+} */
 
 .container.withtab{
   margin: 105rpx 0 0 0;
