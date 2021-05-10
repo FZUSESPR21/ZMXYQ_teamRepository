@@ -2,6 +2,7 @@ com\team\backend\model\PostEyeOn.class
 com\team\backend\mapper\PostEyeOnMapper.class
 com\team\backend\model\PostComment.class
 com\team\backend\model\PrivateChat.class
+com\team\backend\util\Result.class
 com\team\backend\mapper\PartyTypeMapper.class
 com\team\backend\service\ReportService.class
 com\team\backend\controller\PartyTypeController.class
@@ -23,6 +24,7 @@ com\team\backend\service\impl\TreeHoleServiceImpl.class
 com\team\backend\service\PostTypeService.class
 com\team\backend\model\Result.class
 com\team\backend\model\TreeHole.class
+com\team\backend\service\impl\Base64ImageServiceImpl.class
 com\team\backend\service\AdminService.class
 com\team\backend\service\impl\PostLikeServiceImpl.class
 com\team\backend\controller\PostCommentController.class
@@ -31,6 +33,7 @@ com\team\backend\controller\PostRewardController.class
 com\team\backend\service\impl\PostTypeServiceImpl.class
 com\team\backend\model\User.class
 com\team\backend\model\PostReward.class
+com\team\backend\filter\AdminAuthFilter.class
 com\team\backend\config\MybatisPlusConfig.class
 com\team\backend\mapper\AdminMapper.class
 com\team\backend\service\impl\PostCommentServiceImpl.class
@@ -89,8 +92,10 @@ com\team\backend\controller\PartyParticipantsController.class
 com\team\backend\service\PartyCommentService.class
 com\team\backend\service\impl\ReportServiceImpl.class
 com\team\backend\mapper\NotificationMapper.class
+com\team\backend\handler\DateConverterHandler.class
 com\team\backend\service\impl\PartyServiceImpl.class
 com\team\backend\service\UserService.class
+com\team\backend\model\PersonalBlackItem.class
 com\team\backend\util\Base64Util.class
 com\team\backend\config\SwaggerConfig.class
 com\team\backend\model\Post.class

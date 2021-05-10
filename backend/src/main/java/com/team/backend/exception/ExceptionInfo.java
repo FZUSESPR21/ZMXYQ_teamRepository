@@ -60,6 +60,20 @@ public enum ExceptionInfo {
   POST_PUBLISH_INSERT_FAIL(6106, "发帖信息存储失败"),
   POST_LIKE_POST_FAIL(6107, "点赞帖子失败，请检查用户ID和帖子ID有效性"),
   POST_LIKE_ALREADY(6108, "帖子点赞记录已存在，请勿重复点赞"),
+  POST_ID_NULL(6109, "帖子ID为空"),
+  POST_NOT_EXISTED(6110, "不存在该条帖子"),
+
+  PARTY_DESCRIPTION_NULL(6200, "组局描述为空"),
+  PARTY_IMAGEURLS_NULL(6201, "组局图片为空"),
+  PARTY_PEOPLECNT_NULL(6202, "组局人数限制为空"),
+  PARTY_PARTYTYPEID_NULL(6203, "组局类型ID为空"),
+  PARTY_ID_NULL(6204, "组局ID为空"),
+  PARTY_NOT_EXISTED(6205, "该组局记录不存在"),
+  PARTY_TYPE_NOT_EXISTED(6206, "不存在该组局类型"),
+  PARTY_NOT_AVAILABLE(6207, "该组局已满员"),
+  PARTY_NOTCONTAIN_USER(6208, "当前用户没有参与该组局"),
+  PARTY_NOTBELONGTO_USER(6209, "该组局不属于当前用户"),
+  PARTY_SEARCHMAS_NULL(6210, "组局搜索条件为空"),
   ;
 
   private Integer code;
