@@ -21,9 +21,13 @@ mybatis-plus:
       logic-delete-field: deleted
       logic-delete-value: 1
       logic-not-delete-value: 0
+  mapper-locations: classpath:/com/team/backend/mapper/**/*Mapper.xml
 wxMini:
   appId: wx5cb3151fe9a79b35
   secret: 6f6dc11730700a996d1731e9718c5a86
 wxMiniReal:
   appId: wxbc7325a534e7461c
   secret: 25e1f70d9703b0c33679b43923afdbf0
+
+test:
+  istest: 1
