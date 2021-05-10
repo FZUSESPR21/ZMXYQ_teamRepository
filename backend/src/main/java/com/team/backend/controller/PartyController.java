@@ -39,8 +39,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/party")
 public class PartyController {
-  @Autowired
-  PartyService partyService;
+  @Resource
+  private PartyServiceImpl partyService;
   @PostMapping("/add")
   public Response addParty(@RequestBody Map<String, Object> map) {
     String id = (String)map.get("userID");
@@ -55,8 +55,7 @@ public class PartyController {
 
   User user;
 
-  @Resource
-  private PartyServiceImpl partyService;
+
 
   /**
    * 新建组局接口
