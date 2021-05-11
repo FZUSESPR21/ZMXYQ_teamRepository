@@ -33,6 +33,7 @@ com\team\backend\model\PartyComment.class
 com\team\backend\controller\PostRewardController.class
 com\team\backend\service\impl\PostTypeServiceImpl.class
 com\team\backend\model\User.class
+com\team\backend\config\CORSConfig.class
 com\team\backend\model\PostReward.class
 com\team\backend\filter\AdminAuthFilter.class
 com\team\backend\config\MybatisPlusConfig.class
@@ -72,7 +73,6 @@ com\team\backend\controller\PartyCommentController.class
 com\team\backend\mapper\PostTypeMapper.class
 com\team\backend\model\Notification.class
 com\team\backend\service\PartyTypeService.class
-com\team\backend\config\CorsFilter.class
 com\team\backend\mapper\UserMapper.class
 com\team\backend\util\UserLegal.class
 com\team\backend\model\PartyType.class
@@ -82,6 +82,7 @@ com\team\backend\service\PrivateChatService.class
 com\team\backend\mapper\BlackListMapper.class
 com\team\backend\service\impl\PartyParticipantsServiceImpl.class
 com\team\backend\service\impl\BlackListServiceImpl.class
+com\team\backend\config\CORSConfig$1.class
 com\team\backend\service\impl\PrivateChatServiceImpl.class
 com\team\backend\mapper\PostCommentMapper.class
 com\team\backend\model\PersonalCollection.class

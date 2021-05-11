@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
  * @Description : 类描述
  * @date : 2021-05-07 21:04 Copyright  2021 ccreater. All rights reserved.
  */
-@WebFilter(urlPatterns = "/*", filterName = "userAuthFilter")
+@WebFilter(urlPatterns = "/**", filterName = "userAuthFilter")
 public class UserAuthFilter implements Filter {
   @Value("${server.servlet.context-path}")
   String contextValue;
@@ -28,6 +28,7 @@ public class UserAuthFilter implements Filter {
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
       FilterChain filterChain) throws IOException, ServletException {
+
     if(isTest==1){
       filterChain.doFilter(servletRequest, servletResponse);
       return;
@@ -35,8 +36,17 @@ public class UserAuthFilter implements Filter {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpSession session = request.getSession();
     HttpServletResponse response = (HttpServletResponse) servletResponse;
+    if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+      response.setStatus(HttpServletResponse.SC_OK);
+      filterChain.doFilter(servletRequest, servletResponse);
+      return;
+    }
     String [] noAuth = new String[]{"/user/upload/img","/user/login"};
     String uri = request.getRequestURI();
+    if(uri.indexOf("/admin")==0){
+      filterChain.doFilter(servletRequest, servletResponse);
+      return;
+    }
     for(String path : noAuth){
       if(uri.equals(contextValue+path)){
         filterChain.doFilter(servletRequest, servletResponse);

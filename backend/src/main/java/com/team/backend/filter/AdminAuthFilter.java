@@ -28,9 +28,15 @@ public class AdminAuthFilter implements Filter {
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
       FilterChain filterChain) throws IOException, ServletException {
+
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpSession session = request.getSession();
     HttpServletResponse response = (HttpServletResponse) servletResponse;
+    if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+      response.setStatus(HttpServletResponse.SC_OK);
+      filterChain.doFilter(servletRequest, servletResponse);
+      return;
+    }
     String [] noAuth = new String[]{"/admin/login","/admin/register","/admin/changepsw"};
     String uri = request.getRequestURI();
     for(String path : noAuth){
