@@ -1,4 +1,70 @@
 <!--pages/post/index/index.wxml-->
-<view>
-  
+
+<van-notice-bar
+  left-icon="volume-o"
+  text="十大热点"
+  speed="15"
+  color="#f2774d"
+  background="#fffbe8"
+/>
+<view class="section">
+  <picker title="选择主题" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+ 
+    <van-cell icon="flag-o" is-link arrow-direction="down" is-link title= "{{multiArray1[0][multiIndex[0]]}}  {{multiArray[1][multiIndex[1]]}}" bindtap="listenerButton"/>  
+  </picker>
 </view>
+<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" >
+  
+    <block wx:for="6" wx:for-index="idx" wx:for-item="item" data-idx="6">
+        <view class="feed-item">
+            <view class="feed-source">
+                <a>
+                    <view class="avatar">
+                        <image src="../../static/icons/smile.png"></image>
+                    </view>
+                    <text class="name">昵称    </text>
+                    <text class="time">时间 </text>
+                </a>
+                <image class="item-more" mode="aspectFit" src="../../static/icons/moreInfo.png"></image>
+            </view>
+            <view class="feed-content">
+                <view class="question" qid="1" bindtap="goto_postdetail">
+                    <a class="question-link">
+                        <text class = "title">标题</text>
+                        <text> 贴文具体内容\n</text>
+                        <image class="img" src="../../static/icons/img.png"  ></image>
+                    </a>
+                </view>
+      
+                <!-- goto_postdetail -->
+                <view class="answer-body">
+                    <view class="answer-actions" >
+                        <view>
+                            <image class="mark" src="../../static/icons/mark.png" bindtap="mark"></image>
+                            <a class="iconIntro">收藏  </a>
+                        </view>
+                        <view>
+                            <image class="reward" src="../../static/icons/reward.png" bindtap="reward"></image>
+                            <a class="iconIntro">赞赏  </a>
+                        </view>
+                        <view>
+                            <image class="agree" src="../../static/icons/agree.png" bindtap="like"></image>
+                            <a class="iconIntro">点赞 </a>
+                        </view>
+                    
+                </view>
+                <view>
+                    <view class="v-btn"><image class="comment" src="../../static/icons/comment.png" ></image><text>评论</text></view>         
+                    
+                </view>  
+                        </view>    
+                        <view>
+                </view>
+            </view>
+        </view>
+    </block> 
+</scroll-view> 
+
+
+
+
