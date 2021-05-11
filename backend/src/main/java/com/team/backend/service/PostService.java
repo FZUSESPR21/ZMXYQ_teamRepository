@@ -1,13 +1,18 @@
 package com.team.backend.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.model.Post;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.team.backend.model.User;
+import javafx.geometry.Pos;
 
 /**
  * <p>
@@ -40,4 +45,5 @@ public interface PostService extends IService<Post> {
    */
   ExceptionInfo publishPost(Long userId,Long postTheme,String message,String imgUrls);
 
+  List<Map<String,Object>> listPostPageOrderByGmtCreateIdDesc(Long pageNum, Long pageSize, Long userId);
 }

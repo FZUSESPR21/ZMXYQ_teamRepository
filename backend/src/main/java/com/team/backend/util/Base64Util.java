@@ -34,6 +34,8 @@ public class Base64Util {
         typeMap.put("data:image/png;base64",".png");//png格式图片
         typeMap.put("data:image/jpeg;base64",".jpeg");//jpeg格式图片
         typeMap.put("data:image/gif;base64",".gif");//gif格式图片
+        typeMap.put("data:image/bmp;base64",".bmp");//bmp格式图片
+        typeMap.put("data:image/x-icon;base64",".ico");//ico格式图片
         setMimeTypeMap(typeMap);
 
         File file = new File(folderName);
@@ -93,6 +95,9 @@ public class Base64Util {
     public static String generateFileSuffixByBase64Prefix(String prefix) {
         String suffix = "";
         if (prefix != null) {
+            if(mimeTypeMap.containsKey(prefix)){
+                suffix = mimeTypeMap.get(prefix);
+            }
             for (Map.Entry<String,String> mimePair : mimeTypeMap.entrySet()) {
                 if (prefix.equals(mimePair.getKey())) {
                     suffix = mimePair.getValue();
