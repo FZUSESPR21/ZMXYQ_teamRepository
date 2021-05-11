@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -18,4 +19,5 @@ import java.util.List;
 @Component
 public interface PostMapper extends BaseMapper<Post> {
     List<Post> listPostPageOrderByGmtCreateDesc(IPage<?> page,Long currentUserId);
+    List<Post> fuzzyListPostPageOrderByGmtCreateDesc(IPage<?> page, Map<String,Object> queryMap);
 }
