@@ -19,7 +19,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.popover = this.selectComponent('#popover');
   },
 
   /**
@@ -62,5 +62,13 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  onTap: function (e) {
+    // 获取按钮元素的坐标信息
+    var id = 'morebutton' // 或者 e.target.id 获取点击元素的 ID 值
+    wx.createSelectorQuery().select('#' + id).boundingClientRect(res => {
+      // 调用自定义组件 popover 中的 onDisplay 方法
+      this.popover.onDisplay(res);
+    }).exec();
+  },
 })

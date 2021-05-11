@@ -3,7 +3,6 @@
   width: 50%;
   display: flex;
   margin-top: 10rpx;
-  margin-left:10rpx;
 }
 .comment-publisher-view-message{
   display: flex;
@@ -12,6 +11,10 @@
 .comment-publisher-view-message-name{
   max-width: 400rpx;
   overflow: hidden;
+  font-size: 16px;
+}
+.comment-publisher-view-message-time{
+  font-size: 16px;
 }
 .popup-publisher-detail
 {

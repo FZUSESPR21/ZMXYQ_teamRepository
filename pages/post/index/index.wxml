@@ -1,5 +1,5 @@
 <!--pages/post/index/index.wxml-->
-
+<view>
 <van-notice-bar
   left-icon="volume-o"
   text="十大热点"
@@ -13,7 +13,9 @@
     <van-cell icon="flag-o" is-link arrow-direction="down" is-link title= "{{multiArray1[0][multiIndex[0]]}}  {{multiArray[1][multiIndex[1]]}}" bindtap="listenerButton"/>  
   </picker>
 </view>
-<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" >
+ <v-post-list></v-post-list>
+</view>
+<!-- <scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" >
   
     <block wx:for="6" wx:for-index="idx" wx:for-item="item" data-idx="6">
         <view class="feed-item">
@@ -37,7 +39,7 @@
                 </view>
       
                 <!-- goto_postdetail -->
-                <view class="answer-body">
+                <!-- <view class="answer-body">
                     <view class="answer-actions" >
                         <view>
                             <image class="mark" src="../../static/icons/mark.png" bindtap="mark"></image>
@@ -63,7 +65,7 @@
             </view>
         </view>
     </block> 
-</scroll-view> 
+</scroll-view>  --> 
 
 
 

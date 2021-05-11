@@ -13,12 +13,16 @@
                   <text class="time">时间 </text>
               </a> -->
               <v-name-card class="post-name-card"></v-name-card>
-              <image class="item-more" mode="aspectFit" src="../../../static/icons/moreInfo.png"></image>
+              <image class="item-more" mode="aspectFit" src="../../../static/icons/moreInfo.png" id="morebutton" bindtap="onTap">
+            </image>
+            <v-popover id='popover'>
+    <v-popover-item bindtap='editParty' hasline>举报</v-popover-item>
+  </v-popover>
           </view>
           <view class="feed-content">
               <view class="question" >
                   <a class="question-link">
-                      <text class = "title">标题</text>
+                      <text class = "title">type</text>
                       <text class = "content"> 贴文具体内容\n</text>
                       <image class="img" src="../../../static/icons/img.png"  ></image>
                   </a>

@@ -119,9 +119,11 @@
   box-shadow: 0 2px 5px #eeeeee;
 }
 .container .feed-item .feed-source{
-  width: 690rpx;
-  left: 0;
-  height: 50rpx;
+  width: 700rpx;
+  height: 110rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .container .feed-item .feed-source .avatar{
   position: relative;
@@ -150,11 +152,11 @@
   color: #a0acac;
   font-size: 26rpx;
 }
-.container .feed-item .feed-source .item-more{
+#morebutton2{
   display: inline-block;
-  width: 40rpx;
-  height: 45rpx;
-  float: right;
+  width: 60rpx;
+  height: 60rpx;
+  margin-left: 500rpx;
 }
 .container .feed-item .feed-content{
   padding: 20rpx 0 0 0;

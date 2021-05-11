@@ -119,10 +119,11 @@
   box-shadow: 0 2px 5px #eeeeee;
 }
 .container .feed-item .feed-source{
-  width: 690rpx;
+  width: 700rpx;
   height: 110rpx;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 .container .feed-item .feed-source .avatar{
   position: relative;
@@ -222,6 +223,7 @@
   background-color: #f7f4f4;
   border-top: 2px solid #bababa;
   display: flex;
+  align-items: center;
 }
 .input-form{
   width: 100%;
@@ -231,18 +233,18 @@
 }
 .message-area{
   width: 500rpx;
-  height: 70rpx;
+  height: 35px;
   background-color: #fff;
   margin-left: 20px;
   display: inline-block;
   border-radius: 0.5rem;
 }
 .send-button{
-  width: 150rpx;
-  height: 70rpx;
+  width: 75px;
+  height: 35px;
  display: inline-block;
  margin-left: 30rpx;
- line-height: 70rpx;
+ line-height: 35px;
  background-color: #ec7b77;
  color: white;
 }

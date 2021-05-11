@@ -12,21 +12,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
- 
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
   },
 
   /**
@@ -88,5 +85,15 @@ Page({
         })
       }
     })
-  }
+  },
+  onTap: function (e) {
+    // 获取按钮元素的坐标信息
+    this.popover = this.selectComponent('#popover');
+    var id = 'morebutton2';// 或者 e.target.id 获取点击元素的 ID 值
+    this.createSelectorQuery().select('#' + id).boundingClientRect(res => {
+      // 调用自定义组件 popover 中的 onDisplay 方法
+      console.log(res);
+      this.popover.onDisplay(res);
+    }).exec();
+  },
 })

@@ -12,14 +12,12 @@
     <block wx:for="6" wx:for-index="idx" wx:for-item="item" data-idx="6">
         <view class="feed-item">
             <view class="feed-source">
-                <a>
-                    <view class="avatar">
-                        <image src="../../static/icons/smile.png"></image>
-                    </view>
-                    <text class="name">昵称    </text>
-                    <text class="time">时间 </text>
-                </a>
-                <image class="item-more" mode="aspectFit" src="../../static/icons/moreInfo.png"></image>
+               <v-name-card></v-name-card>
+                <image  mode="aspectFit" src="../../static/icons/moreInfo.png" bindtap="onTap" id="morebutton2"></image>
+                <v-popover id='popover'>
+                <v-popover-item bindtap='editParty' hasline>修改</v-popover-item>
+                 <v-popover-item bindtap='disbandParty' hasline>解散</v-popover-item>
+                 </v-popover>
             </view>
             <view class="feed-content">
                 <view class="question" qid="1" bindtap="goto_postdetail">

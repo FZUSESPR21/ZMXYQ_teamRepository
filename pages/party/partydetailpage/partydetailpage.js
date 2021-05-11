@@ -35,11 +35,12 @@ Page({
   生命周期函数
   */
  onLoad: function (options) {
-  console.log(options.partyID);
+  // console.log(options.partyID);
   this.setData({
     partyID: options.partyID
   });
-  console.log(this.data.partyID);
+  // console.log(this.data.partyID);
+  
 },
 
   // 加入或退出组局函数
