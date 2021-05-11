@@ -81,6 +81,16 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     return pack(posts);
   }
 
+  @Override
+  public List<Map<String, Object>> fuzzyListPostPageOrderByGmtCreateDesc(String content, Integer pageNum
+          , Integer pageSize,Long currentUserId) {
+    IPage<Post> postIPage = new Page<>(pageNum,pageSize);
+    Map<String, Object> queryMap = new HashMap<>();
+    queryMap.put("content",content);
+    queryMap.put("currentUserId",currentUserId);
+    return pack(postMapper.fuzzyListPostPageOrderByGmtCreateDesc(postIPage,queryMap));
+  }
+
   private List<Map<String,Object> > pack(List<Post> posts) {
     List<Map<String,Object>> resultList;
     if (posts != null) {

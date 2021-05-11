@@ -65,6 +65,7 @@ public enum ExceptionInfo {
   POST_COMMENT_INFO_LOST(6111,"帖子评论信息缺失"),
   POST_COMMENT_POST_FAIL(6112,"评论帖子失败，请检查参数有效性"),
   POST_LIST_INFO_LOST(6113,"获取帖子参数缺失"),
+  POST_LIST_SEARCH_INFO_LOST(6114,"搜索帖子参数缺失"),
 
 
   PARTY_DESCRIPTION_NULL(6200, "组局描述为空"),

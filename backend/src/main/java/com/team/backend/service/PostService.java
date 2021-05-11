@@ -46,4 +46,7 @@ public interface PostService extends IService<Post> {
   ExceptionInfo publishPost(Long userId,Long postTheme,String message,String imgUrls);
 
   List<Map<String,Object>> listPostPageOrderByGmtCreateIdDesc(Long pageNum, Long pageSize, Long userId);
+
+  List<Map<String,Object>> fuzzyListPostPageOrderByGmtCreateDesc(String content,Integer pageNum,Integer pageSize
+          ,Long currentUserId);
 }

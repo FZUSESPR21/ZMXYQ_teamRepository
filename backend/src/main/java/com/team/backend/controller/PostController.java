@@ -106,5 +106,22 @@ public class PostController {
       return result;
   }
 
+  @PostMapping("/search")
+    public Result searchPost(@RequestBody Map<String,Object> requestMap
+          ,HttpServletRequest servletRequest) {
+      Integer pageNum = (Integer) requestMap.get("pageNum");
+      Integer pageSize = (Integer) requestMap.get("pageSize");
+      String content = (String) requestMap.get("content");
+      Result result;
+      Long userId = 123456L;
+      if(pageNum != null && pageSize != null && content != null) {
+          result = Result.success(postService.fuzzyListPostPageOrderByGmtCreateDesc(content,pageNum,pageSize,userId));
+      }else {
+          result = Result.error(ExceptionInfo.POST_LIST_SEARCH_INFO_LOST.getCode()
+                  ,ExceptionInfo.POST_LIST_SEARCH_INFO_LOST.getMessage());
+      }
+      return result;
+  }
+
 }
 
