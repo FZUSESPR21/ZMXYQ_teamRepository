@@ -2,4 +2,107 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.backend.mapper.PostMapper">
 
+    <select id="listPostPageOrderByGmtCreateDesc" parameterType="long" resultMap="postToShow">
+        select id,
+               publisher_id,
+               status,
+               post_type_id,
+               message,
+               image_urls,
+               gmt_create,
+               gmt_modified,
+               deleted,
+               ${currentUserId} as currentUserId
+        from post
+        where deleted = 0
+        and status = 0
+        order by gmt_create desc,id desc
+    </select>
+    
+    <resultMap id="postToShow" type="com.team.backend.model.Post">
+        <id column="id" property="id"/>
+        <result property="publisherId" column="publisher_id"/>
+        <result property="status" column="status"/>
+        <result property="postTypeId" column="post_type_id"/>
+        <result property="message" column="message"/>
+        <result property="imageUrls" column="image_urls"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="deleted" column="deleted"/>
+        <result property="currentUserId" column="currentUserId"/>
+        <association property="publisherName" javaType="string" column="publisher_id" select="selectUserNameById"/>
+        <association property="postTypeName" javaType="string" column="post_type_id" select="selectPostTypeNameById"/>
+        <association property="eyeOnNum" javaType="integer" column="id" select="countPostEyeOnByPostId"/>
+        <association property="likeNum" javaType="integer" column="id" select="countPostLikeByPostId"/>
+        <association property="isEyeOn" javaType="integer" column="{id=id,currentUserId=currentUserId}"
+                     select="countCurrentUserEyeOnById"/>
+        <association property="isLike" javaType="integer" column="{id=id,currentUserId=currentUserId}"
+                     select="countCurrentUserLikeById"/>
+        <association property="rewardNum" javaType="integer" column="{id=id,currentUserId=currentUserId}"
+                     select="sumCurrentUserRewardNumById"/>
+        <collection property="comments" ofType="com.team.backend.model.PostComment" column="id"
+                    select="selectPostCommentByPostId">
+                <result property="nameFrom" column="name_from"/>
+        </collection>
+    </resultMap>
+    
+    <select id="selectPostCommentByPostId" resultType="com.team.backend.model.PostComment">
+        select post_comment.id as id,
+               post_comment.gmt_create as gmt_create,
+               post_comment.gmt_modified as gmt_modified,
+               post_comment.deleted as deleted,
+               pre_id,
+               post_id,
+               id_from,
+               post_comment.status as status,
+               message,
+               id_to,
+               user.username as name_from
+        from post_comment,user
+        where post_id = #{id}
+        and post_comment.deleted = 0
+        and post_comment.id_from = user.id
+        order by post_comment.gmt_create
+        limit 0,1;
+    </select>
+
+    <select id="selectUserNameById" resultType="string">
+        select username from user where id = #{publisher_id} and deleted = 0
+    </select>
+
+    <select id="selectPostTypeNameById" resultType="string">
+        select name from post_type where id = #{post_type_id} and deleted = 0
+    </select>
+
+    <select id="countPostEyeOnByPostId" resultType="integer">
+        select count(distinct id) from post_eye_on where post_id = #{id} and deleted = 0
+    </select>
+
+    <select id="countPostLikeByPostId" resultType="integer">
+        select count(distinct id) from post_like where post_id = #{id} and deleted = 0
+    </select>
+
+    <select id="countCurrentUserEyeOnById" resultType="integer">
+        select count(distinct id)
+        from post_eye_on
+        where post_id = #{id}
+        and id_from = #{currentUserId}
+        and deleted = 0
+    </select>
+
+    <select id="countCurrentUserLikeById" resultType="integer">
+        select count(distinct id)
+        from post_like
+        where deleted = 0
+        and post_id = #{id}
+        and id_from = #{currentUserId}
+    </select>
+
+    <select id="sumCurrentUserRewardNumById" resultType="integer">
+        select IFNULL(sum(amount),0)
+        from post_reward
+        where deleted = 0
+        and post_id = #{id}
+        and id_from = #{currentUserId}
+    </select>
 </mapper>

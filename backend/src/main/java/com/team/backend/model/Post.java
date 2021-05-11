@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -61,5 +63,31 @@ public class Post implements Serializable {
   @TableField(fill = FieldFill.INSERT)
   private Integer deleted;
 
+  @TableField(exist = false)
+  private List<PostComment> comments;
+
+  @TableField(exist = false)
+  private String publisherName;
+
+  @TableField(exist = false)
+  private String postTypeName;
+
+  @TableField(exist = false)
+  private Integer isEyeOn;
+
+  @TableField(exist = false)
+  private Integer eyeOnNum;
+
+  @TableField(exist = false)
+  private Integer isLike;
+
+  @TableField(exist = false)
+  private Integer likeNum;
+//
+  @TableField(exist = false)
+  private Integer rewardNum;
+
+  @TableField(exist = false)
+  private Long currentUserId;
 
 }

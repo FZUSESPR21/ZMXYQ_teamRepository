@@ -63,5 +63,6 @@ public class PostComment implements Serializable {
   @ApiModelProperty(value = "被回复用户ID，外键")
   private Long idTo;
 
-
+  @TableField(exist = false)
+  private String nameFrom;
 }
