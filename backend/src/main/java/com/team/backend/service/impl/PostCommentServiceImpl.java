@@ -59,8 +59,9 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
         if (postComment.getIdTo() <= 0) {//idTo传入小于等于0，表明是一级评论，数据库中preId与Id相同
           UpdateWrapper<PostComment> updateWrapper = new UpdateWrapper<>();
           updateWrapper.eq("id", postComment.getId());
-          updateWrapper.set("pre_id", postComment.getId());
-          updateWrapper.set("id_to",-1);
+          postComment.setPreId(postComment.getId());
+          postComment.setIdTo(-1L);
+          postCommentMapper.update(postComment,updateWrapper);
         }
         //添加评论消息记录
         Notification notification = new Notification();

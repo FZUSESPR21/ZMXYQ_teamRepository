@@ -2,10 +2,13 @@ package com.team.backend.controller;
 
 
 import com.team.backend.exception.ExceptionInfo;
+import com.team.backend.model.Post;
 import com.team.backend.model.User;
 import com.team.backend.service.impl.Base64ImageServiceImpl;
 import com.team.backend.service.impl.PostServiceImpl;
 import com.team.backend.util.Result;
+
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -27,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController {
 
   User user;
@@ -38,7 +41,7 @@ public class PostController {
   @Resource
   private PostServiceImpl postService;
 
-  @PostMapping("/image")
+  @PostMapping("/imgupload")
   public Result savePostImage(@RequestBody Map<String,Object> requestMap
       , HttpServletRequest request) {
         request.getSession();
@@ -79,10 +82,29 @@ public class PostController {
     Long postTheme = postThemeNumber.longValue();
     String message = (String) requestMap.get("message");
     String imgUrls = (String) requestMap.get("imgUrls");
-    ExceptionInfo exceptionInfo = postService.publishPost(user.getId(),postTheme,message,imgUrls);
+    Number userIdNum = (Number) requestMap.get("userId");
+    Long userId = userIdNum.longValue();
+    ExceptionInfo exceptionInfo = postService.publishPost(userId,postTheme,message,imgUrls);
     return Result.error(exceptionInfo.getCode(),exceptionInfo.getMessage());
   }
 
+  @PostMapping("/all")
+  public Result listPostPage(@RequestBody Map<String,Object> requestMap
+          ,HttpServletRequest servletRequest) {
+      Number pageNum = (Number) requestMap.get("pageNum");
+      Number pageSize = (Number) requestMap.get("pageSize");
+      Long userId = user.getId();
+      Result result;
+      if (pageNum != null && pageSize !=null && userId != null && pageNum.longValue() > 0L
+              && pageSize.longValue() > 0L && userId > 0) {
+          List<Map<String,Object>> posts = postService.listPostPageOrderByGmtCreateIdDesc(pageNum.longValue(),pageSize.longValue(),userId);
+          result = Result.success(posts);
+      }else {
+          result = Result.error(ExceptionInfo.POST_LIST_INFO_LOST.getCode()
+                  ,ExceptionInfo.POST_LIST_INFO_LOST.getMessage());
+      }
+      return result;
+  }
 
 }
 

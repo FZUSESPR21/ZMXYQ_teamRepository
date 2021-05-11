@@ -110,6 +110,11 @@
       <artifactId>fastjson</artifactId>
       <version>1.2.47</version>
     </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.11.4</version>
+    </dependency>
 
 
   </dependencies>
@@ -129,6 +134,19 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <!-- xml放在java目录下-->
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+      <!--指定资源的位置（xml放在resources下，可以不用指定）-->
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
   </build>
 
 </project>
