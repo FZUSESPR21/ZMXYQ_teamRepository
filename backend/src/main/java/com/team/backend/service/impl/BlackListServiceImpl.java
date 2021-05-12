@@ -35,7 +35,6 @@ public class BlackListServiceImpl extends ServiceImpl<BlackListMapper, BlackList
         if (blackListMapper.insert(blackList) == 1) {
           result = true;
         }
-        result = true;
       }else if (!isBlock && existRecord != null) {//需要新增，且数据库中不存在
         queryWrapper.clear();
         queryWrapper.eq("id",existRecord.getId());

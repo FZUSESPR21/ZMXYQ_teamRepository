@@ -70,6 +70,8 @@ public enum ExceptionInfo {
   POST_LIST_QUERY_FAIL(6116,"查询帖子失败，请检查参数有效性或稍后重试"),
   POST_LIST_TOP_TEN_INFO_LOST(6117,"获取最多赞的十个帖子参数缺失"),
   POST_EYE_ON_FAIL(6118,"关注失败请检查参数完整性及有效性"),
+  POST_BLOCK_INFO_LOST(6119,"拉黑用户参数缺失或拉黑请求逻辑已存在"),
+  POST_BLOCK_FAIL(6120,"拉黑用户失败，请检查参数有效性或稍后再试"),
 
 
   PARTY_DESCRIPTION_NULL(6200, "组局描述为空"),
