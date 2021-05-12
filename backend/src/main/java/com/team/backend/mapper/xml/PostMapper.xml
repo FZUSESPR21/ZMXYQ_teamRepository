@@ -35,6 +35,24 @@
           and message like concat('%',#{queryMap.content},'%')
         order by gmt_create desc,id desc
     </select>
+
+    <select id="listPostPageByTypeId" parameterType="map" resultMap="postToShow">
+        select id,
+               publisher_id,
+               status,
+               post_type_id,
+               message,
+               image_urls,
+               gmt_create,
+               gmt_modified,
+               deleted,
+               ${queryMap.currentUserId} as currentUserId
+        from post
+        where deleted = 0
+          and status = 0
+          and post_type_id = #{queryMap.typeId}
+        order by gmt_create desc,id desc
+    </select>
     
     <resultMap id="postToShow" type="com.team.backend.model.Post">
         <id column="id" property="id"/>

@@ -49,4 +49,6 @@ public interface PostService extends IService<Post> {
 
   List<Map<String,Object>> fuzzyListPostPageOrderByGmtCreateDesc(String content,Integer pageNum,Integer pageSize
           ,Long currentUserId);
+
+  List<Map<String,Object>> listPostPageByTypeId(Long typeId,Long currentUserId,Integer pageNum,Integer pageSize);
 }

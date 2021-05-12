@@ -113,12 +113,38 @@ public class PostController {
       Integer pageSize = (Integer) requestMap.get("pageSize");
       String content = (String) requestMap.get("content");
       Result result;
-      Long userId = 123456L;
+      Long userId = user.getId();
       if(pageNum != null && pageSize != null && content != null) {
           result = Result.success(postService.fuzzyListPostPageOrderByGmtCreateDesc(content,pageNum,pageSize,userId));
       }else {
           result = Result.error(ExceptionInfo.POST_LIST_SEARCH_INFO_LOST.getCode()
                   ,ExceptionInfo.POST_LIST_SEARCH_INFO_LOST.getMessage());
+      }
+      return result;
+  }
+
+  @PostMapping("/changetheme")
+  public Result listPostPageByTypeId(@RequestBody Map<String,Object> requestMap
+          ,HttpServletRequest servletRequest) {
+      Integer pageNum = (Integer) requestMap.get("pageNum");
+      Integer pageSize = (Integer) requestMap.get("pageSize");
+      Number typeIdNum = (Number) requestMap.get("typeId");
+      Long userId = user.getId();
+      Result result;
+      if (pageNum != null && pageSize != null && typeIdNum !=null) {
+          Long typeId = typeIdNum.longValue();
+          try {
+              List<Map<String, Object>> postPage = postService.listPostPageByTypeId(typeId, userId, pageNum, pageSize);
+              result = Result.success(postPage);
+          }catch (Exception e) {
+              e.printStackTrace();
+              result = Result.error(ExceptionInfo.POST_LIST_QUERY_FAIL.getCode()
+                      ,ExceptionInfo.POST_LIST_QUERY_FAIL.getMessage());
+          }
+
+      }else {
+          result = Result.error(ExceptionInfo.POST_LIST_TYPE_INFO_LOST.getCode()
+                  ,ExceptionInfo.POST_LIST_TYPE_INFO_LOST.getMessage());
       }
       return result;
   }
