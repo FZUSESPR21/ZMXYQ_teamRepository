@@ -51,4 +51,6 @@ public interface PostService extends IService<Post> {
           ,Long currentUserId);
 
   List<Map<String,Object>> listPostPageByTypeId(Long typeId,Long currentUserId,Integer pageNum,Integer pageSize);
+
+  List<Map<String,Object>> selectTopTenLikePost(Long currentUserId);
 }

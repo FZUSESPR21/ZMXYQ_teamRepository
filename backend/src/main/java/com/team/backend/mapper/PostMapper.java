@@ -22,4 +22,5 @@ public interface PostMapper extends BaseMapper<Post> {
     List<Post> listPostPageOrderByGmtCreateDesc(IPage<Post> page,Long currentUserId);
     List<Post> fuzzyListPostPageOrderByGmtCreateDesc(IPage<Post> page, Map<String,Object> queryMap);
     List<Post> listPostPageByTypeId(IPage<Post> page,Map<String,Object> queryMap);
+    List<Post> selectTopTenLikedPost(Long currentUserId);
 }

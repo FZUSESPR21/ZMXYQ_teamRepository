@@ -36,7 +36,7 @@
         order by gmt_create desc,id desc
     </select>
 
-    <select id="listPostPageByTypeId" parameterType="map" resultMap="postToShow">
+    <select id="listPostPageByTypeId" parameterType="long" resultMap="postToShow">
         select id,
                publisher_id,
                status,
@@ -52,6 +52,29 @@
           and status = 0
           and post_type_id = #{queryMap.typeId}
         order by gmt_create desc,id desc
+    </select>
+
+    <select id="selectTopTenLikedPost" parameterType="map" resultMap="postToShow">
+        select post.id,
+               post.publisher_id,
+               post.status,
+               post.post_type_id,
+               post.message,
+               post.image_urls,
+               post.gmt_create,
+               post.gmt_modified,
+               post.deleted,
+               ${currentUserId} as currentUserId
+        from post,
+             (select  post_like.post_id,count(distinct post_like.id) as cnt
+              from post_like,post
+              where post_like.deleted = 0 and  post_like.post_id = post.id and post.deleted = 0 and post.status=0
+              group by post_like.post_id
+              order by count(distinct post_like.id) desc
+              limit 0,10
+             ) as top
+        where  top.post_id = post.id
+        order by top.cnt desc
     </select>
     
     <resultMap id="postToShow" type="com.team.backend.model.Post">

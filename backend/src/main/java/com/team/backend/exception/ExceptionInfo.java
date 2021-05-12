@@ -68,6 +68,7 @@ public enum ExceptionInfo {
   POST_LIST_SEARCH_INFO_LOST(6114,"搜索帖子参数缺失"),
   POST_LIST_TYPE_INFO_LOST(6115,"获取主题帖子参数缺失"),
   POST_LIST_QUERY_FAIL(6116,"查询帖子失败，请检查参数有效性或稍后重试"),
+  POST_LIST_TOP_TEN_INFO_LOST(6117,"获取最多赞的十个帖子参数缺失"),
 
 
   PARTY_DESCRIPTION_NULL(6200, "组局描述为空"),
