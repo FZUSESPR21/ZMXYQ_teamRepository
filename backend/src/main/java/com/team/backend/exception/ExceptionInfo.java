@@ -72,6 +72,9 @@ public enum ExceptionInfo {
   POST_EYE_ON_FAIL(6118,"关注失败请检查参数完整性及有效性"),
   POST_BLOCK_INFO_LOST(6119,"拉黑用户参数缺失或拉黑请求逻辑已存在"),
   POST_BLOCK_FAIL(6120,"拉黑用户失败，请检查参数有效性或稍后再试"),
+  POST_REWARD_RP_NOT_ENOUGH(6121,"赞赏失败，人品值不足"),
+  POST_REWARD_INFO_LOST(6122,"赞赏参数缺失"),
+  POST_REWARD_INFO_NOT_VALID(6123,"赞赏失败，请检查参数有效性"),
 
 
   PARTY_DESCRIPTION_NULL(6200, "组局描述为空"),

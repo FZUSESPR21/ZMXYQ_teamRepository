@@ -2,6 +2,7 @@ package com.team.backend.service;
 
 import com.team.backend.model.PostReward;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.team.backend.util.Result;
 
 /**
  * <p>
@@ -20,6 +21,6 @@ public interface PostRewardService extends IService<PostReward> {
    * @param postReward 赞赏基本信息，需保证postId，idFrom,amount有值，且amount > 0
    * @return the boolean 是否处理成功
    */
-  boolean rewardPost(PostReward postReward);
+  Result rewardPost(PostReward postReward);
 
 }
