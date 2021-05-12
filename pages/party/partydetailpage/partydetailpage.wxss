@@ -44,8 +44,6 @@ page{
 .partydetailview{
   width: 670rpx; 
   background: #ffffff; 
-  min-height: 150rpx;
-  height: 430rpx; 
   box-sizing: border-box; 
   border:2px solid black;
   border-radius:0.5em;
@@ -82,11 +80,8 @@ page{
 .partydetailcontent{
   width: 612rpx;
   background: #ffffff; 
-  min-height: 100rpx; 
-  height: 100rpx;
-   display: block; 
-   box-sizing: border-box;
    margin-top: 30rpx;
+   word-wrap:break-word
 }
 .partydetailtitle{
   margin-right: 300rpx;
@@ -136,7 +131,6 @@ page{
   flex-direction: row;
   align-items: center;
   margin-top: 20rpx;
-  margin-bottom: -50rpx;
 }
 .user-message
 {
@@ -203,6 +197,8 @@ page{
    display: flex;
    flex-direction: row;
    width: 90%;
+   align-items: center;
+   margin-top: 10rpx;
 }
 .party-detail-title2{
   margin-right:350rpx;

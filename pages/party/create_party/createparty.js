@@ -56,70 +56,41 @@ Page({
 
   afterRead: function (event) {
     const _this = this;
-    console.log(event);
+    console.log(event.detail.file[0].url);
     this.setData({
       fileList: _this.data.fileList.concat(event.detail.file)
     });
 
   },
-  getImageType: function (src) {
-    let imageType = "";
-    let srcArray = src.split('.');
-    // console.log(srcArray);
-    if (srcArray[srcArray.length - 1] == 'jpg' || srcArray[srcArray.length - 1] == 'jpeg') {
-      imageType = "data:image/jpeg;base64,";
-    } else if (srcArray[srcArray.length - 1] == 'png') {
-      imageType = "data:image/png;base64,";
-    } else if (srcArray[srcArray.length - 1] == 'gif') {
-      imageType = "data:image/gif;base64,";
-    }else if (srcArray[srcArray.length - 1] == 'ico') {
-      imageType = "data:image/x-icon;base64,";
-    }else if (srcArray[srcArray.length - 1] == 'bmp') {
-      imageType = "data:image/bmp;base64,";
-    }
-    
-    return imageType
-  },
-  submitImage: function (e) {
+  submitImage:function(e)
+  {
     let _this = this;
     const file = this.data.fileList;
     file.forEach(function (e) {
-      //FileSystemManager().readFile()
       var FSM = wx.getFileSystemManager();
-      //获取图片
-      wx.chooseImage({
-        count: 9,
-        success: function (res) {
-          //循环将得到的图片转换为Base64
-          for (let r in res.tempFilePaths) {
-            console.log(res.tempFilePaths[r]);
-            let imageType = _this.getImageType(res.tempFilePaths[r]);
-            FSM.readFile({
-              filePath: res.tempFilePaths[r],
-              encoding: "base64",
-              success: function (data) {
-                console.log(data.data)
-                wx.request({
-                  url: 'http://192.168.50.167:8088/api/post/image',
-                  data: {
-                    base64Str: imageType + data.data,
-                    filename: "111"
-                  },
-                  method: "POST",
-                  success: function (e) {
-                    console.log(e);
-                  },
-                  fail: function (e) {
-                    console.log(e);
-                  }
-                })
-              }
-            });
-          }
-        },
-      })
+      let imageType=_this.getImageType(e.url);
+      FSM.readFile({
+        filePath: e.url,
+        encoding: "base64",
+        success: function (data) {
+          console.log(data.data);
+          wx.request({
+            url: 'http://192.168.50.167:8088/api/post/image',
+            data: {
+              base64Str: imageType + data.data,
+              filename: "111"
+            },
+            method: "POST",
+            success: function (e) {
+              console.log(e);
+            },
+            fail: function (e) {
+              console.log(e);
+            }
+          })
+        }
+      });
     })
-    console.log(this.data.base64fileList);
   },
   deleteImage: function (e) {
     const index = e.detail.index; //获取到点击要删除的图片的下标
@@ -151,7 +122,7 @@ Page({
       select: false
     })
   },
-  createparty: function (e) {
+  createParty: function (e) {
 
     //  wx.request({
     //    url: 'http://xx.com/api//alumnicycle/party/add',
@@ -169,13 +140,12 @@ Page({
     //    },
 
     //  })
-    this.submitImage();
+    getApp().submitImage(this.data.fileList);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**

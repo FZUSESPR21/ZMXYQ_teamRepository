@@ -7,7 +7,7 @@ Component({
     commentList:{
       type:Array,
       value:[]
-    }
+    },
   },
 
   /**
@@ -23,7 +23,8 @@ Component({
     hasMoreComments:true,
     isMoreCommentsShowed:false,
     moreButtonContent:"查看更多回复",
-    iconSrc:"../../static/icons/down arrow.png"
+    iconSrc:"../../static/icons/down arrow.png",
+    showInput:true,
   },
 
   /**
@@ -49,6 +50,11 @@ Component({
        iconSrc:"../../static/icons/down arrow.png"
      })
    }
+  },
+  showCommentBox:function(e)
+  {
+    let item = {publisherName:'测试',preID:8}
+    this.triggerEvent('showCommentBox',item);
   }
   }
 })

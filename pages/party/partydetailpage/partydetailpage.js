@@ -7,12 +7,18 @@ Page({
    * 页面的初始数据
    */
   data: {
+    userId:0,
     partyID:0,
-     partyDetailContent:"你们好",
-     partyMemberList:[
+    partyDescription:{
+      partyDetailContent:"你们好",
+      partyDetailImageUrlS:[]
+    },
+    partyPublisherID:0, 
+    partyCreateTime:"",
+    partyMemberList:[
        {
         participantsID:0,
-        inTheParty:true
+        inTheParty:false
        },
        {
         participantsID:0,
@@ -28,7 +34,8 @@ Page({
      partyMemmberCntNow:1,
      partyMemmberCnt:2,
      hasjoined:false,
-     buttonContent:"加入拼局"
+     buttonContent:"加入拼局",
+     commentMessage:{},
   },
 
   /*
@@ -46,7 +53,7 @@ Page({
   // 加入或退出组局函数
   joinParty:function(e)
   {
-    
+    this.getPartyDetail();
     if(this.data.hasjoined==false)
     {
       if(this.data.partyMemmberCntNow<this.data.partyMemmberCnt)
@@ -108,15 +115,33 @@ Page({
   },
   // 获取组局详情
   getPartyDetail:function(e){
+    let _this=this;
+    console.log(1);
     wx.request({
-      url: 'http://xx.com/api/alumnicycle/party/partymes',
+      url: 'http://ccreater.top:61112/api/party/partymes',
       method:'GET',
       data:{
-        id:1
+        partyId:123456
       },
       success:function(res)
       {
- 
+       let data=res.data.data;
+       console.log(res);
+       _this.setData({
+         partyID:res.data.data.partyID,
+         partyDesciption:res.data.data.description,
+         partyPublisherID:res.data.data.publisherID,
+         partyMemmberCnt:res.data.data.peopleCnt,
+         partyMemmberCntNow:res.data.data.nowPeopleCnt,
+         partyCreateTime:res.data.data.gmtCreate,
+         partyMemberList:res.data.data.participantsID       
+       })
+
+       
+      },
+      fail:function(res)
+      {
+        console.log(res);
       }
  
     });
@@ -145,13 +170,13 @@ Page({
   sendComment:function(e)
   {
     wx.request({
-      url: 'http://xx.com/api/alumnicycle/party-comment/comment',
+      url: 'http://ccreater.top:61112/api/alumnicycle/party-comment/comment',
       method:"POST",
       data:{
         content:"",
-        userId:0,
-        partyId:0,
-        preId:""
+        userId:this.data.userId,
+        partyId:this.data.partyID,
+        preId:this.commentPreId
       },
       success:function(res)
       {
@@ -239,6 +264,13 @@ Page({
    this.setData({
      partyMemberList:newMemberList
    });
+  },
+  getCommentBox:function(e)
+  {
+    this.setData({
+      showCommentBox:true,
+      commentMessage:e.detail
+    })
+    console.log(this.data.commentMessage);
   }
- 
 })

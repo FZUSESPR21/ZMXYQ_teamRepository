@@ -30,6 +30,6 @@
         </view>
       </view>
     </view>
-    <button class="create-button" bindtap="createparty">{{buttonOperation}}</button>
+    <button class="create-button" bindtap="createParty">{{buttonOperation}}</button>
   </form>
 </view>

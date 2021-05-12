@@ -18,7 +18,7 @@
   </view>
     <v-name-card class="user-message"></v-name-card>
     <view class="partydetailcontent">
-      {{partyDetailContent}}
+      {{description.content}}
     </view>
     <view class="party-detail-operation">
       <view class="joinbutton" bindtap="joinParty">{{buttonContent}}</view>
@@ -50,13 +50,13 @@
     class="comment-list-scroll"
     scroll-y="true" bindscroll="onScroll" bindscrolltoupper="onTopRefresh"
     bindscrolltolower="onBottomRefresh">
-    <v-comment></v-comment>
+    <v-comment bind:showCommentBox="getCommentBox"></v-comment>
 </scroll-view>
 </view>
 </view>
 <view class="comment-box">
 <form action="" class="input-form">
-  <textarea  confirm-type="send" class="message-area" placeholder="请输入你要的评论"></textarea>
+  <textarea  confirm-type="send" class="message-area" placeholder="{{'请输入回复'+commentMessage.publisherName+'的评论'}}" focus="true"></textarea>
   <button class="send-button" bindtap="sendcomment">发送</button>
 </form>
   
