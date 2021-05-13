@@ -1,0 +1,19 @@
+.item{
+    border-bottom: 1rpx solid rgba(206, 198, 198, 0.55);
+    height: 110rpx;
+    width: 100%;
+}
+
+.user{
+    display: flex;
+    align-content: center;
+    padding-left: 10rpx;
+    padding-top: 15rpx;
+}
+
+.nickname{
+    font-size: 40rpx;
+    padding-left: 15rpx;
+    padding-top: 10rpx;
+    color: cornflowerblue;
+}

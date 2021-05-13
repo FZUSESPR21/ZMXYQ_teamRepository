@@ -1,0 +1,16 @@
+<view>
+    <text>719</text>
+    <text>人品值</text>
+    <text>人品记录</text>
+    <scroll-view scroll-y="true" clsss="rpRecord_list">
+        <view class="rpRecord_item">
+            <view>
+                <view class="rpRecord_cause">悬赏人品值</view>
+                <view class="rpRecord_time">2021-04-28 17:13:14</view>
+            </view>
+            <view>
+                <view class="rpRecord_count">+50</view>
+            </view>
+        </view>
+    </scroll-view>
+</view>

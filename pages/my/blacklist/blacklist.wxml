@@ -1,0 +1,14 @@
+<page>
+    <view>
+        <navigator class="item" wx:for="{{5}}"
+                   bindtouchstart="handleTouchStart"
+                   bindtouchend="handleTouchEnd"
+                   bindlongpress="handleLongPress"
+                   bindtap="handleClick">
+        <view class="user" >
+            <van-image round width="2.5rem" height="2.5rem" src="https://img.yzcdn.cn/vant/cat.jpeg"></van-image>
+            <view class="nickname">Camou</view>
+        </view>
+        </navigator>
+    </view>
+</page>
