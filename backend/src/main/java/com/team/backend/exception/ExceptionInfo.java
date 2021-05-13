@@ -51,6 +51,7 @@ public enum ExceptionInfo {
   USER_NOT_LOGIN(6029, "用户未登录"),
   USER_CODE_NULL(6030, "微信授权码为空"),
   USER_ICON_URL_NULL(6031, "用户头像url为空"),
+  USER_OPEN_ID_NULL(6032, "授权码错误，获取的openId为空"),
 
   POST_IMAGE_FOLDER_NOT_CREATED(6101, "文件夹未创建"),
   POST_IMAGE_CONTENT_EMPTY(6102, "Base64字符串或存储文件名为空"),
@@ -62,13 +63,13 @@ public enum ExceptionInfo {
   POST_LIKE_ALREADY(6108, "帖子点赞记录已存在，请勿重复点赞"),
   POST_ID_NULL(6109, "帖子ID为空"),
   POST_NOT_EXISTED(6110, "不存在该条帖子"),
-  POST_COMMENT_INFO_LOST(6111,"帖子评论信息缺失"),
-  POST_COMMENT_POST_FAIL(6112,"评论帖子失败，请检查参数有效性"),
-  POST_LIST_INFO_LOST(6113,"获取帖子参数缺失"),
-  POST_LIST_SEARCH_INFO_LOST(6114,"搜索帖子参数缺失"),
-  POST_LIST_TYPE_INFO_LOST(6115,"获取主题帖子参数缺失"),
-  POST_LIST_QUERY_FAIL(6116,"查询帖子失败，请检查参数有效性或稍后重试"),
-  POST_LIST_TOP_TEN_INFO_LOST(6117,"获取最多赞的十个帖子参数缺失"),
+  POST_COMMENT_INFO_LOST(6111, "帖子评论信息缺失"),
+  POST_COMMENT_POST_FAIL(6112, "评论帖子失败，请检查参数有效性"),
+  POST_LIST_INFO_LOST(6113, "获取帖子参数缺失"),
+  POST_LIST_SEARCH_INFO_LOST(6114, "搜索帖子参数缺失"),
+  POST_LIST_TYPE_INFO_LOST(6115, "获取主题帖子参数缺失"),
+  POST_LIST_QUERY_FAIL(6116, "查询帖子失败，请检查参数有效性或稍后重试"),
+  POST_LIST_TOP_TEN_INFO_LOST(6117, "获取最多赞的十个帖子参数缺失"),
 
 
   PARTY_DESCRIPTION_NULL(6200, "组局描述为空"),

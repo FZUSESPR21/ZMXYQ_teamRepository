@@ -300,6 +300,7 @@ public class UserController {
       result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
       return result;
     }
+    treeHole.setFromId(user.getId());
 
     return treeHoleService.updateTreeHole(treeHole);
   }

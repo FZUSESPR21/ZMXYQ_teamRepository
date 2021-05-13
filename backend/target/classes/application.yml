@@ -22,6 +22,8 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
   mapper-locations: classpath:/com/team/backend/mapper/**/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 wxMini:
   appId: wx5cb3151fe9a79b35
   secret: 6f6dc11730700a996d1731e9718c5a86

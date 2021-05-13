@@ -88,6 +88,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     JSONObject jsonObject = JSONObject.parseObject(wxResult);
     String openId = jsonObject.getString("openid");
 
+    if (openId == null) {
+      result.setCode(ExceptionInfo.valueOf("USER_OPEN_ID_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_OPEN_ID_NULL").getMessage());
+      map.put("result", result);
+      map.put("user", new User());
+      return map;
+    }
+
     QueryWrapper<User> wrapper = new QueryWrapper<>();
     wrapper.eq("open_id", openId);
 
