@@ -36,11 +36,11 @@ export default {
   methods: {
     doLogin() {
       if (!this.user.username) {
-        this.$message.error("用户名不能为空！");
+        this.showMessageBox("用户名不能为空！", "提示"); 
         return;
       }
       else if (!this.user.password) {
-        this.$message.error("密码不能为空！");
+        this.showMessageBox("密码不能为空！", "提示"); 
         return;
       }
       else
