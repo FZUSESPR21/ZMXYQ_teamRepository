@@ -17,12 +17,7 @@ Vue.prototype.$axios = axios;
 Vue.prototype.showMessageBox = function(message, title){
   this.$alert(message, title, {
     confirmButtonText: '确定',
-    callback: action => {
-      this.$message({
-        type: 'info',
-        message: `action: ${ action }`
-      });
-    }
+    closeOnClickModal: false
   });
 };
 

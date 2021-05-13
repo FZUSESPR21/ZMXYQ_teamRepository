@@ -61,7 +61,16 @@ export default {
           .then(function (response) {
             console.log(response);
             if(response.data.code == 0){
-              that.$router.push("/index");
+              that.$alert("修改密码成功，前往登陆！", "提示", {
+                confirmButtonText: '确定',
+                closeOnClickModal: false
+              })
+              .then(() => {
+                that.$router.push("/login");
+              })
+              .catch(() => {
+                ;
+              });
             }
             else{
               this.showMessageBox("请检查账号、原密码是否填写正确！", "提示");

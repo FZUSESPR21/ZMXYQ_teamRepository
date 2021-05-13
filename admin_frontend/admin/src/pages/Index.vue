@@ -1,6 +1,6 @@
 <template>
   <div class="index" clearfix>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#000000" 
+    <el-menu :default-active="1" class="el-menu-demo" mode="horizontal" background-color="#000000" 
     text-color="#ebebe0" active-text-color="#ff9900" @select="handleSelect">
         <el-menu-item index="1" style="display:inline"><router-link to="/index/schoolcard" style="text-decoration:none">校园验证审核</router-link></el-menu-item>
         <el-menu-item index="2" style="display:inline"><router-link to="/index/post" style="text-decoration:none">贴文审核</router-link></el-menu-item>
@@ -18,12 +18,14 @@ export default {
   name: "index",
   data() {
     return {
-      activeIndex: "0"
+      activeIndex: "1"
     };
   },
   created() {},
   methods: {
     handleSelect(key, keyPath) {
+      console.log(key);
+      console.log(keyPath);
     },
     loginOut(){
       let that = this;
