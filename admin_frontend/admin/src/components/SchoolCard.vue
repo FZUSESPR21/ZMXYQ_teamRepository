@@ -57,13 +57,12 @@
         <!-- 分页定义开始 -->
         <div class="block">
           <el-pagination
-            @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
-            :page-size="100"
-            layout="prev, pager, next, jumper"
-            :total="totalCnt">
-          </el-pagination>
+            :page-size="pageSize"
+            layout="total, prev, pager, next"
+            :total="total">
+            </el-pagination>
         </div>
         <!-- 分页定义结束 -->
         
@@ -77,103 +76,78 @@ export default {
     return {
       myData:[],
       currentPage: 1,  //分页用到，当前页面
-      totalCnt:100  //总条数
+      total: 0,  //总条数
+      pageSize: 6
     };
   },
   created() {
-    this.getData();
+    this.getData(this.currentPage - 1);
   },
   methods: {
     unPass(id, index){
-                this.axios.get('http://ccreater.top:61234/api/admin/post').then((response)=>{
-            console.log(response.data);
-      }).catch((response)=>{
-        console.log(response);
+      let that = this;
+      id = id.toString();
+      console.log(id);
+      this.$axios.post('/authorityconfirm',
+      {
+        userID: id,
+        pass: 1
+      })
+      .then((response)=>{
+      console.log(response.data);
+      that.getData(this.currentPage - 1);
+      })
+      .catch((response)=>{
+              console.log(response);
       });
-        this.myData.splice(index,1);
     },
     pass(id, index){
-        this.myData.splice(index,1);
-    },
-    getData(){
+      id = id.toString();
       let that = this;
-      this.$axios.get('/authority', {
-            params: {
-              pageIndex: 1,
-              order: 1
-            },
-            withCredentials: true,
-            credentials: 'include'
-            })
-            .then( function (response) {
+      // console.log(id);
+      this.$axios.post('/authorityconfirm',
+      {
+        userID: id,
+        pass: 0
+      })
+      .then((response)=>{
+      console.log(response.data);
+      that.getData(this.currentPage - 1);
+      })
+      .catch((response)=>{
               console.log(response);
+      });
+      this.getData(this.currentPage - 1);
+    },
+    getData(index){
+      let that = this;
+      this.$axios.post('/authority',
+            {
+              pageIndex: index,
+              order: 1
+            }
+            )
+            .then(function (response) {
+              console.log(response);
+              if(response.data.code == 1){
+                that.getData(index - 1);
+              }
+              else if(response.data.code == 0){
+                that.myData = response.data.data.mes;
+                that.total = response.data.data.count;
+                for(let i = 0; i < that.myData.length; i++){
+                    that.myData[i].gmtCreate = that.formatDate(that.myData[i].gmtCreate);  //格式化日期格式
+                }
+              }
             })
             .catch(function (error) {
               console.log(error);
             });
-      //   this.myData = [
-      //     {           
-      //     "userID":"12345",           
-      //     "userName":"阿伟",           
-      //     "imageUrls":"https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG",
-      //     "gmtCreate":"2021/4/28 18:00:01"         
-      //     },  
-      //     {           
-      //     "userID":"123456",           
-      //     "userName":"阿伟",           
-      //     "imageUrls":"图片路径1", 
-      //     "gmtCreate":"2021/4/28 18:00:01"         
-      //     },  
-      //     {           
-      //     "userID":"123457",           
-      //     "userName":"阿伟",           
-      //     "imageUrls":"图片路径1", 
-      //     "gmtCreate":"2021/4/28 18:00:01"         
-      //     },  
-      //     {           
-      //     "userID":"123458",           
-      //     "userName":"阿伟",           
-      //     "imageUrls":"图片路径1", 
-      //     "gmtCreate":"2021/4/28 18:00:01"         
-      //     },  
-      //     {           
-      //     "userID":"123459",           
-      //     "userName":"阿伟",           
-      //     "imageUrls":"图片路径1", 
-      //     "gmtCreate":"2021/4/28 18:00:01"         
-      //     },  
-      //     {           
-      //     "userID":"123454",           
-      //     "userName":"阿伟",           
-      //     "imageUrls":"图片路径1", 
-      //     "gmtCreate":"2021/4/28 18:00:01"         
-      //     },
-      //     {           
-      //     "userID":"123454",           
-      //     "userName":"阿伟",           
-      //     "imageUrls":"图片路径1", 
-      //     "gmtCreate":"2021/4/28 18:00:01"         
-      //     },
-      //     {           
-      //     "userID":"123454",           
-      //     "userName":"阿伟",           
-      //     "imageUrls":"图片路径1", 
-      //     "gmtCreate":"2021/4/28 18:00:01"         
-      //     },
-      //     {           
-      //     "userID":"123454",           
-      //     "userName":"阿伟",           
-      //     "imageUrls":"图片路径1", 
-      //     "gmtCreate":"2021/4/28 18:00:01"         
-      //     }
-      // ]
     },
     //以下方法为实现分页功能
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.getData(val - 1);
+        this.currentPage = val;
       }
   }
 };

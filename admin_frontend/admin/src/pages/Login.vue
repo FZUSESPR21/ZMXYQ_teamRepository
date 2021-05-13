@@ -64,6 +64,7 @@ export default {
               that.showMessageBox("密码错误！", "Error");
             }
             else{
+              // sessionStorage.setItem('token',response.data.token);
               that.$router.push({name: 'Index'});  //跳转页面
             }
           })
