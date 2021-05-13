@@ -5,7 +5,7 @@
         <el-menu-item index="1" style="display:inline"><router-link to="/index/schoolcard" style="text-decoration:none">校园验证审核</router-link></el-menu-item>
         <el-menu-item index="2" style="display:inline"><router-link to="/index/post" style="text-decoration:none">贴文审核</router-link></el-menu-item>
         <el-menu-item index="3" style="display:inline"><router-link to="/index/party" style="text-decoration:none">组局审核</router-link></el-menu-item>
-        <el-menu-item index="4" style="display:inline">登出</el-menu-item>
+        <el-menu-item index="4" style="display:inline" class="layout-menu" @click="loginOut">登出</el-menu-item>
     </el-menu>
     <div class = "Main">
       <router-view/>
@@ -24,6 +24,17 @@ export default {
   created() {},
   methods: {
     handleSelect(key, keyPath) {
+    },
+    loginOut(){
+      let that = this;
+      console.log("登出");
+      this.$axios.post('/logout')
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
     }
     }
 };
@@ -37,6 +48,10 @@ export default {
 
 .main{
   min-height: 100%;
+}
+
+.layout-menu{
+  margin-left: 65%;
 }
     
 </style>

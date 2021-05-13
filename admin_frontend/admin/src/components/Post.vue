@@ -7,7 +7,6 @@
             border
             style="width: 100%"
             :default-sort = "{prop: 'time', order: 'descending'}"
-            @row-click="getDetails"
           >
             <el-table-column
               fixed
@@ -53,9 +52,9 @@
               width="130">
               <template slot-scope="scope">
                 <el-button icon="el-icon-close"  circle style="background-color:  #ff9f80;" 
-                @click="unPass(scope.row.userID, scope.$index)"></el-button>
+                @click="unPass(scope.row.postID, scope.$index)"></el-button>
                 <el-button type="warning" icon="el-icon-check"  circle style="background-color: #80ff80;"
-                @click="pass(scope.row.userID, scope.$index)"></el-button>
+                @click="pass(scope.row.postID, scope.$index)"></el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -63,15 +62,14 @@
         <!-- 表格定义结束 -->
 
         <!-- 分页定义开始 -->
-        <div class="block">
+          <div class="block">
           <el-pagination
-            @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page.sync="currentPage"
-            :page-size="100"
-            layout="prev, pager, next, jumper"
-            :total="totalCnt">
-          </el-pagination>
+            :page-size="pageSize"
+            layout="total, prev, pager, next"
+            :total="total">
+            </el-pagination>
         </div>
         <!-- 分页定义结束 -->
         
@@ -85,41 +83,80 @@ export default {
     return {
       myData:[],
       currentPage: 1,  //分页用到，当前页面
-      totalCnt:100  //总条数
+      total: 0,  //总条数
+      pageSize: 6
     };
   },
   created() {
-    this.getData();
+    this.getData(1);
   },
   methods: {
-    unPass(id, index){
-        this.myData.splice(index,1);
-    },
-    pass(id, index){
-        this.myData.splice(index,1);
-    },
-    getData(){
-        for(let i = 0; i < 10; i++)
-        {
-          this.myData.push(
-            {           
-            "postID":"12345",           
-            "publisherId":"53422",    
-            "publisherName":"张三",  
-            "message":"阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！阿伟好帅，我好爱！",     
-            "imageUrls":["https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG","https://www.fzu.edu.cn/attach/2021/04/21/418037.jpg"],
-            "gmtCreate":"2021/4/28 18:00:01"         
+      getData(index){
+      let that = this;
+      this.$axios.post('/post',
+            {
+              pageIndex: index - 1,
+              order: 1
             }
-          )
-        }
+            )
+            .then(function (response) {
+              // console.log(response);
+              if(response.data.code == 1){
+                that.getData(index - 1);
+                console.log(index - 1);
+              }
+              else if(response.data.code == 0){
+                that.myData = response.data.data.mes;
+                that.total = response.data.data.count;
+                that.currentPage = index;
+                for(let i = 0; i < that.myData.length; i++){
+                    that.myData[i].gmtCreate = that.formatDate(that.myData[i].gmtCreate);  //格式化日期格式
+                }
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+    },
+       //审核不通过事件响应
+    unPass(id, index){
+      let that = this;
+      id = id.toString();
+      this.$axios.post('/postconfirm',
+      {
+        postID: id,
+        pass: 1
+      })
+      .then((response)=>{
+      // console.log(response.data);
+      that.getData(that.currentPage);
+      })
+      .catch((response)=>{
+              console.log(response);
+      });
+    },
+    //审核通过事件响应
+    pass(id, index){
+      id = id.toString();
+      let that = this;
+      this.$axios.post('/postconfirm',
+      {
+        postID: id,
+        pass: 0
+      })
+      .then((response)=>{
+      // console.log(response.data);
+      that.getData(that.currentPage);
+      })
+      .catch((response)=>{
+          console.log(response);
+      });
     },
     //以下方法为实现分页功能
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      }
+        this.getData(val);
+        this.currentPage = val;
+      },
   }
 };
 </script>

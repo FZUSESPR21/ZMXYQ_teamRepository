@@ -76,31 +76,33 @@ export default {
     return {
       myData:[],
       currentPage: 1,  //分页用到，当前页面
-      total: 0,  //总条数
+      total: 1,  //总条数
       pageSize: 6
     };
   },
   created() {
-    this.getData(this.currentPage - 1);
+    this.getData(1);
   },
   methods: {
+    //审核不通过事件响应
     unPass(id, index){
       let that = this;
       id = id.toString();
-      console.log(id);
+      // console.log(id);
       this.$axios.post('/authorityconfirm',
       {
         userID: id,
         pass: 1
       })
       .then((response)=>{
-      console.log(response.data);
-      that.getData(this.currentPage - 1);
+      // console.log(response.data);
+      that.getData(that.currentPage);
       })
       .catch((response)=>{
-              console.log(response);
+          console.log(response);
       });
     },
+    //审核通过事件响应
     pass(id, index){
       id = id.toString();
       let that = this;
@@ -111,30 +113,30 @@ export default {
         pass: 0
       })
       .then((response)=>{
-      console.log(response.data);
-      that.getData(this.currentPage - 1);
+      // console.log(response.data);
+      that.getData(that.currentPage);
       })
       .catch((response)=>{
-              console.log(response);
+          console.log(response);
       });
-      this.getData(this.currentPage - 1);
     },
     getData(index){
       let that = this;
       this.$axios.post('/authority',
             {
-              pageIndex: index,
+              pageIndex: index - 1,
               order: 1
             }
             )
             .then(function (response) {
-              console.log(response);
+              // console.log(response);
               if(response.data.code == 1){
                 that.getData(index - 1);
               }
               else if(response.data.code == 0){
                 that.myData = response.data.data.mes;
                 that.total = response.data.data.count;
+                that.currentPage = index;
                 for(let i = 0; i < that.myData.length; i++){
                     that.myData[i].gmtCreate = that.formatDate(that.myData[i].gmtCreate);  //格式化日期格式
                 }
@@ -146,7 +148,7 @@ export default {
     },
     //以下方法为实现分页功能
       handleCurrentChange(val) {
-        this.getData(val - 1);
+        this.getData(val);
         this.currentPage = val;
       }
   }
