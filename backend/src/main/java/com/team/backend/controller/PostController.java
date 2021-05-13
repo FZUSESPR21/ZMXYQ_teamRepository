@@ -6,19 +6,17 @@ import com.team.backend.model.Post;
 import com.team.backend.model.User;
 import com.team.backend.service.impl.Base64ImageServiceImpl;
 import com.team.backend.service.impl.PostServiceImpl;
+import com.team.backend.util.DateUtil;
 import com.team.backend.util.Result;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -41,8 +39,42 @@ public class PostController {
   @Resource
   private PostServiceImpl postService;
 
+  @PostMapping("/publishermsg")
+  public Result getUserInfoToShowInPost(@RequestBody Map<String,Number> requestMap) {
+      Number idNum = (Number) requestMap.get("publisherId");
+      Result result;
+      User publisher;
+      if (idNum != null) {
+          try {
+              publisher = postService.getPostPublisher(idNum.longValue());
+              if (publisher == null) {
+                  result = Result.error(ExceptionInfo.POST_PUBLISHER_INFO_INVALID.getCode()
+                          ,ExceptionInfo.POST_PUBLISHER_INFO_INVALID.getMessage());
+              }else {
+                  Map<String,Object> responseMap = new HashMap<>();
+                  responseMap.put("userName",publisher.getUsername());
+                  responseMap.put("age", DateUtil.getAge(publisher.getBirthday()));
+                  responseMap.put("isGraduated",publisher.getIsGraduated());
+                  responseMap.put("province",publisher.getProvince());
+                  responseMap.put("city",publisher.getCity());
+                  responseMap.put("university",publisher.getSchool());
+                  responseMap.put("iconUrl",publisher.getUserIconUrl());
+                  result = Result.success(responseMap);
+              }
+          }catch (Exception e) {
+              e.printStackTrace();
+              result = Result.error(ExceptionInfo.POST_PUBLISHER_INFO_INVALID.getCode()
+                      ,ExceptionInfo.POST_PUBLISHER_INFO_INVALID.getMessage());
+          }
+      }else {
+          result = Result.error(ExceptionInfo.POST_PUBLISHER_INFO_LOST.getCode()
+                  ,ExceptionInfo.POST_PUBLISHER_INFO_LOST.getMessage());
+      }
+    return result;
+  }
+
   @PostMapping("/imgupload")
-  public Result savePostImage(@RequestBody Map<String,Object> requestMap
+  public Result savePostImage(@RequestParam Map<String,Object> requestMap
       , HttpServletRequest request) {
         request.getSession();
         String base64Source = (String)requestMap.get("base64Str");

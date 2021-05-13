@@ -70,6 +70,16 @@ public enum ExceptionInfo {
   POST_LIST_TYPE_INFO_LOST(6115, "获取主题帖子参数缺失"),
   POST_LIST_QUERY_FAIL(6116, "查询帖子失败，请检查参数有效性或稍后重试"),
   POST_LIST_TOP_TEN_INFO_LOST(6117, "获取最多赞的十个帖子参数缺失"),
+  POST_EYE_ON_FAIL(6118, "关注失败请检查参数完整性及有效性"),
+  POST_BLOCK_INFO_LOST(6119, "拉黑用户参数缺失或拉黑请求逻辑已存在"),
+  POST_BLOCK_FAIL(6120, "拉黑用户失败，请检查参数有效性或稍后再试"),
+  POST_REWARD_RP_NOT_ENOUGH(6121, "赞赏失败，人品值不足"),
+  POST_REWARD_INFO_LOST(6122, "赞赏参数缺失"),
+  POST_REWARD_INFO_NOT_VALID(6123, "赞赏失败，请检查参数有效性"),
+  POST_PUBLISHER_INFO_LOST(6124, "查询发帖用户失败，请求参数缺失"),
+  POST_PUBLISHER_INFO_INVALID(6125, "查询发帖用户失败，请检查参数有效性或稍后再试"),
+  POST_REPORT_INFO_LOST(6126, "举报帖子失败，举报参数缺失"),
+  POST_REPORT_INFO_INVALID(6127, "举报帖子失败，请检查参数合法性或稍后再试"),
 
 
   PARTY_DESCRIPTION_NULL(6200, "组局描述为空"),
