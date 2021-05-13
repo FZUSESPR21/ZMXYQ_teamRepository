@@ -130,7 +130,7 @@ public class AdminController {
         toIndex = posts.size() - 1;
       }
     }
-    posts = posts.subList(fromIndex, toIndex+1);
+    posts = posts.subList(fromIndex, toIndex);
     List<Map<String,Object>> mes = new ArrayList<>();
 
     for(Map<String,Object> post : posts){
@@ -185,7 +185,7 @@ public class AdminController {
         toIndex = parties.size() - 1;
       }
     }
-    parties = parties.subList(fromIndex, toIndex+1);
+    parties = parties.subList(fromIndex, toIndex);
     List<Map<String,Object>> mes = new ArrayList<>();
 
     for(Map<String,Object> party : parties){
@@ -243,7 +243,7 @@ public class AdminController {
         toIndex = parties.size() - 1;
       }
     }
-    parties = parties.subList(fromIndex, toIndex+1);
+    parties = parties.subList(fromIndex, toIndex);
     List<Map<String,Object>> mes = new ArrayList<>();
 
     for(Map<String,Object> party : parties){

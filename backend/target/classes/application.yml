@@ -14,6 +14,7 @@ server:
   port: 8088
   servlet:
     context-path: /api
+  secret-key: AA546ADF546safd35444sfd
 
 mybatis-plus:
   global-config:

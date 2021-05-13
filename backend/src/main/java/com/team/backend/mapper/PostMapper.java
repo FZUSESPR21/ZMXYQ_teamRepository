@@ -3,7 +3,6 @@ package com.team.backend.mapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.team.backend.model.Post;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import javafx.geometry.Pos;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
