@@ -1,6 +1,13 @@
 <template>
-  <div class="change-password" clearfix>
-    <div class="login-wrap">
+  <div class="page" clearfix>
+    <div class="logoImage">    
+      <el-image
+      style="width: 20%;"
+      :src="require('../assets/images/logo1.png')"
+      fit="contain"></el-image>
+    </div>
+    <div class="main">
+      <div class="login-wrap">
       <el-row type="flex" justify="center">
         <el-form ref="loginForm" :model="user" status-icon label-width="80px">
           <h3>修改密码</h3>
@@ -20,6 +27,11 @@
           </el-form-item>
         </el-form>
       </el-row>
+    </div>
+    </div>
+    <div class="footer">
+      <span style="text-align: center;display:block;">逐梦校友圈 版权所有</span>
+      <span style="text-align: center;display:block;">Copyright 2021 All Rights Reserved</span>
     </div>
   </div>
 </template>
@@ -85,47 +97,86 @@ export default {
 };
 </script>
 
+
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.login {
-  width: 100%;
-  height: 100%;
-  /*background: url("../assets/images/bg1.png") no-repeat;*/
-  /*background-size: cover;*/
-  /*overflow: hidden;*/
+.page {
+  padding:0px;
+  margin:0px;
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:100%;
+  border:hidden;
+  background-color:rgb(214, 214, 194);
 }
+
+
+.main{
+  position: relative;
+  height: 60%;
+  width: 100%;
+  top: 10%;
+  background: url("../assets/images/fzu1.jpg") no-repeat;
+  background-size: 100%;
+  /* padding-top: 5%; */
+}
+
+.footer{
+  position: relative;
+  height: 5%;
+  top: 20%;
+}
+
 .login-wrap {
-  /*background: url("../assets/images/login_bg.png") no-repeat;*/
-  /*background-size: cover;*/
-  width: 40%;
-  height: 30%;
-  margin: 5% auto;
+  position: relative;
+  background-color: 	rgb(245, 245, 240, 0.8);
+  top: 2%;
+  width: 28%;
+  height: 90%;
+  /* margin-top: 20%; */
+  margin-left: 60%;
   overflow: hidden;
-  padding-top: 10px;
+  padding-top: 20px;
   line-height: 40px;
   border-style: inset;
 }
-#password {
-  margin-top: 5px;
+
+.logoImage{
+  position: relative;
+  top: 5%;
+  padding-left: 2%;
 }
+
+#password {
+  margin-bottom: 5px;
+}
+
 #change-password{
   color: blue;
   text-decoration: underline;
 }
+
 h3 {
   color: #0babeab8;
   font-size: 24px;
 }
+
 hr {
   background-color: #444;
   margin: 20px auto;
 }
+
+
 a {
   text-decoration: none;
   color: #aaa;
   font-size: 15px;
 }
+
 a:hover {
   color: coral;
 }
 </style>
+
