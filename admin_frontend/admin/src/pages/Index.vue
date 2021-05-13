@@ -27,10 +27,10 @@ export default {
     },
     loginOut(){
       let that = this;
-      console.log("登出");
+      // console.log("登出");
       this.$axios.post('/logout')
             .then(function (response) {
-              console.log(response);
+              // console.log(response);
             })
             .catch(function (error) {
               console.log(error);

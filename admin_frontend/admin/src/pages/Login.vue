@@ -55,13 +55,13 @@ export default {
           .then(function(response){
             console.log(response);
             if(response.status != 200){
-              that.showMessageBox("网络错误，请稍后重试！", "Error"); 
+              that.showMessageBox("网络错误，请稍后重试！", "提示"); 
             }
             else if(response.data.code == 1){
-              that.showMessageBox("用户不存在！", "Error");
+              that.showMessageBox("用户不存在！", "提示");
             }
             else if(response.data.code == 2){
-              that.showMessageBox("密码错误！", "Error");
+              that.showMessageBox("密码错误！", "提示");
             }
             else{
               // sessionStorage.setItem('token',response.data.token);

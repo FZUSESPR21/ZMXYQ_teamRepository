@@ -2,17 +2,17 @@
   <div class="change-password" clearfix>
     <div class="login-wrap">
       <el-row type="flex" justify="center">
-        <el-form ref="loginForm" :model="user" :rules="rules" status-icon label-width="80px">
+        <el-form ref="loginForm" :model="user" status-icon label-width="80px">
           <h3>修改密码</h3>
           <hr>
           <el-form-item prop="username" label="用户名">
             <el-input v-model="user.username" placeholder="请输入用户名" prefix-icon></el-input>
           </el-form-item>
           <el-form-item id="password" prop="oriPassword" label="原密码">
-            <el-input v-model="user.password" show-password placeholder="请输入密码"></el-input>
+            <el-input v-model="user.oriPassword" show-password placeholder="请输入密码"></el-input>
           </el-form-item>
           <el-form-item id="password" prop="laterPassword" label="现密码">
-            <el-input v-model="user.password" show-password placeholder="请输入密码"></el-input>
+            <el-input v-model="user.laterPassword" show-password placeholder="请输入密码"></el-input>
           </el-form-item>
           <div style="padding-left: 80%"><span><router-link to="/login" ><span id="change-password">去登录</span></router-link></span></div>
           <el-form-item>
@@ -40,12 +40,36 @@ export default {
   methods: {
     changePassword() {
       if (!this.user.username) {
-        this.$message.error("请输入用户名！");
+        this.showMessageBox("请输入用户名！", "提示");
         return;
       }
-      else if (!this.user.password) {
-        this.$message.error("请输入密码！");
+      else if (!this.user.oriPassword || !this.user.laterPassword) {
+        this.showMessageBox("请输入密码！", "提示");
         return;
+      }
+      else if(this.user.oriPassword !== this.user.laterPassword){
+        this.showMessageBox("两次输入密码不匹配！", "提示");
+      }
+      else{
+        let that = this;
+        this.$axios.post('/changepsw',
+        {
+          adminId: that.user.username,
+          oldPassword: that.user.oriPassword,
+          newPassword: that.user.laterPassword
+        })
+          .then(function (response) {
+            console.log(response);
+            if(response.data.code == 0){
+              that.$router.push("/index");
+            }
+            else{
+              this.showMessageBox("请检查账号、原密码是否填写正确！", "提示");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
     }
   }

@@ -129,7 +129,7 @@ export default {
             }
             )
             .then(function (response) {
-              // console.log(response);
+              console.log(response);
               if(response.data.code == 1){
                 that.getData(index - 1);
               }
