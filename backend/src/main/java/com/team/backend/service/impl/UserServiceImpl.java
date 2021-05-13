@@ -266,12 +266,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     Result<List<Post>> result = new Result<>();
 
+    User user = userMapper.selectById(id);
+
     QueryWrapper<Post> wrapper = new QueryWrapper<>();
     wrapper.eq("publisher_id", id);
 
+    List<Post> postList = postMapper.selectList(wrapper);
+    for (Post post : postList) {
+      post.setPublisherName(user.getUsername());
+    }
+
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    result.setData(postMapper.selectList(wrapper));
+    result.setData(postList);
     return result;
   }
 
