@@ -287,12 +287,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     Result<List<PostComment>> result = new Result<>();
 
+    User user = userMapper.selectById(id);
+
     QueryWrapper<PostComment> wrapper = new QueryWrapper<>();
     wrapper.eq("id_from", id);
 
+    List<PostComment> postCommentList = postCommentMapper.selectList(wrapper);
+    for (PostComment postComment : postCommentList) {
+      postComment.setUsername(user.getUsername());
+    }
+
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    result.setData(postCommentMapper.selectList(wrapper));
+    result.setData(postCommentList);
     return result;
   }
 
@@ -301,12 +308,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     Result<List<PartyComment>> result = new Result<>();
 
+    User user = userMapper.selectById(id);
+
     QueryWrapper<PartyComment> wrapper = new QueryWrapper<>();
     wrapper.eq("id_from", id);
 
+    List<PartyComment> partyCommentList = partyCommentMapper.selectList(wrapper);
+    for (PartyComment partyComment : partyCommentList) {
+      partyComment.setUsername(user.getUsername());
+    }
+
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    result.setData(partyCommentMapper.selectList(wrapper));
+    result.setData(partyCommentList);
     return result;
   }
 
