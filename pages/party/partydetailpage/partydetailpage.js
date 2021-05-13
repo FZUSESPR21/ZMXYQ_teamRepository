@@ -36,6 +36,7 @@ Page({
      hasjoined:false,
      buttonContent:"加入拼局",
      commentMessage:{},
+     commentInputText:""
   },
 
   /*
@@ -108,7 +109,7 @@ Page({
     //   },
     //   success:function(res)
     //   {
-    //     Notify({ type: 'success', message: '加入拼局成功' });
+    //     Notify({ type: 'success', message: '退出拼局成功' });
     //   }
       
     // })
@@ -272,5 +273,13 @@ Page({
       commentMessage:e.detail
     })
     console.log(this.data.commentMessage);
+    console.log(10);
+  },
+  bindTextAreaBlur:function(e)
+  {
+    this.setData({
+      commentInputText:e.detail.value
+    })
+    console.log(this.data.commentInputText)
   }
 })

@@ -213,7 +213,12 @@
   flex-direction: row;
 }
 .actions{
-  width: 150rpx
+  width: 150rpx;
+}
+.mark,
+.agree,.reward,.share
+{
+  margin-bottom: -10rpx;
 }
 .comment-box{
   width: 100%;
@@ -247,4 +252,63 @@
  line-height: 35px;
  background-color: #ec7b77;
  color: white;
+}
+.commentArea{
+  margin-bottom: 50px;
+}
+.reward-area-main{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.member-title{
+  width: 400rpx;
+  font-weight: bold;
+  padding-left: 0rpx;
+}
+.member-stepper{
+  width: 200rpx;
+  display: flex;
+  margin-left: 100rpx;
+  align-items: center;
+  justify-content: center;
+}
+.member-stepper-button{
+  width: 30%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  border-radius: 0.4rem;
+  border: 4rpx solid #1a237e;
+  justify-content: center;
+  font-size: 40rpx;
+  font-weight: bold;
+  box-shadow: 2rpx 2rpx gray ;
+}
+.member-stepper-content{
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+.reward-button{
+  width: 90%;
+  background-color: #C5CAE9;
+  border-radius: 0.4rem;
+  box-shadow: 2rpx 2rpx gray ;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+.reward-area-content{
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: 50rpx;
+  margin-top: 40rpx;
+  margin-bottom: 40rpx;
+  align-items: center;
 }

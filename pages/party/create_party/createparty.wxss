@@ -128,11 +128,6 @@ page{
   display: flex;
   flex-direction: row;
 }
-.member-title{
-  width: 200rpx;
-  font-weight: bold;
-  padding-left: 50rpx;
-}
 .member-stepper-button{
   width: 30%;
   height: 50%;

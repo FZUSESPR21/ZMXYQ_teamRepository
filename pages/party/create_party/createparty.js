@@ -1,4 +1,5 @@
 // pages/party/create_party/createparty.js
+import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 Page({
 
   /**
@@ -21,8 +22,8 @@ Page({
     themeArray: ["重庆分店", "东莞南城分店", "东莞总店", "东莞总店", "东莞总店"],
     value1: 0,
     select: false,
+    memNum:1,
     tihuoWay: '门店自提',
-    memberNum: 0,
     fileList: [{
         url: 'http://iph.href.lu/60x60?text=default',
         name: '图片2',
@@ -62,36 +63,6 @@ Page({
     });
 
   },
-  submitImage:function(e)
-  {
-    let _this = this;
-    const file = this.data.fileList;
-    file.forEach(function (e) {
-      var FSM = wx.getFileSystemManager();
-      let imageType=_this.getImageType(e.url);
-      FSM.readFile({
-        filePath: e.url,
-        encoding: "base64",
-        success: function (data) {
-          console.log(data.data);
-          wx.request({
-            url: 'http://192.168.50.167:8088/api/post/image',
-            data: {
-              base64Str: imageType + data.data,
-              filename: "111"
-            },
-            method: "POST",
-            success: function (e) {
-              console.log(e);
-            },
-            fail: function (e) {
-              console.log(e);
-            }
-          })
-        }
-      });
-    })
-  },
   deleteImage: function (e) {
     const index = e.detail.index; //获取到点击要删除的图片的下标
     const deletImageList = this.data.fileList //用一个变量将本地的图片数组保存起来
@@ -101,17 +72,17 @@ Page({
     })
   },
   addmemberOp(e) {
-    if (this.data.memberNum < 12) {
+    if (this.data.memNum < 12) {
       this.setData({
-        memberNum: this.data.memberNum + 1
+        memNum: this.data.memNum + 1
       })
     }
 
   },
   delmemberOp(e) {
-    if (this.data.memberNum > 0) {
+    if (this.data.memNum > 0) {
       this.setData({
-        memberNum: this.data.memberNum - 1
+        memNum: this.data.memNum - 1
       })
     }
   },
@@ -123,7 +94,25 @@ Page({
     })
   },
   createParty: function (e) {
-
+  if(this.data.partyDetailContent=="")//判断拼局内容是否为空
+  {
+    Dialog.alert({
+      message: '活动详情不能为空',
+    }).then(() => {
+      // on close
+    });
+  }
+  else if(this.data.memNum==0)//判断拼局人数是否为空
+  {
+    Dialog.alert({
+      message: '拼局人数不能为空',
+    }).then(() => {
+      // on close
+    });
+  }
+  else{
+    getApp().submitImage(this.data.fileList);
+  }
     //  wx.request({
     //    url: 'http://xx.com/api//alumnicycle/party/add',
     //    method:"POST",
@@ -140,7 +129,6 @@ Page({
     //    },
 
     //  })
-    getApp().submitImage(this.data.fileList);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

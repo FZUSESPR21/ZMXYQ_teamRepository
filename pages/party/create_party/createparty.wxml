@@ -25,11 +25,12 @@
         <view class="member-title"> 拼局人数</view>
         <view class="member-stepper">
           <view class="member-stepper-button" bindtap="delmemberOp">-</view>
-          <view class="member-stepper-content">{{memberNum}}</view>
+          <view class="member-stepper-content">{{memNum}}</view>
           <view class="member-stepper-button" bindtap="addmemberOp">+</view>
         </view>
       </view>
     </view>
     <button class="create-button" bindtap="createParty">{{buttonOperation}}</button>
+    <van-dialog id="van-dialog" />
   </form>
 </view>

@@ -31,16 +31,17 @@
               <view class="answer-body">
                   <view class="answer-actions" bindtap="bindItemTap">
                     <view class="actions">
-                      <image class="mark" src="../../../static/icons/mark.png" ></image>
+                      <image class="mark" src="{{hasMark?'../../../static/icons/love it.png':'../../../static/icons/mark.png'}}" bindtap="postMark"></image>
                           <a class="iconIntro">收藏  </a>
                       </view>
                       <view class="actions">
                         <image class="agree" src="../../../static/icons/agree.png" ></image>
                           <a class="iconIntro">点赞  </a>
+                          <van-toast id="van-toast" />
                       </view>
                       <view class="actions">
-                          <image class="reward" src="../../../static/icons/reward.png" ></image>
-                          <a class="iconIntro">赞赏  </a>
+                          <image class="reward" src="../../../static/icons/reward.png"  bindtap="getRewardBox"></image>
+                          <a class="iconIntro" bindtap="getRewardBox">赞赏  </a>
                       </view>
                       <view class="actions">
                           <image class="share" src="../../../static/icons/share.png" ></image>
@@ -53,11 +54,32 @@
       </view>
   </block>
 </scroll-view> 
+<view class="commentArea">
+    <v-comment bind:showCommentBox="getCommentBox"></v-comment>
+</view>
 </view>
 <view class="comment-box">
 <form action="" class="input-form">
-  <textarea  confirm-type="send" class="message-area" placeholder="请输入你要的评论"></textarea>
+  <textarea  bindblur="bindTextAreaBlur" confirm-type="send" class="message-area" placeholder="{{'请输入回复'+commentMessage.publisherName+'的评论'}}"></textarea>
   <button class="send-button" bindtap="sendcomment">发送</button>
 </form>
-  
+<van-popup
+  show="{{ showRewardBox }}"
+  position="bottom"
+  custom-style="height: 20%;"
+  bind:close="onClose"
+>
+<view class="reward-area-main">
+    <view class="reward-area-content">
+        <view class="member-title"> 打赏人气值</view>
+        <view class="member-stepper">
+          <view class="member-stepper-button" bindtap="delmemberOp">-</view>
+          <view class="member-stepper-content">{{popularityNum}}</view>
+          <view class="member-stepper-button" bindtap="addmemberOp">+</view>
+        </view>
+    </view>
+    <view class="reward-button">确定</view>
+    
+</view>
+</van-popup>
 </view>
