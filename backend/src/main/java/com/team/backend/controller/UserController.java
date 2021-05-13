@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -63,7 +64,7 @@ public class UserController {
   }
 
   @PostMapping("/identify/submit")
-  public Result<Integer> identifySubmit(User user1) {
+  public Result<Integer> identifySubmit(@RequestBody User user1) {
 
     User user = null;
 
@@ -109,7 +110,7 @@ public class UserController {
   }
 
   @PostMapping("/data/update")
-  public Result<Integer> updateUser(User user1) {
+  public Result<Integer> updateUser(@RequestBody User user1) {
 
     User user = null;
 
@@ -140,7 +141,7 @@ public class UserController {
   }
 
   @PostMapping("/collect/deleted")
-  public Result<Integer> deleteCollection(Long id) {
+  public Result<Integer> deleteCollection(@RequestBody Long id) {
 
     User user = null;
 
@@ -170,7 +171,7 @@ public class UserController {
   }
 
   @PostMapping("/post/deleted")
-  public Result<Integer> postDeleted(Long id) {
+  public Result<Integer> postDeleted(@RequestBody Long id) {
 
     User user = null;
 
@@ -215,7 +216,7 @@ public class UserController {
   }
 
   @PostMapping("/postcomment/deleted")
-  public Result<Integer> PostCommentDeleted(Long id) {
+  public Result<Integer> PostCommentDeleted(@RequestBody Long id) {
 
     User user = null;
 
@@ -230,7 +231,7 @@ public class UserController {
   }
 
   @PostMapping("/partycomment/deleted")
-  public Result<Integer> PartyCommentDeleted(Long id) {
+  public Result<Integer> PartyCommentDeleted(@RequestBody Long id) {
 
     User user = null;
 
@@ -260,7 +261,7 @@ public class UserController {
   }
 
   @PostMapping("/black/deleted")
-  public Result<Integer> deleteBlack(Long id) {
+  public Result<Integer> deleteBlack(@RequestBody Long id) {
 
     User user = null;
 
@@ -290,7 +291,7 @@ public class UserController {
   }
 
   @PostMapping("/treehole/update")
-  public Result<Integer> updateTreeHole(TreeHole treeHole) {
+  public Result<Integer> updateTreeHole(@RequestBody TreeHole treeHole) {
 
     User user = null;
 
@@ -306,7 +307,7 @@ public class UserController {
   }
 
   @PostMapping("/treehole/deleted")
-  public Result<Integer> deleteTreeHole(Long id) {
+  public Result<Integer> deleteTreeHole(@RequestBody Long id) {
 
     User user = null;
 
@@ -321,7 +322,7 @@ public class UserController {
   }
 
   @PostMapping("/treehole/new")
-  public Result<Integer> insertTreeHole(String content) {
+  public Result<Integer> insertTreeHole(@RequestBody String content) {
 
     User user = null;
 
