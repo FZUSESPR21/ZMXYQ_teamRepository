@@ -36,7 +36,9 @@ export default {
       // console.log("登出");
       this.$axios.post('/logout')
             .then(function (response) {
-              // console.log(response);
+              if(response.data.code == 0){
+                that.$router.push("/login");
+              }
             })
             .catch(function (error) {
               console.log(error);
