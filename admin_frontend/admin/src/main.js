@@ -6,12 +6,34 @@ import 'element-ui/lib/theme-chalk/index.css';
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import { Message } from "element-ui";
 import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 axios.defaults.baseURL = "http://ccreater.top:61112/api/admin";
 axios.defaults.withCredentials = true; // 允许携带cookie
+//设置未登录跳转
+// http response 响应拦截器
+axios.interceptors.response.use(response => {
+  return response;
+},error => {
+  if (error.response) {
+      switch (error.response.status) {
+          // 返回401，清除token信息并跳转到登录页面
+          case 401:
+            Message({
+              showClose: true,
+              message: "尚未登录,请先登录!",
+              type: "error"
+            });
+            router.push({path: "/login"});
+      }
+      // 返回接口返回的错误信息
+      return Promise.reject(error.response.data);
+  }
+});
+
 Vue.prototype.$axios = axios;
 // 定义全局函数，弹出弹出框
 Vue.prototype.showMessageBox = function(message, title){
