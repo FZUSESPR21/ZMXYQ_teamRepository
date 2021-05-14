@@ -47,42 +47,67 @@ App({
   },
   submitImage:function(fileList)//上传图片函数
   {
-    let _this = this;
+    let _this=this;
     const file = fileList;
+    let promiseArr=[];
     let imgServerUrls=new Array();
+    console.log(fileList);
     file.forEach(function (e) {
-      let imgServerUrl="";
       var FSM = wx.getFileSystemManager();
       let imageType=_this.getImageType(e.url);
-      FSM.readFile({
-        filePath: e.url,
-        encoding: "base64",
-        success: function (data) {
-          // console.log(data.data);
-          // console.log(imageType);
-          wx.request({
-            url: 'http://192.168.50.167:8088/api/posts/imgupload',
-            method: "POST",
-            data: {
-              base64Str: imageType + data.data,
-              filename: "111"
-            },
-            success: function (res) {
-              console.log(res);
-              imgServerUrl=res.data.data;
-              // console.log(imgServerUrl);
-              imgServerUrls.push(imgServerUrl);
-              console.log("上传图片成功");
-              // console.log(imgServerUrls);
-            },
-            fail: function (e) {
-              console.log(e);
-              console.log("上传图片失败");
+      promiseArr.push(
+        new Promise(function (resolve,reject) {
+          FSM.readFile({
+            filePath: e.url,
+            encoding: "base64",
+            success: function (data) {
+                  wx.request({
+                    url: 'http://192.168.5.219:8088/api/posts/imgupload',
+                    method: "POST",
+                    data: {
+                      base64Str: imageType + data.data,
+                      filename: "111"
+                    },
+                    success: function (res) {
+                      console.log(res);
+                      console.log("上传图片成功");
+                      if(res.data.code==200)
+                      {
+                      return resolve(res);
+                      }
+                      else{
+                        return reject(res.data.message);
+                      }
+                    },
+                    fail: function (e) {
+                      console.log(e);
+                      console.log("上传图片失败");
+                      return reject(e)
+                    },
+                    complete: function (complete) {
+        
+                      return complete;
+                    }
+                  })
+               
+              
             }
-          })
+          });
+        })
+      )
+   })
+      Promise.all(promiseArr).then(function (values) {
+        console.log(values);
+        values.forEach(function (e) {
+          console.log(e);
+          imgServerUrls.push(e.data.data)
+        })
+       
+        console.log(imgServerUrls);
+      }).catch(
+        reason=>{
+          console.log(reason)
         }
-      });
-    })
-    return imgServerUrls;
+      )
   },
 })

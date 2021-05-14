@@ -29,7 +29,7 @@
         <textarea class='input_title' bindinput='getTitle' placeholder='请输入内容' value="{{postContent}}"></textarea>
       </view>
             <view class="invite flex-item img-area">
-               <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" deletable="{{ true }}" max-count="9" class="party-detail-content-image" multiple="{{true}}" bind:delete="deleteImage"/>
+               <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" deletable="{{ true }}" max-count="9" class="party-detail-content-image" multiple="{{true}}" bind:delete="deleteImage" preview-size="214rpx"	/>
             </view>
      <view class='line_shadow'></view>
          <view class='line'></view>         

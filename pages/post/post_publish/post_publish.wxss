@@ -108,6 +108,7 @@
  width: 90%;
  font-size: 20px;
  margin-top: 4%;
+ margin-bottom: 20rpx;
  border: none;
  color:white;
  background-color:#f2774d;
