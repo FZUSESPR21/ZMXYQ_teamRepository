@@ -224,23 +224,15 @@ Page({
   onTap: function (e) {
     // 获取按钮元素的坐标信息
     this.popover = this.selectComponent('#popover');
-    console.log(this.popover);
-    var id = 'morebutton2';// 或者 e.target.id 获取点击元素的 ID 值
+    var id = e.currentTarget.dataset.idname;// 或者 e.target.id 获取点击元素的 ID 值
     this.createSelectorQuery().select('#' + id).boundingClientRect(res => {
       // 调用自定义组件 popover 中的 onDisplay 方法
-      console.log(res);
+      // console.log(res);
       this.popover.onDisplay(res);
     }).exec();
   },
 
-  onTap: function (e) {
-    // 获取按钮元素的坐标信息
-    var id = 'morebutton' // 或者 e.target.id 获取点击元素的 ID 值
-    wx.createSelectorQuery().select('#' + id).boundingClientRect(res => {
-      // 调用自定义组件 popover 中的 onDisplay 方法
-      this.popover.onDisplay(res);
-    }).exec();
-  },
+
   getCommentBox:function(e)
   {
     this.setData({

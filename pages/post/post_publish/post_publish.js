@@ -192,7 +192,7 @@ Page({
       file.forEach(function (e) {
         var FSM = wx.getFileSystemManager();
         let imageType=getApp().getImageType(e.url);
-        promiseArr.push(
+        promiseArr.push(//顺序上传照片请求
           new Promise(function (resolve,reject) {
             FSM.readFile({
               filePath: e.url,
@@ -245,12 +245,26 @@ Page({
             imgUrls:imgServerUrls
           })
           console.log(_this.data.imgUrls)
+          wx.request({//创建组局请求
+            url: 'http://192.168.5.219:8088/api/posts/publish',
+            method:'POST',
+            data:{
+              userId:123456,
+              postTheme:1,
+              message:_this.data.postContent,
+              imgUrls:_this.data.imgUrls.join(";")
+            },
+            success:function(res)
+            {
+              console.log(_this.data.imgUrls)
+              console.log(res);
+            }
+          })
         }).catch(
           reason=>{
             console.log(reason)
           }
         )
-
     }
   }
 })

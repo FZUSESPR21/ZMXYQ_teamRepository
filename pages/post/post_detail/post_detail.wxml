@@ -43,10 +43,7 @@
                           <image class="reward" src="../../../static/icons/reward.png"  bindtap="getRewardBox"></image>
                           <a class="iconIntro" bindtap="getRewardBox">赞赏  </a>
                       </view>
-                      <view class="actions">
-                          <image class="share" src="../../../static/icons/share.png" ></image>
-                          <a class="iconIntro">分享  </a>
-                      </view>      
+                      
                   </view>
               </view>
           </view>
