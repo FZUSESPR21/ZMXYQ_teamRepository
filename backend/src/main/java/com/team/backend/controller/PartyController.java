@@ -41,18 +41,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class PartyController {
   @Resource
   private PartyServiceImpl partyService;
-  @PostMapping("/add")
-  public Response addParty(@RequestBody Map<String, Object> map) {
-    String id = (String)map.get("userID");
-    String desc = (String)map.get("description");
-    //@TODO: img list
-
-    int peopleCnt = (int)map.get("peopleCnt");
-    long partyTypeID = (long) map.get("partyTypeID");
-
-    return new Response(0,"");
-  }
-
   User user;
 
 
@@ -136,13 +124,13 @@ public class PartyController {
   /**
    * 参加组局接口
    * <p>
-   * 接口：/api/party/jion
+   * 接口：/api/party/join
    * <p>
    *
    * @param partyId
    * @return the result
    */
-  @PostMapping("/jion")
+  @PostMapping("/join")
   public Result<Integer> joinParty(long partyId) {
 
     User user = null;

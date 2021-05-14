@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -41,12 +42,14 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
   @Resource
   private UserMapper userMapper;
-  @Autowired
+  @Resource
   private AdminMapper adminMapper;
-  @Autowired
+  @Resource
   private PostMapper postMapper;
-  @Autowired
+  @Resource
   private PartyMapper partyMapper;
+  @Value("${server.secret-key}")
+  private String secretKey;
 
   private Admin processInput(String nickname, String password) {
     nickname = nickname.trim();
@@ -55,7 +58,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
       return null;
     }
     try {
-      password += "AA546ADF546safd35444sfd";
+      password += secretKey;
       byte[] bytesOfPassword = password.getBytes("UTF-8");
       MessageDigest md = MessageDigest.getInstance("MD5");
       password = Hex.encodeHexString(md.digest(bytesOfPassword));
@@ -135,11 +138,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
   }
   public void confirmPost(long id,int pass){
-    if(pass==0){
-      Post post = postMapper.selectById(id);
-      post.setStatus(1);
-      postMapper.updateById(post);
+    int status;
+    int deleted = 0;
+    if(pass==1){
+      status = 1;
+    }else{
+      status = 2;
+      deleted = 1;
     }
+    Post post = postMapper.selectById(id);
+    post.setStatus(status);
+    post.setDeleted(deleted);
+    postMapper.updateById(post);
   }
 
   public List<Map<String,Object>> getUncheckedParty(int order){
@@ -158,11 +168,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
   }
 
   public void confirmParty(long id,int pass){
-    if(pass==0){
-      Party party = partyMapper.selectById(id);
-      party.setStatus(1);
-      partyMapper.updateById(party);
+    int status;
+    int deleted = 0;
+    if(pass==1){
+      status = 1;
+    }else{
+      status = 2;
+      deleted = 1;
     }
+    Party party = partyMapper.selectById(id);
+    party.setStatus(status);
+    party.setDeleted(deleted);
+    partyMapper.updateById(party);
   }
 
   public List<Map<String,Object>> getUncheckedUser(int order){
@@ -181,11 +198,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
   }
 
   public void confirmUser(long id,int pass){
-    if(pass==0){
-      User user = userMapper.selectById(id);
-      user.setStatus(1);
-      userMapper.updateById(user);
+    int status;
+    int deleted = 0;
+    if(pass==1){
+      status = 1;
+    }else{
+      status = 2;
+      deleted = 1;
     }
+    User user = userMapper.selectById(id);
+    user.setStatus(status);
+    user.setDeleted(deleted);
+    userMapper.updateById(user);
   }
 
 }
