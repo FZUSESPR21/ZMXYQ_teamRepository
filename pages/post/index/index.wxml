@@ -1,18 +1,21 @@
 <!--pages/post/index/index.wxml-->
 <view>
-<van-notice-bar
+<!-- <van-notice-bar
   left-icon="volume-o"
   text="十大热点"
   speed="15"
   color="#f2774d"
   background="#fffbe8"
-/>
-<view class="section">
+/> -->
+<v-top-ten></v-top-ten>
+<view class="line"></view>
+<!-- <view class="section">
   <picker title="选择主题" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
  
     <van-cell icon="flag-o" is-link arrow-direction="down" is-link title= "{{multiArray1[0][multiIndex[0]]}}  {{multiArray[1][multiIndex[1]]}}" bindtap="listenerButton"/>  
   </picker>
-</view>
+</view> -->
+
  <v-post-list></v-post-list>
 </view>
 <!-- <scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" >
