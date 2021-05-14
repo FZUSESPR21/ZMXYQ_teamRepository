@@ -1,6 +1,7 @@
 package com.team.backend.controller;
 
 
+import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.model.PartyComment;
 import com.team.backend.model.Result;
 import com.team.backend.service.impl.PartyCommentServiceImpl;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/party-comment")
+@RequestMapping("${server.api-path}/party-comment")
 public class PartyCommentController {
 
   @Resource
@@ -43,10 +44,12 @@ public class PartyCommentController {
    * @return the result
    */
   @PostMapping
-  public Result<Integer> commentParty(@RequestBody Map<String, Object> requestMap,
+  public com.team.backend.util.Result commentParty(@RequestBody Map<String, Object> requestMap,
       HttpServletRequest request) {
-
-    String content = (String) requestMap.get("content");
+    PartyComment partyComment = new PartyComment();
+//    Number IdNumber = (Number) requestMap.get("Id");
+//    Long Id = IdNumber.longValue();
+    String content = (String) requestMap.get("information");
     Number userIdNumber = (Number) requestMap.get("userId");
     Long userId = userIdNumber.longValue();
     Number partyIdNumber = (Number) requestMap.get("partyId");
@@ -54,13 +57,30 @@ public class PartyCommentController {
     Number preIdIdNumber = (Number) requestMap.get("preId");
     Long preId = preIdIdNumber.longValue();
 
-    PartyComment partyComment = new PartyComment();
     partyComment.setInformation(content);
     partyComment.setIdFrom(userId);
     partyComment.setPartyId(partyId);
     partyComment.setPreId(preId);
+    partyComment.setStatus(0);
+    partyComment.setDeleted(0);
 
-    return partyCommentService.commentParty(partyComment);
+    boolean isComSuccess = false;
+
+    com.team.backend.util.Result result;
+    try {
+      isComSuccess = partyCommentService.commentParty(partyComment);
+      if (isComSuccess) {
+        result = com.team.backend.util.Result.success();
+      } else {
+        result = com.team.backend.util.Result.error(ExceptionInfo.PARTY_COMMENT_INFO_LOST.getCode()
+            , ExceptionInfo.PARTY_COMMENT_INFO_LOST.getMessage());
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      result = com.team.backend.util.Result.error(ExceptionInfo.PARTY_COMMENT_POST_FAIL.getCode()
+          , ExceptionInfo.PARTY_COMMENT_POST_FAIL.getMessage());
+    }
+    return result;
   }
 
   /**
@@ -73,7 +93,7 @@ public class PartyCommentController {
    * @return the result
    */
   @PostMapping("/commentlsit")
-  public com.team.backend.model.Result<List<PartyComment>> getCommentList(Long partyId) {
+  public Result<List<Map<String, Object>>> getCommentList(Long partyId) {
 
     return partyCommentService.PartyCommentList(partyId);
   }

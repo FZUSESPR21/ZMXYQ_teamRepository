@@ -6,10 +6,15 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.mapper.PartyCommentMapper;
+import com.team.backend.mapper.UserMapper;
 import com.team.backend.model.PartyComment;
 import com.team.backend.model.Result;
+import com.team.backend.model.User;
 import com.team.backend.service.PartyCommentService;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +33,12 @@ public class PartyCommentServiceImpl extends
   @Resource
   private PartyCommentMapper partyCommentMapper;
 
-  //  评论组局
-  public Result<Integer> commentParty(PartyComment partyComment) {
-    Result<Integer> result = new Result<>();
+  @Resource
+  private UserMapper userMapper;
 
+  //  评论组局
+  public boolean commentParty(PartyComment partyComment) {
+    boolean result = false;
     if (partyComment.getIdFrom() != null && partyComment.getPartyId() != null &&
         partyComment.getPreId() != null && !StringUtils.isBlank(partyComment.getInformation())) {
       if (partyCommentMapper.insert(partyComment) == 1) {
@@ -40,26 +47,37 @@ public class PartyCommentServiceImpl extends
           updateWrapper.eq("id", partyComment.getId());
           updateWrapper.set("pre_id", partyComment.getId());
         }
+        result = true;
       }
 
     }
-    result.setCode(ExceptionInfo.valueOf("OK").getCode());
-    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    result.setData(0);
     return result;
   }
 
-  // 查询组局评论
-  public Result<List<PartyComment>> PartyCommentList(Long id) {//传入组局ID获取对应组局的评论列表
+  // 查询组局评论列表
+  public Result<List<Map<String, Object>>> PartyCommentList(Long id) {//传入组局ID获取对应组局的评论列表
 
-    Result<List<PartyComment>> result = new Result<>();
+    Result<List<Map<String, Object>>> result = new Result<>();
+    List<Map<String, Object>> mapList = new LinkedList<>();
 
     QueryWrapper<PartyComment> wrapper = new QueryWrapper<>();
     wrapper.eq("party_id", id);
+    List<PartyComment> partyComments = partyCommentMapper.selectList(wrapper);
+    for (PartyComment partyComment : partyComments) {
+      Map<String, Object> map = new HashMap<>();
+      map.put("commentId", partyComment.getId());
+      map.put("commentUserId", partyComment.getIdFrom());
+      User user = userMapper.selectById(partyComment.getIdFrom());
+      map.put("commentUsername", user.getUsername());
+      map.put("message", partyComment.getInformation());
+      map.put("preId", partyComment.getPreId());
+      map.put("gmtCreate", partyComment.getGmtCreate());
+      mapList.add(map);
+    }
 
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    result.setData(partyCommentMapper.selectList(wrapper));
+    result.setData(mapList);
     return result;
   }
 

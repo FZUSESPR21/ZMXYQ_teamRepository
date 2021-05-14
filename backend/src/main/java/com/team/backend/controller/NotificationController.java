@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-05-02
  */
 @RestController
-@RequestMapping("/notification")
+@RequestMapping("${server.api-path}/notification")
 public class NotificationController {
 
 }

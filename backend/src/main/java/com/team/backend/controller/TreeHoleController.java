@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/tree-hole")
+@RequestMapping("${server.api-path}/tree-hole")
 public class TreeHoleController {
 
 }

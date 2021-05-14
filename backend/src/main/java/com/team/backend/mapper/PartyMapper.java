@@ -17,6 +17,5 @@ import java.util.List;
  * @since 2021-04-28
  */
 public interface PartyMapper extends BaseMapper<Party> {
-    //    List<Party> selectByMyWrapper(@Param(Constants.WRAPPER) Wrapper<Party> partyWrapper);
-    List<Party> selectByMyWrapper();
+
 }

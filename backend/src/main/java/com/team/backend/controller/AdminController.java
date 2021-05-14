@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("${server.api-path}/admin")
 public class AdminController {
 
   private Admin admin;

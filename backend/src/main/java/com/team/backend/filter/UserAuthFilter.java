@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
  * @Description : 类描述
  * @date : 2021-05-07 21:04 Copyright  2021 ccreater. All rights reserved.
  */
-@WebFilter(urlPatterns = "/**", filterName = "userAuthFilter")
+@WebFilter(urlPatterns = "/api/**", filterName = "userAuthFilter")
 public class UserAuthFilter implements Filter {
   @Value("${server.servlet.context-path}")
   String contextValue;
@@ -41,14 +41,14 @@ public class UserAuthFilter implements Filter {
       filterChain.doFilter(servletRequest, servletResponse);
       return;
     }
-    String [] noAuth = new String[]{"/user/upload/img","/user/login"};
+    String [] noAuth = new String[]{"/api/user/upload/img","/api/user/login","/api/posts/imgupload"};
     String uri = request.getRequestURI();
     if(uri.indexOf("/admin")==0){
       filterChain.doFilter(servletRequest, servletResponse);
       return;
     }
     for(String path : noAuth){
-      if(uri.equals(contextValue+path)){
+      if(uri.equals(path)){
         filterChain.doFilter(servletRequest, servletResponse);
         return;
       }

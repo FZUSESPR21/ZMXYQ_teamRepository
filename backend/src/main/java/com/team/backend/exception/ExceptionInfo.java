@@ -82,6 +82,7 @@ public enum ExceptionInfo {
   POST_REPORT_INFO_INVALID(6127, "举报帖子失败，请检查参数合法性或稍后再试"),
 
 
+  //组局6
   PARTY_DESCRIPTION_NULL(6200, "组局描述为空"),
   PARTY_IMAGEURLS_NULL(6201, "组局图片为空"),
   PARTY_PEOPLECNT_NULL(6202, "组局人数限制为空"),
@@ -93,7 +94,10 @@ public enum ExceptionInfo {
   PARTY_NOTCONTAIN_USER(6208, "当前用户没有参与该组局"),
   PARTY_NOTBELONGTO_USER(6209, "该组局不属于当前用户"),
   PARTY_SEARCHMAS_NULL(6210, "组局搜索条件为空"),
-  ;
+  PARTY_INSERT_FAIL(6211, "组局创建失败"),
+  //组局评论
+  PARTY_COMMENT_INFO_LOST(6211, "组局评论信息缺失"),
+  PARTY_COMMENT_POST_FAIL(6212, "评论组局失败，请检查参数");
 
   private Integer code;
   private String message;

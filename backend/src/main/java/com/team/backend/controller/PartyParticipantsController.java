@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/party-participants")
+@RequestMapping("${server.api-path}/party-participants")
 public class PartyParticipantsController {
 
   @Resource
@@ -41,7 +41,7 @@ public class PartyParticipantsController {
    */
 
   @PostMapping("/moveoff")
-  public Result<Integer> exitParty(long partyId, long userId) {
+  public Result<Integer> exitParty(Long partyId, Long userId) {
 
     return partyParticipantsService.moveOffParticipant(partyId, userId);
 

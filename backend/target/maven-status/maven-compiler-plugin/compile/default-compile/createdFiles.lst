@@ -6,6 +6,7 @@ com\team\backend\util\Result.class
 com\team\backend\mapper\PartyTypeMapper.class
 com\team\backend\service\ReportService.class
 com\team\backend\controller\PartyTypeController.class
+com\team\backend\util\HttpRequestUtil.class
 com\team\backend\exception\ExceptionInfo.class
 com\team\backend\service\impl\PostRewardServiceImpl.class
 com\team\backend\controller\AdminController.class
@@ -17,6 +18,7 @@ com\team\backend\controller\PostLikeController.class
 com\team\backend\controller\TreeHoleController.class
 com\team\backend\service\BlackListService.class
 com\team\backend\BackendApplication.class
+com\team\backend\filter\UserAuthFilter.class
 com\team\backend\mapper\PartyCommentMapper.class
 com\team\backend\controller\BlackListController.class
 com\team\backend\service\impl\PartyTypeServiceImpl.class

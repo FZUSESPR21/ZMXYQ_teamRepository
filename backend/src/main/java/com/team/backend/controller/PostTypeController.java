@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/post-type")
+@RequestMapping("${server.api-path}/post-type")
 public class PostTypeController {
 
 }

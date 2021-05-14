@@ -13,8 +13,11 @@ spring:
 server:
   port: 8088
   servlet:
-    context-path: /api
+    context-path: /
   secret-key: AA546ADF546safd35444sfd
+  image-folder: static
+  api-path: api
+  admin-path: public
 
 mybatis-plus:
   global-config:

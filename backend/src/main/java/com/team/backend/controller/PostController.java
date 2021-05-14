@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("${server.api-path}/posts")
 public class PostController {
 
   User user;
