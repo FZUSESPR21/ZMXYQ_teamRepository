@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 public class PostServiceTest {
@@ -80,6 +82,130 @@ public class PostServiceTest {
 
     @Test
     public void listPostPageOrderByGmtCreateIdDescTest0(){
+        List<Map<String, Object>> mapList = postService.listPostPageOrderByGmtCreateIdDesc(1L, 10L, 123456L);
+        System.out.println(mapList);
+        Assertions.assertEquals(mapList.size(),10);
+        for (Map<String,Object> info :mapList) {
+            Assertions.assertNotNull(info.get("postId"));
+            Assertions.assertNotNull(info.get("publisherId"));
+            Assertions.assertNotNull(info.get("publisherName"));
+            Assertions.assertNotNull(info.get("postType"));
+            Assertions.assertNotNull(info.get("message"));
+            Assertions.assertNotNull(info.get("imageUrls"));
+            Assertions.assertNotNull(info.get("gmtCreate"));
+            Assertions.assertNotNull(info.get("isEyeOn"));
+            Assertions.assertNotNull(info.get("eyeOnNum"));
+            Assertions.assertNotNull(info.get("isLike"));
+            Assertions.assertNotNull(info.get("likeNum"));
+            Assertions.assertNotNull(info.get("rewardNum"));
+            Assertions.assertNotNull(info.get("comments"));
+        }
+    }
 
+    @Test
+    public void listPostPageOrderByGmtCreateIdDescTest1(){
+        List<Map<String, Object>> mapList = postService.listPostPageOrderByGmtCreateIdDesc(100L, 10L, 123456L);
+        System.out.println(mapList);
+        for (Map<String,Object> info :mapList) {
+            Assertions.assertEquals(mapList.size(), 0);
+            Assertions.assertNotNull(info.get("postId"));
+            Assertions.assertNotNull(info.get("publisherId"));
+            Assertions.assertNotNull(info.get("publisherName"));
+            Assertions.assertNotNull(info.get("postType"));
+            Assertions.assertNotNull(info.get("message"));
+            Assertions.assertNotNull(info.get("imageUrls"));
+            Assertions.assertNotNull(info.get("gmtCreate"));
+            Assertions.assertNotNull(info.get("isEyeOn"));
+            Assertions.assertNotNull(info.get("eyeOnNum"));
+            Assertions.assertNotNull(info.get("isLike"));
+            Assertions.assertNotNull(info.get("likeNum"));
+            Assertions.assertNotNull(info.get("rewardNum"));
+            Assertions.assertNotNull(info.get("comments"));
+        }
+    }
+
+    @Test
+    public void listPostPageOrderByGmtCreateIdDescTest2(){
+        List<Map<String, Object>> mapList = postService.listPostPageOrderByGmtCreateIdDesc(1L, 10000L, 123456L);
+        System.out.println(mapList);
+        for (Map<String,Object> info :mapList) {
+            Assertions.assertNotNull(info.get("postId"));
+            Assertions.assertNotNull(info.get("publisherId"));
+            Assertions.assertNotNull(info.get("publisherName"));
+            Assertions.assertNotNull(info.get("postType"));
+            Assertions.assertNotNull(info.get("message"));
+            Assertions.assertNotNull(info.get("imageUrls"));
+            Assertions.assertNotNull(info.get("gmtCreate"));
+            Assertions.assertNotNull(info.get("isEyeOn"));
+            Assertions.assertNotNull(info.get("eyeOnNum"));
+            Assertions.assertNotNull(info.get("isLike"));
+            Assertions.assertNotNull(info.get("likeNum"));
+            Assertions.assertNotNull(info.get("rewardNum"));
+            Assertions.assertNotNull(info.get("comments"));
+        }
+    }
+    @Test
+    public void fuzzyListPostPageOrderByGmtCreateDescTest0(){
+        List<Map<String, Object>> mapList = postService.fuzzyListPostPageOrderByGmtCreateDesc("这",1
+                , 10000, 123456L);
+        System.out.println(mapList.toString());
+        for (Map<String,Object> info :mapList) {
+            Assertions.assertNotNull(info.get("postId"));
+            Assertions.assertNotNull(info.get("publisherId"));
+            Assertions.assertNotNull(info.get("publisherName"));
+            Assertions.assertNotNull(info.get("postType"));
+            Assertions.assertNotNull(info.get("message"));
+            Assertions.assertNotNull(info.get("imageUrls"));
+            Assertions.assertNotNull(info.get("gmtCreate"));
+            Assertions.assertNotNull(info.get("isEyeOn"));
+            Assertions.assertNotNull(info.get("eyeOnNum"));
+            Assertions.assertNotNull(info.get("isLike"));
+            Assertions.assertNotNull(info.get("likeNum"));
+            Assertions.assertNotNull(info.get("rewardNum"));
+            Assertions.assertNotNull(info.get("comments"));
+        }
+    }
+
+    @Test
+    public void listPostPageByTypeId0() {
+        List<Map<String, Object>> mapList = postService.listPostPageByTypeId(1L
+                , 123456L, 1, 10);
+        System.out.println(mapList.toString());
+        for (Map<String, Object> info : mapList) {
+            Assertions.assertNotNull(info.get("postId"));
+            Assertions.assertNotNull(info.get("publisherId"));
+            Assertions.assertNotNull(info.get("publisherName"));
+            Assertions.assertNotNull(info.get("postType"));
+            Assertions.assertNotNull(info.get("message"));
+            Assertions.assertNotNull(info.get("imageUrls"));
+            Assertions.assertNotNull(info.get("gmtCreate"));
+            Assertions.assertNotNull(info.get("isEyeOn"));
+            Assertions.assertNotNull(info.get("eyeOnNum"));
+            Assertions.assertNotNull(info.get("isLike"));
+            Assertions.assertNotNull(info.get("likeNum"));
+            Assertions.assertNotNull(info.get("rewardNum"));
+            Assertions.assertNotNull(info.get("comments"));
+        }
+    }
+
+    @Test
+    public void selectTopTenLikePost() {
+        List<Map<String, Object>> mapList = postService.selectTopTenLikePost(123456L);
+        System.out.println(mapList.toString());
+        for (Map<String, Object> info : mapList) {
+            Assertions.assertNotNull(info.get("postId"));
+            Assertions.assertNotNull(info.get("publisherId"));
+            Assertions.assertNotNull(info.get("publisherName"));
+            Assertions.assertNotNull(info.get("postType"));
+            Assertions.assertNotNull(info.get("message"));
+            Assertions.assertNotNull(info.get("imageUrls"));
+            Assertions.assertNotNull(info.get("gmtCreate"));
+            Assertions.assertNotNull(info.get("isEyeOn"));
+            Assertions.assertNotNull(info.get("eyeOnNum"));
+            Assertions.assertNotNull(info.get("isLike"));
+            Assertions.assertNotNull(info.get("likeNum"));
+            Assertions.assertNotNull(info.get("rewardNum"));
+            Assertions.assertNotNull(info.get("comments"));
+        }
     }
 }

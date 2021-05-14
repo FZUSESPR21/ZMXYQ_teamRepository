@@ -115,7 +115,5 @@ backend/.project
 backend/.settings/**
 /backend/target/
 Base64Decoded/
-backend/src/test/java/com/team/backend/PostMapperTest.java
-/backend/src/test/java/com/team/backend/PostControllerTest.java
 /backend/target/classes/
 backend/src/test/**
