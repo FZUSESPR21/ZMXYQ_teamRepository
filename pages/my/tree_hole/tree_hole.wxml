@@ -1,12 +1,21 @@
 <view>
-    <van-card wx:for="{{5}}"
-            title="2021-4-23"
-            desc="这是我的树洞内容这是我的树洞内容这是我的树洞内容这是我的树洞内容这是我的树洞内容这是我的树洞内容"
-            thumb=" https://img.yzcdn.cn/vant/cat.jpeg "
-    >
-        <view slot="footer">
-            <van-button size="mini" bindtap="goToHoleDetail">查看</van-button>
-            <van-button size="mini">删除</van-button>
-        </view>
-    </van-card>
+    <view class="new">
+        <van-button type="warning" block bindtap="newTreeHole">新增树洞</van-button>
+    </view>
+    <view>
+        <van-card wx:for="{{treeHoleList}}"
+                  wx:key="{{index}}"
+                  title="{{item.gmtCreate}}"
+                  desc="{{item.message}}"
+                  thumb=" https://img.yzcdn.cn/vant/cat.jpeg"
+        >
+            <view slot="footer">
+                <van-button size="mini" data-id="{{item.id}}" data-content="{{item.message}}" bindtap="goToHoleDetail">查看</van-button>
+                <van-button size="mini" bindtap="deleteTreeHole">删除</van-button>
+            </view>
+        </van-card>
+    </view>
 </view>
+
+
+<van-dialog id="van-dialog" />

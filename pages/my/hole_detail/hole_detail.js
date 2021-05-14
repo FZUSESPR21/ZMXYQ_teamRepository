@@ -5,14 +5,43 @@ Page({
    * 页面的初始数据
    */
   data: {
+    currentId: '',
+    content: ''
+  },
 
+
+  update(){
+    let that = this;
+    let id = this.data.currentId - 0
+    console.log(id)
+    wx.request({
+      method: 'POST',
+      url: `http://localhost:8088/api/user/treehole/update`,
+
+      data: {
+        fromId:123456,
+        id: that.data.currentId-0,
+        message: that.data.content
+      },
+      // header: {
+      // 'content-type': 'application/x-www-form-urlencoded'
+      // },
+      success(res){
+        console.log(res)
+      }
+
+    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // console.log(options.id)
+    this.setData({
+      currentId: options.id,
+      content: options.content
+    })
   },
 
   /**

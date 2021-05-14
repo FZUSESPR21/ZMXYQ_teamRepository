@@ -1,7 +1,7 @@
 <view>
     <view class="hole-detail">
-        <textarea class="hole-detail-text" placeholder="树洞内容" maxlength="-1"></textarea>
+        <textarea class="hole-detail-text"  maxlength="-1" model:value="{{content}}"></textarea>
     </view>
 
-    <button class="button">保存</button>
+    <button class="button" bindtap="update">保存</button>
 </view>
