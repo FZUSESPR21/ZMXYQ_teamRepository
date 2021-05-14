@@ -2,8 +2,8 @@
 <van-cell title="头像" is-link center border title-class="title">
     <view>
 
-        <van-uploader maxcount="1" bind:after-read="afterRead">
-            <image class="img" src="https://img.yzcdn.cn/vant/cat.jpeg"></image>
+        <van-uploader  maxcount="1" bind:after-read="afterRead" >
+            <image class="img" src="{{headSrc}}"></image>
         </van-uploader>
     </view>
 </van-cell>
@@ -13,7 +13,7 @@
         value-class="value"
         is-link
         title="昵称"
-        value="Camouflage"
+        value="{{nickname}}"
         link-type="navigateTo"
         url="../ch_nickname/ch_nickname"
 />

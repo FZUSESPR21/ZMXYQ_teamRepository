@@ -2,5 +2,8 @@
   "navigationBarBackgroundColor": "#f2774d",
   "navigationBarTitleText": "个人信息",
   "navigationBarTextStyle": "white",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-cell": "@vant/weapp/cell/index",
+    "van-uploader": "@vant/weapp/uploader/index"
+  }
 }
