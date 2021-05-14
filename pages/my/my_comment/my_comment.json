@@ -2,5 +2,10 @@
   "navigationBarBackgroundColor": "#f2774d",
   "navigationBarTitleText": "我的评论",
   "navigationBarTextStyle": "white",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index"
+  }
 }
