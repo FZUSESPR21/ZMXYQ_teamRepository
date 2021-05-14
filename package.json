@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@vant/area-data": "^1.1.1",
-    "@vant/weapp": "^1.6.8"
+    "@vant/weapp": "^1.6.8",
+    "timeago.js": "^4.0.2"
   }
 }

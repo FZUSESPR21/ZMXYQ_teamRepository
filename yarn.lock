@@ -3,11 +3,16 @@
 
 
 "@vant/area-data@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.nlark.com/@vant/area-data/download/@vant/area-data-1.1.1.tgz#b9acf8a804c0d60f721b6900680299422b006b1a"
-  integrity sha1-uaz4qATA1g9yG2kAaAKZQisAaxo=
+  "integrity" "sha1-uaz4qATA1g9yG2kAaAKZQisAaxo="
+  "resolved" "https://registry.nlark.com/@vant/area-data/download/@vant/area-data-1.1.1.tgz"
+  "version" "1.1.1"
 
 "@vant/weapp@^1.6.8":
-  version "1.6.8"
-  resolved "https://registry.npm.taobao.org/@vant/weapp/download/@vant/weapp-1.6.8.tgz#948ae16fba07c5a2054c52783f22aaf6a04453e1"
-  integrity sha1-lIrhb7oHxaIFTFJ4PyKq9qBEU+E=
+  "integrity" "sha1-lIrhb7oHxaIFTFJ4PyKq9qBEU+E="
+  "resolved" "https://registry.npm.taobao.org/@vant/weapp/download/@vant/weapp-1.6.8.tgz"
+  "version" "1.6.8"
+
+"timeago.js@^4.0.2":
+  "integrity" "sha1-ck6MiDPjSQZ2x7sKdfXa8g5VgCg="
+  "resolved" "https://registry.nlark.com/timeago.js/download/timeago.js-4.0.2.tgz"
+  "version" "4.0.2"

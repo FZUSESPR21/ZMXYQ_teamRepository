@@ -1,5 +1,7 @@
 // pages/party/index/index.js
+
 const app = getApp();
+const timeago = require("timeago.js")
 Page({
 
   /**
@@ -61,14 +63,14 @@ Page({
    },
 
    onClose: function () {
-    console.log("关闭");
+    // console.log("关闭");
     this.setData({
       zIndex: -1
     });
    },
 
    onOpen: function () {
-     console.log("打开");
+    //  console.log("打开");
     this.setData({
       zIndex: 2
     });
@@ -90,6 +92,9 @@ Page({
       success:function(res)
       {
        let partyList = res.data.data;
+        for(let i = 0; i < partyList.length; i++){
+          partyList[i].gmtCreate = timeago.format(new Date(partyList[i].gmtCreate),'zh_CN');
+        }
        console.log(res);
         that.setData({
          partyList    
