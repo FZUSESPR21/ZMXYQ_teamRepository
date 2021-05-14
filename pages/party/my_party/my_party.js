@@ -16,7 +16,6 @@ Page({
       method:'GET',
       success:function(res)
       {
-       console.log(res);
        let partyList = res.data.data;
        if(partyList != null){
           for(let i = 0; i < partyList.length; i++){

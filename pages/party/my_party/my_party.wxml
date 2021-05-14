@@ -1,7 +1,7 @@
 <!--pages/party/my_party/my_party.wxml-->
 <page>
     <view class = "noneView" wx:if="{{show}}">
-      <text class = "noneText">这里空空如野！！！</text>
+      <text class = "noneText">这里空空如也！！！</text>
     </view>
     <!-- 我的组局列表开始 -->
     <scroll-view scroll-y>

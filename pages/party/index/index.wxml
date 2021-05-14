@@ -24,7 +24,7 @@
     <!-- 组局列表开始 -->
   <view class="list">
       <view class = "noneView"  wx:if="{{show}}">
-        <text class = "noneText">这里空空如野！！！</text>
+        <text class = "noneText">这里空空如也！！！</text>
       </view>
       <scroll-view scroll-y class="scroll-view">
       <v-party-item wx:for="{{partyList}}" wx:key="key" 
