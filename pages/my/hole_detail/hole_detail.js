@@ -6,10 +6,12 @@ Page({
    */
   data: {
     currentId: '',
-    content: ''
+    content: '',
+    fun:'',
+    func:'',
   },
 
-
+  //更新树洞
   update(){
     let that = this;
     let id = this.data.currentId - 0
@@ -29,7 +31,25 @@ Page({
         })
         // console.log(res)
       }
+    })
+  },
 
+  //新建树洞
+  create(){
+    let that = this;
+    wx.request({
+      method: 'POST',
+      url: `http://localhost:8088/api/user/treehole/new`,
+
+      data:
+        that.data.content,
+
+      success(res){
+        wx.navigateBack({
+          delta:1
+        })
+        // console.log(res)
+      }
     })
   },
 
@@ -40,7 +60,9 @@ Page({
     // console.log(options.id)
     this.setData({
       currentId: options.id,
-      content: options.content
+      content: options.content,
+      fun:options.fun,
+      func:options.func,
     })
   },
 

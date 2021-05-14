@@ -11,6 +11,7 @@ Page({
     treeHoleList:[]
   },
 
+  //删除树洞
   deleteTreeHole:function(event) {
     let id = event.target.dataset.id;
     let that = this;
@@ -37,18 +38,32 @@ Page({
         });
   },
 
+  //新增树洞
+  newTreeHole(){
+    let fun = "创建";
+    let func = "create";
+    wx.navigateTo({
+      url: `../hole_detail/hole_detail?fun=${fun}&func=${func}`
+    })
+  },
+
+
+  //查看修改树洞内容
   goToHoleDetail(event){
     // console.log(event.target.dataset.id);
     let id = event.target.dataset.id;
     let content = event.target.dataset.content;
+    let fun = "保存";
+    let func = "update";
     this.setData({
       currentId:id,
     })
     wx.navigateTo({
-      url: `../hole_detail/hole_detail?id=${id}&content=${content}`
+      url: `../hole_detail/hole_detail?id=${id}&content=${content}&fun=${fun}&func=${func}`
     })
   },
 
+  //获取树洞列表
   getTreeHoleList(){
     let that = this;
     wx.request({

@@ -3,5 +3,5 @@
         <textarea class="hole-detail-text"  maxlength="-1" model:value="{{content}}"></textarea>
     </view>
 
-    <button class="button" bindtap="update">保存</button>
+    <button class="button" bindtap="{{func}}">{{fun}}</button>
 </view>

@@ -1,6 +1,6 @@
 <view>
     <view class="new">
-        <van-button type="warning" block bindtap="newTreeHole">新增树洞</van-button>
+        <van-button type="warning" block bindtap="newTreeHole">新建树洞</van-button>
     </view>
     <view>
         <van-card wx:for="{{treeHoleList}}"
