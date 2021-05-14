@@ -1,13 +1,12 @@
 
-  <view class="search-image"> 
     <van-image
       round
       width="100rpx"
       height="100rpx"
       src="/static/icons/search.png"
       catchtap="searchParty"
+      class="search-image"
     />
-  </view>
 
   <view class="my-buttons">
       <van-button round icon="friends" color="linear-gradient(to right, #4bb0ff, #6149f6)" custom-class = "button-style" bindtap="goToMyParty">我的组局</van-button>
@@ -22,16 +21,18 @@
     </view>
     <!-- 下拉框结束 -->
 
-
     <!-- 组局列表开始 -->
   <view class="list">
+      <view class = "noneView"  wx:if="{{show}}">
+        <text class = "noneText">这里空空如野！！！</text>
+      </view>
       <scroll-view scroll-y class="scroll-view">
       <v-party-item wx:for="{{partyList}}" wx:key="key" 
-      partyID = "{{item.id}}"
-      partyType = "{{item.partyType}}"
+      partyID = "{{item.partyID}}"
+      partyType = "{{partyType[item.partyType]}}"
       content = "{{item.description}}"
-      publisherName = "{{item.publisher.username}}"
-      publisherSex = "{{item.publisher.sex}}"
+      publisherName = "{{item.username}}"
+      publisherSex = "{{item.sex}}"
       time= "{{item.gmtCreate}}"
       peopleCnt = "{{item.peopleCnt}}"
       nowPeopleCnt = "{{item.nowPeopleCnt}}"

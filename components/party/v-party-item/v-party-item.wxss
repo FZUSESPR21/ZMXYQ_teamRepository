@@ -38,7 +38,7 @@ page,view,text,swiper,swiper-item,image,navigator,button{
 }
 
 .content-text{
-    font-size: 25rpx;
+    font-size: 30rpx;
     font-family: 'Droid Sans', sans-serif;
     font-weight: 900;
     color: #000000;
@@ -47,7 +47,7 @@ page,view,text,swiper,swiper-item,image,navigator,button{
 }
 
 .other-mes-text{
-  font-size: 20rpx;
+  font-size: 27rpx;
   font-style: normal;
   font-family: 'Droid Sans', sans-serif;
   font-weight: 500;

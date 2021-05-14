@@ -1,1 +1,13 @@
 /* pages/party/my_party/my_party.wxss */
+page{
+  background-color: #ffe680;
+}
+
+.noneView{
+  margin-top: 30%;
+}
+
+.noneText{
+  display: block;
+  text-align: center;
+}

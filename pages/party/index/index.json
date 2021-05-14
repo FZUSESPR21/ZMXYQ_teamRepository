@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "组局",
   "usingComponents": {
     "van-icon": "@vant/weapp/icon/index",
     "van-image": "@vant/weapp/image/index",

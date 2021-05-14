@@ -26,7 +26,7 @@ page{
 
 .search-image{
   position: fixed;
-  z-index: 2;
+  z-index: 100;
   bottom: 50rpx;
   left: 600rpx;
 }
@@ -52,6 +52,15 @@ page{
 .scroll-view{
     position: absolute;
     height: 900rpx;
+}
+
+.noneView{
+  margin-top: 30%;
+}
+
+.noneText{
+  display: block;
+  text-align: center;
 }
 
 
