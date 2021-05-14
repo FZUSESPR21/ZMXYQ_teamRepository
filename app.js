@@ -1,4 +1,5 @@
 // app.js
+import {request} from "./utils/request"
 App({
   onLaunch() {
     // 展示本地存储能力
@@ -10,14 +11,25 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-         wx.request({
-           url: this.globalData.baseUrl+'api/user/login',
-           data:{
-             code:res.code
-           },
-           success:function(res)
+        let that = this;
+         console.log(res.code);
+         console.log("登录" + this.globalData.baseUrl);
+         request({
+           url:  that.globalData.baseUrl + '/api/user/login',
+           method: 'POST',
+           data:
+             res.code,
+           success:function(respond)
            {
-             this.globalData.userInfo=res.data
+             that.globalData.userInfo=res.data;
+             console.log("成功了" + res);
+             console.log(respond);
+           },
+           fail:function(respond)
+           {
+            //  this.globalData.userInfo=res.data;
+            console.log(respond);
+             console.log("失败");
            }
          })
       }
