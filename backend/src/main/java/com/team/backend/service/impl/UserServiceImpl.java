@@ -7,6 +7,7 @@ import com.team.backend.mapper.BlackListMapper;
 import com.team.backend.mapper.PartyCommentMapper;
 import com.team.backend.mapper.PostCommentMapper;
 import com.team.backend.mapper.PostEyeOnMapper;
+import com.team.backend.mapper.PostLikeMapper;
 import com.team.backend.mapper.PostMapper;
 import com.team.backend.model.BlackList;
 import com.team.backend.model.PartyComment;
@@ -15,6 +16,7 @@ import com.team.backend.model.PersonalCollection;
 import com.team.backend.model.Post;
 import com.team.backend.model.PostComment;
 import com.team.backend.model.PostEyeOn;
+import com.team.backend.model.PostLike;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
 import com.team.backend.mapper.UserMapper;
@@ -61,11 +63,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   @Autowired
   BlackListMapper blackListMapper;
 
+  @Autowired
+  PostLikeMapper postLikeMapper;
 
-  @Value("${wxMini.appId}")
+
+  @Value("${wxMiniReal.appId}")
   private String appId;
 
-  @Value("${wxMini.secret}")
+  @Value("${wxMiniReal.secret}")
   private String secret;
 
   // 用户登录验证
@@ -81,7 +86,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       map.put("user", new User());
       return map;
     }
-
     String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appId + "&secret=" + secret
         + "&js_code=" + code + "&grant_type=authorization_code";
     String wxResult = HttpRequestUtil.httpRequest(url, "GET", null);
@@ -104,8 +108,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     // 当前用户为新用户
     if (user == null) {
-      user.setOpenId(openId);
-      result.setData(userMapper.insert(user));
+      User newUser = new User();
+      newUser.setOpenId(openId);
+      result.setData(userMapper.insert(newUser));
       user = userMapper.selectOne(wrapper);
       map.put("result", result);
       map.put("user", user);
@@ -254,6 +259,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       result.setData(0);
       return result;
     }
+
+    QueryWrapper<PostEyeOn> postEyeOnWrapper = new QueryWrapper<>();
+    postEyeOnWrapper.eq("post_id", id);
+    postEyeOnMapper.delete(postEyeOnWrapper);
+
+    QueryWrapper<PostComment> postCommentWrapper = new QueryWrapper<>();
+    postCommentWrapper.eq("post_id", id);
+    postCommentMapper.delete(postCommentWrapper);
+
+    QueryWrapper<PostLike> postLikeWrapper = new QueryWrapper<>();
+    postLikeWrapper.eq("post_id", id);
+    postLikeMapper.delete(postLikeWrapper);
 
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
@@ -593,6 +610,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     result.setData(blackListMapper.deleteById(id));
     return result;
   }
-
 
 }
