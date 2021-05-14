@@ -105,7 +105,7 @@
 }
 .send_button{
  height: 40px;
- width: 70%;
+ width: 90%;
  font-size: 20px;
  margin-top: 4%;
  border: none;
@@ -171,6 +171,9 @@
 
 .pick_theme{
  font-size:15px;
+}
+.img-area{
+  display: flex;
 }
 
 

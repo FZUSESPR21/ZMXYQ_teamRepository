@@ -49,30 +49,40 @@ App({
   {
     let _this = this;
     const file = fileList;
+    let imgServerUrls=new Array();
     file.forEach(function (e) {
+      let imgServerUrl="";
       var FSM = wx.getFileSystemManager();
       let imageType=_this.getImageType(e.url);
       FSM.readFile({
         filePath: e.url,
         encoding: "base64",
         success: function (data) {
-          console.log(data.data);
+          // console.log(data.data);
+          // console.log(imageType);
           wx.request({
-            url: 'http://192.168.50.167:8088/api/post/image',
+            url: 'http://192.168.50.167:8088/api/posts/imgupload',
+            method: "POST",
             data: {
               base64Str: imageType + data.data,
               filename: "111"
             },
-            method: "POST",
-            success: function (e) {
+            success: function (res) {
+              console.log(res);
+              imgServerUrl=res.data.data;
+              // console.log(imgServerUrl);
+              imgServerUrls.push(imgServerUrl);
               console.log("上传图片成功");
+              // console.log(imgServerUrls);
             },
             fail: function (e) {
+              console.log(e);
               console.log("上传图片失败");
             }
           })
         }
       });
     })
+    return imgServerUrls;
   },
 })

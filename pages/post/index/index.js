@@ -1,4 +1,5 @@
 // pages/post_list/post_list.js
+import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 Page({
 
   /**
