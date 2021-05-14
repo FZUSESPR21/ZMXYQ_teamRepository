@@ -8,7 +8,8 @@ Page({
         url: 'https://img.yzcdn.cn/vant/tree.jpg',
       },
     ],
-    multiArray: [['求助', '找人', '投稿','投票','租房','帮转','找人','公告','闲置','兼职招聘','寻物/招领'], ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐','求点评','求租/借','求购']],
+    multiArray: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领'], ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐','求点评','求租/借','求购']],
+    multiArray1: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领','请设置主题'], ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐','求点评','求租/借','求购']],
     objectMultiArray: [
       [
         {
@@ -37,22 +38,18 @@ Page({
         },
         {
           id: 6,
-          name: '找人'
-        },
-        {
-          id: 7,
           name: '公告'
         },
         {
-          id: 8,
+          id: 7,
           name: '闲置'
         },
         {
-          id: 9,
+          id: 8,
           name: '兼职招聘'
         },
         {
-          id: 10,
+          id: 9,
           name: '寻物/招领'
         },
       ], [
@@ -94,7 +91,9 @@ Page({
         }
       ]
     ],
-    multiIndex: [0, 0],
+    multiIndex: [10,null],
+    postContent:"111",
+    imgUrls:[]
   },
   bindPickerChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -158,21 +157,13 @@ Page({
     console.log(data.multiIndex);
     this.setData(data);
   },
-  afterRead(event) {
-    const { file } = event.detail;
-    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-    wx.uploadFile({
-      url: 'https://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
-      filePath: file.url,
-      name: 'file',
-      formData: { user: 'test' },
-      success(res) {
-        // 上传完成需要更新 fileList
-        const { fileList = [] } = this.data;
-        fileList.push({ ...file, url: res.data });
-        this.setData({ fileList });
-      },
+  afterRead: function (event) {
+    const _this = this;
+    console.log(event.detail.file[0].url);
+    this.setData({
+      fileList: _this.data.fileList.concat(event.detail.file)
     });
+
   },
   deleteImage: function (e) {
     const index = e.detail.index; //获取到点击要删除的图片的下标
@@ -182,9 +173,101 @@ Page({
       fileList: deletImageList
     })
   },
-  goto_postlist:function(param){
-    wx.navigateTo({
-      url: '/pages/post_list/post_list',
-      })
+  publishPost:function(e)
+  {
+    if(this.data.postContent=="")
+    {
+      Dialog.alert({
+        message: '发布内容不能为空',
+      }).then(() => {
+        // on close
+      });
+    }
+    else{
+    let _this = this;
+    const file = this.data.fileList;
+    let promiseArr=[];
+    let imgServerUrls=new Array();
+    file.forEach(function (e) {
+      let imgServerUrl="";
+      var FSM = wx.getFileSystemManager();
+      let imageType=getApp().getImageType(e.url);
+      FSM.readFile({
+        filePath: e.url,
+        encoding: "base64",
+        success: function (data) {
+          promiseArr.push(
+            new Promise(function (resolve,reject) {
+              wx.request({
+                url: 'http://192.168.23.219:8088/api/posts/imgupload',
+                method: "POST",
+                data: {
+                  base64Str: imageType + data.data,
+                  filename: "111"
+                },
+                success: function (res) {
+                  console.log(res);
+                  imgServerUrl=res.data.data;
+                  console.log(imgServerUrl);
+                  imgServerUrls.push(imgServerUrl);
+                  console.log("上传图片成功");
+                  // console.log(imgServerUrls);
+                  return resolve(res);
+                },
+                fail: function (e) {
+                  console.log(e);
+                  console.log("上传图片失败");
+                },
+                complete: function (complete) {
+    
+                  return complete;
+                }
+              })
+            })
+          )
+          // console.log(data.data);
+          // console.log(imageType);
+          // wx.request({
+          //   url: 'http://192.168.50.167:8088/api/posts/imgupload',
+          //   method: "POST",
+          //   data: {
+          //     base64Str: imageType + data.data,
+          //     filename: "111"
+          //   },
+          //   success: function (res) {
+          //     console.log(res);
+          //     imgServerUrl=res.data.data;
+          //     // console.log(imgServerUrl);
+          //     imgServerUrls.push(imgServerUrl);
+          //     console.log("上传图片成功");
+          //     // console.log(imgServerUrls);
+          //   },
+          //   fail: function (e) {
+          //     console.log(e);
+          //     console.log("上传图片失败");
+          //   }
+          // })
+        }
+      });
+    })
+    
+     console.log(promiseArr);
+      Promise.all(promiseArr).then(function (values) {
+        console.log(values);
+      }).catch(
+        reason=>{
+          console.log(reason)
+        }
+      )
+      // let imageUrls=getApp().submitImage(this.data.fileList);
+      // this.setData({
+      //   imgUrls:imageUrls
+      // })
+      // wx.request({
+      //   url: '',
+      // })
+      
+
+    }
   }
 })

@@ -35,7 +35,8 @@
                           <a class="iconIntro">收藏  </a>
                       </view>
                       <view class="actions">
-                        <image class="agree" src="../../../static/icons/agree.png" ></image>
+                        <image class="agree" src="{{hasLike?'../../../static/icons/like.png':'../../../static/icons/agree.png'}}"
+                        bindtap="postLike" ></image>
                           <a class="iconIntro">点赞  </a>
                           <van-toast id="van-toast" />
                       </view>

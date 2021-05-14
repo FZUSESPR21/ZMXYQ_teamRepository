@@ -16,29 +16,25 @@
 </view> -->
 
 <view class="section">
-  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-    <van-cell icon="flag-o" is-link arrow-direction="down" is-link title=" {{multiArray[0][multiIndex[0]]}}  {{multiArray[1][multiIndex[1]]}}" bindtap="listenerButton"/>
-  </picker>
+  <picker title="选择主题" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+ 
+ <van-cell icon="flag-o" is-link arrow-direction="down" is-link title= "{{multiArray1[0][multiIndex[0]]}}  {{multiArray[1][multiIndex[1]]}}" bindtap="listenerButton"/>  
+</picker>
 </view>
 
   <!--添加内容-->
   <view class='input'>
       <!--添加标题-->
       <view class='input_title_border'>
-        <textarea class='input_title' bindinput='getTitle' placeholder='请输入内容'></textarea>
+        <textarea class='input_title' bindinput='getTitle' placeholder='请输入内容' value="{{postContent}}"></textarea>
       </view>
-            <view class="invite flex-item">
-                <!-- <image src="../../images/plus.png"></image>
-                <text class="addMore">添加图片</text> -->
-                <van-uploader>
-                  <van-uploader file-list="{{ fileList }}" deletable="{{ true }}" bind:delete="deleteImage" />
-               <!-- <van-button icon="photo" type="primary" color="#f2774d">上传图片</van-button> -->
-      </van-uploader>
+            <view class="invite flex-item img-area">
+               <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" deletable="{{ true }}" max-count="9" class="party-detail-content-image" multiple="{{true}}" bind:delete="deleteImage"/>
             </view>
      <view class='line_shadow'></view>
          <view class='line'></view>         
     </view>
     <view >
-      <button class="send_button" bindtap='goto_postlist'>发布</button>
+      <button class="send_button" bindtap='publishPost'>发布</button>
     </view>
 </view>

@@ -13,7 +13,7 @@ Page({
     showRewardBox:false,
     popularityNum:0,
     hasMark:false,
-    hasLike:true,
+    hasLike:false,
   },
 
   /**
@@ -115,21 +115,36 @@ Page({
   {
    this.setData({
      hasMark:!this.data.hasMark
-   })
+   });
+    // wx.request({
+    //   url: 'http://xx.com/api/alumnicycle/posts/collect',
+    //   method:"POST",
+    //   data:{
+    //     postId:this.data.postId
+    //   },
+    //   success:function(e)
+    //   {
+    //     Toast('收藏成功');
+    //   }
+    // })
+
   },
   postLike:function(e)
   {
-    wx.request({
-      url: 'http://xx.com/api/alumnicycle/posts/like',
-      method:"POST",
-      data:{
-        postId:this.data.postId
-      },
-      success:function(e)
-      {
-        Toast('点赞成功');
-      }
+    this.setData({
+      hasLike:!this.data.hasLike
     })
+    // wx.request({
+    //   url: 'http://xx.com/api/alumnicycle/posts/like',
+    //   method:"POST",
+    //   data:{
+    //     postId:this.data.postId
+    //   },
+    //   success:function(e)
+    //   {
+    //     Toast('点赞成功');
+    //   }
+    // })
   },
   postCollect:function(e)
   {
