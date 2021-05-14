@@ -1,11 +1,14 @@
 // pages/post_list/post_list.js
-import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    page: 1,
+    pages: 0,
+    articles: [],
+
     fileList: [
       {
         url: 'https://img.yzcdn.cn/vant/leaf.jpg',
@@ -15,7 +18,7 @@ Page({
       },
     ],
     multiArray: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领'], ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐','求点评','求租/借','求购']],
-    multiArray1: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领','请设置主题'], ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐','求点评','求租/借','求购']],
+    multiArray1: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领','请选择主题'], ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐','求点评','求租/借','求购']],
     objectMultiArray: [
       [
         {
@@ -161,8 +164,8 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
- 
+  onLoad (options) {
+     this.getInfoListData(1, true)
   },
 
   /**
@@ -195,15 +198,59 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
+  onPullDownRefresh() {
+    // 上拉刷新
+    if (!this.loading) {
+      this. getInfoListData(1, true).then(() => {
+        // 处理完成后，终止下拉刷新
+        wx.stopPullDownRefresh()
+      })
+    }
+  },
+  
+    getInfoListData(pageNo, over) {
+      this.loading = true
+  
+      return getArticles(pageNo).then(res => {
+        const articles = res.items
+        this.setData({
+          page: pageNo,     //当前的页号
+          pages: res.pages,  //总页数
+          articles: over ? articles : this.data.articles.concat(articles)
+        })
+      }).catch(err => {
+        console.log( err)
+      }).then(() => {
+        this.loading = false
+      })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: () =>{
+    // 下拉触底，先判断是否有请求正在进行中
+    // 以及检查当前请求页数是不是小于数据总页数，如符合条件，则发送请求
+    if (!this.loading && this.data.page < this.data.pages) {
+      this.getInfoListData(this.data.page + 1)
+    }
+  },
+  getInfoListData(pageNo, over) {
+    this.loading = true
 
+    // 向后端请求指定页码的数据
+    return getArticles(pageNo).then(res => {
+      const articles = res.items
+      this.setData({
+        page: pageNo,     //当前的页号
+        pages: res.pages,  //总页数
+        articles: over ? articles : this.data.articles.concat(articles)
+      })
+    }).catch(err => {
+      console.log( err)
+    }).then(() => {
+      this.loading = false
+    })
   },
 
   /**
@@ -214,7 +261,7 @@ Page({
   },
   goto_postdetail:function(param){
     wx.navigateTo({
-      url: 'pages/post/post_detail/post_detail',
+      url: '../post_detail/post_detail',
       })
   },
   
