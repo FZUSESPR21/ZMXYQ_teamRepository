@@ -2,14 +2,14 @@
 <view class="my-wrap">
     <view class="head">
     <van-image class="head-image" round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg"></van-image>
-    <view class="head-z" bindtap="">
+    <view class="head-z" bindtap="goToMyInfo">
         <view class="head-name"><text>Camouflage</text></view>
         <view class="head-school"><text>福州大学</text></view>
     </view>
     </view>
 
     <view class="body">
-    <view class="rpz" bindtap="goToMyPost">
+    <view class="rpz" bindtap="">
         <text>人品值</text>
         <text class="number">619</text>
     </view>
@@ -19,12 +19,12 @@
         <text class="number">1</text>
     </view>
 
-    <view class="sc" bindtap="goToMyPost">
+    <view class="sc" bindtap="goToMyCollection">
         <text>收藏</text>
         <text class="number">0</text>
     </view>
 
-    <view class="pl" bindtap="goToMyPost">
+    <view class="pl" bindtap="goToMyComment">
         <text>评论</text>
         <text class="number">200</text>
     </view>
@@ -36,12 +36,12 @@
 <!--        <van-cell title="单元格" value="内容" />-->
 <!--        <van-cell title="单元格" is-link value="内容" arrow-direction="down" />-->
 <!--        <van-cell title="单元格" value="内容" label="描述信息" border="{{ false }}" />-->
-        <van-cell icon="shop" border is-link >
+        <van-cell icon="shop" border is-link bind:click="">
             <view slot="title">
                 <view class="van-cell-text">社区规范</view>
             </view>
         </van-cell>
-        <van-cell icon="shop" border is-link >
+        <van-cell icon="shop" border is-link bind:click="goToTreeHole">
             <view slot="title">
                 <view class="van-cell-text">我的树洞</view>
             </view>
@@ -57,7 +57,7 @@
 <!--        </van-cell>-->
     </van-cell-group>
     <van-cell-group style="margin:20rpx">
-        <van-cell icon="shop" border is-link >
+        <van-cell icon="shop" border is-link bind:click="goToBlacklist">
             <view slot="title">
                 <view class="van-cell-text">拉黑列表</view>
             </view>

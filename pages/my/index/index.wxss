@@ -31,6 +31,11 @@ body{
     padding-left: 40rpx;
 }
 
+.head-name{
+    font-size: 32rpx;
+    margin-left: 10rpx;
+}
+
 .head-school{
     border: solid 1px black;
     border-radius: 15%;

@@ -8,9 +8,39 @@ Page({
 
   },
 
-  goToMyPost: function(){
+  goToMyPost(){
     wx.navigateTo({
       url: '../my_post/my_post'
+    })
+  },
+
+  goToMyCollection(){
+    wx.navigateTo({
+      url: '../my_collection/my_collection'
+    })
+  },
+
+  goToMyComment(){
+    wx.navigateTo({
+      url: '../my_comment/my_comment'
+    })
+  },
+
+  goToTreeHole(){
+    wx.navigateTo({
+      url: '../tree_hole/tree_hole'
+    })
+  },
+
+  goToMyInfo(){
+    wx.navigateTo({
+      url: '../my_info/my_info'
+    })
+  },
+
+  goToBlacklist(){
+    wx.navigateTo({
+      url: '../blacklist/blacklist'
     })
   },
 
