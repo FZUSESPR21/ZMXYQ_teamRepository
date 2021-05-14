@@ -14,7 +14,7 @@ App({
         let that = this;
          console.log(res.code);
          console.log("登录" + this.globalData.baseUrl);
-         request({
+         wx.request({
            url:  that.globalData.baseUrl + '/api/user/login',
            method: 'POST',
            data:
