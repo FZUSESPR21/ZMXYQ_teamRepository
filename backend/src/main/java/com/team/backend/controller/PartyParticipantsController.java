@@ -41,7 +41,7 @@ public class PartyParticipantsController {
    */
 
   @PostMapping("/moveoff")
-  public Result<Integer> exitParty(long partyId, long userId) {
+  public Result<Integer> exitParty(Long partyId, Long userId) {
 
     return partyParticipantsService.moveOffParticipant(partyId, userId);
 
