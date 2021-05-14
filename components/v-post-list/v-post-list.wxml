@@ -20,7 +20,7 @@
         <view class="feed-item">
             <view class="feed-source">
                <v-name-card></v-name-card>
-                <image  mode="aspectFit" src="../../static/icons/moreInfo.png" bindtap="onTap" id="morebutton2"></image>
+                <image class="morebutton" mode="aspectFit" src="../../static/icons/moreInfo.png" bindtap="onTap" id="{{'morebutton'}}{{idx}}" data-idName="{{'morebutton'}}{{idx}}"></image>
                 <v-popover id='popover'>
                 <v-popover-item bindtap='editParty' hasline>修改</v-popover-item>
                  <v-popover-item bindtap='disbandParty' hasline>解散</v-popover-item>

@@ -145,7 +145,7 @@
   color: #a0acac;
   font-size: 26rpx;
 }
-#morebutton2{
+.morebutton{
   display: inline-block;
   width: 60rpx;
   height: 60rpx;
