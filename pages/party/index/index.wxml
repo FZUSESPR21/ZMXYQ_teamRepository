@@ -26,8 +26,8 @@
     <!-- 组局列表开始 -->
   <view class="list">
       <scroll-view scroll-y class="scroll-view">
-      <v-party-item wx:for="{{partyList}}" 
-      partyID = "{{item.aprtyID}}"
+      <v-party-item wx:for="{{partyList}}" wx:key="key" 
+      partyID = "{{item.id}}"
       partyType = "{{item.partyType}}"
       content = "{{item.description}}"
       publisherName = "{{item.publisher.username}}"

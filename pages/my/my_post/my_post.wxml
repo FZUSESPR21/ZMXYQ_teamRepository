@@ -1,13 +1,29 @@
 <view class="post_main">
-    <navigator class="post_item" wx:for="{{5}}">
+    <navigator class="post_item" wx:for="{{postList}}" wx:key="{{index}}"
+               bindtouchstart="handleTouchStart"
+               bindtouchend="handleTouchEnd"
+               bindlongpress="handleLongPress"
+               bindtap="handleClick"
+               data-id="{{item.id}}">
         <view class="txt">
             <view class="content">
-                这是贴文内容这是贴文内容这是贴文内容这是贴文内容这是贴文内容这是贴文内容。
+                {{item.message}}
             </view>
             <view class="info">
-                <view class="nickname">Camouflage</view>
+                <view class="nickname">{{item.publisherName}}</view>
                 <view class="time">24分钟前</view>
             </view>
         </view>
     </navigator>
 </view>
+
+<van-action-sheet
+        show="{{ show }}"
+        actions="{{ actions }}"
+        cancel-text="Cancel"
+        bind:close="onClose"
+        bind:select="onSelect"
+        bind:cancel="onClose"
+/>
+
+<van-dialog id="van-dialog" />

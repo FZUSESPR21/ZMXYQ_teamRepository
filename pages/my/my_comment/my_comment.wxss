@@ -1,13 +1,13 @@
-.post_main{
+.comment_main{
     padding: 0 25rpx;
 }
 
-.post_item{
+.comment_item{
     margin: 15rpx 0;
     border-bottom: 1rpx solid rgba(206, 198, 198, 0.55);
 }
 
-.post_item .txt{
+.comment_item .txt{
     display: flex;
     flex-direction: column;
     justify-content: space-between;

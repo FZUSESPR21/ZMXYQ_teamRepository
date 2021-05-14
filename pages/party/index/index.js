@@ -1,4 +1,7 @@
 // pages/party/index/index.js
+
+const app = getApp();
+const timeago = require("timeago.js")
 Page({
 
   /**
@@ -60,14 +63,14 @@ Page({
    },
 
    onClose: function () {
-    console.log("关闭");
+    // console.log("关闭");
     this.setData({
       zIndex: -1
     });
    },
 
    onOpen: function () {
-     console.log("打开");
+    //  console.log("打开");
     this.setData({
       zIndex: 2
     });
@@ -77,24 +80,30 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    for(let i = 0; i < 10; i++)
-    {
-      let partyList = this.data.partyList;
-      partyList.push({
-        "partyID": "12345",
-        "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
-        "publisher": {
-            "username": "张三",
-            "sex":"男"
-        },
-        "peopleCnt": 6,
-        "nowPeopleCnt": 3,
-        "partyType": "组局",
-        "gmtCreate": "1h前"
-      });
-      this.setData({
-        partyList
-      })
-     }  
+    let that = this;
+    let baseUrl = app.globalData.baseUrl;
+    wx.request({
+      // url: app.globalData.baseUrl + "api/party-type/getparty",
+      url:  baseUrl + '/api/party-type/getparty',
+      method:'GET',
+      data:{
+        partyTypeID: 1
+      },
+      success:function(res)
+      {
+       let partyList = res.data.data;
+        for(let i = 0; i < partyList.length; i++){
+          partyList[i].gmtCreate = timeago.format(new Date(partyList[i].gmtCreate),'zh_CN');
+        }
+       console.log(res);
+        that.setData({
+         partyList    
+       })
+      },
+      fail:function(res)
+      {
+        console.log(res);
+      }
+    });
   }
 })

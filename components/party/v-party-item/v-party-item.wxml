@@ -18,7 +18,7 @@
 
           <!-- 局长，时间，人数-->
         <view>
-          <text decode="{{true}}" class = "other-mes-text">局长：{{publisherName}}&emsp;</text>
+          <!-- <text decode="{{true}}" class = "other-mes-text">局长：{{publisherName}}&emsp;</text> -->
           <text decode="{{true}}" class = "other-mes-text">人数：{{peopleCnt}}/{{nowPeopleCnt}}&emsp;</text>
           <text decode="{{true}}" class = "other-mes-text">{{time}}&emsp;</text>
         </view>

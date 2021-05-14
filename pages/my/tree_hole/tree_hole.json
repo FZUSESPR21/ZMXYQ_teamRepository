@@ -2,5 +2,9 @@
   "navigationBarBackgroundColor": "#f2774d",
   "navigationBarTitleText": "我的树洞",
   "navigationBarTextStyle": "white",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-card": "@vant/weapp/card/index",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index"
+  }
 }
