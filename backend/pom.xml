@@ -115,6 +115,12 @@
       <artifactId>jackson-databind</artifactId>
       <version>2.11.4</version>
     </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-base</artifactId>
+      <version>11.0.1</version>
+    </dependency>
+
 
 
   </dependencies>
