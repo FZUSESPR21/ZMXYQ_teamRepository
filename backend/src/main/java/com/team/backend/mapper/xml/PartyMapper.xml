@@ -3,6 +3,6 @@
 <mapper namespace="com.team.backend.mapper.PartyMapper">
     <select id="selectByMyWrapper" resultType="com.team.backend.model.Party">
         //返回有空位的party
-        select * from party,party_participants where party.id=party_participants.party_id group by party.id having party.people_cnt>count(*);
+        SELECT party.* FROM party,party_participants WHERE ((party.id = party_participants.party_id and people_cnt > (SELECT COUNT(*) FROM party_participants WHERE party_participants.party_id = `party`.id))) OR (SELECT COUNT(*) FROM party_participants WHERE party_participants.party_id = `party`.id)=0 ;
     </select>
 </mapper>

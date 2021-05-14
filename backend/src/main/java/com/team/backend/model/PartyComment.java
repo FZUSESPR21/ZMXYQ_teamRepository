@@ -61,5 +61,9 @@ public class PartyComment implements Serializable {
   @TableField(fill = FieldFill.INSERT_UPDATE)
   private Date gmtModified;
 
+  @ApiModelProperty(value = "组局者用户名")
+  @TableField(exist = false)
+  private String username;
+
 
 }

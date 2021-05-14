@@ -65,4 +65,8 @@ public class PostComment implements Serializable {
 
   @TableField(exist = false)
   private String nameFrom;
+
+  @ApiModelProperty(value = "发帖者用户名")
+  @TableField(exist = false)
+  private String username;
 }
