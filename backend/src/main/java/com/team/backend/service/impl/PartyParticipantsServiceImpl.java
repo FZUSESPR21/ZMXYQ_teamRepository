@@ -39,9 +39,10 @@ public class PartyParticipantsServiceImpl extends
   private PartyTypeMapper partyTypeMapper;
 
   //将参与者移出组局
-  public Result<Integer> moveOffParticipant(long partyid, long userid) {
+  public Result<Integer> moveOffParticipant(Long partyid, Long userid) {
     Result<Integer> result = new Result<>();
     Party fromParty = partyMapper.selectById(partyid);
+    boolean isDeleted = false;
     // 判断数据库是否存在该组局
     if (fromParty == null) {
       result.setCode(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getCode());
@@ -52,7 +53,8 @@ public class PartyParticipantsServiceImpl extends
 
     QueryWrapper<PartyParticipants> wrapper = new QueryWrapper<>();
     wrapper.eq("party_id", partyid)
-        .eq("participant_id", userid);
+        .eq("participant_id", userid)
+    ;
     PartyParticipants participant = partyParticipantsMapper.selectOne(wrapper);
     //判断该用户是否是该组局的参与者
     if (participant == null) {
@@ -61,7 +63,10 @@ public class PartyParticipantsServiceImpl extends
       result.setData(0);
       return result;
     }
-    result.setData(partyParticipantsMapper.delete(wrapper));
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(partyParticipantsMapper.deleteById(participant.getId()));
     return result;
   }
 
