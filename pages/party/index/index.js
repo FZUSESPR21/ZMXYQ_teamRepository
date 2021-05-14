@@ -1,4 +1,5 @@
 // pages/party/index/index.js
+const app = getApp();
 Page({
 
   /**
@@ -77,24 +78,27 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    for(let i = 0; i < 10; i++)
-    {
-      let partyList = this.data.partyList;
-      partyList.push({
-        "partyID": "12345",
-        "description": "晚上十点，玫瑰园，王者荣耀五黑，不见不散，带你上王者，我就是阿伟！",
-        "publisher": {
-            "username": "张三",
-            "sex":"男"
-        },
-        "peopleCnt": 6,
-        "nowPeopleCnt": 3,
-        "partyType": "组局",
-        "gmtCreate": "1h前"
-      });
-      this.setData({
-        partyList
-      })
-     }  
+    let that = this;
+    let baseUrl = app.globalData.baseUrl;
+    wx.request({
+      // url: app.globalData.baseUrl + "api/party-type/getparty",
+      url:  baseUrl + '/api/party-type/getparty',
+      method:'GET',
+      data:{
+        partyTypeID: 1
+      },
+      success:function(res)
+      {
+       let partyList = res.data.data;
+       console.log(res);
+        that.setData({
+         partyList    
+       })
+      },
+      fail:function(res)
+      {
+        console.log(res);
+      }
+    });
   }
 })
