@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/party")
+@RequestMapping("${server.api-path}/party")
 public class PartyController {
   @Resource
   private PartyServiceImpl partyService;

@@ -24,7 +24,7 @@ import java.util.Map;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/block")
+@RequestMapping("${server.api-path}/block")
 public class BlackListController {
     private User user;
 

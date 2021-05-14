@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/alumnicycle/posts")
+@RequestMapping("${server.api-path}/alumnicycle/posts")
 public class PostCommentController {
 
   @Autowired

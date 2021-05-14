@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/party-participants")
+@RequestMapping("${server.api-path}/party-participants")
 public class PartyParticipantsController {
 
   @Resource

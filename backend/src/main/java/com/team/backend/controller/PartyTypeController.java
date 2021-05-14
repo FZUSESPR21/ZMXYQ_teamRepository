@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/party-type")
+@RequestMapping("${server.api-path}/party-type")
 public class PartyTypeController {
 
   User user;

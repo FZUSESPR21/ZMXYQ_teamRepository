@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/party-comment")
+@RequestMapping("${server.api-path}/party-comment")
 public class PartyCommentController {
 
   @Resource

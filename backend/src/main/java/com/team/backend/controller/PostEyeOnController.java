@@ -25,7 +25,7 @@ import javax.annotation.Resource;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/alumnicycle/posts/collect")
+@RequestMapping("${server.api-path}/alumnicycle/posts/collect")
 public class PostEyeOnController {
     @Resource
     private PostEyeOnServiceImpl postEyeOnService;
