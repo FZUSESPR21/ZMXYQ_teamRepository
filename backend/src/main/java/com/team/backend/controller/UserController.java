@@ -45,7 +45,7 @@ public class UserController {
   TreeHoleServiceImpl treeHoleService;
 
   @PostMapping("/login")
-  public Result<Integer> login(HttpServletRequest request, String code) {
+  public Result<Integer> login(HttpServletRequest request, @RequestBody String code) {
 
     HttpSession session = request.getSession();
     Map<String, Object> map = userService.login(code);
@@ -173,16 +173,16 @@ public class UserController {
   @PostMapping("/post/deleted")
   public Result<Integer> postDeleted(@RequestBody Long id) {
 
-//    User user = null;
-//
-//    if (user == null) {
-//      Result<Integer> result = new Result<>();
-//      result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
-//      result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
-//      return result;
-//    }
+    User user = null;
 
-    return userService.postDeleted(123456L, id);
+    if (user == null) {
+      Result<Integer> result = new Result<>();
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
+      return result;
+    }
+
+    return userService.postDeleted(user.getId(), id);
   }
 
   @GetMapping("/postcomment/list")
