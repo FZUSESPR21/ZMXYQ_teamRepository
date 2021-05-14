@@ -41,12 +41,8 @@ public class Base64Util {
         typeMap.put("data:image/bmp;base64",".bmp");//bmp格式图片
         typeMap.put("data:image/x-icon;base64",".ico");//ico格式图片
         setMimeTypeMap(typeMap);
+        folderName = Paths.get(System.getProperty("user.dir"),folderName).toString();
 
-        try {
-            folderName = Paths.get(Paths.get(Base64Util.class.getProtectionDomain().getCodeSource().getLocation().toURI()).toString(),folderName).toString();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
         File file = new File(folderName);
         if (!file.exists()) {
             isFolderExist = file.mkdir();
