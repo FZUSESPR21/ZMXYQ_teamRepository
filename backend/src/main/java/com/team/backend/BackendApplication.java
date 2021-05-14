@@ -18,10 +18,8 @@ public class BackendApplication implements WebMvcConfigurer {
     SpringApplication.run(BackendApplication.class, args);
   }
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-    // Register resource handler for images
-    registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-    registry.addResourceHandler("/public/**").addResourceLocations("classpath:/public/");
+    registry.addResourceHandler("/static/**").addResourceLocations("file:"+Paths.get(System.getProperty("user.dir"),"static",".").toString());
+    registry.addResourceHandler("/public/**").addResourceLocations("file:"+Paths.get(System.getProperty("user.dir"),"public",".").toString());
   }
 
 }
