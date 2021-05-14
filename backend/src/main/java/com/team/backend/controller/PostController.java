@@ -74,9 +74,7 @@ public class PostController {
   }
 
   @PostMapping("/imgupload")
-  public Result savePostImage(@RequestParam Map<String,Object> requestMap
-      , HttpServletRequest request) {
-        request.getSession();
+  public Result savePostImage(@RequestBody Map<String,Object> requestMap) {
         String base64Source = (String)requestMap.get("base64Str");
         String fileName = (String)requestMap.get("filename");
         ExceptionInfo info = imageService.saveImage(base64Source,fileName);
