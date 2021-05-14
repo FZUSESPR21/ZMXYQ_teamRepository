@@ -13,21 +13,21 @@ Page({
   update(){
     let that = this;
     let id = this.data.currentId - 0
-    console.log(id)
+    // console.log(id)
     wx.request({
       method: 'POST',
       url: `http://localhost:8088/api/user/treehole/update`,
 
       data: {
-        fromId:123456,
         id: that.data.currentId-0,
         message: that.data.content
       },
-      // header: {
-      // 'content-type': 'application/x-www-form-urlencoded'
-      // },
       success(res){
-        console.log(res)
+        wx.navigateBack({
+          delta:1
+
+        })
+        // console.log(res)
       }
 
     })
