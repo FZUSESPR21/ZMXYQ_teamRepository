@@ -32,7 +32,7 @@ public class PostCommentController {
   PostCommentServiceImpl postCommentService;
 
   @PostMapping("/commentlist")
-  public Result<List<Map<String, Object>>> listComment(Long postId){
+  public Result<List<Map<String, Object>>> listComment(@RequestBody Long postId){
 
     return postCommentService.listComment(postId);
   }
