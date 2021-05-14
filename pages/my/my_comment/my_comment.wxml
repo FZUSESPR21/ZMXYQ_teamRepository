@@ -13,7 +13,13 @@
 
         <van-tab title="校友圈">
             <view class="comment_main">
-                <navigator class="comment_item" wx:for="{{postCommentsList}}" wx:key="{{index}}">
+                <navigator class="comment_item" wx:for="{{postCommentsList}}" wx:key="{{index}}"
+                           bindtouchstart="handleTouchStart"
+                           bindtouchend="handleTouchEnd"
+                           bindlongpress="handleLongPress"
+                           bindtap="handleClick"
+                           data-id="{{item.id}}"
+                           data-topic="post">
                     <view class="txt">
                         <view class="content">
                             {{item.message}}
@@ -29,7 +35,13 @@
 
         <van-tab title="组团">
             <view class="comment_main">
-                <navigator class="comment_item" wx:for="{{partyCommentsList}}" wx:key="{{index}}">
+                <navigator class="comment_item" wx:for="{{partyCommentsList}}" wx:key="{{index}}"
+                           bindtouchstart="handleTouchStart"
+                           bindtouchend="handleTouchEnd"
+                           bindlongpress="handleLongPress"
+                           bindtap="handleClick"
+                           data-id="{{item.id}}"
+                           data-topic="party">
                     <view class="txt">
                         <view class="content">
                             {{item.information}}
@@ -44,3 +56,14 @@
         </van-tab>
     </van-tabs>
 </view>
+
+<van-action-sheet
+        show="{{ show }}"
+        actions="{{ actions }}"
+        cancel-text="Cancel"
+        bind:close="onClose"
+        bind:select="onSelect"
+        bind:cancel="onClose"
+/>
+
+<van-dialog id="van-dialog" />

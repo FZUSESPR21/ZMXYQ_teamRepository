@@ -11,10 +11,11 @@ Page({
     actions: [
       { name: '删除帖子' },
     ],
-    currentId:1,
+    currentId:0,
     postList:[],
   },
 
+  //点击计时器
   handleTouchStart:function(e){
     this.startTime=e.timeStamp;
     //console.log(" startTime="+e.timeStamp);
@@ -49,6 +50,7 @@ Page({
     this.setData({ show: false });
   },
 
+  //删除我的帖子
   deleteMyPost(ID){
     let that = this;
     let id = this.data.currentId - 0
@@ -69,6 +71,7 @@ Page({
     })
   },
 
+  //删除帖子确认框
   deletePostDialog:function(e)
   {
     Dialog.confirm({
@@ -98,6 +101,7 @@ Page({
     this.deletePostDialog();
   },
 
+  //获取帖子列表
   getPostList(){
     let that = this;
     wx.request({

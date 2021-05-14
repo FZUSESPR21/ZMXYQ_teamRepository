@@ -11,7 +11,7 @@ Page({
     actions: [
       { name: '取消收藏' },
     ],
-    currentId:1,
+    currentId:0,
     collectionList:[],
   },
 
