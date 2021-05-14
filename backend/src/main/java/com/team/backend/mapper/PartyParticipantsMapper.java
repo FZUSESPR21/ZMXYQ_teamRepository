@@ -1,7 +1,9 @@
 package com.team.backend.mapper;
 
+import com.team.backend.model.Party;
 import com.team.backend.model.PartyParticipants;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import java.util.List;
 
 /**
  * <p>

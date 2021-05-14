@@ -1,7 +1,9 @@
 package com.team.backend.mapper;
 
+import com.team.backend.model.Party;
 import com.team.backend.model.PartyType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface PartyTypeMapper extends BaseMapper<PartyType> {
 
+  List<Party> selectByMyWrapper();
 }

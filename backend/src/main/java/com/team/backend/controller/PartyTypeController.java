@@ -10,6 +10,7 @@ import com.team.backend.service.impl.PartyParticipantsServiceImpl;
 import com.team.backend.service.impl.PartyServiceImpl;
 import com.team.backend.service.impl.PartyTypeServiceImpl;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/party-type")
+@RequestMapping("${server.api-path}/party-type")
 public class PartyTypeController {
 
   User user;
@@ -43,7 +44,7 @@ public class PartyTypeController {
    * @return the result
    */
   @GetMapping("/getparty")
-  public Result<List<Party>> getMyparty(int partyTypeID) {
+  public Result<List<Map<String, Object>>> getMyparty(int partyTypeID) {
 
     return partyTypeService.PartylistByTypeID(partyTypeID);
 

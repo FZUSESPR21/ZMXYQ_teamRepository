@@ -7,10 +7,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -26,7 +30,7 @@ import java.util.Map;
 public class Base64Util {
 
     private static boolean isFolderExist;
-    private static final String folderName = "Base64Decoded/";//存放在根目录该文件夹下
+    private static String folderName="static";//存放在根目录该文件夹下
     private static Map<String,String> mimeTypeMap;
 
     static {
@@ -37,6 +41,7 @@ public class Base64Util {
         typeMap.put("data:image/bmp;base64",".bmp");//bmp格式图片
         typeMap.put("data:image/x-icon;base64",".ico");//ico格式图片
         setMimeTypeMap(typeMap);
+        folderName = Paths.get(System.getProperty("user.dir"),folderName).toString();
 
         File file = new File(folderName);
         if (!file.exists()) {
@@ -59,6 +64,9 @@ public class Base64Util {
      * @return the int 结果代码：0：成功，1：文件夹未创建，：2：Base64字符串或存储文件名为空
      *                      ，3：未找到存储位置，4：文件写入失败
      */
+    public static String getFolderName(){
+        return Base64Util.folderName;
+    }
     public static int decryptByBase64AndSave(String source,String saveName) {
         int result = 0;
         if (!isFolderExist) {
@@ -67,7 +75,7 @@ public class Base64Util {
             result = 2;
         }else {
             Decoder decoder = Base64.getDecoder();
-            try (OutputStream outputStream = new FileOutputStream(folderName + saveName)) {
+            try (OutputStream outputStream = new FileOutputStream(Paths.get(folderName,saveName).toString())) {
                 byte[] bytes = decoder.decode(source);
                 for (int i = 0;i < bytes.length;i++) {
                     if (bytes[i] < 0) {

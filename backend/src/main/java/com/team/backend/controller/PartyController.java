@@ -10,14 +10,9 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.model.Party;
-import com.team.backend.model.PersonalCollection;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
-import com.team.backend.service.impl.PartyCommentServiceImpl;
-import com.team.backend.service.impl.PartyParticipantsServiceImpl;
 import com.team.backend.service.impl.PartyServiceImpl;
-import com.team.backend.service.impl.PartyTypeServiceImpl;
-import com.team.backend.util.Response;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -37,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/party")
+@RequestMapping("${server.api-path}/party")
 public class PartyController {
   @Resource
   private PartyServiceImpl partyService;
@@ -56,17 +51,18 @@ public class PartyController {
    * @return the result
    */
   @PostMapping("/insert")
-  public Result<Integer> insertParty(@RequestBody Map<String, Object> requestMap
+  public com.team.backend.util.Result insertParty(@RequestBody Map<String, Object> requestMap
       , HttpServletRequest request) {
-
-    Number partyTypeNum = (Number) requestMap.get("partyTypeId");
-    Long partyTypeId = partyTypeNum.longValue();
+    Number userIdNum = (Number) requestMap.get("userId");
+    Long userId = userIdNum.longValue();
     String description = (String) requestMap.get("description");
     String imageUrls = (String) requestMap.get("images");
     int peopleCnt = (int) requestMap.get("peopleCnt");
-    com.team.backend.model.Result<Integer> result = partyService
-        .insertParty(user.getId(), description, imageUrls, peopleCnt, partyTypeId);
-    return result;
+    Number partyTypeNum = (Number) requestMap.get("partyTypeId");
+    Long partyTypeId = partyTypeNum.longValue();
+    ExceptionInfo exceptionInfo = partyService
+        .insertParty(userId, description, imageUrls, peopleCnt, partyTypeId);
+    return com.team.backend.util.Result.error(exceptionInfo.getCode(), exceptionInfo.getMessage());
   }
 
   /**
@@ -89,20 +85,21 @@ public class PartyController {
    * <p>
    * 接口：/api/party/myparty
    * <p>
+   *
+   * @return
    */
   @GetMapping("/myparty")
-  public Result<List<Party>> getMyparty() {
-
-    User user = null;
+  public Result<List<Map<String, Object>>> getMyparty() {
 
     if (user == null) {
-      Result<List<Party>> result = new Result<>();
+      Result<List<Map<String, Object>>> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
       return result;
     }
 
     return partyService.GetMyPartyList(user.getId());
+//    return partyService.GetMyPartyList(id);//测试用
   }
 
   /**
@@ -115,7 +112,7 @@ public class PartyController {
    * @return the result
    */
   @GetMapping("/partymes")
-  public Result<Party> getPartymes(long partyId) {
+  public Result<Map<String, Object>> getPartymes(Long partyId) {
 
     return partyService.getPartymes(partyId);
 
@@ -130,10 +127,9 @@ public class PartyController {
    * @param partyId
    * @return the result
    */
-  @PostMapping("/join")
-  public Result<Integer> joinParty(long partyId) {
 
-    User user = null;
+  @PostMapping("/jion")
+  public Result<Integer> joinParty(Long userId, Long partyId) {
 
     if (user == null) {
       Result<Integer> result = new Result<>();
@@ -143,6 +139,7 @@ public class PartyController {
     }
 
     return partyService.joinParty(user.getId(), partyId);
+//    return partyService.joinParty(userId,partyId);//测试
   }
 
   /**
@@ -155,18 +152,17 @@ public class PartyController {
    * @return the result
    */
   @PostMapping("/exit")
-  public Result<Integer> exitParty(long partyId) {
+  public Result<Integer> exitParty(Long userId, Long partyId) {
 
-    User user = null;
-
-    if (user == null) {
-      Result<Integer> result = new Result<>();
-      result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
-      result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
-      return result;
-    }
-
-    return partyService.exitParty(user.getId(), partyId);
+//    if (user == null) {
+//      Result<Integer> result = new Result<>();
+//      result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
+//      result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
+//      return result;
+//    }
+//
+//    return partyService.exitParty(user.getId(), partyId);
+    return partyService.exitParty(userId, partyId);//测试
   }
 
   /**
@@ -181,8 +177,6 @@ public class PartyController {
   @PostMapping("/delete")
   public Result<Integer> deleteParty(Long partyId) {
 
-    User user = null;
-
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -191,6 +185,7 @@ public class PartyController {
     }
 
     return partyService.deleteParty(user.getId(), partyId);
+//    return partyService.deleteParty(userId, partyId);//测试
   }
 
   /**
@@ -203,14 +198,9 @@ public class PartyController {
    * @return the result
    */
   @PostMapping("/search")
-  public Result<Integer> searchParty(String massage) {
-    Result result = new Result();
-    result.setData(1);
-    if (partyService.searchParty(massage) != null) {
-      result.setData(0);
-    }
-    return result;
+  public Result<List<Map<String, Object>>> searchParty(String massage) {
+
+    return partyService.searchParty(massage);
   }
-  //PARTY部分的controller层
 }
 

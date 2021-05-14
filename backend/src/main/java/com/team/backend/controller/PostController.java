@@ -4,6 +4,7 @@ package com.team.backend.controller;
 import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.model.Post;
 import com.team.backend.model.User;
+import com.team.backend.model.vo.UserInfoToShowInVO;
 import com.team.backend.service.impl.Base64ImageServiceImpl;
 import com.team.backend.service.impl.PostServiceImpl;
 import com.team.backend.util.DateUtil;
@@ -15,6 +16,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("${server.api-path}/posts")
 public class PostController {
 
   User user;
@@ -40,8 +43,8 @@ public class PostController {
   private PostServiceImpl postService;
 
   @PostMapping("/publishermsg")
-  public Result getUserInfoToShowInPost(@RequestBody Map<String,Number> requestMap) {
-      Number idNum = (Number) requestMap.get("publisherId");
+  public Result getUserInfoToShowInPost(@RequestBody UserInfoToShowInVO userInfoToShowInVO) {
+      Number idNum = userInfoToShowInVO.getPublisherId();
       Result result;
       User publisher;
       if (idNum != null) {
@@ -74,19 +77,23 @@ public class PostController {
   }
 
   @PostMapping("/imgupload")
-  public Result savePostImage(@RequestParam Map<String,Object> requestMap
+  public Result savePostImage(@RequestBody Map<String,Object> requestMap
       , HttpServletRequest request) {
-        request.getSession();
-        String base64Source = (String)requestMap.get("base64Str");
-        String fileName = (String)requestMap.get("filename");
-        ExceptionInfo info = imageService.saveImage(base64Source,fileName);
-        Result result;
-        if (info.equals(ExceptionInfo.OK)) {
-          result = Result.success(fileName);
-        }else {
-          result = Result.error(info.getCode(), info.getMessage());
-        }
-        return result;
+      String base64Source = (String)requestMap.get("base64Str");
+      String fileName = (String)requestMap.get("filename");
+      Result result;
+      if (base64Source != null && fileName != null) {
+          Pair<ExceptionInfo,String> info = imageService.saveImage(base64Source, fileName);
+          if (info.getKey().equals(ExceptionInfo.OK)) {
+              result = Result.success(info.getValue());
+          } else {
+              result = Result.error(info.getKey().getCode(), info.getKey().getMessage());
+          }
+      }else {
+          result = Result.error(ExceptionInfo.POST_IMAGE_CONTENT_EMPTY.getCode()
+                  ,ExceptionInfo.POST_IMAGE_CONTENT_EMPTY.getMessage());
+      }
+      return result;
   }
 
   /**
@@ -116,7 +123,13 @@ public class PostController {
     String imgUrls = (String) requestMap.get("imgUrls");
     Number userIdNum = (Number) requestMap.get("userId");
     Long userId = userIdNum.longValue();
-    ExceptionInfo exceptionInfo = postService.publishPost(userId,postTheme,message,imgUrls);
+    ExceptionInfo exceptionInfo;
+    try {
+        exceptionInfo = postService.publishPost(userId,postTheme,message,imgUrls);
+    }catch (Exception e) {
+        e.printStackTrace();
+        exceptionInfo = ExceptionInfo.POST_PUBLISH_INSERT_FAIL;
+    }
     return Result.error(exceptionInfo.getCode(),exceptionInfo.getMessage());
   }
 

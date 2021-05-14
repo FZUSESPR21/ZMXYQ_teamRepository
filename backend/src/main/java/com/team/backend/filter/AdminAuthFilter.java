@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
  * @date : 2021-05-04 22:04 Copyright  2021 ccreater. All rights reserved.
  */
 
-@WebFilter(urlPatterns = "/admin/*", filterName = "adminAuthFilter")
+@WebFilter(urlPatterns = "/api/admin/*", filterName = "adminAuthFilter")
 public class AdminAuthFilter implements Filter {
   @Value("${server.servlet.context-path}")
   String contextValue;
@@ -37,10 +37,10 @@ public class AdminAuthFilter implements Filter {
       filterChain.doFilter(servletRequest, servletResponse);
       return;
     }
-    String [] noAuth = new String[]{"/admin/login","/admin/register","/admin/changepsw"};
+    String [] noAuth = new String[]{"/api/admin/login","/api/admin/register","/api/admin/changepsw"};
     String uri = request.getRequestURI();
     for(String path : noAuth){
-      if(uri.equals(contextValue+path)){
+      if(uri.equals(path)){
         filterChain.doFilter(servletRequest, servletResponse);
         return;
       }

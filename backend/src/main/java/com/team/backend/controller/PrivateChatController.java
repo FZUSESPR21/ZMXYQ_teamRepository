@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/private-chat")
+@RequestMapping("${server.api-path}/private-chat")
 public class PrivateChatController {
 
 }

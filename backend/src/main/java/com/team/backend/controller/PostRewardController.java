@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/alumnicycle/posts/reward")
+@RequestMapping("${server.api-path}/alumnicycle/posts/reward")
 public class PostRewardController {
     @Resource
     private PostRewardServiceImpl postRewardService;

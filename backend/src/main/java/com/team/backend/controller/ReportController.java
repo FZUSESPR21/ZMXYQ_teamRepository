@@ -25,7 +25,7 @@ import java.util.Map;
  * @since 2021-04-28
  */
 @RestController
-@RequestMapping("/alumnicycle/posts/tipoff")
+@RequestMapping("${server.api-path}/alumnicycle/posts/tipoff")
 public class ReportController {
     private User user;
 

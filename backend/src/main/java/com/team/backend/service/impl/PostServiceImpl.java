@@ -20,6 +20,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
  * @since 2021-04-28
  */
 @Service
+@Transactional
 public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements PostService {
 
   @Resource
@@ -54,6 +56,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
   @Override
   public ExceptionInfo publishPost(Long userId, Long postTheme, String message, String imgUrls)  {
     ExceptionInfo info;
+    if (imgUrls == null) {
+      imgUrls = "";
+    }
     if (userId == null || postTheme == null || StringUtils.isBlank(message)) {
       info = ExceptionInfo.POST_PUBLISH_INFO_LOST;
     }else {
@@ -63,13 +68,8 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
       post.setPostTypeId(postTheme);
       post.setPublisherId(userId);
       post.setStatus(0);
-      try {
-        postMapper.insert(post);
-        info = ExceptionInfo.OK;
-      } catch (Exception e) {
-        e.printStackTrace();
-        info = ExceptionInfo.POST_PUBLISH_INSERT_FAIL;
-      }
+      postMapper.insert(post);
+      info = ExceptionInfo.OK;
     }
     return info;
   }
