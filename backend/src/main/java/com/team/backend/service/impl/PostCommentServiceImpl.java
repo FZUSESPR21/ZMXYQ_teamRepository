@@ -72,7 +72,11 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
         postWrapper.eq("id",postComment.getPostId());
         postWrapper.select("publisher_id");
         Post post = postMapper.selectOne(postWrapper);
-        notification.setUserId(post.getPublisherId());
+        if (postComment.getIdTo() == -1) {
+          notification.setUserId(post.getPublisherId());
+        }else {
+          notification.setUserId(postComment.getIdTo());
+        }
         if (notificationMapper.insert(notification) == 1) {
           result = true;
         }

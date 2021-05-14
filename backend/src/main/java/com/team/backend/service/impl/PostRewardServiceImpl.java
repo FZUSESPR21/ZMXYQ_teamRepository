@@ -50,11 +50,10 @@ public class PostRewardServiceImpl extends ServiceImpl<PostRewardMapper, PostRew
             ,ExceptionInfo.POST_REWARD_INFO_LOST.getMessage());
     if (postReward.getPostId() != null && postReward.getIdFrom() != null
         && postReward.getAmount() != null && postReward.getAmount() > 0) {
-      if (postRewardMapper.insert(postReward) == 1) {
+
         Notification notification = new Notification();
         notification.setType(2);//消息对应类型(0:评论,1:点赞,2:赞赏,3:收藏)
         notification.setIsRead(0);
-        notification.setSourceId(postReward.getId());
         Long idTo = postMapper.selectById(postReward.getPostId()).getPublisherId();
         notification.setUserId(idTo);
 
@@ -69,22 +68,24 @@ public class PostRewardServiceImpl extends ServiceImpl<PostRewardMapper, PostRew
           result = Result.error(ExceptionInfo.POST_REWARD_RP_NOT_ENOUGH.getCode()
                   ,ExceptionInfo.POST_REWARD_RP_NOT_ENOUGH.getMessage());
         }else {
-          rewardFrom.setRpValue(rewardFrom.getRpValue() - postReward.getAmount());
-          userUpdateWrapper.eq("id",postReward.getIdFrom());
-          userMapper.update(rewardFrom,userUpdateWrapper);
-          userUpdateWrapper.clear();
+          if (postRewardMapper.insert(postReward) == 1) {
+            rewardFrom.setRpValue(rewardFrom.getRpValue() - postReward.getAmount());
+            userUpdateWrapper.eq("id",postReward.getIdFrom());
+            userMapper.update(rewardFrom,userUpdateWrapper);
+            userUpdateWrapper.clear();
 
-          User rewardTo = userMapper.selectById(idTo);
+            User rewardTo = userMapper.selectById(idTo);
 
-          rewardTo.setRpValue(rewardTo.getRpValue() + postReward.getAmount());
+            rewardTo.setRpValue(rewardTo.getRpValue() + postReward.getAmount());
 
-          userUpdateWrapper.eq("id",rewardTo.getId());
-          userMapper.update(rewardTo,userUpdateWrapper);
+            userUpdateWrapper.eq("id",rewardTo.getId());
+            userMapper.update(rewardTo,userUpdateWrapper);
+            notification.setSourceId(postReward.getId());
+            if (notificationMapper.insert(notification) == 1) {
+              result = Result.success();
+            }
+          }
         }
-        if (notificationMapper.insert(notification) == 1) {
-          result = Result.success();
-        }
-      }
     }
     return result;
   }

@@ -92,7 +92,8 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
   }
 
   @Override
-  public List<Map<String, Object>> listPostPageByTypeId(Long typeId, Long currentUserId, Integer pageNum, Integer pageSize) {
+  public List<Map<String, Object>> listPostPageByTypeId(Long typeId, Long currentUserId, Integer pageNum
+          , Integer pageSize) {
     IPage<Post> postIPage = new Page<>(pageNum,pageSize);
     Map<String,Object> queryMap = new HashMap<>();
     queryMap.put("typeId",typeId);
