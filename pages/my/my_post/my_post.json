@@ -2,5 +2,8 @@
   "navigationBarBackgroundColor": "#f2774d",
   "navigationBarTitleText": "我的帖子",
   "navigationBarTextStyle": "white",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index"
+  }
 }
