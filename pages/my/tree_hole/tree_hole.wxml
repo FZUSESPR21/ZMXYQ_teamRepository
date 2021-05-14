@@ -11,7 +11,7 @@
         >
             <view slot="footer">
                 <van-button size="mini" data-id="{{item.id}}" data-content="{{item.message}}" bindtap="goToHoleDetail">查看</van-button>
-                <van-button size="mini" bindtap="deleteTreeHole">删除</van-button>
+                <van-button size="mini" data-id="{{item.id}}" bindtap="deleteTreeHole">删除</van-button>
             </view>
         </van-card>
     </view>
