@@ -29,9 +29,9 @@
             <view class="feed-content">
                 <view class="question" qid="1" bindtap="goto_postdetail">
                     <a class="question-link">
-                        <text class = "title">标题</text>
+                        <text class = "v-post-list-title">标题</text>
                         <text> 贴文具体内容\n</text>
-                        <image class="img" src="../../static/icons/img.png"  ></image>
+                        <image class="v-post-list-img" src="../../static/icons/img.png"  ></image>
                     </a>
                 </view>
       

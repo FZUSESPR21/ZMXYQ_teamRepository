@@ -14,7 +14,7 @@
   /*padding: 200rpx 0;*/
   box-sizing: border-box;
 }
-.title{
+.v-post-list-title{
   padding-left: 3px;
   padding-right: 3px;
   margin-left:2px;
@@ -34,7 +34,7 @@
 .iconIntro{
   font-size: 13px;  
 }
-.img{
+.v-post-list-img{
   width: 160rpx;
   height: 130rpx;
   margin-top:6px;
