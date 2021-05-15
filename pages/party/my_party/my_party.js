@@ -5,7 +5,18 @@ const timeago = require("timeago.js");
 Page({
   data: {
     partyList: [],
-    show: false
+    show: false,
+    partyType:[
+      "自习",
+      "电影",
+      "聚餐",
+      "拼车",
+      "拼单",
+      "运动",
+      "游戏",
+      "旅行",
+      "其他"
+    ]
 },
 
    getData: function(){

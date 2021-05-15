@@ -1,5 +1,4 @@
 // pages/party/index/index.js
-
 const app = getApp();
 const timeago = require("timeago.js");
 Page({
@@ -97,6 +96,7 @@ Page({
             partyList[i].description = partyList[i].description.substr(0, 35) + "...";
           }
         }
+        /*设置显示无信息标签的可见与不可见 */
         if(partyList.length == 0)
           that.setData({show: true});
         else
