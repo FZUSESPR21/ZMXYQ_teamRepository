@@ -21,11 +21,11 @@ public interface PartyService extends IService<Party> {
   User getPartyPublisher(Long publisherId);
 
   //新建组局
-  ExceptionInfo insertParty(Long id, String description, String imageUrls, int peopleCnt,
+  ExceptionInfo insertParty(Long id, String description, List<String> Urls, int peopleCnt,
       Long partyTypeId);
 
   //修改组局信息
-  Result<Integer> updateParty(Long id, String description, String imageUrls, int peopleCnt,
+  Result<Integer> updateParty(Long id, String description, List<String> Urls, int peopleCnt,
       Long partyTypeId);
 
   //查看我的组局

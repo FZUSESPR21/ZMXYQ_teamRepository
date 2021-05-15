@@ -98,29 +98,29 @@ public class TreeHoleServiceImplTest {
     Assertions.assertEquals(result, treeHoleService.updateTreeHole(treeHole));
   }
 
-  @Test
-  void deleteTreeHoleTest() {
-
-    Result<Integer> result = new Result<>();
-
-    result.setCode(ExceptionInfo.valueOf("USER_TREE_HOLE_ID_NULL").getCode());
-    result.setMessage(ExceptionInfo.valueOf("USER_TREE_HOLE_ID_NULL").getMessage());
-    result.setData(0);
-    Assertions.assertEquals(result, treeHoleService.deleteTreeHole(123456L, null));
-
-    result.setCode(ExceptionInfo.valueOf("USER_TREE_HOLE_DELETED").getCode());
-    result.setMessage(ExceptionInfo.valueOf("USER_TREE_HOLE_DELETED").getMessage());
-    result.setData(0);
-    Assertions.assertEquals(result, treeHoleService.deleteTreeHole(123456L, 99999999L));
-
-    result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
-    result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
-    result.setData(0);
-    Assertions.assertEquals(result, treeHoleService.deleteTreeHole(99999999L, 1L));
-
-    result.setCode(ExceptionInfo.valueOf("OK").getCode());
-    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    result.setData(1);
-    Assertions.assertEquals(result, treeHoleService.deleteTreeHole(123456L, 1L));
-  }
+//  @Test
+//  void deleteTreeHoleTest() {
+//
+//    Result<Integer> result = new Result<>();
+//
+//    result.setCode(ExceptionInfo.valueOf("USER_TREE_HOLE_ID_NULL").getCode());
+//    result.setMessage(ExceptionInfo.valueOf("USER_TREE_HOLE_ID_NULL").getMessage());
+//    result.setData(0);
+//    Assertions.assertEquals(result, treeHoleService.deleteTreeHole(123456L, null));
+//
+//    result.setCode(ExceptionInfo.valueOf("USER_TREE_HOLE_DELETED").getCode());
+//    result.setMessage(ExceptionInfo.valueOf("USER_TREE_HOLE_DELETED").getMessage());
+//    result.setData(0);
+//    Assertions.assertEquals(result, treeHoleService.deleteTreeHole(123456L, 99999999L));
+//
+//    result.setCode(ExceptionInfo.valueOf("USER_NOT_BELONG").getCode());
+//    result.setMessage(ExceptionInfo.valueOf("USER_NOT_BELONG").getMessage());
+//    result.setData(0);
+//    Assertions.assertEquals(result, treeHoleService.deleteTreeHole(99999999L, 1L));
+//
+//    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+//    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+//    result.setData(1);
+//    Assertions.assertEquals(result, treeHoleService.deleteTreeHole(123456L, 1L));
+//  }
 }

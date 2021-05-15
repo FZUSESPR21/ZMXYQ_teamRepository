@@ -13,7 +13,6 @@ import com.team.backend.model.Result;
  * @since 2021-04-28
  */
 public interface PartyParticipantsService extends IService<PartyParticipants> {
-
   //将参与者移出组局
   Result moveOffParticipant(Long partyid, Long userid);
 }

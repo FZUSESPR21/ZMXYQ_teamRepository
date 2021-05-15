@@ -59,28 +59,31 @@ public class PartyTypeServiceImpl extends ServiceImpl<PartyTypeMapper, PartyType
       for (Party party : partylistByTypeID) {
         Map<String, Object> map = new HashMap<>();
         User user = userMapper.selectById(party.getPublisherId());
+        int nowPeopleCnt = partyMapper.selectNowPartyCnt(party.getId());
         map.put("partyID", party.getId());
         map.put("description", party.getDescription());
-        map.put("peopleCnt", party.getPeopleCnt());
-        map.put("partyType", party.getPartyTypeId());
-        map.put("gmtCreate", party.getGmtCreate());
         map.put("username", user.getUsername());
         map.put("sex", user.getSex());
+        map.put("peopleCnt", party.getPeopleCnt());
+        map.put("nowPeopleCnt", nowPeopleCnt);
+        map.put("partyType", party.getPartyTypeId());
+        map.put("gmtCreate", party.getGmtCreate());
         mapList.add(map);
       }
     } else if (id == -2) {//当传入"-2"时返回有空位的组局
-//            partylistByTypeID=partyMapper.selectByMyWrapper();
       partylistByTypeID = partyTypeMapper.selectByMyWrapper();
       for (Party party : partylistByTypeID) {
         Map<String, Object> map = new HashMap<>();
         User user = userMapper.selectById(party.getPublisherId());
+        int nowPeopleCnt = partyMapper.selectNowPartyCnt(party.getId());
         map.put("partyID", party.getId());
         map.put("description", party.getDescription());
-        map.put("peopleCnt", party.getPeopleCnt());
-        map.put("partyType", party.getPartyTypeId());
-        map.put("gmtCreate", party.getGmtCreate());
         map.put("username", user.getUsername());
         map.put("sex", user.getSex());
+        map.put("peopleCnt", party.getPeopleCnt());
+        map.put("nowPeopleCnt", nowPeopleCnt);
+        map.put("partyType", party.getPartyTypeId());
+        map.put("gmtCreate", party.getGmtCreate());
         mapList.add(map);
       }
     } else if (id == 0 || id == 1 || id == 2 || id == 3 || id == 4 || id == 5 || id == 6 || id == 7
@@ -91,13 +94,15 @@ public class PartyTypeServiceImpl extends ServiceImpl<PartyTypeMapper, PartyType
       for (Party party : partylistByTypeID) {
         Map<String, Object> map = new HashMap<>();
         User user = userMapper.selectById(party.getPublisherId());
+        int nowPeopleCnt = partyMapper.selectNowPartyCnt(party.getId());
         map.put("partyID", party.getId());
         map.put("description", party.getDescription());
-        map.put("peopleCnt", party.getPeopleCnt());
-        map.put("partyType", party.getPartyTypeId());
-        map.put("gmtCreate", party.getGmtCreate());
         map.put("username", user.getUsername());
         map.put("sex", user.getSex());
+        map.put("peopleCnt", party.getPeopleCnt());
+        map.put("nowPeopleCnt", nowPeopleCnt);
+        map.put("partyType", party.getPartyTypeId());
+        map.put("gmtCreate", party.getGmtCreate());
         mapList.add(map);
       }
     } else {

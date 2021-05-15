@@ -43,12 +43,10 @@ public class PartyCommentController {
    * @param requestMap
    * @return the result
    */
-  @PostMapping
+  @PostMapping("/comment")
   public com.team.backend.util.Result commentParty(@RequestBody Map<String, Object> requestMap,
       HttpServletRequest request) {
     PartyComment partyComment = new PartyComment();
-//    Number IdNumber = (Number) requestMap.get("Id");
-//    Long Id = IdNumber.longValue();
     String content = (String) requestMap.get("information");
     Number userIdNumber = (Number) requestMap.get("userId");
     Long userId = userIdNumber.longValue();

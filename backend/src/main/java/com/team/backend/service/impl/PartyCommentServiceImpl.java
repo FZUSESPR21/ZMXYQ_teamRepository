@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.mapper.PartyCommentMapper;
 import com.team.backend.mapper.UserMapper;
+import com.team.backend.mapper.PartyMapper;
+import com.team.backend.model.Party;
 import com.team.backend.model.PartyComment;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
@@ -32,6 +34,9 @@ public class PartyCommentServiceImpl extends
 
   @Resource
   private PartyCommentMapper partyCommentMapper;
+
+  @Resource
+  private PartyMapper partyMapper;
 
   @Resource
   private UserMapper userMapper;
@@ -63,6 +68,18 @@ public class PartyCommentServiceImpl extends
     QueryWrapper<PartyComment> wrapper = new QueryWrapper<>();
     wrapper.eq("party_id", id);
     List<PartyComment> partyComments = partyCommentMapper.selectList(wrapper);
+    if (partyMapper.selectById(id) == null) {
+      result.setCode(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getMessage());
+      result.setData(null);
+      return result;
+    }
+    if (partyComments.size() == 0) {
+      result.setCode(ExceptionInfo.valueOf("PARTY_COMMENT_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("PARTY_COMMENT_NULL").getMessage());
+      result.setData(null);
+      return result;
+    }
     for (PartyComment partyComment : partyComments) {
       Map<String, Object> map = new HashMap<>();
       map.put("commentId", partyComment.getId());
