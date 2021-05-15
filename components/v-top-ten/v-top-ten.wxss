@@ -48,6 +48,7 @@
 .swiper-item-text{
   display: flex;
   border: none;
+  font-size: 30rpx;
 }
 
 
