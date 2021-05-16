@@ -133,18 +133,27 @@ Component({
             data: jsonValue,
             success:function(res)
             {
-             console.log("初始");
+             console.log("初始页面");
              console.log(res);
              let midPostsData = res.data.data;
              if(midPostsData!= null){
                 for(let i = 0; i < midPostsData.length; i++){
+                  midPostsData[i].imageUrls = "";
                   midPostsData[i].gmtCreate = timeago.format(new Date(midPostsData[i].gmtCreate),'zh_CN');
+                  let midImageUrls = midPostsData[i].imageUrls;
+                  if(midPostsData[i].imageUrls != "" && midPostsData[i].imageUrls != null){
+                    midPostsData[i].imageUrls = midPostsData[i].imageUrls.split(';');
+                    if(midPostsData[i].imageUrls.length == 0)
+                    midPostsData[i].imageUrls.push(midImageUrls);
+                  }
                 }
-                for(var i in midPostsData)
-                 postsData.push(i);
+                for(var m in midPostsData)
+                 postsData.push(midPostsData[m]);
                  that.setData({
                    postsData  
                 });
+                console.log("that.data.postsData[0].imageUrls");
+                console.log(that.data.postsData[0].imageUrls);
              }
             },
             fail:function(res)
@@ -184,15 +193,18 @@ Component({
          let midPostsData = res.data.data;
          if(midPostsData!= null){
             for(let i = 0; i < midPostsData.length; i++){
-              midPostsData[i].gmtCreate = timeago.format(new Date(partyList[i].gmtCreate),'zh_CN');
+              midPostsData[i].imageUrls = "https://img.yzcdn.cn/vant/cat.jpeg;https://img.yzcdn.cn/vant/cat.jpeg;https://img.yzcdn.cn/vant/cat.jpeg;https://img.yzcdn.cn/vant/cat.jpeg;";
+              midPostsData[i].gmtCreate = timeago.format(new Date(midPostsData[i].gmtCreate),'zh_CN');
+              midPostsData[i].imageUrls = midPostsData[i].imageUrls.spilit(';');
             }
-            let postsData = that.data.postData;
-            for(var i in midPostsData)
-             postsData.push(i);
+            let postsData = that.data.postsData;
+            for(var m in midPostsData)
+             postsData.push(midPostsData[m]);
              that.setData({
                postsData  
             });
          }
+        //  console.log(that.data.postsData);
         },
         fail:function(res)
         {

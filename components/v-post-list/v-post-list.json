@@ -1,4 +1,6 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "v-post-item": "../v-post-item/v-post-item"
+  }
 }

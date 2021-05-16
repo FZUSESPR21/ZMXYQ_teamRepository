@@ -165,104 +165,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad (options) {
-     this.getInfoListData(1, true)
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-    // 上拉刷新
-    if (!this.loading) {
-      this. getInfoListData(1, true).then(() => {
-        // 处理完成后，终止下拉刷新
-        wx.stopPullDownRefresh()
-      })
-    }
-  },
-  
-    getInfoListData(pageNo, over) {
-      this.loading = true
-  
-      return getArticles(pageNo).then(res => {
-        const articles = res.items
-        this.setData({
-          page: pageNo,     //当前的页号
-          pages: res.pages,  //总页数
-          articles: over ? articles : this.data.articles.concat(articles)
-        })
-      }).catch(err => {
-        console.log( err)
-      }).then(() => {
-        this.loading = false
-      })
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: () =>{
-    // 下拉触底，先判断是否有请求正在进行中
-    // 以及检查当前请求页数是不是小于数据总页数，如符合条件，则发送请求
-    if (!this.loading && this.data.page < this.data.pages) {
-      this.getInfoListData(this.data.page + 1)
-    }
-  },
-  getInfoListData(pageNo, over) {
-    this.loading = true
-
-    // 向后端请求指定页码的数据
-    return getArticles(pageNo).then(res => {
-      const articles = res.items
-      this.setData({
-        page: pageNo,     //当前的页号
-        pages: res.pages,  //总页数
-        articles: over ? articles : this.data.articles.concat(articles)
-      })
-    }).catch(err => {
-      console.log( err)
-    }).then(() => {
-      this.loading = false
-    })
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-  goto_postdetail:function(param){
-    wx.navigateTo({
-      url: '../post_detail/post_detail',
-      })
-  },
-  
+  onReady(){
+    // let postList=this.selectComponent('#postList');
+    // console.log(postList);
+    // postList.getPostsData(0);
+  }
 })

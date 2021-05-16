@@ -22,7 +22,7 @@ Component({
           },
           success:function(res)
           {
-           console.log(res);
+          //  console.log(res);
            let resData = res.data.data;
            if(resData != null){
             for(let i = 0; i < resData.length; i++){
@@ -31,7 +31,6 @@ Component({
               topTen.push(resData[i].message);
             }
           }
-           console.log(res);
             that.setData({
              topTen    
            })
@@ -46,4 +45,4 @@ Component({
         });
     }
 }
-  })
+})
