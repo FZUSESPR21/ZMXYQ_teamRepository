@@ -16,7 +16,7 @@
   </picker>
 </view>
 
-    <block wx:for="{{[1,2,3,4,5,6]}}" wx:for-index="idx" wx:for-item="item" data-idx="6">
+    <block wx:for="{{[1,2,3,4,5,6]}}" wx:for-index="idx" wx:for-item="item" data-idx="6" wx:key="key">
         <view class="feed-item">
             <view class="feed-source">
                <v-name-card></v-name-card>
