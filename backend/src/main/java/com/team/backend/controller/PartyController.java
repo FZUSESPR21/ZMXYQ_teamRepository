@@ -17,11 +17,8 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -36,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PartyController {
   @Resource
   private PartyServiceImpl partyService;
+
   User user;
 
 
@@ -136,15 +134,23 @@ public class PartyController {
    */
 
   @PostMapping("/join")
-  public Result<Integer> joinParty(Long partyId) {
+  public Result<Integer> joinParty(@RequestParam Number partyId) {
 
+    System.out.println(user.toString());
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
       return result;
     }
-    return partyService.joinParty(user.getId(), partyId);
+    if (partyId == null) {
+      Result<Integer> result = new Result<>();
+      result.setCode(ExceptionInfo.PARTY_ID_NULL.getCode());
+      result.setMessage(ExceptionInfo.PARTY_ID_NULL.getMessage());
+      return result;
+    }
+    Long partyIdLong = partyId.longValue();
+    return partyService.joinParty(user.getId(), partyIdLong);
 //    return partyService.joinParty(userId,partyId);//测试
   }
 
