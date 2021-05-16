@@ -105,7 +105,6 @@ Page({
       else{
         that.setData({show: true});
       }
-       console.log(res);
         that.setData({
          partyList    
        })

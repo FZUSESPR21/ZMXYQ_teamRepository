@@ -28,6 +28,8 @@ Page({
       success:function(res)
       {
        let partyList = res.data.data;
+       console.log("获取我的组局信息");
+       console.log(res);
        if(partyList != null){
           for(let i = 0; i < partyList.length; i++){
             partyList[i].gmtCreate = timeago.format(new Date(partyList[i].gmtCreate),'zh_CN');
@@ -52,6 +54,7 @@ Page({
       },
       fail:function(res)
       {
+        console.log("获取我的组局信息失败！")
         console.log(res);
       }
     });

@@ -21,6 +21,15 @@ post-item{
     background-color:#f2774d;
     color:white;
   }
+
+  .message{
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left:2px;
+    font-size: 30px;
+    color:#000;
+  }
+
   .content{
     margin: 5px;
     font-size: 20px;
@@ -30,8 +39,16 @@ post-item{
     height: 25rpx;
     margin-right:2px;
   }
+.bar{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
   .iconIntro{
-    font-size: 13px;  
+    font-size: 13px; 
+    display: inline; 
+    max-width: 120rpx;  
   }
   .v-post-list-img{
     width: 160rpx;
@@ -212,4 +229,9 @@ post-item{
     margin-top: -18px;
     line-height:24px;
     text-align:center;
+  }
+
+  .image{
+    margin-left: 10rpx;
+    margin-top: 10rpx;
   }

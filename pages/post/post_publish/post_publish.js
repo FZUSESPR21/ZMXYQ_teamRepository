@@ -1,4 +1,5 @@
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
+const app=getApp();
 Page({
   data: {
     fileList: [
@@ -194,7 +195,7 @@ Page({
               encoding: "base64",
               success: function (data) {
                     wx.request({
-                      url: 'http://192.168.5.219:8088/api/posts/imgupload',
+                      url: app.globalData.baseUrl+'/api/posts/imgupload',
                       method: "POST",
                       data: {
                         base64Str: imageType + data.data,
@@ -241,7 +242,7 @@ Page({
           })
           console.log(_this.data.imgUrls)
           wx.request({//创建组局请求
-            url: 'http://192.168.5.219:8088/api/posts/publish',
+            url: app.globalData.baseUrl+'/api/posts/publish',
             method:'POST',
             data:{
               userId:123456,
@@ -253,6 +254,10 @@ Page({
             {
               console.log(_this.data.imgUrls)
               console.log(res);
+              wx.navigateTo({
+                url: '../index/index',
+                
+              })
             }
           })
         }).catch(
@@ -261,5 +266,11 @@ Page({
           }
         )
     }
+  },
+  getValue:function (e) {
+    var _this=this;
+    this.setData({
+      postContent:e.detail.value
+    })
   }
 })

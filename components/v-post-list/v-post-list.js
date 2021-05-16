@@ -133,18 +133,30 @@ Component({
             data: jsonValue,
             success:function(res)
             {
-             console.log("初始");
+             console.log("初始页面");
              console.log(res);
              let midPostsData = res.data.data;
              if(midPostsData!= null){
                 for(let i = 0; i < midPostsData.length; i++){
                   midPostsData[i].gmtCreate = timeago.format(new Date(midPostsData[i].gmtCreate),'zh_CN');
+                  let midImageUrls = midPostsData[i].imageUrls;
+                  if(midPostsData[i].imageUrls != "" && midPostsData[i].imageUrls != null){
+                    midPostsData[i].imageUrls = midPostsData[i].imageUrls.split(';');
+                    if(midPostsData[i].imageUrls.length == 0)
+                      midPostsData[i].imageUrls.push(midImageUrls);
+                  }
+                  //图片最终url
+                  for(let imageIndex = 0; imageIndex < midPostsData[i].imageUrls.length; imageIndex++){
+                    midPostsData[i].imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData[i].imageUrls[imageIndex];
+                  }
                 }
-                for(var i in midPostsData)
-                 postsData.push(i);
+                for(var m in midPostsData)
+                 postsData.push(midPostsData[m]);
                  that.setData({
                    postsData  
                 });
+                console.log("that.data.postsData[0].imageUrls");
+                console.log(that.data.postsData[0].imageUrls);
              }
             },
             fail:function(res)
@@ -167,7 +179,7 @@ Component({
     getPostsData(pageNum){
       let that = this;
       let baseUrl = app.globalData.baseUrl;
-      let jsonStr = '{"pageSize": %s,"pageNum": %s}'.format(that.data.pageSize, pageNum);
+      // let jsonStr = '{"pageSize": %s,"pageNum": %s}'.format(that.data.pageSize, pageNum);
       let jsonValue = JSON.parse(jsonStr);
       console.log(jsonValue);
       request({
@@ -184,15 +196,18 @@ Component({
          let midPostsData = res.data.data;
          if(midPostsData!= null){
             for(let i = 0; i < midPostsData.length; i++){
-              midPostsData[i].gmtCreate = timeago.format(new Date(partyList[i].gmtCreate),'zh_CN');
+              midPostsData[i].imageUrls = "https://img.yzcdn.cn/vant/cat.jpeg;https://img.yzcdn.cn/vant/cat.jpeg;https://img.yzcdn.cn/vant/cat.jpeg;https://img.yzcdn.cn/vant/cat.jpeg;";
+              midPostsData[i].gmtCreate = timeago.format(new Date(midPostsData[i].gmtCreate),'zh_CN');
+              midPostsData[i].imageUrls = midPostsData[i].imageUrls.spilit(';');
             }
-            let postsData = that.data.postData;
-            for(var i in midPostsData)
-             postsData.push(i);
+            let postsData = that.data.postsData;
+            for(var m in midPostsData)
+             postsData.push(midPostsData[m]);
              that.setData({
                postsData  
             });
          }
+        //  console.log(that.data.postsData);
         },
         fail:function(res)
         {
@@ -303,55 +318,6 @@ Component({
         commentInputText:e.detail.value
       })
       console.log(this.data.commentInputText)
-    },
-
-    postMark:function(e)
-    {
-     this.setData({
-       hasMark:!this.data.hasMark
-     })
-    },
-
-    postLike:function(e)
-    {
-      wx.request({
-        url: 'http://xx.com/api/alumnicycle/posts/like',
-        method:"POST",
-        data:{
-          postId:this.data.postId
-        },
-        success:function(e)
-        {
-          Toast('点赞成功');
-        }
-      })
-    },
-
-    postCollect:function(e)
-    {
-      wx.request({
-        url: 'http://xx.com/api/alumnicycle/posts/collect',
-        method:"POST",
-        data:{
-          postId:this.data.postId
-        },
-        success:function(e)
-        {
-          Notify({ type: 'success', message: '收藏成功' });
-        }
-      })
-    },
-
-    postReward:function(e)
-    {
-      wx.request({
-        url: 'http://xx.com/api/alumnicycle/posts/reward',
-        method:"POST",
-        data:{
-          postId:this.data.postId,
-          amount:0
-        }
-      })
     },
 
     getRewardBox:function(e)
