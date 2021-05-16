@@ -172,9 +172,10 @@ Page({
     // postList.getPostsData(0);
   },
 
+  // 下拉刷新实现
   onPullDownRefresh: function() {
     let postList=this.selectComponent('#postList');
-    console.log(postList);
+    console.log("下拉刷新");
     postList.getPostsData(1);
   }
 })
