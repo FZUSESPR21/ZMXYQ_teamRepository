@@ -1,19 +1,19 @@
 <!--components/v-name-card.wxml-->
-<view class="name-card-view" bindtap="Popup">
+<view class="name-card-view" bindtap="getPublisherMessage">
   <van-image round width="2.8rem" height="2.8rem" src="https://img.yzcdn.cn/vant/cat.jpeg"
     class="comment-publisher-view-head" />
   <view class="comment-publisher-view-message">
-    <view class="comment-publisher-view-message-name">1</view>
-    <view class="comment-publisher-view-message-time">2</view>
+    <view class="comment-publisher-view-message-name">{{publisherMsg.userName}}</view>
+    <view class="comment-publisher-view-message-time">{{publisherTime}}</view>
     <van-popup show="{{ showPopUp }}" position="bottom" custom-style="height: 30%;">
       <view class="popup-publisher-detail">
         <view class="popup-publisher-detail-message">
           <view class="popup-publisher-detail-message-row">
-            <view class="popup-publisher-detail-message-name">用户1</view>
-            <view class="popup-publisher-detail-message-gender">男</view>
+            <view class="popup-publisher-detail-message-name">{{publisherMsg.userName}}11111111</view>
+            <view class="popup-publisher-detail-message-gender">{{publisherMsg.province}}{{publisherMsg.city}}</view>
           </view>
 
-          <van-image round width="5rem" height="5rem" src="https://img.yzcdn.cn/vant/cat.jpeg"
+          <van-image round width="5rem" height="5rem" src="{{publisherMsg.iconUrl}}"
             class="popup-publisher-head" />
         </view>
         <view class="popup-publisher-operation">

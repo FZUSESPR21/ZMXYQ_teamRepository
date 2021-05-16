@@ -17,6 +17,7 @@ Page({
     partyDetailContent: "你们好",
     partyDetailImageUrlS: [],
     partyPublisherID: 0,
+    partyPublisherMsg:{},
     partyCreateTime: "",
     partyParticipantsId:[],
     partyMemberList: [{
@@ -37,7 +38,8 @@ Page({
     partyOwner:true,
     hasjoined: false,
     buttonContent: "加入拼局",
-    commentMessage: {},
+    commentMessage: {
+    },
     commentInputText: "",
     moveOffButtonText:"移除成员"
   },
@@ -57,16 +59,19 @@ Page({
   // 加入或退出组局函数
   joinParty: function (e) {
     //  
+    console.log(app.globalData.userInfo)
     let _this = this;
     if (this.data.hasjoined == false) {
       if (this.data.partyMemmberCntNow < this.data.partyMemmberCnt) {
 
         request({
-          url: app.globalData.baseUrl + "/api/party/join",
+          url: app.globalData.baseUrl +"/api/party/join",
           method: "post",
           data: {
-            partyId: 101,
-            userId: 123456
+            partyId: 13,
+          },
+          header:{
+            'content-type': 'application/x-www-form-urlencoded'
           },
           success: function (res) {
             console.log(res);
@@ -85,6 +90,9 @@ Page({
               }),
               partyMemmberCntNow: _this.data.partyMemmberCntNow + 1
             })
+          },
+          fail:function (e) {
+            console.log(e);
           }
         })
         _this.getPartyDetail();
@@ -103,9 +111,9 @@ Page({
         method: "POST",
         data: {
           partyId: 101,
-          userId: 123456
         },
         success: function (res) {
+          console.log(res);
           _this.setData({
             buttonContent: "加入组局",
             hasjoined: false
@@ -116,7 +124,7 @@ Page({
             message: '退出拼局成功'
           });
 
-        }
+        } 
       })
     }
     // wx.request({
@@ -152,7 +160,7 @@ Page({
       url: 'http://ccreater.top:61112/api/party/partymes',
       method: 'GET',
       data: {
-        partyId: 101
+        partyId: 107
       },
       success: function (res) {
         let data = res.data.data;
@@ -170,12 +178,8 @@ Page({
             partyMemmberCntNow:data.nowPeopleCnt
           })
         }
-
-
-
-
-
         console.log(_this.data.partyMemberList);
+        _this.getPublisherMessage();
       },
       fail: function (res) {
         console.log(res);
@@ -203,20 +207,26 @@ Page({
   },
   // 发送评论函数
   sendComment: function (e) {
-    wx.request({
-      url: 'http://ccreater.top:61112/api/alumnicycle/party-comment/comment',
-      method: "POST",
-      data: {
-        content: "",
+    let commentData={
+      information: this.data.commentInputText,
         userId: this.data.userId,
         partyId: this.data.partyID,
-        preId: this.commentPreId
-      },
+        preId: this.data.partyPublisherID
+    }
+    request({
+      url: "http://192.168.50.167:8088/api/party-comment/comment",
+      method: "POST",
+      data: commentData,
       success: function (res) {
+        console.log(res);
         Notify({
           type: 'success',
           message: '评论成功'
         });
+
+      },
+      fail:function (res) {
+        
       }
 
     })
@@ -379,5 +389,28 @@ Page({
       commentInputText: e.detail.value
     })
     console.log(this.data.commentInputText)
+  },
+  getPublisherMessage:function (e) {
+    let data={
+      publisherId:this.data.partyPublisherID
+    };
+    let _this=this;
+    wx.request({
+      url: app.globalData.baseUrl+"/api/posts/publishermsg",
+      method:"POST",
+      data:data,
+      success:function (res) {
+        console.log(res.data.data)
+        _this.setData({
+          partyPublisherMsg:res.data.data
+        })
+      }
+    })
+  },
+  getValue:function (e) {
+    var _this=this;
+    this.setData({
+      commentInputText:e.detail.value
+    })
   }
 })

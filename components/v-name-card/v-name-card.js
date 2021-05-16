@@ -1,28 +1,21 @@
 // components/v-name-card.js
+const app=getApp();
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-     publisherId:{
+    publisherMsg:{
+      type:Object,
+      value:{}
+    },
+    publisherTime:{
+      type:String,
+      value:""
+    },
+    userId:{
       type:Number,
-      value:0,
-     },
-     publisherName:{
-       type:String,
-       value:""
-     },
-     publisherSchool:{
-      type:String,
-      value:""
-    },
-    publisherGender:{
-      type:String,
-      value:""
-    },
-    publisherHeadUrl:{
-      type:String,
-      value:""
+      value:0
     }
   },
 
@@ -47,16 +40,22 @@ Component({
     },
     getPublisherMessage:function(e)
     {
-     wx.request({
-       url: 'http://xx.com/api/alumnicycle/posts/publishermsg',
-       method:"POST",
-       data:{
-         publisherId:0
-       },
-       success:function(res){
-
-       }
-     })
+      this.setData({ showPopUp: !this.data.showPopUp });
+      let data={
+        publisherId:this.data.userId
+      };
+      let _this=this;
+      wx.request({
+        url: app.globalData.baseUrl+"/api/posts/publishermsg",
+        method:"POST",
+        data:data,
+        success:function (res) {
+          console.log(res.data.data)
+          _this.setData({
+            partyPublisherMsg:res.data.data
+          })
+        }
+      })
     },
   }
 })
