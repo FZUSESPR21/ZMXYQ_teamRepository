@@ -118,8 +118,10 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
       if (!postComment.getIdTo().equals(-1L)) {
         User user1 = userMapper.selectById(postComment.getIdTo());
         map.put("replyUsername", user1.getUsername());
+        map.put("iconUrl", user1.getUserIconUrl());
       } else {
-        map.put("replyUsername", null);
+        map.put("replyUsername", "");
+        map.put("iconUrl", "");
       }
       map.put("message", postComment.getMessage());
       map.put("preId", postComment.getPreId());

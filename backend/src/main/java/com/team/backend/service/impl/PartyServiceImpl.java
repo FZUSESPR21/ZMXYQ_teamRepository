@@ -251,9 +251,9 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
   //参加组局
   public Result<Integer> joinParty(Long userid, Long id) {
     Result<Integer> result = new Result<>();
-    Party jionParty = partyMapper.selectById(id);
+    Party joinParty = partyMapper.selectById(id);
     // 判断数据库是否存在该组局
-    if (jionParty == null) {
+    if (joinParty == null) {
       result.setCode(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getMessage());
       result.setData(0);
@@ -262,7 +262,7 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
     QueryWrapper<PartyParticipants> wrapper = new QueryWrapper<>();
     wrapper.eq("party_id", id);
     List<PartyParticipants> partyParticipantsList = partyParticipantsMapper.selectList(wrapper);
-    if (partyParticipantsList.size() < jionParty.getPeopleCnt()) {// 判断该组局是否已满员
+    if (partyParticipantsList.size() < joinParty.getPeopleCnt()) {// 判断该组局是否已满员
       PartyParticipants partyParticipants = new PartyParticipants();
       partyParticipants.setPartyId(id);
       partyParticipants.setParticipantId(userid);
