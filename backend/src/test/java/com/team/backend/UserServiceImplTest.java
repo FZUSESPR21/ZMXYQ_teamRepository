@@ -28,8 +28,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class UserServiceImplTest {
 
-//  @Autowired
-//  UserServiceImpl userService;
+  @Autowired
+  UserServiceImpl userService;
 //
 //  @Test
 //  void identifyUserTest() {
@@ -187,7 +187,7 @@ public class UserServiceImplTest {
 //    System.out.println(result);
 //
 //  }
-//
+
 //  @Test
 //  void PostCommentDeletedTest() {
 //
@@ -214,7 +214,7 @@ public class UserServiceImplTest {
 //    Assertions.assertEquals(result, userService.PostCommentDeleted(123456L, 4L));
 //
 //  }
-//
+
 //  @Test
 //  void PartyCommentDeletedTest() {
 //
@@ -241,7 +241,7 @@ public class UserServiceImplTest {
 //    Assertions.assertEquals(result, userService.PartyCommentDeleted(123456L, 2L));
 //
 //  }
-//
+
 //  @Test
 //  void queryUserTest() {
 //
@@ -341,7 +341,7 @@ public class UserServiceImplTest {
 //    Result<List<PersonalCollection>> result = userService.listCollection(123456L);
 //    System.out.println(result);
 //  }
-//
+
 //  @Test
 //  void deleteCollectionTest() {
 //

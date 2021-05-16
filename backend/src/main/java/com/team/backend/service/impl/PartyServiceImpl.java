@@ -13,6 +13,7 @@ import com.team.backend.model.PartyParticipants;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
 import com.team.backend.service.PartyService;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,14 +60,15 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
 
   // 新建组局
   @Override
-  public ExceptionInfo insertParty(Long id, String description, String imageUrls, int peopleCnt,
+  public ExceptionInfo insertParty(Long id, String description, List<String> Urls, int peopleCnt,
       Long partyTypeId) {
     ExceptionInfo result;
+    String imageUrls = "";
     if (description == null || description == "") {
       result = ExceptionInfo.PARTY_DESCRIPTION_NULL;
       return result;
     }
-    if (imageUrls == null || imageUrls == "") {
+    if (Urls == null || Urls.size() == 0) {
       result = ExceptionInfo.PARTY_IMAGEURLS_NULL;
       return result;
     }
@@ -81,6 +83,9 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
     Party party = new Party();
     party.setPublisherId(id);
     party.setDescription(description);
+    for (String imageurl : Urls) {
+      imageUrls = imageurl + ";" + imageUrls;//为防止第一个image为""，逆序插入URL
+    }
     party.setImageUrls(imageUrls);
     party.setPeopleCnt(peopleCnt);
     party.setPartyTypeId(partyTypeId);
@@ -108,10 +113,11 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
   }
 
   // 修改组局信息
-  public Result<Integer> updateParty(Long id, String description, String imageUrls, int peopleCnt,
+  public Result<Integer> updateParty(Long id, String description, List<String> Urls, int peopleCnt,
       Long partyTypeId) {
     Result<Integer> result = new Result<>();
     Party party = partyMapper.selectById(id);
+    String imageUrls = "";
     if (party.getId() == null) {
       result.setCode(ExceptionInfo.valueOf("PARTY_ID_NULL").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_ID_NULL").getMessage());
@@ -124,7 +130,7 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
       result.setData(0);
       return result;
     }
-    if (imageUrls == null || imageUrls == "") {
+    if (Urls == null || Urls.size() == 0) {
       result.setCode(ExceptionInfo.valueOf("PARTY_IMAGEURLS_NULL").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_IMAGEURLS_NULL").getMessage());
       result.setData(0);
@@ -151,6 +157,9 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
       return result;
     }
     party.setDescription(description);
+    for (String imageurl : Urls) {
+      imageUrls = imageurl + ";" + imageUrls;//为防止第一个image为""，逆序插入URL
+    }
     party.setImageUrls(imageUrls);
     party.setPeopleCnt(peopleCnt);
     party.setPartyTypeId(partyTypeId);
@@ -172,13 +181,15 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
     for (Party party : MyPartyList) {
       Map<String, Object> map = new HashMap<>();
       User user = userMapper.selectById(party.getPublisherId());
+      int nowPeopleCnt = partyMapper.selectNowPartyCnt(party.getId());
       map.put("partyID", party.getId());
       map.put("description", party.getDescription());
-      map.put("peopleCnt", party.getPeopleCnt());
-      map.put("partyType", party.getPartyTypeId());
-      map.put("gmtCreate", party.getGmtCreate());
       map.put("username", user.getUsername());
       map.put("sex", user.getSex());
+      map.put("peopleCnt", party.getPeopleCnt());
+      map.put("nowPeopleCnt", nowPeopleCnt);
+      map.put("partyType", party.getPartyTypeId());
+      map.put("gmtCreate", party.getGmtCreate());
       mapList.add(map);
     }
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
@@ -193,16 +204,32 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
     Result<Map<String, Object>> result = new Result<>();
     Party party = partyMapper.selectById(id);
     Map<String, Object> map = new HashMap<>();
+    int nowPeopleCnt = partyMapper.selectNowPartyCnt(party.getId());
     if (party == null) {
       result.setCode(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getMessage());
-      result.setData(map);
+      result.setData(null);
       return result;
     }
+
     map.put("partyID", party.getId());
     map.put("context", party.getDescription());
-    map.put("images", party.getImageUrls());
+    String imageArrayStr = party.getImageUrls();
+    List<String> imageUrlList = new LinkedList<>();
+    if (imageArrayStr == null) {
+      String[] imageurlsArray = new String[0];
+      Collections.emptyList();
+    } else {
+      String[] imageurlsArray = imageArrayStr.split("\\;");
+      for (String imageurl : imageurlsArray) {
+        imageUrlList.add(imageurl);
+      }
+      Collections.reverse(imageUrlList);//把imageURLS以正确顺序输出
+    }
+    map.put("images", imageUrlList);//返回数组
+    map.put("publisherID", party.getPublisherId());
     map.put("peopleCnt", party.getPeopleCnt());
+    map.put("nowPeopleCnt", nowPeopleCnt);
     map.put("partyType", party.getPartyTypeId());
     map.put("gmtCreate", party.getGmtCreate());
     List<Long> idList = new LinkedList<>();
@@ -342,14 +369,22 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
 //      System.out.println(party);
       Map<String, Object> map = new HashMap<>();
       User user = userMapper.selectById(party.getPublisherId());
+      int nowPeopleCnt = partyMapper.selectNowPartyCnt(party.getId());
       map.put("partyID", party.getId());
       map.put("description", party.getDescription());
-      map.put("peopleCnt", party.getPeopleCnt());
-      map.put("partyType", party.getPartyTypeId());
-      map.put("gmtCreate", party.getGmtCreate());
       map.put("username", user.getUsername());
       map.put("sex", user.getSex());
+      map.put("peopleCnt", party.getPeopleCnt());
+      map.put("nowPeopleCnt", nowPeopleCnt);
+      map.put("partyType", party.getPartyTypeId());
+      map.put("gmtCreate", party.getGmtCreate());
       mapList.add(map);
+    }
+    if (searchPartyList.size() == 0) {
+      result.setCode(ExceptionInfo.valueOf("PARTY_RELATED_NULL").getCode());
+      result.setMessage(ExceptionInfo.valueOf("PARTY_RELATED_NULL").getMessage());
+      result.setData(null);
+      return result;
     }
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());

@@ -18,4 +18,5 @@ import java.util.List;
  */
 public interface PartyMapper extends BaseMapper<Party> {
 
+  int selectNowPartyCnt(@Param("partyId") Long partyId);
 }

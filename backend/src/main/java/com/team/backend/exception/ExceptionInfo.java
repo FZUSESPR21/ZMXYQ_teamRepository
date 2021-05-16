@@ -95,10 +95,11 @@ public enum ExceptionInfo {
   PARTY_NOTBELONGTO_USER(6209, "该组局不属于当前用户"),
   PARTY_SEARCHMAS_NULL(6210, "组局搜索条件为空"),
   PARTY_INSERT_FAIL(6211, "组局创建失败"),
+  PARTY_RELATED_NULL(6212, "无相关搜索记录"),
   //组局评论
-  PARTY_COMMENT_INFO_LOST(6211, "组局评论信息缺失"),
-  PARTY_COMMENT_POST_FAIL(6212, "评论组局失败，请检查参数");
-
+  PARTY_COMMENT_INFO_LOST(6213, "组局评论信息缺失"),
+  PARTY_COMMENT_POST_FAIL(6214, "评论组局失败，请检查参数"),
+  PARTY_COMMENT_NULL(6215, "组局评论为空");
   private Integer code;
   private String message;
 
