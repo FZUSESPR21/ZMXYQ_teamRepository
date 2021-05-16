@@ -21,7 +21,7 @@
         class="change"
         title-class="title"
         is-link
-        title="修改个人资料卡片"
+        title="修改个人资料"
         link-type="navigateTo"
         url="../modify_info/modify_info"
 />

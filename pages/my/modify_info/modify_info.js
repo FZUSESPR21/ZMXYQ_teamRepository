@@ -46,14 +46,37 @@ Page({
     wx.request({
       url:"http://localhost:8088/api/user/data/select",
       success(res){
-        // console.log(res);
+        let bDay = res.data.data.birthday;
+        console.log(bDay.substring(0,10));
         that.setData({
           UserInfo:res.data.data,
-          sex:res.data.data.sex-0 === 1 ? '男':'女',
+          sex:res.data.data.sex-0 === 2 ? '女':'男',
           region:[res.data.data.province,res.data.data.city],
-          birthday:res.data.data.birthday.substring(0,10),
+          birthday:bDay.substring(0,10),
         })
         // console.log(that.data.UserInfo.username);
+      }
+    })
+  },
+
+  //修改个人信息
+  updateUserInfo(){
+    let that = this;
+    // let id = this.data.currentId - 0
+    // console.log(id)
+    wx.request({
+      method: 'POST',
+      url: `http://localhost:8088/api/user/data/update`,
+      data: {
+        sex:that.data.sex === "女" ? "2" : "1",
+        birthday:that.data.birthday,
+        province:that.data.region[0],
+        city:that.data.region[1],
+      },
+      success(res){
+        wx.navigateBack({
+          delta:1
+        })
       }
     })
   },
@@ -141,22 +164,14 @@ Page({
     });
   },
 
-  /*
-  保存修改
-  */
- handleSave(){
-   console.log("保存");
- },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      // this.setData({
-      //   sex: "男",
-      //   birthday: "1999-09-09",
-      //   region: ["福建省", "福州市"]
-      // });
     this.getUserInfo();
-  }
+  },
+
+  onShow: function () {
+    this.getUserInfo();
+  },
 })
