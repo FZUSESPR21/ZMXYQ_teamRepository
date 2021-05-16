@@ -10,6 +10,7 @@ Page({
     imgUrls:[],
     headSrc:"",
     nickname:"",
+    currentId:0
   },
 
   //获取用户资料
@@ -23,13 +24,21 @@ Page({
           UserInfo:res.data.data,
           headSrc:res.data.data.userIconUrl,
           nickname:res.data.data.username,
+          currentId:res.data.data.id
         })
         // console.log(that.data.UserInfo.username);
       }
     })
   },
 
-
+  changeNickname(){
+    let that = this;
+    let nickname = this.data.nickname;
+    let id = this.data.id;
+    wx.navigateTo({
+      url: `../ch_nickname/ch_nickname?id=${id}&nickname=${nickname}`
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -49,7 +58,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getUserInfo();
   },
 
   /**

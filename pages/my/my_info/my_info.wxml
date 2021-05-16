@@ -14,15 +14,14 @@
         is-link
         title="昵称"
         value="{{nickname}}"
-        link-type="navigateTo"
-        url="../ch_nickname/ch_nickname"
+        bindtap="changeNickname"
 />
 
 <van-cell
         class="change"
         title-class="title"
         is-link
-        title="修改个人资料卡片"
+        title="修改个人资料"
         link-type="navigateTo"
         url="../modify_info/modify_info"
 />

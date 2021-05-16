@@ -5,14 +5,39 @@ Page({
    * 页面的初始数据
    */
   data: {
+    nickname: '',
+    currentId:0
+  },
 
+  //修改昵称
+  updateNickname(){
+    let that = this;
+    let id = this.data.currentId - 0
+    // console.log(id)
+    wx.request({
+      method: 'POST',
+      url: `http://localhost:8088/api/user/data/update`,
+      data: {
+        username: that.data.nickname
+      },
+      success(res){
+        // console.log(res)
+        wx.navigateBack({
+          delta:1
+        })
+
+      }
+    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      nickname:options.nickname,
+      currentId:options.id - 0,
+    })
   },
 
   /**
