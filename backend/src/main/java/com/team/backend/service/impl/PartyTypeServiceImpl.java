@@ -1,6 +1,7 @@
 package com.team.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.mapper.PartyCommentMapper;
@@ -13,10 +14,13 @@ import com.team.backend.model.PartyType;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
 import com.team.backend.service.PartyTypeService;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +59,7 @@ public class PartyTypeServiceImpl extends ServiceImpl<PartyTypeMapper, PartyType
     List<Map<String, Object>> mapList = new LinkedList<>();
 
     if (id == -1) {//当传入为"-1"时返回所有组局信息
-      partylistByTypeID = partyMapper.selectList(null);
+      partylistByTypeID = partyTypeMapper.selectAllPartyOrderByGmtCreate();
       for (Party party : partylistByTypeID) {
         Map<String, Object> map = new HashMap<>();
         User user = userMapper.selectById(party.getPublisherId());
@@ -69,6 +73,7 @@ public class PartyTypeServiceImpl extends ServiceImpl<PartyTypeMapper, PartyType
         map.put("partyType", party.getPartyTypeId());
         map.put("gmtCreate", party.getGmtCreate());
         mapList.add(map);
+        Collections.reverse(mapList);
       }
     } else if (id == -2) {//当传入"-2"时返回有空位的组局
       partylistByTypeID = partyTypeMapper.selectByMyWrapper();
@@ -85,11 +90,12 @@ public class PartyTypeServiceImpl extends ServiceImpl<PartyTypeMapper, PartyType
         map.put("partyType", party.getPartyTypeId());
         map.put("gmtCreate", party.getGmtCreate());
         mapList.add(map);
+        Collections.reverse(mapList);
       }
     } else if (id == 0 || id == 1 || id == 2 || id == 3 || id == 4 || id == 5 || id == 6 || id == 7
         || id == 8) {
       //0-自习 1-电影 2-聚餐 3-拼车 4-拼单 5-运动 6-游戏 7-旅行 8-其他
-      wrapper.eq("party_type_id", id);
+      wrapper.eq("party_type_id", id).orderByDesc("gmt_create");
       partylistByTypeID = partyMapper.selectList(wrapper);
       for (Party party : partylistByTypeID) {
         Map<String, Object> map = new HashMap<>();
