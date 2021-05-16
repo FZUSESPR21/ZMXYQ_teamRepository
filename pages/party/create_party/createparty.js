@@ -1,5 +1,7 @@
 // pages/party/create_party/createparty.js
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import {request} from "../../../utils/request"
+const timeago = require("timeago.js");
 Page({
 
   /**
@@ -206,6 +208,34 @@ Page({
    
   }
 
+  },
+  editParty:function (e) {
+    
+    wx.request({
+      url: 'http://ccreater.top:61112/api/party/update',
+      method:"POST",
+      data:{
+        userId:0,
+        description:"",
+        imageUrls:[],
+        peopleCnt:0,
+        partyTypeID:0
+      },
+      success(res)
+      {
+        console.log(res);
+        Dialog.alert({
+          message: '发布成功',
+        }).then(() => {
+          // on close
+        });
+      },
+      fail:function(res)
+      {
+        console.log(res);
+      }
+
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

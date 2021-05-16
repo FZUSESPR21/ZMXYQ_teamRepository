@@ -24,6 +24,7 @@ page{
   justify-content: center; 
   align-items:center;
   margin-top: 20px;
+  position: relative;
 }
 .partymemberlist{
   width: 100%; 
@@ -210,4 +211,13 @@ page{
 .delete-button-icon{
   height: 20px;
   width: 20px;
+}
+.party-moveoff-button{
+  position: absolute;
+  width: 170rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  right: 5%;
+  top: 10%;
+  font-size: 14px;
 }

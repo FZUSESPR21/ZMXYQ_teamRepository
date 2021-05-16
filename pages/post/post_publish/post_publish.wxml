@@ -37,4 +37,5 @@
     <view >
       <button class="send_button" bindtap='publishPost'>发布</button>
     </view>
+    <van-dialog id="van-dialog" />
 </view>
