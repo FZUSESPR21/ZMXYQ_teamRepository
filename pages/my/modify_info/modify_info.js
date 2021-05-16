@@ -12,7 +12,7 @@ Page({
     show2: false,
     show3: false,
     areaList,
-    picktime:"",
+    birthday:"",
     sex:"",
     formatter(type, value) {
       if (type === 'year') {
@@ -35,8 +35,30 @@ Page({
       },
     ],
     region: [],
+    UserInfo:[],
+
   },
 
+
+  //获取用户资料
+  getUserInfo(){
+    let that = this;
+    wx.request({
+      url:"http://localhost:8088/api/user/data/select",
+      success(res){
+        // console.log(res);
+        that.setData({
+          UserInfo:res.data.data,
+          sex:res.data.data.sex-0 === 1 ? '男':'女',
+          region:[res.data.data.province,res.data.data.city],
+          birthday:res.data.data.birthday.substring(0,10),
+        })
+        // console.log(that.data.UserInfo.username);
+      }
+    })
+  },
+
+  //时间转换
   timeFormat(date, fmt) {
     var o = {
       "M+": date.getMonth() + 1,         //月份 
@@ -50,6 +72,7 @@ Page({
     return fmt;
 
   },
+
 
   showBirthday() {
     this.setData({ show1: true });
@@ -65,7 +88,7 @@ Page({
 
   onConfirm(event) {
     var timeValue = this.timeFormat(new Date(event.detail), "yyyy-MM-dd");
-    this.setData({ picktime: timeValue, show1: false });
+    this.setData({ birthday: timeValue, show1: false });
     var myEventDetail = {
       val: timeValue
     }
@@ -129,10 +152,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      this.setData({
-        sex: "男",
-        picktime: "1999-09-09",
-        region: ["福建省", "福州市"]
-      });
+      // this.setData({
+      //   sex: "男",
+      //   birthday: "1999-09-09",
+      //   region: ["福建省", "福州市"]
+      // });
+    this.getUserInfo();
   }
 })
