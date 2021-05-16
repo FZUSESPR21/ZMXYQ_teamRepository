@@ -171,5 +171,11 @@ Page({
     // let postList=this.selectComponent('#postList');
     // console.log(postList);
     // postList.getPostsData(0);
+  },
+
+  onPullDownRefresh: function() {
+    let postList=this.selectComponent('#postList');
+    console.log(postList);
+    postList.getPostsData(1);
   }
 })

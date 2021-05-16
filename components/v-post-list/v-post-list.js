@@ -121,7 +121,7 @@ Component({
         let that = this;
         app.userLogin().then(function (res) {
           let baseUrl = app.globalData.baseUrl;
-          let jsonStr = '{"pageSize": 10,"pageNum": 1}';
+          let jsonStr = '{"pageSize": 50,"pageNum": 1}';
           let jsonValue = JSON.parse(jsonStr);
           console.log(jsonValue);
           request({
@@ -133,6 +133,7 @@ Component({
             data: jsonValue,
             success:function(res)
             {
+              app.globalData.userInfo = "already";
              console.log("初始页面");
              console.log(res);
              let midPostsData = res.data.data;
@@ -176,45 +177,53 @@ Component({
       // 在组件实例被从页面节点树移除时执行
     },
 
+  methods: {
     getPostsData(pageNum){
-      let that = this;
-      let baseUrl = app.globalData.baseUrl;
-      // let jsonStr = '{"pageSize": %s,"pageNum": %s}'.format(that.data.pageSize, pageNum);
-      let jsonValue = JSON.parse(jsonStr);
-      console.log(jsonValue);
-      request({
-        url:  baseUrl + '/api/posts/all',
-        method:'POST',
-        Headers: {
-          'content-type': 'application/json'
-        },
-        data: jsonValue,
-        success:function(res)
-        {
-         console.log("初始");
-         console.log(res);
-         let midPostsData = res.data.data;
-         if(midPostsData!= null){
-            for(let i = 0; i < midPostsData.length; i++){
-              midPostsData[i].imageUrls = "https://img.yzcdn.cn/vant/cat.jpeg;https://img.yzcdn.cn/vant/cat.jpeg;https://img.yzcdn.cn/vant/cat.jpeg;https://img.yzcdn.cn/vant/cat.jpeg;";
-              midPostsData[i].gmtCreate = timeago.format(new Date(midPostsData[i].gmtCreate),'zh_CN');
-              midPostsData[i].imageUrls = midPostsData[i].imageUrls.spilit(';');
+        let postsData = [];
+        let that = this;
+        let baseUrl = app.globalData.baseUrl;
+        let jsonStr = '{"pageSize": 50,"pageNum": 1}';
+        let jsonValue = JSON.parse(jsonStr);
+        console.log(jsonValue);
+        request({
+          url:  baseUrl + '/api/posts/all',
+          method:'POST',
+          Headers: {
+            'content-type': 'application/json'
+          },
+          data: jsonValue,
+          success:function(res)
+          {
+            console.log("初始页面");
+            console.log(res);
+            let midPostsData = res.data.data;
+            if(midPostsData!= null){
+              for(let i = 0; i < midPostsData.length; i++){
+                midPostsData[i].gmtCreate = timeago.format(new Date(midPostsData[i].gmtCreate),'zh_CN');
+                let midImageUrls = midPostsData[i].imageUrls;
+                if(midPostsData[i].imageUrls != "" && midPostsData[i].imageUrls != null){
+                  midPostsData[i].imageUrls = midPostsData[i].imageUrls.split(';');
+                  if(midPostsData[i].imageUrls.length == 0)
+                    midPostsData[i].imageUrls.push(midImageUrls);
+                }
+                //图片最终url
+                for(let imageIndex = 0; imageIndex < midPostsData[i].imageUrls.length; imageIndex++){
+                  midPostsData[i].imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData[i].imageUrls[imageIndex];
+                }
+              }
+              for(var m in midPostsData)
+                postsData.push(midPostsData[m]);
+                that.setData({
+                  postsData  
+              });
             }
-            let postsData = that.data.postsData;
-            for(var m in midPostsData)
-             postsData.push(midPostsData[m]);
-             that.setData({
-               postsData  
-            });
-         }
-        //  console.log(that.data.postsData);
-        },
-        fail:function(res)
-        {
-          console.log(res);
-        }
-      });
-    },
+          },
+          fail:function(res)
+          {
+            console.log(res);
+          }
+        });
+    }},
 
   // method: {
     bindPickerChange: function(e) {
@@ -286,49 +295,32 @@ Component({
   
     },
 
-    goto_postdetail:function(param){
-      wx.navigateTo({
-        url: '../post_detail/post_detail',
-        })
-    },
+    // getCommentBox:function(e)
+    // {
+    //   this.setData({
+    //     commentMessage:e.detail
+    //   })
+    //   console.log(this.data.commentMessage);
+    //   console.log(10);
+    // },
 
-    onTap: function (e) {
-      // 获取按钮元素的坐标信息
-      this.popover = this.selectComponent('#popover');
-      var id = e.currentTarget.dataset.idname;// 或者 e.target.id 获取点击元素的 ID 值
-      this.createSelectorQuery().select('#' + id).boundingClientRect(res => {
-        // 调用自定义组件 popover 中的 onDisplay 方法
-        // console.log(res);
-        this.popover.onDisplay(res);
-      }).exec();
-    },
-  
-    getCommentBox:function(e)
-    {
-      this.setData({
-        commentMessage:e.detail
-      })
-      console.log(this.data.commentMessage);
-      console.log(10);
-    },
+    // bindTextAreaBlur:function(e)
+    // {
+    //   this.setData({
+    //     commentInputText:e.detail.value
+    //   })
+    //   console.log(this.data.commentInputText)
+    // },
 
-    bindTextAreaBlur:function(e)
-    {
-      this.setData({
-        commentInputText:e.detail.value
-      })
-      console.log(this.data.commentInputText)
-    },
-
-    getRewardBox:function(e)
-    {
-      this.setData({
-        showRewardBox:true
-      })
-    },
-    onClose() {
-      this.setData({ showRewardBox: false });
-    },
+    // getRewardBox:function(e)
+    // {
+    //   this.setData({
+    //     showRewardBox:true
+    //   })
+    // },
+    // onClose() {
+    //   this.setData({ showRewardBox: false });
+    // },
 
 
       /*获取页面数据*/
