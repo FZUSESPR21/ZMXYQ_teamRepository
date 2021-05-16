@@ -14,6 +14,8 @@ import com.team.backend.service.impl.TreeHoleServiceImpl;
 import com.team.backend.service.impl.UserServiceImpl;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -95,18 +97,35 @@ public class UserController {
   }
 
   @GetMapping("/data/select")
-  public Result<User> queryUser() {
+  public Result<Map<String, Object>> queryUser() {
 
     User user = null;
+    Result<Map<String, Object>> result = new Result<>();
+    Map<String, Object> resultMap = new HashMap<>();
+    Map<String, Integer> map = new HashMap<>();
 
     if (user == null) {
-      Result<User> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
       return result;
     }
 
-    return userService.queryUser(user.getId());
+    resultMap.put("user", userService.queryUser(user.getId()).getData());
+
+    Result<List<Post>> postResult = userService.postList(user.getId());
+    map.put("postNumber", postResult.getData().size());
+    Result<List<PostComment>> postCommentResult = userService.PostCommentList(user.getId());
+    map.put("postCommentNumber", postCommentResult.getData().size());
+    Result<List<PartyComment>> partyCommentResult = userService.PartyCommentList(user.getId());
+    map.put("partyCommentNumber", partyCommentResult.getData().size());
+    Result<List<PersonalCollection>> collectionResult = userService.listCollection(user.getId());
+    map.put("collectionNumber", collectionResult.getData().size());
+    resultMap.put("numberList", map);
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(resultMap);
+    return result;
   }
 
   @PostMapping("/data/update")
@@ -335,5 +354,6 @@ public class UserController {
 
     return treeHoleService.insertTreeHole(user.getId(), content);
   }
+
 }
 
