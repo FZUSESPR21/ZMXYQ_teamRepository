@@ -1,3 +1,4 @@
+import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 Page({
   data: {
     fileList: [
@@ -92,7 +93,7 @@ Page({
       ]
     ],
     multiIndex: [10,null],
-    postContent:"111",
+    postContent:"",
     imgUrls:[]
   },
   bindPickerChange: function(e) {

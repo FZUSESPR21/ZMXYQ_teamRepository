@@ -7,23 +7,23 @@ Page({
    */
   data: {
     option1: [{
-        text: '全部商品',
+        text: '主题1',
         value: 0
       },
       {
-        text: '新款商品',
+        text: '主题2',
         value: 1
       },
       {
-        text: '活动商品',
+        text: '主题3',
         value: 2
       },
     ],
-    themeArray: ["重庆分店", "东莞南城分店", "东莞总店", "东莞总店", "东莞总店"],
+    themeArray: ["主题1", "主题2", "主题3", "主题4"],
     value1: 0,
     select: false,
     memNum:1,
-    tihuoWay: '门店自提',
+    tihuoWay: '全部主题',
     fileList: [{
         url: 'http://iph.href.lu/60x60?text=default',
         name: '图片2',
@@ -112,62 +112,62 @@ Page({
     });
   }
   else{
-    let _this=this;
-      const file = _this.data.fileList;
-      let promiseArr=[];
-      let imgServerUrls=new Array();
-      console.log(_this.data.fileList);
-      file.forEach(function (e) {
-        var FSM = wx.getFileSystemManager();
-        let imageType=getApp().getImageType(e.url);
-        promiseArr.push(
-          new Promise(function (resolve,reject) {
-            FSM.readFile({
-              filePath: e.url,
-              encoding: "base64",
-              success: function (data) {
-                    wx.request({
-                      url: 'http://192.168.5.219:8088/api/posts/imgupload',
-                      method: "POST",
-                      data: {
-                        base64Str: imageType + data.data,
-                        filename: "111"
-                      },
-                      success: function (res) {
-                        console.log(res);
-                        console.log("上传图片成功");
-                        if(res.data.code==200)
-                        {
-                        return resolve(res);
-                        }
-                        else{
-                          return reject(res.data.message);
-                        }
-                      },
-                      fail: function (e) {
+     let _this=this;
+       const file = _this.data.fileList;
+       let promiseArr=[];
+       let imgServerUrls=new Array();
+       console.log(_this.data.fileList);
+       file.forEach(function (e) {
+         var FSM = wx.getFileSystemManager();
+         let imageType=getApp().getImageType(e.url);
+         promiseArr.push(
+           new Promise(function (resolve,reject) {
+             FSM.readFile({
+               filePath: e.url,
+               encoding: "base64",
+               success: function (data) {
+                     wx.request({
+                       url: 'http://ccreater.top:61112/api/posts/imgupload',
+                       method: "POST",
+                       data: {
+                         base64Str: imageType + data.data,
+                         filename: "111"
+                       },
+                       success: function (res) {
+                         console.log(res);
+                         console.log("上传图片成功");
+                         if(res.data.code==200)
+                         {
+                         return resolve(res);
+                         }
+                         else{
+                           return reject(res.data.message);
+                         }
+                       },
+                       fail: function (e) {
                         console.log(e);
-                        console.log("上传图片失败");
-                        return reject(e)
-                      },
-                      complete: function (complete) {
+                    console.log("上传图片失败");
+                         return reject(e)
+                       },
+                       complete: function (complete) {
           
-                        return complete;
-                      }
-                    })
+                         return complete;
+                       }
+                     })
                  
-                
-              }
-            });
-          })
-        )
-     })
+              
+               }
+             });
+           })
+         )
+      })
         Promise.all(promiseArr).then(function (values) {
           console.log(values);
           values.forEach(function (e) {
             console.log(e);
             imgServerUrls.push(e.data.data)
           })
-         
+    
           // console.log(imgServerUrls);
           _this.setData({
             imgUrls:imgServerUrls
@@ -178,23 +178,34 @@ Page({
             console.log(reason)
           }
         )
+        wx.request({
+          url: 'http://ccreater.top:61112/api/party/insert',
+          method:"POST",
+          data:{
+            userId:0,
+            description:"",
+            images:[],
+            peopleCnt:0,
+            partyTypeID:0
+          },
+          success(res)
+          {
+            console.log(res);
+            Dialog.alert({
+              message: '发布成功',
+            }).then(() => {
+              // on close
+            });
+          },
+          fail:function(res)
+          {
+            console.log(res);
+          }
+  
+        })
+   
   }
-    //  wx.request({
-    //    url: 'http://xx.com/api//alumnicycle/party/add',
-    //    method:"POST",
-    //    data:{
-    //      userId:0,
-    //      description:"",
-    //      images:[],
-    //      peopleCnt:0,
-    //      partyTypeID:0
-    //    },
-    //    success(res)
-    //    {
-    //     Notify({ type: 'success', message: '创建拼局成功' });
-    //    },
 
-    //  })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

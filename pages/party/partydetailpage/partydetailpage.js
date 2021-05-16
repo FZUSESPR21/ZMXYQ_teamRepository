@@ -122,22 +122,25 @@ Page({
       url: 'http://ccreater.top:61112/api/party/partymes',
       method:'GET',
       data:{
-        partyId:123456
+        partyId:101
       },
       success:function(res)
       {
        let data=res.data.data;
        console.log(res);
-       _this.setData({
-         partyID:res.data.data.partyID,
-         partyDesciption:res.data.data.description,
-         partyPublisherID:res.data.data.publisherID,
-         partyMemmberCnt:res.data.data.peopleCnt,
-         partyMemmberCntNow:res.data.data.nowPeopleCnt,
-         partyCreateTime:res.data.data.gmtCreate,
-         partyMemberList:res.data.data.participantsID       
-       })
-
+       console.log(data);
+      _this.setData({
+          partyID:data.partyID,
+          partyDesciption:res.data.data.description,
+          partyPublisherID:res.data.data.publisherID,
+          partyMemmberCnt:res.data.data.peopleCnt,
+          partyMemmberCntNow:res.data.data.nowPeopleCnt,
+          partyCreateTime:res.data.data.gmtCreate,
+          partyMemberList:res.data.data.participantsID       
+        })
+ 
+       
+      
        
       },
       fail:function(res)
