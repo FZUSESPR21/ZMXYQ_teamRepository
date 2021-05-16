@@ -138,7 +138,6 @@ Component({
              let midPostsData = res.data.data;
              if(midPostsData!= null){
                 for(let i = 0; i < midPostsData.length; i++){
-                  midPostsData[i].imageUrls = "";
                   midPostsData[i].gmtCreate = timeago.format(new Date(midPostsData[i].gmtCreate),'zh_CN');
                   let midImageUrls = midPostsData[i].imageUrls;
                   if(midPostsData[i].imageUrls != "" && midPostsData[i].imageUrls != null){

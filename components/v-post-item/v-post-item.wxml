@@ -24,15 +24,18 @@
                 <view class="answer-body">
                     <view class="answer-actions" bindtap="bindItemTap">
                         <view>
-                            <image class="mark" src="../../static/icons/mark.png" bindtap="postMark"></image>
+                            <image wx:if="{{isEyeOn == 0}}" class="mark" src="../../static/icons/mark.png" bindtap="postMark"></image>
+                            <image wx:if="{{isEyeOn != 0}}" class="mark" src="../../static/icons/mark-active.png" bindtap="postMark"></image>
                             <a class="iconIntro">{{eyeOnNum}}</a>
                         </view>
                         <view>
-                            <image class="reward" src="../../static/icons/reward.png" bindtap="postReward"></image>
+                            <image wx:if="{{isReward == 0}}" class="reward" src="../../static/icons/reward.png" bindtap="postReward"></image>
+                            <image wx:if="{{isReward != 0}}" class="reward" src="../../static/icons/reward-active.png" bindtap="postMark"></image>
                             <a class="iconIntro">{{rewardNum}}</a>
                         </view>
                         <view>
-                            <image class="agree" src="../../static/icons/agree.png" bindtap="postLike"></image>
+                            <image wx:if="{{isLike == 0}}" class="agree" src="../../static/icons/agree.png" bindtap="postLike"></image>
+                            <image wx:if="{{isLike != 0}}" class="agree" src="../../static/icons/agree-active.png" bindtap="postMark"></image>
                             <a class="iconIntro">{{likeNum}}</a>
                         </view>              
                     </view>    
