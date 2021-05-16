@@ -2,12 +2,14 @@
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import {request} from "../../../utils/request"
 const timeago = require("timeago.js");
+const app=getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    userId:123456,
     option1: [{
         text: '主题1',
         value: 0
@@ -36,9 +38,10 @@ Page({
 
     ],
     base64fileList: [],
-    partyDetailContent: "1111",
-    buttonOperation: "创建组局(消耗50人品)",
-    imgUrls:[]
+    partyDetailContent: "",
+    buttonOperation:"创建组局(消耗50人品)",
+    buttonOperationValue:1,
+    imgUrls:[],
   },
 
   /**
@@ -51,6 +54,12 @@ Page({
       memberNum: options.partyMemberCnt,
       buttonOperation: options.operation
     })
+    if(this.data.buttonOperation=="修改组局")
+    {
+      this.setData({
+        buttonOperationValue:2
+      })
+    }
   },
   bindShowMsg: function () {
     this.setData({
@@ -115,6 +124,7 @@ Page({
   }
   else{
      let _this=this;
+     console.log(this.data.memNum);
        const file = _this.data.fileList;
        let promiseArr=[];
        let imgServerUrls=new Array();
@@ -180,16 +190,20 @@ Page({
             console.log(reason)
           }
         )
-        wx.request({
-          url: 'http://ccreater.top:61112/api/party/insert',
+       
+        if(_this.data.buttonOperationValue==1)
+        {
+          let createData={
+            userId:_this.data.userId,
+            description:_this.data.partyDetailContent,
+            images:_this.data.imgUrls,
+            peopleCnt:_this.data.memNum,
+            partyTypeId:0
+          }
+          request({
+          url: app.globalData.baseUrl+'/api/party/insert',
           method:"POST",
-          data:{
-            userId:0,
-            description:"",
-            images:[],
-            peopleCnt:0,
-            partyTypeID:0
-          },
+          data:createData,
           success(res)
           {
             console.log(res);
@@ -205,6 +219,10 @@ Page({
           }
   
         })
+      }
+      else{
+        this.editParty();
+      }
    
   }
 
@@ -215,7 +233,7 @@ Page({
       url: 'http://ccreater.top:61112/api/party/update',
       method:"POST",
       data:{
-        userId:0,
+        userId:this.data,
         description:"",
         imageUrls:[],
         peopleCnt:0,
@@ -237,51 +255,10 @@ Page({
 
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  getValue:function (e) {
+    var _this=this;
+    this.setData({
+      partyDetailContent:e.detail.value
+    })
   }
 })
