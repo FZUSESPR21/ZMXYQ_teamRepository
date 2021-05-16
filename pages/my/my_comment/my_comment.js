@@ -26,7 +26,7 @@ Page({
         console.log(res);
         if(res.data.code === 200){
           that.setData({
-            postCommentsList:res.data.data
+            postCommentsList:res.data.data.reverse()
           })
         }
       }
@@ -42,7 +42,7 @@ Page({
         console.log(res);
         if(res.data.code === 200){
           that.setData({
-            partyCommentsList:res.data.data
+            partyCommentsList:res.data.data.reverse()
           })
         }
       }
@@ -163,7 +163,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getPostComments()
+    this.getPostComments();
     this.getPartyComments()
   },
 
@@ -178,7 +178,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
   },
 
   /**

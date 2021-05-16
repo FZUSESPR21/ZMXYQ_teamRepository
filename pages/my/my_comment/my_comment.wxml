@@ -1,15 +1,5 @@
 <view>
-<!--    <scroll-view class="wkNav" scroll-x>-->
-<!--        <view class="box">-->
-<!--            <block>-->
-<!--                校友圈-->
-<!--            </block>-->
-<!--            <block>-->
-<!--                组团-->
-<!--            </block>-->
-<!--        </view>-->
-<!--    </scroll-view>-->
-    <van-tabs active="{{ active }}" bind:change="onChange" color="#f2774d" line-width="50%">
+    <van-tabs color="#f2774d" line-width="50%">
 
         <van-tab title="校友圈">
             <view class="comment_main">

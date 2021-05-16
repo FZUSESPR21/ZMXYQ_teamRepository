@@ -13,6 +13,7 @@ Page({
     ],
     currentId:0,
     collectionList:[],
+    collectionReverse:[],
   },
 
 //touchstart
@@ -54,7 +55,7 @@ Page({
       success(res){
         console.log(res);
         that.setData({
-          collectionList:res.data.data,
+          collectionList:res.data.data.reverse(),
         })
       }
     })

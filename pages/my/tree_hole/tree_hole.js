@@ -72,7 +72,7 @@ Page({
         // console.log(res.data.data);
         if(res.data.code === 200){
           that.setData({
-            treeHoleList:res.data.data
+            treeHoleList:res.data.data.reverse()
           })
         }
       }

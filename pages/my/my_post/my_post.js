@@ -110,7 +110,7 @@ Page({
         console.log(res);
         if(res.data.code === 200){
           that.setData({
-            postList:res.data.data
+            postList:res.data.data.reverse()
           })
         }
       }
