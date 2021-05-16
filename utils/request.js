@@ -3,15 +3,19 @@ const request = function (obj) {
     obj.cookie = wx.getStorageSync(key);
     if (!('fail' in obj)) {
         obj.fail = function (err) {
-        }
+        }   
     }
     if (!('complete' in obj)) {
         obj.complete = function (res) {
         }
     }
-    obj.header ={
-        "Content-Type":"application/json",
+    if(!obj.header)
+    {
+        obj.header ={
+            "Content-Type":"application/json",
+        }
     }
+    
     if(obj.cookie){
         obj.header["Cookie"] = obj.cookie;
     }

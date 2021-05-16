@@ -1,20 +1,21 @@
 /* components/v-name-card.wxss */
 .name-card-view{
-  width: 50%;
+  width: 600rpx;
   display: flex;
   margin-top: 10rpx;
 }
 .comment-publisher-view-message{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 .comment-publisher-view-message-name{
   max-width: 400rpx;
   overflow: hidden;
-  font-size: 16px;
+  font-size: 14px;
 }
 .comment-publisher-view-message-time{
-  font-size: 16px;
+  font-size: 14px;
+  color: gray;
 }
 .popup-publisher-detail
 {

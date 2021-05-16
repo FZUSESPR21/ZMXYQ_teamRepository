@@ -16,7 +16,7 @@
   </v-popover>
   <van-dialog id="van-dialog" />
   </view>
-    <v-name-card class="user-message"></v-name-card>
+    <v-name-card class="user-message" publisherMsg="{{partyPublisherMsg}}" userId="{{partyPublisherID}}" publisherTime="{{partyCreateTime}}" ></v-name-card>
     <view class="partydetailcontent">
       {{partyDetailContent}}
     </view>
@@ -57,7 +57,7 @@
 </view>
 <view class="comment-box">
 <form action="" class="input-form">
-  <textarea  bindblur="bindTextAreaBlur" confirm-type="send" class="message-area" placeholder="{{'请输入回复'+commentMessage.publisherName+'的评论'}}" focus="true" value="{{commentInputText}}"></textarea>
+  <textarea  bindblur="bindTextAreaBlur" confirm-type="send" class="message-area" placeholder="{{'请输入回复'+commentMessage.publisherName+'的评论'}}" focus="true" value="{{commentInputText}}" bindinput="getValue"></textarea>
   <button class="send-button" bindtap="sendComment">发送</button>
 </form>
   

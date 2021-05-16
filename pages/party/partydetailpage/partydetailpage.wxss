@@ -135,7 +135,7 @@ page{
 }
 .user-message
 {
-  margin-right: 500rpx;
+  
 }
 .comment-box{
   width: 100%;
