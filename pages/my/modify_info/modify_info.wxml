@@ -35,6 +35,7 @@
     <van-popup show="{{show3}}" position="bottom" bind:close="onClose3">
         <van-area
                 area-list="{{ areaList }}"
+                value="{{currentArea}}"
                 bind:cancel="onCancel3"
                 columns-num="{{ 2 }}"
                 bind:confirm="confirmRegion"/>

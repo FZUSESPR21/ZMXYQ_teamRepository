@@ -7,7 +7,8 @@ Page({
   data: {
     currentDate: new Date().getTime(),
     maxDate: new Date().getTime(),
-    minDate: new Date(1950,1,1),
+    minDate: new Date(1950,1,1).getTime(),
+    currentArea:350100,
     show1: false,
     show2: false,
     show3: false,
@@ -155,12 +156,15 @@ Page({
   },
 
   confirmRegion(event){
+    // console.log(event);
     let midRegion = [];
+    let areaCode = event.detail.values[1].code;
     midRegion[0] = event.detail.values[0].name;
     midRegion[1] = event.detail.values[1].name;
     this.setData({
       region: midRegion,
-      show3: false
+      show3: false,
+      currentArea:areaCode,
     });
   },
 
@@ -169,6 +173,16 @@ Page({
    */
   onLoad: function (options) {
     this.getUserInfo();
+  },
+
+  onReady: function () {
+    let that = this;
+
+    this.setData({
+      currentDate: new Date(that.data.birthday.substring(0,10)).getTime(),
+      currentArea: 350100,
+    })
+    // console.log(that.data.region)
   },
 
   onShow: function () {
