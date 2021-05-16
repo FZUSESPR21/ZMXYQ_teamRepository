@@ -14,8 +14,7 @@
         is-link
         title="昵称"
         value="{{nickname}}"
-        link-type="navigateTo"
-        url="../ch_nickname/ch_nickname"
+        bindtap="changeNickname"
 />
 
 <van-cell

@@ -1,12 +1,12 @@
 <view>
     <van-cell-group>
     <van-field
-            value="{{ nickname }}"
+            model:value="{{ nickname }}"
             clearable="true"
             label="昵称"
             placeholder="请输入昵称"
             bind:click-icon="onClickIcon"
     />
     </van-cell-group>
-    <button class="button">保存昵称</button>
+    <button class="button" bindtap="updateNickname">保存昵称</button>
 </view>
