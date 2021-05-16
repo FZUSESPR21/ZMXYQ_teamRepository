@@ -1,0 +1,215 @@
+/* pages/post_list/post_list.wxss */
+
+post-item{
+    height: 1500rpx;
+    padding: 0;
+    font-size: 14rpx;
+    background: #F0F4F3;
+    color: #000;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+  .v-post-list-title{
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left:2px;
+    font-size: 10px;
+    background-color:#f2774d;
+    color:white;
+  }
+  .content{
+    margin: 5px;
+    font-size: 20px;
+  }
+  .btn{
+    width: 45rpx;
+    height: 25rpx;
+    margin-right:2px;
+  }
+  .iconIntro{
+    font-size: 13px;  
+  }
+  .v-post-list-img{
+    width: 160rpx;
+    height: 130rpx;
+    margin-top:6px;
+    margin-right:4px;
+  }
+  .share{
+    width: 36rpx;
+    height: 36rpx;
+    margin-left:3px;
+    margin-right:5px;
+  }
+  .mark{
+    width: 36rpx;
+    height: 36rpx;
+    margin-left:3px;
+    margin-right:5px;
+  }
+  .reward{
+    width: 38rpx;
+    height: 38rpx;
+    margin-left:3px;
+    margin-right:5px;
+  }
+  .agree{
+    width: 36rpx;
+    height: 36rpx;
+    margin-left:3px;
+    margin-right:5px;
+  }
+  
+  .post-item.withtab{
+    margin: 105rpx 0 0 0;
+  }
+  .flex-wrp{
+    display: flex;
+  }
+  .flex-tab{
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: stretch;
+  }
+  .flex-item{
+    flex-grow: 1;
+    text-align: center;
+  }
+  .top-tab{
+    width: 750rpx;
+    height: 100rpx;
+    background: #298DE5;
+    color: #8CCEFD;
+    font-size: 28rpx;
+    line-height: 100rpx;
+    box-shadow: 0 2px 2px #bebebe;
+    margin: 0 0 8rpx 0;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+  }
+  .toptab.active{
+    color: #ffffff;
+    border-bottom: solid 2px #ffffff;
+  }
+  .post-item{
+    padding: 0;
+    font-size: 14rpx;
+    color: #000;
+  }
+  .post-item .feed-item{
+    width: 690rpx;
+    padding: 30rpx 30rpx 20rpx;
+    margin: 7rpx 0 6rpx 0;
+    background: #ffffff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 2px 5px #eeeeee;
+  }
+  .post-item .feed-item .feed-source{
+    width: 700rpx;
+    height: 110rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .post-item .feed-item .feed-source .avatar{
+    position: relative;
+    display: inline-post-item;
+  }
+  .post-item .feed-item .feed-source a{
+    display: inline-post-item;
+    height: 40rpx;
+  }
+  .post-item .feed-item .feed-source .avatar image{
+    /*position: absolute;*/
+    display: inline-post-item;
+    width: 55rpx;
+    height: 55rpx;
+    border-radius: 55rpx;
+    top: 10rpx;
+    vertical-align: middle;
+  }
+  .post-item .feed-item .feed-source text{
+    /*position: absolute;*/
+    display: inline-post-item;
+    height: 40rpx;
+    line-height: 40rpx;
+    vertical-align: middle;
+    margin: 0 0 0 15rpx;
+    color: #a0acac;
+    font-size: 26rpx;
+  }
+  .morebutton{
+    display: inline-post-item;
+    width: 60rpx;
+    height: 60rpx;
+    margin-left: 500rpx;
+  }
+  .post-item .feed-item .feed-content{
+    padding: 20rpx 0 0 0;
+  }
+  .post-item .feed-item .feed-content .question text{
+    font-size: 26rpx;
+    font-weight: 600px;
+    line-height: 40rpx;
+    text-space: 5rpx;
+  }
+  .post-item .feed-item .feed-content .answer-body{
+    padding: 10rpx 0 0 0;
+    /*height: 10rpx;*/
+    font-size: 24rpx;
+    line-height: 28rpx;
+    color: #5b5b5b;
+  }
+  
+  .answer-actions{
+    display: flex;
+    flex-direction: row;
+    padding: 10rpx 0 0 0;
+    /*height: 10rpx;*/
+    font-size: 24rpx;
+    line-height: 28rpx;
+    color: #5b5b5b;
+  }
+  .post-item .feed-item .feed-content .answer-actions{
+    width: 690rpx;
+    padding: 10rpx 0  0;
+    color: #a0acac;
+  }
+  .post-item .feed-item .feed-content .answer-actions view{
+    display: inline-post-item;
+    vertical-align: text-bottom;
+    padding: 0 10rpx 0 0;
+    font-size: 24rpx;
+  }
+  
+   .post-item .feed-item .feed-source .name{
+    margin-left:20rpx;
+    margin-top:-10rpx ; 
+    font-size:16px;
+  }
+  .post-item .feed-item .feed-source .time{
+    margin-left:24rpx;
+    margin-top:-3px ; 
+    font-size:12px;
+  } 
+  .post-item .feed-item .feed-content .v-btn{
+    border:solid 1.2px #a0acac;
+    float:right;
+    display: flex;
+    height:24px;
+    width: 80px;
+    font-size: 13px;
+    background:white;
+    border-radius:40px 40px 40px 40px;
+    color:#a0acac;
+    margin-left: 100px;
+    margin-top: -18px;
+    line-height:24px;
+    text-align:center;
+  }
