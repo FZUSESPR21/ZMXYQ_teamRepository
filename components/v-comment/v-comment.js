@@ -55,6 +55,9 @@ Component({
   {
     let item = {publisherName:'测试',preID:8}
     this.triggerEvent('showCommentBox',item);
+  },
+  getPartyComments:function (params) {
+    
   }
   }
 })

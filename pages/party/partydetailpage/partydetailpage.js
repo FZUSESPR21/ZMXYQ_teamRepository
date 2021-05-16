@@ -156,7 +156,7 @@ Page({
   getPartyDetail: function (e) {
     let _this = this;
     console.log(1);
-    wx.request({
+    request({
       url: 'http://ccreater.top:61112/api/party/partymes',
       method: 'GET',
       data: {
@@ -259,7 +259,7 @@ Page({
           url: app.globalData.baseUrl+'/api/party/delete',
           method: "POST",
           data: {
-            partyId: 101
+            partyId: 107
           },
           success: function (res) {
             console.log(res)
