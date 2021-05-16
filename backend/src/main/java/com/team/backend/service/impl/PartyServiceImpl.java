@@ -217,8 +217,8 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
     String imageArrayStr = party.getImageUrls();
     List<String> imageUrlList = new LinkedList<>();
     if (imageArrayStr == null) {
-      String[] imageurlsArray = new String[0];
-      Collections.emptyList();
+      String[] imageurlsArray = new String[0];//返回空数组
+      Collections.emptyList();//返回空集合
     } else {
       String[] imageurlsArray = imageArrayStr.split("\\;");
       for (String imageurl : imageurlsArray) {
