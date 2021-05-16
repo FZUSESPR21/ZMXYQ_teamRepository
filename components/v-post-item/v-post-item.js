@@ -1,4 +1,7 @@
 // components/v-post-item/v-post-component.js
+const app = getApp();
+import {request} from "../../utils/request"
+const timeago = require("timeago.js");
 Component({
   /**
    * 组件的属性列表
@@ -29,5 +32,108 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    //点赞处理函数
+    handleLike: function(event){
+      let id = event.target.dataset.id;
+      let that = this;
+      let baseUrl = app.globalData.baseUrl;
+      let jsonStr = '{"postId":' + id + '}';
+      let jsonValue = JSON.parse(jsonStr);
+      console.log(jsonValue);
+      request({
+        url:  baseUrl + '/api/alumnicycle/posts/like',
+        method:'POST',
+        Headers: {
+          'content-type': 'application/json'
+        },
+        data: jsonValue,
+        success:function(res)
+        {
+          console.log(res);
+          let newLikeNum = that.data.likeNum + 1; 
+          console.log(newLikeNum);
+          that.setData({
+            isLike: 1,
+            likeNum: newLikeNum
+          });   //设置为喜欢
+        },
+        fail:function(res)
+        {
+          console.log(res);
+        }
+      });
+    },
+    //赞赏处理函数
+    handleReward: function(event){
+      console.log(event.target.dataset.id);
+      console.log(event.target.dataset.id);
+      let id = event.target.dataset.id;
+      let that = this;
+      let baseUrl = app.globalData.baseUrl;
+      let jsonStr = '{"postId":' + id + ', "amount": 2' + '}';
+      let jsonValue = JSON.parse(jsonStr);
+      console.log(jsonValue);
+      request({
+        url:  baseUrl + '/api/alumnicycle/posts/reward',
+        method:'POST',
+        Headers: {
+          'content-type': 'application/json'
+        },
+        data: jsonValue,
+        success:function(res)
+        {
+          console.log(res);
+          if(res.data.code != 0){
+            wx.showToast({
+              title: '人品值不足！',
+              icon: 'error',
+              duration: 1000
+            })
+          }
+          else{
+            let newRewardNum = that.data.rewardNum + 2; 
+            that.setData({
+              isReward: 0,
+              rewardNum: newRewardNum
+            });   //设置为喜欢
+          }
+        },
+        fail:function(res)
+        {
+          console.log(res);
+        }
+      });
+    },
+    //收藏处理函数
+    handleMark(event){
+      console.log(event.target.dataset.id);
+      let id = event.target.dataset.id;
+      let that = this;
+      let baseUrl = app.globalData.baseUrl;
+      let jsonStr = '{"postId":' + id + '}';
+      let jsonValue = JSON.parse(jsonStr);
+      console.log(jsonValue);
+      request({
+        url:  baseUrl + '/api/alumnicycle/posts/collect',
+        method:'POST',
+        Headers: {
+          'content-type': 'application/json'
+        },
+        data: jsonValue,
+        success:function(res)
+        {
+          console.log(res);
+          let newEyeOnNum = that.data.eyeOnNum + 1; 
+          that.setData({
+            isEyeOn: 1,
+            eyeOnNum: newEyeOnNum
+          });   //设置为喜欢
+        },
+        fail:function(res)
+        {
+          console.log(res);
+        }
+      });
+    }
   }
 })

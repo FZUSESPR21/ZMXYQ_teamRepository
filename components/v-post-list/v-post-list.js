@@ -316,55 +316,6 @@ Component({
       console.log(this.data.commentInputText)
     },
 
-    postMark:function(e)
-    {
-     this.setData({
-       hasMark:!this.data.hasMark
-     })
-    },
-
-    postLike:function(e)
-    {
-      wx.request({
-        url: 'http://xx.com/api/alumnicycle/posts/like',
-        method:"POST",
-        data:{
-          postId:this.data.postId
-        },
-        success:function(e)
-        {
-          Toast('点赞成功');
-        }
-      })
-    },
-
-    postCollect:function(e)
-    {
-      wx.request({
-        url: 'http://xx.com/api/alumnicycle/posts/collect',
-        method:"POST",
-        data:{
-          postId:this.data.postId
-        },
-        success:function(e)
-        {
-          Notify({ type: 'success', message: '收藏成功' });
-        }
-      })
-    },
-
-    postReward:function(e)
-    {
-      wx.request({
-        url: 'http://xx.com/api/alumnicycle/posts/reward',
-        method:"POST",
-        data:{
-          postId:this.data.postId,
-          amount:0
-        }
-      })
-    },
-
     getRewardBox:function(e)
     {
       this.setData({

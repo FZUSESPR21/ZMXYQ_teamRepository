@@ -39,9 +39,16 @@ post-item{
     height: 25rpx;
     margin-right:2px;
   }
+.bar{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
   .iconIntro{
-    font-size: 13px;  
-    margin-right: 120rpx;
+    font-size: 13px; 
+    display: inline; 
+    max-width: 120rpx;  
   }
   .v-post-list-img{
     width: 160rpx;

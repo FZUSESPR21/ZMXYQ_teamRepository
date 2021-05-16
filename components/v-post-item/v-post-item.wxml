@@ -23,20 +23,23 @@
                 <!-- goto_postdetail -->
                 <view class="answer-body">
                     <view class="answer-actions" bindtap="bindItemTap">
-                        <view>
-                            <image wx:if="{{isEyeOn == 0}}" class="mark" src="../../static/icons/mark.png" bindtap="postMark"></image>
-                            <image wx:if="{{isEyeOn != 0}}" class="mark" src="../../static/icons/mark-active.png" bindtap="postMark"></image>
-                            <a class="iconIntro">{{eyeOnNum}}</a>
+                        <view class="bar">
+                            <image wx:if="{{isEyeOn == 0}}" class="mark" src="../../static/icons/mark.png" bindtap="handleMark" data-id="{{postId}}"></image>
+                            <image wx:if="{{isEyeOn != 0}}" class="mark" src="../../static/icons/mark-active.png"></image>
+                            <!-- <a class="iconIntro">{{eyeOnNum}}</a> -->
+                            <input class="iconIntro" model:value="{{eyeOnNum}}" disabled="{{true}}" />
                         </view>
-                        <view>
-                            <image wx:if="{{isReward == 0}}" class="reward" src="../../static/icons/reward.png" bindtap="postReward"></image>
-                            <image wx:if="{{isReward != 0}}" class="reward" src="../../static/icons/reward-active.png" bindtap="postMark"></image>
-                            <a class="iconIntro">{{rewardNum}}</a>
+                        <view class="bar">
+                            <image wx:if="{{isReward == 0}}" class="reward" src="../../static/icons/reward.png" bindtap="handleReward" data-id="{{postId}}"></image>
+                            <image wx:if="{{isReward != 0}}" class="reward" src="../../static/icons/reward-active.png"></image>
+                            <!-- <a class="iconIntro">{{rewardNum}}</a> -->
+                            <input class="iconIntro" model:value="{{rewardNum}}" disabled="{{true}}"/>
                         </view>
-                        <view>
-                            <image wx:if="{{isLike == 0}}" class="agree" src="../../static/icons/agree.png" bindtap="postLike"></image>
-                            <image wx:if="{{isLike != 0}}" class="agree" src="../../static/icons/agree-active.png" bindtap="postMark"></image>
-                            <a class="iconIntro">{{likeNum}}</a>
+                        <view class="bar">
+                            <image wx:if="{{isLike == 0}}" class="agree" src="../../static/icons/agree.png" bindtap="handleLike" data-id="{{postId}}"></image>
+                            <image wx:if="{{isLike != 0}}" class="agree" src="../../static/icons/agree-active.png"></image>
+                            <!-- <a class="iconIntro">{{likeNum}}</a> -->
+                            <input class="iconIntro" model:value="{{likeNum}}" disabled="{{true}}"/>
                         </view>              
                     </view>    
                 </view>
