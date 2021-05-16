@@ -223,7 +223,13 @@ Component({
             console.log(res);
           }
         });
-    }},
+    },
+    refresh: function(){
+      this.methods.getPostsData(1);
+  },
+  },
+
+    
 
   // method: {
     bindPickerChange: function(e) {

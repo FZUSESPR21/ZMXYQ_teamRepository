@@ -1,11 +1,5 @@
-<!--pages/post/top_ten_posts/top_ten_posts.wxml-->
+
 <scroll-view>
-<!-- <scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" >
-    <view class="section">
-        <picker title="选择主题" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-            <van-cell icon="flag-o" is-link arrow-direction="down" is-link title= "{{multiArray1[0][multiIndex[0]]}}  {{multiArray[1][multiIndex[1]]}}" bindtap="listenerButton"/>  
-        </picker>
-    </view> -->
             <v-post-item wx:for="{{postsData}}"  wx:key="key"
                 eyeOnNum= "{{item.eyeOnNum}}"
                 gmtCreate= "{{item.gmtCreate}}"

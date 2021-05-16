@@ -6,6 +6,7 @@
   font-size: 14rpx;
   background: #F0F4F3;
   color: #000;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -13,6 +14,9 @@
   justify-content: space-between;
   /*padding: 200rpx 0;*/
   box-sizing: border-box;
+}
+.section{
+  width: 100%;
 }
 .v-post-list-title{
   padding-left: 3px;

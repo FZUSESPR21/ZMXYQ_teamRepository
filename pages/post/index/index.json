@@ -1,4 +1,6 @@
 {
+  "backgroundTextStyle": "dark", 
+  "backgroundColor": "#eeeeee",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "van-notice-bar": "@vant/weapp/notice-bar/index"

@@ -1,6 +1,5 @@
 // pages/post_list/post_list.js
 Page({
-
   /**
    * 页面的初始数据
    */
