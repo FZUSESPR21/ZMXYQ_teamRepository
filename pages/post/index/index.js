@@ -1,6 +1,5 @@
 // pages/post_list/post_list.js
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -171,5 +170,12 @@ Page({
     // let postList=this.selectComponent('#postList');
     // console.log(postList);
     // postList.getPostsData(0);
+  },
+
+  // 下拉刷新实现
+  onPullDownRefresh: function() {
+    let postList=this.selectComponent('#postList');
+    console.log("下拉刷新");
+    postList.getPostsData(1);
   }
 })

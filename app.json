@@ -53,26 +53,26 @@
       },
       {
         "pagePath": "pages/message/index/index",
-        "iconPath": "/static/icons/post.png",
-        "selectedIconPath": "/static/icons/post_active.png",
+        "iconPath": "/static/icons/message.png",
+        "selectedIconPath": "/static/icons/message_active.png",
         "text": "消息"
       },
       {
         "pagePath": "pages/post/post_publish/post_publish",
-        "iconPath": "/static/icons/post.png",
-        "selectedIconPath": "/static/icons/post_active.png",
+        "iconPath": "/static/icons/add_post.png",
+        "selectedIconPath": "/static/icons/add_post_active.png",
         "text": "发帖"
       },
       {
         "pagePath": "pages/party/index/index",
-        "iconPath": "/static/icons/post.png",
-        "selectedIconPath": "/static/icons/post_active.png",
+        "iconPath": "/static/icons/party.png",
+        "selectedIconPath": "/static/icons/party_active.png",
         "text": "组局"
       },
       {
         "pagePath": "pages/my/index/index",
-        "iconPath": "/static/icons/post.png",
-        "selectedIconPath": "/static/icons/post_active.png",
+        "iconPath": "/static/icons/smile.png",
+        "selectedIconPath": "/static/icons/smile.png",
         "text": "我的"
       }
     ]

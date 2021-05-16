@@ -1,7 +1,8 @@
 <!--pages/post_list/post_list.wxml-->
-<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" >
+<view class="container">
+<!-- <scroll-view scroll-y="true" class="container"  refresher-enabled="true" bindrefresherrefresh="refresh"> -->
     <view class="section">
-        <picker title="选择主题" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+        <picker class="picker1" title="选择主题" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
             <van-cell icon="flag-o" is-link arrow-direction="down" is-link title= "{{multiArray1[0][multiIndex[0]]}}  {{multiArray[1][multiIndex[1]]}}" bindtap="listenerButton"/>  
         </picker>
     </view>
@@ -20,7 +21,8 @@
                 rewardNum= "{{item.rewardNum}}"
             >
             </v-post-item>
-</scroll-view> 
+<!-- </scroll-view>  -->
+</view>
 
 
 

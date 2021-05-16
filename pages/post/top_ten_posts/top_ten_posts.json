@@ -1,5 +1,6 @@
 {
+  "navigationBarTitleText": "十大热帖",
   "usingComponents": {
-    "v-top-ten":"../../../components/v-top-ten/v-top-ten"
+    "v-post-item": "../../../components/v-post-item/v-post-item"
   }
 }

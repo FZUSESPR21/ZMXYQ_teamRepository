@@ -1,6 +1,19 @@
-<!--pages/post/top_ten_posts/top_ten_posts.wxml-->
-<view>
-111
-  <v-top-ten></v-top-ten>
-</view>
+
+<scroll-view>
+            <v-post-item wx:for="{{postsData}}"  wx:key="key"
+                eyeOnNum= "{{item.eyeOnNum}}"
+                gmtCreate= "{{item.gmtCreate}}"
+                imageUrls= "{{item.imageUrls}}"
+                isEyeOn= "{{item.isEyeOn}}"
+                isLike= "{{item.isLike}}"
+                likeNum= "{{item.likeNum}}"
+                message= "{{item.message}}"
+                postId= "{{item.postId}}"
+                postType= "{{item.postType}}"
+                publisherId= "{{item.publisherId}}"
+                pubulisherName= "{{item.pubulisherName}}"
+                rewardNum= "{{item.rewardNum}}"
+            >
+            </v-post-item>
+</scroll-view> 
 

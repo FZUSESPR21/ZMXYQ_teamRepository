@@ -165,7 +165,6 @@ post-item{
     display: inline-post-item;
     width: 60rpx;
     height: 60rpx;
-    margin-left: 500rpx;
   }
   .post-item .feed-item .feed-content{
     padding: 20rpx 0 0 0;
