@@ -1,6 +1,4 @@
 package com.team.backend.controller;
-
-
 import com.team.backend.service.PartyService;
 import com.team.backend.util.Response;
 import java.io.PrintWriter;
