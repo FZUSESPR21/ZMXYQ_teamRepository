@@ -1,5 +1,8 @@
 // pages/my/my_post/my_post.js
 import Dialog from "../../../miniprogram_npm/@vant/weapp/dialog/dialog";
+const app = getApp();
+const timeago = require("timeago.js");
+import {request} from "../../../utils/request"
 
 Page({
 
@@ -13,6 +16,24 @@ Page({
     ],
     currentId:0,
     postList:[],
+  },
+
+  //获取帖子列表
+  getPostList(){
+    let that = this;
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/post/list',
+      method:'GET',
+      success(res){
+        console.log(res);
+        if(res.data.code === 200){
+          that.setData({
+            postList:res.data.data.reverse()
+          })
+        }
+      }
+    })
   },
 
   //点击计时器
@@ -54,11 +75,11 @@ Page({
   deleteMyPost(ID){
     let that = this;
     let id = this.data.currentId - 0
-    console.log(id)
-    wx.request({
+    let baseUrl = app.globalData.baseUrl;
+    // console.log(id)
+    request({
+      url: baseUrl + '/api/user/post/deleted',
       method: 'POST',
-      url: 'http://localhost:8088/api/user/post/deleted',
-
       data:id,
       // header: {
       // 'content-type': 'application/x-www-form-urlencoded'
@@ -79,18 +100,6 @@ Page({
     })
         .then(() => {
           this.deleteMyPost();
-          // wx.request({
-          //   url: 'http://xx.com/api/alumnicycle/party/delete',
-          //   method:"POST",
-          //   data:{
-          //     partyId:0
-          //   },
-          //   success:function(res)
-          //   {
-          //     console.log(res);
-          //   }
-          // })
-          // // on confirm
         })
         .catch(() => {
           // on cancel
@@ -100,24 +109,6 @@ Page({
   onSelect(event){
     this.deletePostDialog();
   },
-
-  //获取帖子列表
-  getPostList(){
-    let that = this;
-    wx.request({
-      url:"http://localhost:8088/api/user/post/list",
-      success(res){
-        console.log(res);
-        if(res.data.code === 200){
-          that.setData({
-            postList:res.data.data.reverse()
-          })
-        }
-      }
-    })
-  },
-
-
 
   /**
    * 生命周期函数--监听页面加载

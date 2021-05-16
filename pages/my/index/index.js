@@ -1,11 +1,43 @@
-// pages/my/index/index.js
+import {request} from "../../../utils/request"
+const app = getApp();
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    nickname: "",
+    headSrc: "",
+    currentId: "",
+    school: "",
+    rpValue:"",
+    postCount:-1,
+    collectionCount:-1,
+    commentCount:-1,
+  },
 
+  getUserInfo(){
+    let that = this;
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/data/select',
+      success(res){
+        // console.log(res);
+        that.setData({
+          UserInfo:res.data.data.user,
+          headSrc:res.data.data.user.userIconUrl,
+          nickname:res.data.data.user.username,
+          currentId:res.data.data.user.id,
+          school:res.data.data.user.school,
+          rpValue:res.data.data.user.rpValue,
+          postCount:res.data.data.numberList.postNumber - 0,
+          collectionCount:res.data.data.numberList.collectionNumber - 0,
+          commentCount:res.data.data.numberList.postCommentNumber + res.data.data.numberList.partyCommentNumber - 0,
+        })
+        // console.log(that.data.UserInfo.username);
+      }
+    })
   },
 
   goToMyPost(){
@@ -48,21 +80,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getUserInfo();
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    console.log(测试);
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getUserInfo();
   },
 
   /**

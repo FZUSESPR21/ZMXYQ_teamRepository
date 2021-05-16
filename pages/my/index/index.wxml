@@ -1,32 +1,32 @@
 <view class="wrap">
 <view class="my-wrap">
     <view class="head">
-    <van-image class="head-image" round width="3rem" height="3rem" src="https://img.yzcdn.cn/vant/cat.jpeg"></van-image>
+    <van-image class="head-image" round width="3rem" height="3rem" src="{{headSrc}}"></van-image>
     <view class="head-z" bindtap="goToMyInfo">
-        <view class="head-name"><text>Camouflage</text></view>
-        <view class="head-school"><text>福州大学</text></view>
+        <view class="head-name"><text>{{nickname}}</text></view>
+        <view class="head-school"><text>{{school}}</text></view>
     </view>
     </view>
 
     <view class="body">
     <view class="rpz" bindtap="">
         <text>人品值</text>
-        <text class="number">619</text>
+        <text class="number">{{rpValue}}</text>
     </view>
 
     <view class="tz" bindtap="goToMyPost">
         <text>帖子</text>
-        <text class="number">1</text>
+        <text class="number">{{postCount}}</text>
     </view>
 
     <view class="sc" bindtap="goToMyCollection">
         <text>收藏</text>
-        <text class="number">0</text>
+        <text class="number">{{collectionCount}}</text>
     </view>
 
     <view class="pl" bindtap="goToMyComment">
         <text>评论</text>
-        <text class="number">200</text>
+        <text class="number">{{commentCount}}</text>
     </view>
     </view>
 </view>

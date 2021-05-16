@@ -1,4 +1,6 @@
-// pages/my/hole_detail/hole_detail.js
+import {request} from "../../../utils/request"
+const app = getApp();
+
 Page({
 
   /**
@@ -15,11 +17,11 @@ Page({
   update(){
     let that = this;
     let id = this.data.currentId - 0
+    let baseUrl = app.globalData.baseUrl;
     // console.log(id)
-    wx.request({
+    request({
+      url: baseUrl + '/api/user/treehole/update',
       method: 'POST',
-      url: `http://localhost:8088/api/user/treehole/update`,
-
       data: {
         id: that.data.currentId-0,
         message: that.data.content
@@ -37,9 +39,10 @@ Page({
   //新建树洞
   create(){
     let that = this;
-    wx.request({
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/treehole/new',
       method: 'POST',
-      url: `http://localhost:8088/api/user/treehole/new`,
 
       data:
         that.data.content,

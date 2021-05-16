@@ -1,4 +1,7 @@
 import { areaList } from '../../../static/@vant/area-data/lib/index';
+import {request} from "../../../utils/request"
+const app = getApp();
+
 Page({
 
   /**
@@ -45,17 +48,19 @@ Page({
   //获取用户资料
   getUserInfo(){
     let that = this;
-    wx.request({
-      url:"http://localhost:8088/api/user/data/select",
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/data/select',
+      method:'GET',
       success(res){
-        let bDay = res.data.data.birthday;
+        let bDay = res.data.data.user.birthday;
         // console.log(bDay.substring(0,10));
         that.setData({
-          UserInfo:res.data.data,
-          sex:res.data.data.sex-0 === 2 ? '女':'男',
-          region:[res.data.data.province,res.data.data.city],
+          UserInfo:res.data.data.user,
+          sex:res.data.data.user.sex-0 === 2 ? '女':'男',
+          region:[res.data.data.user.province,res.data.data.user.city],
           birthday:bDay.substring(0,10),
-          originCode:res.data.data.originCode-0,
+          originCode:res.data.data.user.originCode-0,
         })
         // console.log(that.data.UserInfo.username);
       }
@@ -65,19 +70,22 @@ Page({
   //修改个人信息
   updateUserInfo(){
     let that = this;
+    let baseUrl = app.globalData.baseUrl;
     // let id = this.data.currentId - 0
-    // console.log(id)
-    wx.request({
+    // console.log(that.data.birthday.substring(8,10))
+    request({
+      url: baseUrl + '/api/user/data/update',
       method: 'POST',
-      url: `http://localhost:8088/api/user/data/update`,
       data: {
         sex:that.data.sex === "女" ? "2" : "1",
+        // birthday:new Date(that.data.birthday.substring(0,4)-1,that.data.birthday.substring(5,7)-1,that.data.birthday.substring(8,10)-1),
         birthday:that.data.birthday,
         province:that.data.region[0],
         city:that.data.region[1],
         originCode:that.data.currentArea,
       },
       success(res){
+        console.log(res);
         wx.navigateBack({
           delta:1
         })

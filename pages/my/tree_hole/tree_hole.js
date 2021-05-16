@@ -1,5 +1,7 @@
 // pages/my/tree_hole/tree_hole.js
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import {request} from "../../../utils/request"
+const app = getApp();
 
 Page({
 
@@ -15,13 +17,14 @@ Page({
   deleteTreeHole:function(event) {
     let id = event.target.dataset.id;
     let that = this;
+    let baseUrl = app.globalData.baseUrl;
     // console.log(id);
     Dialog.confirm({
       message: '确定要删除树洞吗',
     })
         .then(() => {
-          wx.request({
-            url: 'http://localhost:8088/api/user/treehole/deleted',
+          request({
+            url: baseUrl + '/api/user/treehole/deleted',
             method:"POST",
             data:id,
 
@@ -66,8 +69,10 @@ Page({
   //获取树洞列表
   getTreeHoleList(){
     let that = this;
-    wx.request({
-      url:"http://localhost:8088/api/user/treehole/content",
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/treehole/content',
+      method: 'GET',
       success(res){
         // console.log(res.data.data);
         if(res.data.code === 200){

@@ -1,5 +1,8 @@
 // pages/my/my_comment/my_comment.js
 import Dialog from "../../../miniprogram_npm/@vant/weapp/dialog/dialog";
+const app = getApp();
+import {request} from "../../../utils/request"
+const timeago = require("timeago.js");
 
 Page({
 
@@ -20,8 +23,10 @@ Page({
   //获取贴文评论
   getPostComments(){
     let that = this;
-    wx.request({
-      url:"http://localhost:8088/api/user/postcomment/list",
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/postcomment/list',
+      method: 'GET',
       success(res){
         console.log(res);
         if(res.data.code === 200){
@@ -36,8 +41,10 @@ Page({
   //获取组局评论
   getPartyComments(){
     let that = this;
-    wx.request({
-      url:"http://localhost:8088/api/user/partycomment/list",
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/partycomment/list',
+      method: 'GET',
       success(res){
         console.log(res);
         if(res.data.code === 200){
@@ -96,11 +103,11 @@ Page({
   deletePostComment(ID){
     let that = this;
     let id = this.data.currentId - 0
+    let baseUrl = app.globalData.baseUrl;
     // console.log(id)
-    wx.request({
+    request({
+      url: baseUrl + '/api/user/postcomment/deleted',
       method: 'POST',
-      url: 'http://localhost:8088/api/user/postcomment/deleted',
-
       data:id,
       // header: {
       // 'content-type': 'application/x-www-form-urlencoded'
@@ -117,11 +124,11 @@ Page({
   deletePartyComment(ID){
     let that = this;
     let id = this.data.currentId - 0
+    let baseUrl = app.globalData.baseUrl;
     // console.log(id)
-    wx.request({
+    request({
+      url: baseUrl + '/api/user/partycomment/deleted',
       method: 'POST',
-      url: 'http://localhost:8088/api/user/partycomment/deleted',
-
       data:id,
       // header: {
       // 'content-type': 'application/x-www-form-urlencoded'
