@@ -7,6 +7,8 @@
     "van-datetime-picker": "@vant/weapp/datetime-picker/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-area": "@vant/weapp/area/index",
-    "van-button": "@vant/weapp/button/index"
+    "van-button": "@vant/weapp/button/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index"
   }
 }

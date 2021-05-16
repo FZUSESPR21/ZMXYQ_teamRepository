@@ -2,5 +2,7 @@
   "navigationBarBackgroundColor": "#f2774d",
   "navigationBarTitleText": "拉黑列表",
   "navigationBarTextStyle": "white",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-image": "@vant/weapp/image/index"
+  }
 }

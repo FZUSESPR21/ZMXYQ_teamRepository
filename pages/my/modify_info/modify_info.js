@@ -9,6 +9,7 @@ Page({
     maxDate: new Date().getTime(),
     minDate: new Date(1950,1,1).getTime(),
     currentArea:350100,
+    originCode:1,
     show1: false,
     show2: false,
     show3: false,
@@ -48,12 +49,13 @@ Page({
       url:"http://localhost:8088/api/user/data/select",
       success(res){
         let bDay = res.data.data.birthday;
-        console.log(bDay.substring(0,10));
+        // console.log(bDay.substring(0,10));
         that.setData({
           UserInfo:res.data.data,
           sex:res.data.data.sex-0 === 2 ? '女':'男',
           region:[res.data.data.province,res.data.data.city],
           birthday:bDay.substring(0,10),
+          originCode:res.data.data.originCode-0,
         })
         // console.log(that.data.UserInfo.username);
       }
@@ -73,6 +75,7 @@ Page({
         birthday:that.data.birthday,
         province:that.data.region[0],
         city:that.data.region[1],
+        originCode:that.data.currentArea,
       },
       success(res){
         wx.navigateBack({
@@ -84,13 +87,13 @@ Page({
 
   //时间转换
   timeFormat(date, fmt) {
-    var o = {
+    let o = {
       "M+": date.getMonth() + 1,         //月份 
       "d+": date.getDate(),          //日
     };
     if (/(y+)/.test(fmt))
       fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
+    for (let k in o)
       if (new RegExp("(" + k + ")").test(fmt))
         fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
@@ -99,7 +102,8 @@ Page({
 
 
   showBirthday() {
-    this.setData({ show1: true });
+    this.setData(
+        { show1: true });
   },
 
   showSex() {
@@ -132,15 +136,18 @@ Page({
   },
 
   onClose2() {
-    this.setData({ show2: false });
+    this.setData({
+      show2: false });
   },
 
   onCancel3() {
-    this.setData({ show3: false });
+    this.setData({
+      show3: false });
   },
 
   onClose3() {
-    this.setData({ show3: false });
+    this.setData({
+      show3: false });
   },
 
   onSelect2(res){
@@ -180,7 +187,7 @@ Page({
 
     this.setData({
       currentDate: new Date(that.data.birthday.substring(0,10)).getTime(),
-      currentArea: 350100,
+      currentArea: that.data.originCode,
     })
     // console.log(that.data.region)
   },

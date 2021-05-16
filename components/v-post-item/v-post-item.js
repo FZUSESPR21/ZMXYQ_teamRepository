@@ -83,7 +83,7 @@ Component({
         success:function(res)
         {
           console.log(res);
-          if(res.data.code != 0){
+          if(res.data.code != 200){
             wx.showToast({
               title: '人品值不足！',
               icon: 'error',
@@ -135,6 +135,53 @@ Component({
         }
       });
     },
+
+    //跳转至详情界面函数
+    goToDetail: function(event){
+      let id = event.currentTarget.dataset.id;
+      console.log(event);
+      console.log(id);
+      wx.navigateTo({
+        url: '../post_detail/post_detail?postId=' + id,
+      })
+    },
+
+    //举报处理函数
+    handleReport: function(event){
+      let id = event.currentTarget.dataset.id;
+      console.log(event);
+      console.log("举报" + id);
+      let that = this;
+      let baseUrl = app.globalData.baseUrl;
+      let jsonStr = '{"postId":' + id + '}';
+      let jsonValue = JSON.parse(jsonStr);
+      console.log(jsonValue);
+      request({
+        url:  baseUrl + '/api/alumnicycle/posts/tipoff',
+        method:'POST',
+        Headers: {
+          'content-type': 'application/json'
+        },
+        data: jsonValue,
+        success:function(res)
+        {
+          console.log(res);
+          if(res.data.code == 200){
+            wx.showToast({
+              title: '举报成功!',
+              icon: 'success',
+              duration: 1000
+            })
+          }
+        },
+        fail:function(res)
+        {
+          console.log(res);
+        }
+      });
+
+    },
+
     onTap: function (e) {
       // 获取按钮元素的坐标信息
       this.popover = this.selectComponent('#popover');

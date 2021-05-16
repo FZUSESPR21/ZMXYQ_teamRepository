@@ -6,11 +6,11 @@
                 <v-name-card></v-name-card>
                 <image class="morebutton" mode="aspectFit" src="../../static/icons/moreInfo.png" bindtap="onTap" id="{{'morebutton'}}{{idx}}" data-idName="{{'morebutton'}}{{idx}}"></image>
                 <v-popover id='popover'>
-                <v-popover-item bindtap='editParty' hasline>举报</v-popover-item>
-                    </v-popover>
+                    <v-popover-item bindtap="handleReport" data-id="{{postId}}" hasline>举报</v-popover-item>
+                </v-popover>
             </view>
             <view class="feed-content">
-                <view class="question" qid="1" bindtap="goto_postdetail">
+                <view class="question"  bindtap="goToDetail" data-id="{{postId}}">
                     <a class="question-link">
                         <text class = "v-post-list-title" decode="{{true}}">{{postType}}&emsp;&emsp;{{gmtCreate}}\n</text>
                         <text class = "message"> {{message}}\n</text>
@@ -21,7 +21,7 @@
         
                 <!-- goto_postdetail -->
                 <view class="answer-body">
-                    <view class="answer-actions" bindtap="bindItemTap">
+                    <view class="answer-actions">
                         <view class="bar">
                             <image wx:if="{{isEyeOn == 0}}" class="mark" src="../../static/icons/mark.png" bindtap="handleMark" data-id="{{postId}}"></image>
                             <image wx:if="{{isEyeOn != 0}}" class="mark" src="../../static/icons/mark-active.png"></image>
