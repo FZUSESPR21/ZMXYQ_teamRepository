@@ -17,7 +17,8 @@ const request = function (obj) {
     }
     wx.request({
         url: obj.url,
-        data: JSON.stringify(obj.data),
+        // data: JSON.stringify(obj.data),
+        data: obj.data,
         method: obj.method,
         header: obj.header,
         success: res => {

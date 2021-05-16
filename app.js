@@ -7,37 +7,12 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        let that = this;
-         console.log(res.code);
-         console.log("登录" + this.globalData.baseUrl);
-         wx.request({
-           url:  that.globalData.baseUrl + '/api/user/login',
-           method: 'POST',
-           data:
-             res.code,
-           success:function(respond)
-           {
-             that.globalData.userInfo=res.data;
-             console.log("成功了" + res);
-             console.log(respond);
-           },
-           fail:function(respond)
-           {
-            //  this.globalData.userInfo=res.data;
-            console.log(respond);
-             console.log("失败");
-           }
-         })
-      }
-    })
+    this.userLogin();
   },
   globalData: {
     userInfo: null,
     baseUrl:"http://ccreater.top:61112",
+    // baseUrl:"http://192.168.50.167:8088"
   },
   getImageType: function (src) {
     let imageType = "";
@@ -122,4 +97,37 @@ App({
         }
       )
   },
+  userLogin:function (e) {
+    let that=this;
+    let promise=new Promise(function (resolve,reject) {
+      wx.login({
+        success: res => {
+          // 发送 res.code 到后台换取 openId, sessionKey, unionId
+           console.log(res.code);
+           console.log("登录" + that.globalData.baseUrl);
+           request({
+             url:  that.globalData.baseUrl + '/api/user/login',
+             method: 'POST',
+             data:
+               res.code,
+             success:function(respond)
+             {
+               that.globalData.userInfo=res.data;
+               console.log("登录成功");
+               console.log(respond);
+               resolve(respond);
+             },
+             fail:function(respond)
+             {
+              //  this.globalData.userInfo=res.data;
+              console.log("登录失败");
+              console.log(respond);
+               reject(respond);
+             }
+           })
+        }
+      })
+    })
+    return promise;    
+  }
 })

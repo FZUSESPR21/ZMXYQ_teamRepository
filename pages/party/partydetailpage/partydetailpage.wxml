@@ -18,7 +18,7 @@
   </view>
     <v-name-card class="user-message"></v-name-card>
     <view class="partydetailcontent">
-      {{description.content}}
+      {{partyDetailContent}}
     </view>
     <view class="party-detail-operation">
       <view class="joinbutton" bindtap="joinParty">{{buttonContent}}</view>
@@ -27,8 +27,9 @@
   </view>
 <view class="partymemberview">
   <text class="party-detail-title2">局内成员</text>
+  <button class="party-moveoff-button" wx:if="{{partyOwner}}" bindtap="showMoveOff">{{moveOffButtonText}}</button>
   <view class="partymemberlist">
-    <view class="partymemberlistitem" wx:for="{{partyMemberList}}" wx:for-item='item' wx:for-index='index'>
+    <view class="partymemberlistitem" wx:for="{{partyMemberList}}" wx:for-item='item' wx:for-index='index' wx:key="key">
       <!-- {{item.userName}} -->
       <van-image
   round
@@ -40,7 +41,7 @@
 <view class="partyMemberListitemlabel">
   局长
 </view>
-<view class="delete-button" wx:if="{{item.inTheParty}}"><image src="../../../static/icons/delete.png" class="delete-button-icon" bindtap="moveOffMember" data-index="{{index}}"></image></view>
+<view class="delete-button" wx:if="{{item.isPartyOwner}}" ><image src="../../../static/icons/delete.png" class="delete-button-icon" bindtap="moveOffMember" data-index="{{index}}"></image></view>
     </view>
   </view>
   </view>

@@ -1,14 +1,17 @@
 {
   "pages": [
+    "pages/post/index/index",
+    "pages/party/index/index",
     "pages/name_card/name_card",
     "pages/party/partydetailpage/partydetailpage",
     "pages/party/create_party/createparty",
-    "pages/post/index/index",
+    "pages/post/post_publish/post_publish",
     "pages/message/index/index",
     "pages/add_post/index/index",
-    "pages/party/index/index",
-    "pages/my/index/index"
-    
+    "pages/my/index/index",
+    "pages/party/my_party/my_party",
+    "pages/party/search_party/search_party",
+    "pages/post/top_ten_posts/top_ten_posts"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -26,13 +29,19 @@
     "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
     "van-dropdown-item": "@vant/weapp/dropdown-item/index",
     "van-cell": "@vant/weapp/cell/index",
-  "van-cell-group": "@vant/weapp/cell-group/index",
-  "van-switch": "@vant/weapp/switch/index",
-  "van-uploader": "@vant/weapp/uploader/index",
-  "van-notify": "@vant/weapp/notify/index",
-  "v-comment":"/components/v-comment/v-comment",
-  "van-popup": "@vant/weapp/popup/index",
-  "v-name-card":"/components/v-name-card/v-name-card"
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-switch": "@vant/weapp/switch/index",
+    "van-uploader": "@vant/weapp/uploader/index",
+    "van-notify": "@vant/weapp/notify/index",
+    "v-comment":"/components/v-comment/v-comment",
+    "van-popup": "@vant/weapp/popup/index",
+    "v-name-card":"/components/v-name-card/v-name-card",
+    "v-popover": "/components/v-popover/v-popover",
+    "v-popover-item": "/components/v-popover/v-popover-item",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "v-post-list":"/components/v-post-list/v-post-list",
+    "van-toast": "@vant/weapp/toast/index",
+    "v-top-ten":"/components/v-top-ten/v-top-ten"
   },
   "tabBar": {
     "list": [
@@ -49,7 +58,7 @@
         "text": "消息"
       },
       {
-        "pagePath": "pages/add_post/index/index",
+        "pagePath": "pages/post/post_publish/post_publish",
         "iconPath": "/static/icons/post.png",
         "selectedIconPath": "/static/icons/post_active.png",
         "text": "发帖"
