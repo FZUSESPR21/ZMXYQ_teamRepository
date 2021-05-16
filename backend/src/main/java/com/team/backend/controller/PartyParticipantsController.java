@@ -3,14 +3,10 @@ package com.team.backend.controller;
 
 import com.team.backend.exception.ExceptionInfo;
 import com.team.backend.model.Result;
-import com.team.backend.model.User;
 import com.team.backend.service.impl.PartyParticipantsServiceImpl;
-import com.team.backend.service.impl.PartyServiceImpl;
 import javax.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -25,9 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class PartyParticipantsController {
 
   @Resource
-  private PartyServiceImpl partyService;
-
-  @Resource
   private PartyParticipantsServiceImpl partyParticipantsService;
 
   /**
@@ -36,14 +29,28 @@ public class PartyParticipantsController {
    * 接口：/api/party-participants/moveoff
    * <p>
    *
-   * @param partyId
+   * @param partyId,userId
    * @return the result
    */
 
   @PostMapping("/moveoff")
-  public Result<Integer> exitParty(Long partyId, Long userId) {
-
-    return partyParticipantsService.moveOffParticipant(partyId, userId);
+  public Result<Integer> moveOffParticipant(@RequestParam Number partyId,
+      @RequestParam Number userId) {
+    if (partyId == null) {
+      Result<Integer> result = new Result<>();
+      result.setCode(ExceptionInfo.PARTY_ID_NULL.getCode());
+      result.setMessage(ExceptionInfo.PARTY_ID_NULL.getMessage());
+      return result;
+    }
+    if (userId == null) {
+      Result<Integer> result = new Result<>();
+      result.setCode(ExceptionInfo.USER_ID_NULL.getCode());
+      result.setMessage(ExceptionInfo.USER_ID_NULL.getMessage());
+      return result;
+    }
+    Long partyIdLong = partyId.longValue();
+    Long userIdLong = userId.longValue();
+    return partyParticipantsService.moveOffParticipant(partyIdLong, userIdLong);
 
   }
 

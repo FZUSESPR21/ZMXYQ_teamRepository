@@ -211,7 +211,6 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
       result.setData(null);
       return result;
     }
-
     map.put("partyID", party.getId());
     map.put("context", party.getDescription());
     String imageArrayStr = party.getImageUrls();
