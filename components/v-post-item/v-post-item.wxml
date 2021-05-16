@@ -6,8 +6,7 @@
                 <v-name-card></v-name-card>
                 <image class="morebutton" mode="aspectFit" src="../../static/icons/moreInfo.png" bindtap="onTap" id="{{'morebutton'}}{{idx}}" data-idName="{{'morebutton'}}{{idx}}"></image>
                 <v-popover id='popover'>
-                <v-popover-item bindtap='editParty' hasline>修改</v-popover-item>
-                    <v-popover-item bindtap='disbandParty' hasline>解散</v-popover-item>
+                <v-popover-item bindtap='editParty' hasline>举报</v-popover-item>
                     </v-popover>
             </view>
             <view class="feed-content">
