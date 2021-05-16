@@ -143,7 +143,11 @@ Component({
                   if(midPostsData[i].imageUrls != "" && midPostsData[i].imageUrls != null){
                     midPostsData[i].imageUrls = midPostsData[i].imageUrls.split(';');
                     if(midPostsData[i].imageUrls.length == 0)
-                    midPostsData[i].imageUrls.push(midImageUrls);
+                      midPostsData[i].imageUrls.push(midImageUrls);
+                  }
+                  //图片最终url
+                  for(let imageIndex = 0; imageIndex < midPostsData[i].imageUrls.length; imageIndex++){
+                    midPostsData[i].imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData[i].imageUrls[imageIndex];
                   }
                 }
                 for(var m in midPostsData)
@@ -175,7 +179,7 @@ Component({
     getPostsData(pageNum){
       let that = this;
       let baseUrl = app.globalData.baseUrl;
-      let jsonStr = '{"pageSize": %s,"pageNum": %s}'.format(that.data.pageSize, pageNum);
+      // let jsonStr = '{"pageSize": %s,"pageNum": %s}'.format(that.data.pageSize, pageNum);
       let jsonValue = JSON.parse(jsonStr);
       console.log(jsonValue);
       request({
