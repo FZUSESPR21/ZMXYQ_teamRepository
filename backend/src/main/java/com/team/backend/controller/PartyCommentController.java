@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -91,9 +92,15 @@ public class PartyCommentController {
    * @return the result
    */
   @PostMapping("/commentlsit")
-  public Result<List<Map<String, Object>>> getCommentList(Long partyId) {
-
-    return partyCommentService.PartyCommentList(partyId);
+  public Result<List<Map<String, Object>>> getCommentList(@RequestParam Number partyId) {
+    if (partyId == null) {
+      Result<List<Map<String, Object>>> result = new Result<>();
+      result.setCode(ExceptionInfo.PARTY_ID_NULL.getCode());
+      result.setMessage(ExceptionInfo.PARTY_ID_NULL.getMessage());
+      return result;
+    }
+    Long partyIdLong = partyId.longValue();
+    return partyCommentService.PartyCommentList(partyIdLong);
   }
 
 

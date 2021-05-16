@@ -50,7 +50,6 @@ public class PartyParticipantsServiceImpl extends
       result.setData(0);
       return result;
     }
-
     QueryWrapper<PartyParticipants> wrapper = new QueryWrapper<>();
     wrapper.eq("party_id", partyid)
         .eq("participant_id", userid)
