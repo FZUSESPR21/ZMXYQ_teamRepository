@@ -7,7 +7,7 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
-    this.userLogin();
+   
   },
   globalData: {
     userInfo: null,
@@ -112,7 +112,7 @@ App({
                res.code,
              success:function(respond)
              {
-               that.globalData.userInfo=res.data;
+               that.globalData.userInfo=respond.data;
                console.log("登录成功");
                console.log(respond);
                resolve(respond);

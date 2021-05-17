@@ -1,5 +1,6 @@
 {
   "pages": [
+    
     "pages/post/index/index",
     "pages/party/index/index",
     "pages/name_card/name_card",
