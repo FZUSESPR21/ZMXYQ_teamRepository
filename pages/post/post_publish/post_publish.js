@@ -258,11 +258,12 @@ Page({
                 message: '发布成功',
               }).then(() => {
                 // on close
+                wx.switchTab({
+                  url: '../index/index',
+  
+                })
               });
-              wx.navigateTo({
-                url: '../index/index',
-
-              })
+             
             }
           })
         }).catch(

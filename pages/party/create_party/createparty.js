@@ -10,6 +10,7 @@ Page({
    */
   data: {
     userId:123456,
+    partyId:0,
     option1: [{
         text: '主题1',
         value: 0
@@ -52,9 +53,12 @@ Page({
     this.setData({
       partyDetailContent: options.partyDetailContent,
       memberNum: options.partyMemberCnt,
-      buttonOperation: options.operation
+      buttonOperation: options.operation,
+      partyId:parseInt(options.partyID)
     })
-    if(this.data.buttonOperation=="修改组局")
+  },
+  onReady:function(e){
+    if(this.data.buttonOperation.trim()=="修改拼局".trim())
     {
       this.setData({
         buttonOperationValue:2
@@ -190,7 +194,7 @@ Page({
             console.log(reason)
           }
         )
-       
+       console.log(_this.data.buttonOperationValue);
         if(_this.data.buttonOperationValue==1)
         {
           let createData={
@@ -211,6 +215,9 @@ Page({
               message: '发布成功',
             }).then(() => {
               // on close
+              wx.switchTab({
+                url: '../index/index',
+              })
             });
           },
           fail:function(res)
@@ -228,22 +235,22 @@ Page({
 
   },
   editParty:function (e) {
-    
-    wx.request({
-      url: 'http://ccreater.top:61112/api/party/update',
+    let editData={
+      partyId:this.data.partyId,
+      description:this.data.partyDetailContent,
+      imageUrls:this.data.imgUrls,
+      peopleCnt:this.data.memNum,
+      partyTypeID:0
+    }
+    request({
+      url: app.globalData.baseUrl+'/api/party/update',
       method:"POST",
-      data:{
-        userId:this.data,
-        description:"",
-        imageUrls:[],
-        peopleCnt:0,
-        partyTypeID:0
-      },
+      data:editData,
       success(res)
       {
         console.log(res);
         Dialog.alert({
-          message: '发布成功',
+          message: '修改拼局成功',
         }).then(() => {
           // on close
         });

@@ -20,6 +20,9 @@
     <view class="partydetailcontent">
       {{partyDetailContent}}
     </view>
+    <view class="party-detail-img-view">
+      <image class="party-detail-img" src="{{item}}" wx:for="{{partyDetailImageUrls}}" wx:for-item='item' wx:for-index='index' wx:key="key"></image>
+    </view>
     <view class="party-detail-operation">
       <view class="joinbutton" bindtap="joinParty">{{buttonContent}}</view>
       <van-notify id="van-notify" />
@@ -41,17 +44,17 @@
 <view class="partyMemberListitemlabel">
   局长
 </view>
-<view class="delete-button" wx:if="{{item.isPartyOwner}}" ><image src="../../../static/icons/delete.png" class="delete-button-icon" bindtap="moveOffMember" data-index="{{index}}"></image></view>
+<view class="delete-button" wx:if="{{!item.isPartyOwner}}" ><image src="../../../static/icons/delete.png" class="delete-button-icon" bindtap="moveOffMember" data-index="{{index}}"></image></view>
     </view>
   </view>
   </view>
   <view class="party-comment-list">
-    <text class="party-detail-title2">拼局评论</text>
+    <text class="partydetailtitle">拼局评论</text>
     <scroll-view 
     class="comment-list-scroll"
     scroll-y="true" bindscroll="onScroll" bindscrolltoupper="onTopRefresh"
     bindscrolltolower="onBottomRefresh">
-    <v-comment bind:showCommentBox="getCommentBox"></v-comment>
+    <v-comment bind:showCommentBox="getCommentBox" commentListData="{{partyCommentList}}"></v-comment>
 </scroll-view>
 </view>
 </view>

@@ -1,16 +1,16 @@
 <view class="main">
   <view class="comment-area">
-    <view class="parentComment-view" wx:for="{{parentComments}}" wx:key="key">
+    <view class="parentComment-view" wx:for="{{commentListData}}" wx:key="key">
       <view class="comment-content-view">
         <v-name-card></v-name-card>
         <view class="comment-content-main">
           <view class="comment-content-view-text" bindtap="showCommentBox">
-            11111111111111111111111111111111111111111111111111111111111111111</view>
+            {{}}</view>
           <view class="comment-content-more">
             <view wx:if="{{hasMoreComments}}" bindtap="showMoreContents" class="comment-content-more-button">
               {{moreButtonContent}}<image src="{{iconSrc}}" class="down"></image>
             </view>
-            <view wx:if="{{hasMoreComments}}" class="more-comment-view" wx:for="{{childComments}}" wx:key="key">
+            <view wx:if="{{isMoreCommentsShowed}}" class="more-comment-view" wx:for="{{childComments}}" wx:key="key">
               <v-name-card></v-name-card>
               <view class="comment-content-view-text" bindtap="showCommentBox">
             11111111111111111111111111111111111111111111111111111111111111111</view>

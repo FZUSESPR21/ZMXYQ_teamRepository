@@ -12,10 +12,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userId: 0,
-    partyID: 0,
+    userId: 123456,
+    partyID: "",
     partyDetailContent: "你们好",
-    partyDetailImageUrlS: [],
+    partyDetailImageUrls: ["https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG","https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG","https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG","https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG"],
     partyPublisherID: 0,
     partyPublisherMsg:{},
     partyCreateTime: "",
@@ -39,6 +39,7 @@ Page({
     hasjoined: false,
     buttonContent: "加入拼局",
     commentMessage: {
+     publisherName:"楼主"
     },
     commentInputText: "",
     moveOffButtonText:"移除成员"
@@ -68,7 +69,7 @@ Page({
           url: app.globalData.baseUrl +"/api/party/join",
           method: "post",
           data: {
-            partyId: 13,
+            partyId: 106,
           },
           header:{
             'content-type': 'application/x-www-form-urlencoded'
@@ -83,13 +84,6 @@ Page({
               type: 'success',
               message: '加入拼局成功'
             });
-            _this.setData({
-              partyMemberList: _this.data.partyMemberList.concat({
-                userName: "222",
-                state: true
-              }),
-              partyMemmberCntNow: _this.data.partyMemmberCntNow + 1
-            })
           },
           fail:function (e) {
             console.log(e);
@@ -110,7 +104,10 @@ Page({
         url: app.globalData.baseUrl + "/api/party/exit",
         method: "POST",
         data: {
-          partyId: 101,
+          partyId: 107,
+        },
+        header:{
+          'content-type': 'application/x-www-form-urlencoded'
         },
         success: function (res) {
           console.log(res);
@@ -123,6 +120,7 @@ Page({
             type: 'success',
             message: '退出拼局成功'
           });
+          _this.getPartyDetail();   
 
         } 
       })
@@ -160,7 +158,7 @@ Page({
       url: 'http://ccreater.top:61112/api/party/partymes',
       method: 'GET',
       data: {
-        partyId: 107
+        partyId: 106
       },
       success: function (res) {
         let data = res.data.data;
@@ -174,7 +172,7 @@ Page({
             partyMemmberCnt: data.peopleCnt,
             partyCreateTime: timeago.format(new Date(data.gmtCreate),'zh_CN'),
             partyParticipantsId: data.participantsID,
-            partyDetailImageUrlS: data.images,
+            partyDetailImageUrls: data.images,
             partyMemmberCntNow:data.nowPeopleCnt
           })
         }
@@ -189,20 +187,31 @@ Page({
   },
   // 获取评论列表函数
   getPartyCommentList: function (e) {
-    wx.request({
-      url: 'http://xx.com/api/alumnicycle/party-comment/commentlsit',
+    let _this=this;
+    console.log(typeof(_this.data.partyID))
+    request({
+      url: app.globalData.baseUrl+'/api/party-comment/commentlsit',
       method: 'POST',
       data: {
-        partyId: '1'
+        partyId: "106",
+      },
+      header:{
+        'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        this.data.partyCommentList = res.data;
+       console.log(res);
+       _this.setData({
+         partyCommentList:res.data.data
+       })
+      },
+      fail:function (res) {
+        console.log(res);
       }
     })
   },
   onReady: function () {
-    this.getPartyDetail();
-    this.getPartyCommentList();
+    this.getPartyDetail();//获取组局详情
+    this.getPartyCommentList();//获取组局评论列表
     this.popover = this.selectComponent('#popover');
   },
   // 发送评论函数
@@ -244,13 +253,14 @@ Page({
   // 编辑拼局函数
   editParty: function (e) {
     wx.navigateTo({
-      url: '../create_party/createparty?partyDetailContent=' + this.data.partyDetailContent + '&partyMemberCnt=' + this.data.partyMemmberCnt + '&operation=修改拼局',
+      url: '../create_party/createparty?partyDetailContent=' + this.data.partyDetailContent + '&partyMemberCnt=' + this.data.partyMemmberCnt + '&operation=修改拼局'+'&partyID='+this.data.partyID,
     });
     // 调用自定义组件 popover 中的 onHide 方法
     this.popover.onHide();
   },
   // 解散组局函数
   disbandParty: function (e) {
+    let _this=this;
     Dialog.confirm({
         message: '确定要解散拼局吗',
       })
@@ -259,13 +269,16 @@ Page({
           url: app.globalData.baseUrl+'/api/party/delete',
           method: "POST",
           data: {
-            partyId: 107
+            partyId: "106",
+          },
+          header:{
+            'content-type': 'application/x-www-form-urlencoded'
           },
           success: function (res) {
             console.log(res)
             if(res.data.status=200){
               Dialog.alert({
-                message: '解散拼局成功',
+                message: res.data.data.message,
               }).then(() => {
                 // on close
               });
@@ -357,22 +370,35 @@ Page({
   },
   // 将参与者移除组局函数
   moveOffMember: function (e) {
-
+    let _this=this;
     Dialog.confirm({
         message: '确定要移除该成员吗',
       })
       .then(() => {
+        console.log(100000);
+        console.log(e);
         let deleteIndex = e.currentTarget.dataset.index;
+        console.log(deleteIndex);
+        console.log(_this.data.partyMemberList[deleteIndex]);
         request({
           url:app.globalData.baseUrl+"/api/party-participants/moveoff",
           method:"POST",
           data:{
             partyId:_this.data.partyID,
-            userId:_this.data.partyMemberList[deleteIndex]
+            userId:123456
+          },
+          header:{
+            'content-type': 'application/x-www-form-urlencoded'
           },
           success:function (res) {
-            this.moveOff(deleteIndex);
+            console.log(res);
+            _this.moveOff(deleteIndex);
+          },
+          fail:function(res)
+          {
+            console.log(res)
           }
+          
         })
       })
       .catch(() => {

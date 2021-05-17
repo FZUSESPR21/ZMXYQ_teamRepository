@@ -28,7 +28,7 @@ page{
 }
 .partymemberlist{
   width: 100%; 
- 
+  margin-top:40rpx;
   display: flex; 
   box-sizing: border-box; 
   flex-direction: row;
@@ -202,8 +202,9 @@ page{
    margin-top: 10rpx;
 }
 .party-detail-title2{
-  margin-right:350rpx;
-  margin-bottom: 20rpx;
+  position: absolute;
+  top: 10%;
+  left: 5%;
   font-weight: bold;
   width: 40%;
   font-size: 36rpx;
@@ -220,4 +221,14 @@ page{
   right: 5%;
   top: 10%;
   font-size: 14px;
+}
+.party-detail-img-view
+{
+  width: 612rpx;
+  margin-top: 20rpx;
+}
+.party-detail-img{
+  height: 100px;
+  width: 100px;
+  margin-right: 20rpx;
 }
