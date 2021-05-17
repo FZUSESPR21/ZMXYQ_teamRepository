@@ -172,7 +172,7 @@ Page({
             partyDetailContent: data.context,
             partyPublisherID:data.publisherID,
             partyMemmberCnt: data.peopleCnt,
-            partyCreateTime: data.gmtCreate,
+            partyCreateTime: timeago.format(new Date(data.gmtCreate),'zh_CN'),
             partyParticipantsId: data.participantsID,
             partyDetailImageUrlS: data.images,
             partyMemmberCntNow:data.nowPeopleCnt
@@ -263,19 +263,30 @@ Page({
           },
           success: function (res) {
             console.log(res)
-            Dialog.alert({
-              message: '解散拼局成功',
-            }).then(() => {
-              // on close
-            });
-            wx.navigateTo({
-              url: '../index/index.wxml',
-              success: (result) => {
-
-              },
-              fail: () => {},
-              complete: () => {}
-            });
+            if(res.data.status=200){
+              Dialog.alert({
+                message: '解散拼局成功',
+              }).then(() => {
+                // on close
+              });
+              wx.navigateTo({
+                url: '../index/index.wxml',
+                success: (result) => {
+  
+                },
+                fail: () => {},
+                complete: () => {}
+              });
+            }
+            else
+            {
+              Dialog.alert({
+                message: '解散拼局失败',
+              }).then(() => {
+                // on close
+              });
+            }
+            
           }
         })
         // on confirm

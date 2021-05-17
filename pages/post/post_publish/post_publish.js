@@ -254,9 +254,14 @@ Page({
             {
               console.log(_this.data.imgUrls)
               console.log(res);
+              Dialog.alert({
+                message: '发布成功',
+              }).then(() => {
+                // on close
+              });
               wx.navigateTo({
                 url: '../index/index',
-                
+
               })
             }
           })
