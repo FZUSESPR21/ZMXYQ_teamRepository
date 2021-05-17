@@ -102,6 +102,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     QueryWrapper<User> wrapper = new QueryWrapper<>();
     wrapper.eq("open_id", openId);
+    wrapper.last(" limit 1");
 
     User user = userMapper.selectOne(wrapper);
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
