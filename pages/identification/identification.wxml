@@ -1,0 +1,69 @@
+<!--pages/identification/identification.wxml-->
+
+<view calss="content">
+  <view class="head">
+    <!--中间文字-->
+    <view class="head_text">身份验证</view>
+  </view>
+  <view class='line_shadow'></view>
+  <view class='line'></view>
+
+<view class="section">
+  <picker class="picker_info" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+    <view class="notice1">
+<van-notice-bar 
+  scrollable="{{ false }}"
+  color="#1989fa"
+  background="#ecf9ff"
+  left-icon="bullhorn-o"
+  text="请填写用户信息"
+/>
+</view>
+    <van-cell icon="user-o" is-link arrow-direction="down" is-link title= "{{multiArray1[0][multiIndex[0]]}}  {{multiArray[1][multiIndex[1]]}}" bindtap="listenerButton"/>
+  </picker>
+</view>
+
+<view class="section">
+    <picker mode="selector" bindchange="bindPickerChange1" value="{{index1}}" range="{{array_iden}}">
+    <van-cell icon="records"  is-link arrow-direction="down" is-link title=" {{array_iden1[index1]}}" bindtap="listenerButton"/>
+  </picker>
+</view>
+
+<view class="section">
+  <picker mode="selector" bindchange="bindPickerChange3" value="{{index3}}" range="{{array_year}}">
+    <van-cell icon="todo-list-o" is-link arrow-direction="down" is-link title="{{array_year1[index3]}}" bindtap="listenerButton"/>
+  </picker>
+</view>
+
+
+<view class="section">
+  <picker mode="selector" bindchange="bindPickerChange2" value="{{index2}}" range="{{array_grad}}">
+    <van-cell icon="gem-o" is-link arrow-direction="down" is-link title="{{array_grad1[index2]}}" bindtap="listenerButton"/>
+  </picker>
+</view>
+
+<view class="notice">
+<van-notice-bar
+  scrollable="{{ false }}"
+  color="#1989fa"
+  background="#ecf9ff"
+  left-icon="photo-o"
+  text="请上传证明学生证件"
+/>
+</view>
+
+  <!--添加内容-->
+  <view class='input'>
+            <view class="invite flex-item">
+                <van-uploader>
+                  <van-uploader file-list="{{ fileList }}" deletable="{{ true }}" bind:delete="deleteImage" />
+      </van-uploader>
+            </view>
+     <view class='line_shadow'></view>
+         <view class='line'></view>         
+    </view>
+    <view >
+      <button class="send_button"  style="position: relative; left: 0rpx; top: 2rpx">下一步</button>
+    </view>
+</view>
+
