@@ -1,4 +1,6 @@
-// pages/my/ch_nickname/ch_nickname.js
+import {request} from "../../../utils/request"
+const app = getApp();
+
 Page({
 
   /**
@@ -13,10 +15,11 @@ Page({
   updateNickname(){
     let that = this;
     let id = this.data.currentId - 0
+    let baseUrl = app.globalData.baseUrl;
     // console.log(id)
-    wx.request({
+    request({
+      url: baseUrl + '/api/user/data/update',
       method: 'POST',
-      url: `http://localhost:8088/api/user/data/update`,
       data: {
         username: that.data.nickname
       },

@@ -1,5 +1,8 @@
 {
   "navigationBarTitleText": "组局",
+  "backgroundTextStyle": "dark", 
+  "backgroundColor": "#eeeeee",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "van-icon": "@vant/weapp/icon/index",
     "van-image": "@vant/weapp/image/index",

@@ -1,4 +1,7 @@
-// pages/my/my_info/my_info.js
+const app = getApp();
+const timeago = require("timeago.js");
+import {request} from "../../../utils/request"
+
 Page({
 
   /**
@@ -16,15 +19,18 @@ Page({
   //获取用户资料
   getUserInfo(){
     let that = this;
-    wx.request({
-      url:"http://localhost:8088/api/user/data/select",
+    // console.log(getApp().globalData.userInfo)
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/data/select',
+      method:'GET',
       success(res){
-        // console.log(res);
+        console.log(res);
         that.setData({
-          UserInfo:res.data.data,
-          headSrc:res.data.data.userIconUrl,
-          nickname:res.data.data.username,
-          currentId:res.data.data.id
+          UserInfo:res.data.data.user,
+          headSrc:res.data.data.user.userIconUrl,
+          nickname:res.data.data.user.username,
+          currentId:res.data.data.user.id
         })
         // console.log(that.data.UserInfo.username);
       }

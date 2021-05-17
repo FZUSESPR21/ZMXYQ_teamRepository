@@ -170,7 +170,7 @@ Component({
             wx.showToast({
               title: '举报成功!',
               icon: 'success',
-              duration: 1000
+              duration: 2000
             })
           }
         },

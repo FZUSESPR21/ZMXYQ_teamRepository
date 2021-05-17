@@ -1,5 +1,7 @@
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
-// import { format } from '../../../miniprogram_npm/timeago.js';
+const app = getApp();
+import {request} from "../../../utils/request"
+const timeago = require("timeago.js");
 
 Page({
 
@@ -50,8 +52,10 @@ Page({
 
   getCollectionList(){
     let that = this;
-    wx.request({
-      url:"http://localhost:8088/api/user/collect/list",
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/collect/list',
+      method: 'GET',
       success(res){
         console.log(res);
         that.setData({
@@ -68,11 +72,11 @@ Page({
   deleteCollection(ID){
     let that = this;
     let id = this.data.currentId - 0
-    console.log(id)
-    wx.request({
+    let baseUrl = app.globalData.baseUrl;
+    // console.log(id)
+    request({
+      url: baseUrl + '/api/user/collect/deleted',
       method: 'POST',
-      url: 'http://localhost:8088/api/user/collect/deleted',
-
       data:id,
       // header: {
       // 'content-type': 'application/x-www-form-urlencoded'
@@ -92,18 +96,6 @@ Page({
     })
         .then(() => {
           this.deleteCollection();
-          // wx.request({
-          //   url: 'http://xx.com/api/alumnicycle/party/delete',
-          //   method:"POST",
-          //   data:{
-          //     partyId:0
-          //   },
-          //   success:function(res)
-          //   {
-          //     console.log(res);
-          //   }
-          // })
-          // // on confirm
         })
         .catch(() => {
           // on cancel

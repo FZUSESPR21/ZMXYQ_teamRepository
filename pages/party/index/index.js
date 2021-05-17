@@ -34,7 +34,8 @@ Page({
     value1: -2,
     partyList: [],
     zIndex: -1,
-    show: false
+    show: false,
+    nowType: -2
   },
 
   goToMyParty: function(){
@@ -56,6 +57,7 @@ Page({
   },
 
   onChange: function ({detail}) {
+      this.setData({nowType: detail + 0});
       this.getData(detail + 0);
    },
 
@@ -85,6 +87,7 @@ Page({
       },
       success:function(res)
       {
+        console.log(res);
        let partyList = res.data.data;
        if(partyList != null){
         for(let i = 0; i < partyList.length; i++){
@@ -120,5 +123,11 @@ Page({
    */
   onLoad: function (options) {
     this.getData(-2);
-  }
+  },
+
+    // 下拉刷新实现
+    onPullDownRefresh: function() {
+      console.log("下拉刷新");
+      this.getData(this.data.nowType);
+    }
 })

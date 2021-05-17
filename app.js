@@ -72,12 +72,9 @@ App({
                       return reject(e)
                     },
                     complete: function (complete) {
-        
                       return complete;
                     }
                   })
-               
-              
             }
           });
         })

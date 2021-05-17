@@ -1,4 +1,7 @@
 import { areaList } from '../../../static/@vant/area-data/lib/index';
+import {request} from "../../../utils/request"
+const app = getApp();
+
 Page({
 
   /**
@@ -7,9 +10,8 @@ Page({
   data: {
     currentDate: new Date().getTime(),
     maxDate: new Date().getTime(),
-    minDate: new Date(1950,1,1).getTime(),
+    minDate: new Date(1950,0,1).getTime(),
     currentArea:350100,
-    originCode:1,
     show1: false,
     show2: false,
     show3: false,
@@ -45,17 +47,20 @@ Page({
   //获取用户资料
   getUserInfo(){
     let that = this;
-    wx.request({
-      url:"http://localhost:8088/api/user/data/select",
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/data/select',
+      method:'GET',
       success(res){
-        let bDay = res.data.data.birthday;
+        let bDay = res.data.data.user.birthday;
         // console.log(bDay.substring(0,10));
         that.setData({
-          UserInfo:res.data.data,
-          sex:res.data.data.sex-0 === 2 ? '女':'男',
-          region:[res.data.data.province,res.data.data.city],
+          UserInfo:res.data.data.user,
+          sex:res.data.data.user.sex-0 === 2 ? '女':'男',
+          region:[res.data.data.user.province,res.data.data.user.city],
           birthday:bDay.substring(0,10),
-          originCode:res.data.data.originCode-0,
+          currentArea:res.data.data.user.originCode - 0,
+          currentDate:new Date(bDay.substring(0,10)).getTime(),
         })
         // console.log(that.data.UserInfo.username);
       }
@@ -65,11 +70,12 @@ Page({
   //修改个人信息
   updateUserInfo(){
     let that = this;
+    let baseUrl = app.globalData.baseUrl;
     // let id = this.data.currentId - 0
-    // console.log(id)
-    wx.request({
+    // console.log(that.data.birthday.substring(8,10))
+    request({
+      url: baseUrl + '/api/user/data/update',
       method: 'POST',
-      url: `http://localhost:8088/api/user/data/update`,
       data: {
         sex:that.data.sex === "女" ? "2" : "1",
         birthday:that.data.birthday,
@@ -78,6 +84,7 @@ Page({
         originCode:that.data.currentArea,
       },
       success(res){
+        console.log(res);
         wx.navigateBack({
           delta:1
         })
@@ -179,17 +186,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getUserInfo();
   },
 
   onReady: function () {
-    let that = this;
-
-    this.setData({
-      currentDate: new Date(that.data.birthday.substring(0,10)).getTime(),
-      currentArea: that.data.originCode,
-    })
-    // console.log(that.data.region)
+    this.getUserInfo();
   },
 
   onShow: function () {
