@@ -175,7 +175,7 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
 
     Result<List<Map<String, Object>>> result = new Result<>();
     QueryWrapper<Party> wrapper = new QueryWrapper<>();
-    wrapper.eq("publisher_id", id);
+    wrapper.eq("publisher_id", id).orderByDesc("gmt_create");
     List<Party> MyPartyList = partyMapper.selectList(wrapper);
     List<Map<String, Object>> mapList = new LinkedList<>();
     for (Party party : MyPartyList) {
@@ -211,14 +211,13 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
       result.setData(null);
       return result;
     }
-
     map.put("partyID", party.getId());
     map.put("context", party.getDescription());
     String imageArrayStr = party.getImageUrls();
     List<String> imageUrlList = new LinkedList<>();
     if (imageArrayStr == null) {
-      String[] imageurlsArray = new String[0];
-      Collections.emptyList();
+      String[] imageurlsArray = new String[0];//返回空数组
+      Collections.emptyList();//返回空集合
     } else {
       String[] imageurlsArray = imageArrayStr.split("\\;");
       for (String imageurl : imageurlsArray) {
@@ -362,7 +361,9 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
         .like("party_type_id", massage).or()
         .like("people_cnt", massage).or()
         .like("image_urls", massage).or()
-        .like("gmt_create", massage);
+        .like("gmt_create", massage)
+        .orderByDesc("gmt_create")
+    ;
     List<Party> searchPartyList = partyMapper.selectList(wrapper);
     List<Map<String, Object>> mapList = new LinkedList<>();
     for (Party party : searchPartyList) {

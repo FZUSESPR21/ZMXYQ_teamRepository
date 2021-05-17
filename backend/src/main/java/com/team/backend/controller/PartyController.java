@@ -1,23 +1,14 @@
 package com.team.backend.controller;
 
 
-import com.team.backend.service.PartyService;
-import com.team.backend.util.Response;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Map;
 import javax.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.team.backend.exception.ExceptionInfo;
-import com.team.backend.model.Party;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
 import com.team.backend.service.impl.PartyServiceImpl;
 import java.util.List;
-import java.util.Map;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -35,8 +26,6 @@ public class PartyController {
   private PartyServiceImpl partyService;
 
   User user;
-
-
 
   /**
    * 新建组局接口
@@ -56,7 +45,7 @@ public class PartyController {
     String description = (String) requestMap.get("description");
     List<String> imageUrls = (List<String>) requestMap.get("images");
     int peopleCnt = (int) requestMap.get("peopleCnt");
-    Number partyTypeNum = (Number) requestMap.get("partyTypeId");
+    Number partyTypeNum = (Number) requestMap.get("partyTypeID");
     Long partyTypeId = partyTypeNum.longValue();
     ExceptionInfo exceptionInfo = partyService
         .insertParty(userId, description, imageUrls, peopleCnt, partyTypeId);
@@ -80,7 +69,7 @@ public class PartyController {
     String description = (String) requestMap.get("description");
     List<String> imageUrls = (List<String>) requestMap.get("images");
     int peopleCnt = (int) requestMap.get("peopleCnt");
-    Number partyTypeNum = (Number) requestMap.get("partyTypeId");
+    Number partyTypeNum = (Number) requestMap.get("partyTypeID");
     Long partyTypeId = partyTypeNum.longValue();
     return partyService.updateParty(partyId, description, imageUrls, peopleCnt, partyTypeId);
   }
@@ -95,7 +84,7 @@ public class PartyController {
    */
   @GetMapping("/myparty")
   public Result<List<Map<String, Object>>> getMyparty() {
-
+    System.out.println(user.toString());
     if (user == null) {
       Result<List<Map<String, Object>>> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -117,9 +106,10 @@ public class PartyController {
    * @return the result
    */
   @GetMapping("/partymes")
-  public Result<Map<String, Object>> getPartymes(Long partyId) {
+  public Result<Map<String, Object>> getPartymes(@RequestParam Number partyId) {
 
-    return partyService.getPartymes(partyId);
+    Long partyIdLong = partyId.longValue();
+    return partyService.getPartymes(partyIdLong);
 
   }
 
@@ -164,16 +154,23 @@ public class PartyController {
    * @return the result
    */
   @PostMapping("/exit")
-  public Result<Integer> exitParty(Long partyId) {
+  public Result<Integer> exitParty(@RequestParam Number partyId) {
 
+    System.out.println(user.toString());
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
       return result;
     }
-
-    return partyService.exitParty(user.getId(), partyId);
+    if (partyId == null) {
+      Result<Integer> result = new Result<>();
+      result.setCode(ExceptionInfo.PARTY_ID_NULL.getCode());
+      result.setMessage(ExceptionInfo.PARTY_ID_NULL.getMessage());
+      return result;
+    }
+    Long partyIdLong = partyId.longValue();
+    return partyService.exitParty(user.getId(), partyIdLong);
 //    return partyService.exitParty(userId, partyId);//测试
   }
 
@@ -187,16 +184,23 @@ public class PartyController {
    * @return the result
    */
   @PostMapping("/delete")
-  public Result<Integer> deleteParty(Long partyId) {
+  public Result<Integer> deleteParty(@RequestParam Number partyId) {
 
+    System.out.println(user.toString());
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
       return result;
     }
-
-    return partyService.deleteParty(user.getId(), partyId);
+    if (partyId == null) {
+      Result<Integer> result = new Result<>();
+      result.setCode(ExceptionInfo.PARTY_ID_NULL.getCode());
+      result.setMessage(ExceptionInfo.PARTY_ID_NULL.getMessage());
+      return result;
+    }
+    Long partyIdLong = partyId.longValue();
+    return partyService.deleteParty(user.getId(), partyIdLong);
 //    return partyService.deleteParty(userId, partyId);//测试
   }
 
@@ -210,7 +214,7 @@ public class PartyController {
    * @return the result
    */
   @PostMapping("/search")
-  public Result<List<Map<String, Object>>> searchParty(String massage) {
+  public Result<List<Map<String, Object>>> searchParty(@RequestParam String massage) {
 
     return partyService.searchParty(massage);
   }
