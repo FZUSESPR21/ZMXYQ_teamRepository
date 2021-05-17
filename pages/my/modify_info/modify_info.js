@@ -10,9 +10,8 @@ Page({
   data: {
     currentDate: new Date().getTime(),
     maxDate: new Date().getTime(),
-    minDate: new Date(1950,1,1).getTime(),
+    minDate: new Date(1950,0,1).getTime(),
     currentArea:350100,
-    originCode:1,
     show1: false,
     show2: false,
     show3: false,
@@ -60,7 +59,8 @@ Page({
           sex:res.data.data.user.sex-0 === 2 ? '女':'男',
           region:[res.data.data.user.province,res.data.data.user.city],
           birthday:bDay.substring(0,10),
-          originCode:res.data.data.user.originCode-0,
+          currentArea:res.data.data.user.originCode - 0,
+          currentDate:new Date(bDay.substring(0,10)).getTime(),
         })
         // console.log(that.data.UserInfo.username);
       }
@@ -78,7 +78,6 @@ Page({
       method: 'POST',
       data: {
         sex:that.data.sex === "女" ? "2" : "1",
-        // birthday:new Date(that.data.birthday.substring(0,4)-1,that.data.birthday.substring(5,7)-1,that.data.birthday.substring(8,10)-1),
         birthday:that.data.birthday,
         province:that.data.region[0],
         city:that.data.region[1],
@@ -187,17 +186,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getUserInfo();
   },
 
   onReady: function () {
-    let that = this;
-
-    this.setData({
-      currentDate: new Date(that.data.birthday.substring(0,10)).getTime(),
-      currentArea: that.data.originCode,
-    })
-    // console.log(that.data.region)
+    this.getUserInfo();
   },
 
   onShow: function () {
