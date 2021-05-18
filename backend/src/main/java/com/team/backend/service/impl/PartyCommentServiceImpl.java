@@ -93,7 +93,45 @@ public class PartyCommentServiceImpl extends
       map.put("gmtCreate", partyComment.getGmtCreate());
       mapList.add(map);
     }
-
+//    for (PartyComment partyComment : partyComments) {
+//      // 当前评论为父评论
+//      if (partyComment.getId().equals(partyComment.getPreId())) {
+//        Map<String, Object> map = new HashMap<>();
+//
+//        map.put("commentId", partyComment.getId());
+//        map.put("commentUserId", partyComment.getIdFrom());
+//        User user = userMapper.selectById(partyComment.getIdFrom());
+//        map.put("commentUsername", user.getUsername());
+//        map.put("iconUrl", user.getUserIconUrl());
+//        List<Map<String, Object>> childrenList = new LinkedList<>();
+//        for (PartyComment comment : partyComments) {
+//          // 当前评论不为父评论，且为当前父评论的子评论
+//          if (!comment.getId().equals(partyComment.getId()) && comment.getPreId()
+//              .equals(partyComment.getId())) {
+//            Map<String, Object> childrenMap = new HashMap<>();
+//            childrenMap.put("commentId", comment.getId());
+//            childrenMap.put("commentUserId", comment.getIdFrom());
+//            User user1 = userMapper.selectById(comment.getIdFrom());
+//            childrenMap.put("commentUsername", user1.getUsername());
+//            childrenMap.put("iconUrl", user1.getUserIconUrl());
+//            childrenMap.put("message", comment.getInformation());
+//            childrenMap.put("preId", comment.getPreId());
+//            childrenMap.put("replyId", comment.getIdTo());
+//            if (!comment.getIdTo().equals(-1L)) {
+//              User user2 = userMapper.selectById(comment.getIdTo());
+//              childrenMap.put("replyName", user2.getUsername());
+//            } else {
+//              childrenMap.put("replyName", "");
+//            }
+//            childrenList.add(childrenMap);
+//          }
+//        }
+//
+//        map.put("childrenComments", childrenList);
+//        map.put("message", partyComment.getInformation());
+//        map.put("preId", partyComment.getPreId());
+//        mapList.add(map);
+//      }
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(mapList);

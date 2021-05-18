@@ -19,6 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
  * @since 2021-04-28
  */
 
+@Slf4j
 @Service
 public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements PartyService {
 
@@ -93,22 +95,17 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
     party.setDeleted(0);
     try {
       partyMapper.insert(party);
+      //把发起人加入参与者列表
+      PartyParticipants publisher = new PartyParticipants();
+      publisher.setParticipantId(party.getPublisherId());
+      publisher.setPartyId(party.getId());
+      publisher.setDeleted(0);
+      partyParticipantsMapper.insert(publisher);
       result = ExceptionInfo.OK;
     } catch (Exception e) {
       e.printStackTrace();
       result = ExceptionInfo.PARTY_INSERT_FAIL;
     }
-    return result;
-  }
-
-  // 获取组局审核状态
-  public Result<Integer> PartyIdentifyStatus(Long id) {
-
-    Result<Integer> result = new Result<>();
-    result.setCode(ExceptionInfo.valueOf("OK").getCode());
-    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    Party party = partyMapper.selectById(id);
-    result.setData(party.getStatus());
     return result;
   }
 
@@ -118,7 +115,7 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
     Result<Integer> result = new Result<>();
     Party party = partyMapper.selectById(id);
     String imageUrls = "";
-    if (party.getId() == null) {
+    if (id == null) {
       result.setCode(ExceptionInfo.valueOf("PARTY_ID_NULL").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_ID_NULL").getMessage());
       result.setData(0);
@@ -149,8 +146,7 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
       return result;
     }
     // 判断数据库是否存在这个组局
-    Party aqlParty = partyMapper.selectById(party.getId());
-    if (aqlParty == null) {
+    if (party == null || party.getDeleted() == 1) {
       result.setCode(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getMessage());
       result.setData(0);
@@ -169,6 +165,7 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
 //    partyMapper.updateById(party)
     return result;
   }
+
 
   //查看我的组局
   public Result<List<Map<String, Object>>> GetMyPartyList(Long id) {//使用个人ID查询
@@ -203,14 +200,14 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
 
     Result<Map<String, Object>> result = new Result<>();
     Party party = partyMapper.selectById(id);
-    Map<String, Object> map = new HashMap<>();
-    int nowPeopleCnt = partyMapper.selectNowPartyCnt(party.getId());
-    if (party == null) {
+    if (party == null || party.getDeleted() == 1) {
       result.setCode(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getMessage());
       result.setData(null);
       return result;
     }
+    Map<String, Object> map = new HashMap<>();
+    int nowPeopleCnt = partyMapper.selectNowPartyCnt(party.getId());
     map.put("partyID", party.getId());
     map.put("context", party.getDescription());
     String imageArrayStr = party.getImageUrls();
@@ -336,7 +333,7 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
 
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    result.setData(partyMapper.deleteById(partyId));
+    result.setData(partyMapper.updateById(dlParty));
     return result;
 
   }
