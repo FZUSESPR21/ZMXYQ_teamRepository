@@ -97,12 +97,11 @@ public class PartyCommentServiceImpl extends
 //      // 当前评论为父评论
 //      if (partyComment.getId().equals(partyComment.getPreId())) {
 //        Map<String, Object> map = new HashMap<>();
-//
 //        map.put("commentId", partyComment.getId());
 //        map.put("commentUserId", partyComment.getIdFrom());
 //        User user = userMapper.selectById(partyComment.getIdFrom());
 //        map.put("commentUsername", user.getUsername());
-//        map.put("iconUrl", user.getUserIconUrl());
+//        map.put("images", user.getUserIconUrl());
 //        List<Map<String, Object>> childrenList = new LinkedList<>();
 //        for (PartyComment comment : partyComments) {
 //          // 当前评论不为父评论，且为当前父评论的子评论
@@ -113,29 +112,25 @@ public class PartyCommentServiceImpl extends
 //            childrenMap.put("commentUserId", comment.getIdFrom());
 //            User user1 = userMapper.selectById(comment.getIdFrom());
 //            childrenMap.put("commentUsername", user1.getUsername());
-//            childrenMap.put("iconUrl", user1.getUserIconUrl());
+//            childrenMap.put("images", user1.getUserIconUrl());
 //            childrenMap.put("message", comment.getInformation());
 //            childrenMap.put("preId", comment.getPreId());
-//            childrenMap.put("replyId", comment.getIdTo());
-//            if (!comment.getIdTo().equals(-1L)) {
-//              User user2 = userMapper.selectById(comment.getIdTo());
-//              childrenMap.put("replyName", user2.getUsername());
-//            } else {
-//              childrenMap.put("replyName", "");
-//            }
+//            map.put("gmtCreate", comment.getGmtCreate());
+//            childrenMap.put("replyId", partyComment.getIdFrom());
 //            childrenList.add(childrenMap);
 //          }
 //        }
-//
 //        map.put("childrenComments", childrenList);
 //        map.put("message", partyComment.getInformation());
 //        map.put("preId", partyComment.getPreId());
+//        map.put("gmtCreate", partyComment.getGmtCreate());
 //        mapList.add(map);
 //      }
+//    }
+
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(mapList);
     return result;
   }
-
 }

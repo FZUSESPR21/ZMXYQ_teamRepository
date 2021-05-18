@@ -2,6 +2,8 @@ package com.team.backend.controller;
 
 
 import com.team.backend.exception.ExceptionInfo;
+import com.team.backend.mapper.PartyMapper;
+import com.team.backend.model.Party;
 import com.team.backend.model.PartyComment;
 import com.team.backend.model.Result;
 import com.team.backend.service.impl.PartyCommentServiceImpl;
@@ -35,6 +37,9 @@ public class PartyCommentController {
   @Resource
   private PartyCommentServiceImpl partyCommentService;
 
+  @Resource
+  private PartyMapper partyMapper;
+
   /**
    * 评论组局接口Controller
    * <p>
@@ -63,9 +68,14 @@ public class PartyCommentController {
     partyComment.setStatus(0);
     partyComment.setDeleted(0);
 
-    boolean isComSuccess = false;
-
+    Party party = partyMapper.selectById(partyId);
     com.team.backend.util.Result result;
+    if (party == null || party.getDeleted() == 1) {
+      result = com.team.backend.util.Result.error(ExceptionInfo.PARTY_NOT_EXISTED.getCode()
+          , ExceptionInfo.PARTY_NOT_EXISTED.getMessage());
+      return result;
+    }
+    boolean isComSuccess;
     try {
       isComSuccess = partyCommentService.commentParty(partyComment);
       if (isComSuccess) {
