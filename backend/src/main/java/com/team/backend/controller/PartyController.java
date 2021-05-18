@@ -93,6 +93,7 @@ public class PartyController {
     }
 
     return partyService.GetMyPartyList(user.getId());
+//    Long id=userId.longValue();
 //    return partyService.GetMyPartyList(id);//测试用
   }
 
@@ -140,8 +141,10 @@ public class PartyController {
       return result;
     }
     Long partyIdLong = partyId.longValue();
+//    Long userIdLong = userId.longValue();
+//    return partyService.joinParty(userIdLong, partyIdLong);//测试
     return partyService.joinParty(user.getId(), partyIdLong);
-//    return partyService.joinParty(userId,partyId);//测试
+
   }
 
   /**
@@ -170,8 +173,9 @@ public class PartyController {
       return result;
     }
     Long partyIdLong = partyId.longValue();
+//    Long userIdLong = userId.longValue();
+//    return partyService.exitParty(userIdLong, partyIdLong);//测试
     return partyService.exitParty(user.getId(), partyIdLong);
-//    return partyService.exitParty(userId, partyId);//测试
   }
 
   /**

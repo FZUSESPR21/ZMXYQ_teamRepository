@@ -9,6 +9,7 @@ import com.team.backend.mapper.PartyParticipantsMapper;
 import com.team.backend.mapper.PartyTypeMapper;
 import com.team.backend.mapper.UserMapper;
 import com.team.backend.model.Party;
+import com.team.backend.model.PartyComment;
 import com.team.backend.model.PartyParticipants;
 import com.team.backend.model.Result;
 import com.team.backend.model.User;
@@ -169,12 +170,18 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
 
   //查看我的组局
   public Result<List<Map<String, Object>>> GetMyPartyList(Long id) {//使用个人ID查询
-
     Result<List<Map<String, Object>>> result = new Result<>();
     QueryWrapper<Party> wrapper = new QueryWrapper<>();
-    wrapper.eq("publisher_id", id).orderByDesc("gmt_create");
+    wrapper.eq("publisher_id", id)
+        .orderByDesc("gmt_create");
     List<Party> MyPartyList = partyMapper.selectList(wrapper);
     List<Map<String, Object>> mapList = new LinkedList<>();
+    if (MyPartyList.size() == 0) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_HAVE_PARTY").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_HAVE_PARTY").getMessage());
+      result.setData(Collections.emptyList());
+      return result;
+    }
     for (Party party : MyPartyList) {
       Map<String, Object> map = new HashMap<>();
       User user = userMapper.selectById(party.getPublisherId());
@@ -244,14 +251,22 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
   }
 
 
-  //参加组局
+  //加入组局
   public Result<Integer> joinParty(Long userid, Long id) {
     Result<Integer> result = new Result<>();
     Party joinParty = partyMapper.selectById(id);
+    User joinuser = userMapper.selectById(userid);
     // 判断数据库是否存在该组局
-    if (joinParty == null) {
+    if (joinParty == null || joinParty.getDeleted() == 1) {
       result.setCode(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getMessage());
+      result.setData(0);
+      return result;
+    }
+    // 判断数据库是否存在该用户
+    if (joinuser == null || joinuser.getDeleted() == 1) {
+      result.setCode(ExceptionInfo.valueOf("USER_NOT_EXISTED").getCode());
+      result.setMessage(ExceptionInfo.valueOf("USER_NOT_EXISTED").getMessage());
       result.setData(0);
       return result;
     }
@@ -279,7 +294,7 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
     Result<Integer> result = new Result<>();
     Party exitParty = partyMapper.selectById(id);
     // 判断数据库是否存在该组局
-    if (exitParty == null) {
+    if (exitParty == null || exitParty.getDeleted() == 1) {
       result.setCode(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getMessage());
       result.setData(0);
@@ -289,6 +304,12 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
     wrapper.eq("party_id", id)
         .eq("participant_id", userId);
     PartyParticipants participants = partyParticipantsMapper.selectOne(wrapper);
+    if (participants == null || participants.getDeleted() == 1) {
+      result.setCode(ExceptionInfo.valueOf("PARTY_NOTCONTAIN_USER").getCode());
+      result.setMessage(ExceptionInfo.valueOf("PARTY_NOTCONTAIN_USER").getMessage());
+      result.setData(0);
+      return result;
+    }
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(partyParticipantsMapper.deleteById(participants.getId()));
@@ -317,7 +338,7 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
 
     // 判断数据库是否存在该组局
     Party dlParty = partyMapper.selectById(partyId);
-    if (dlParty == null) {
+    if (dlParty == null || dlParty.getDeleted() == 1) {
       result.setCode(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_NOT_EXISTED").getMessage());
       result.setData(0);
@@ -330,10 +351,36 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
       result.setData(0);
       return result;
     }
+    //删除参与者表内组局的相关参与者记录
+    QueryWrapper<PartyParticipants> PPwrapper = new QueryWrapper<>();
+    PPwrapper.eq("party_id", dlParty.getId());
+    List pPList = partyParticipantsMapper.selectList(PPwrapper);
+    if (pPList.size() != 0) {
+      partyParticipantsMapper.delete(PPwrapper);
+      if (partyParticipantsMapper.selectList(PPwrapper).size() != 0) {
+        result.setCode(ExceptionInfo.valueOf("PARTY_PARTICIPANTS_DELETE_FAIL").getCode());
+        result.setMessage(ExceptionInfo.valueOf("PARTY_PARTICIPANTS_DELETE_FAIL").getMessage());
+        result.setData(0);
+        return result;
+      }
+    }
+    //删除评论表内组局的相关评论记录
+    QueryWrapper<PartyComment> PCwrapper = new QueryWrapper<>();
+    PCwrapper.eq("party_id", dlParty.getId());
+    List pCList = partyCommentMapper.selectList(PCwrapper);
+    if (pCList.size() != 0) {
+      partyCommentMapper.delete(PCwrapper);
+      if (partyCommentMapper.selectList(PCwrapper).size() != 0) {
+        result.setCode(ExceptionInfo.valueOf("PARTY_COMMENT_DELETE_FAIL").getCode());
+        result.setMessage(ExceptionInfo.valueOf("PARTY_COMMENT_DELETE_FAIL").getMessage());
+        result.setData(0);
+        return result;
+      }
+    }
 
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
-    result.setData(partyMapper.updateById(dlParty));
+    result.setData(partyMapper.deleteById(dlParty.getId()));
     return result;
 
   }
@@ -359,6 +406,7 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
         .like("people_cnt", massage).or()
         .like("image_urls", massage).or()
         .like("gmt_create", massage)
+        .eq("deleted", 0)
         .orderByDesc("gmt_create")
     ;
     List<Party> searchPartyList = partyMapper.selectList(wrapper);

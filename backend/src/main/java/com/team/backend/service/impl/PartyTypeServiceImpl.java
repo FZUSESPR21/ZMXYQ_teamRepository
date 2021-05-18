@@ -55,7 +55,7 @@ public class PartyTypeServiceImpl extends ServiceImpl<PartyTypeMapper, PartyType
 
     Result<List<Map<String, Object>>> result = new Result<>();
     QueryWrapper<Party> wrapper = new QueryWrapper<>();
-    List<Party> partylistByTypeID = new LinkedList<>();
+    List<Party> partylistByTypeID;
     List<Map<String, Object>> mapList = new LinkedList<>();
 
     if (id == -1) {//当传入为"-1"时返回所有组局信息
@@ -73,8 +73,8 @@ public class PartyTypeServiceImpl extends ServiceImpl<PartyTypeMapper, PartyType
         map.put("partyType", party.getPartyTypeId());
         map.put("gmtCreate", party.getGmtCreate());
         mapList.add(map);
-        Collections.reverse(mapList);
       }
+      Collections.reverse(mapList);
     } else if (id == -2) {//当传入"-2"时返回有空位的组局
       partylistByTypeID = partyTypeMapper.selectByMyWrapper();
       for (Party party : partylistByTypeID) {
@@ -90,12 +90,12 @@ public class PartyTypeServiceImpl extends ServiceImpl<PartyTypeMapper, PartyType
         map.put("partyType", party.getPartyTypeId());
         map.put("gmtCreate", party.getGmtCreate());
         mapList.add(map);
-        Collections.reverse(mapList);
       }
+      Collections.reverse(mapList);
     } else if (id == 0 || id == 1 || id == 2 || id == 3 || id == 4 || id == 5 || id == 6 || id == 7
         || id == 8) {
       //0-自习 1-电影 2-聚餐 3-拼车 4-拼单 5-运动 6-游戏 7-旅行 8-其他
-      wrapper.eq("party_type_id", id).orderByDesc("gmt_create");
+      wrapper.eq("party_type_id", id).eq("deleted", 0).orderByDesc("gmt_create");
       partylistByTypeID = partyMapper.selectList(wrapper);
       for (Party party : partylistByTypeID) {
         Map<String, Object> map = new HashMap<>();
