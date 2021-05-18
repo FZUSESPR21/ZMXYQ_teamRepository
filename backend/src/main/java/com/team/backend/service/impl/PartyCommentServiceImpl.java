@@ -80,18 +80,6 @@ public class PartyCommentServiceImpl extends
       result.setData(null);
       return result;
     }
-//    for (PartyComment partyComment : partyComments) {
-//      Map<String, Object> map = new HashMap<>();
-//      map.put("commentId", partyComment.getId());
-//      map.put("commentUserId", partyComment.getIdFrom());
-//      User user = userMapper.selectById(partyComment.getIdFrom());
-//      map.put("images", user.getUserIconUrl());//返回数组
-//      map.put("commentUsername", user.getUsername());
-//      map.put("message", partyComment.getInformation());
-//      map.put("preId", partyComment.getPreId());
-//      map.put("gmtCreate", partyComment.getGmtCreate());
-//      mapList.add(map);
-//    }
     //组局评论分级展示
     for (PartyComment partyComment : partyComments) {
       // 当前评论为父评论
