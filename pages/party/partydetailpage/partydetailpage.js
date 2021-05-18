@@ -176,7 +176,7 @@ Page({
             partyMemmberCntNow:data.nowPeopleCnt
           })
         }
-        console.log(_this.data.partyMemberList);
+        console.log(_this.data.partyDetailImageUrls)
         _this.getPublisherMessage();
       },
       fail: function (res) {

@@ -21,7 +21,8 @@
       {{partyDetailContent}}
     </view>
     <view class="party-detail-img-view">
-      <image class="party-detail-img" src="{{item}}" wx:for="{{partyDetailImageUrls}}" wx:for-item='item' wx:for-index='index' wx:key="key"></image>
+      <image class="party-detail-img" src="http://ccreater.top:61112/static/{{item}}" wx:for="{{partyDetailImageUrls}}" wx:for-item='item' wx:for-index='index' wx:key="key">
+      </image>
     </view>
     <view class="party-detail-operation">
       <view class="joinbutton" bindtap="joinParty">{{buttonContent}}</view>

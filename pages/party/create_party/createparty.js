@@ -189,47 +189,47 @@ Page({
             imgUrls:imgServerUrls
           })
           console.log(_this.data.imgUrls)
+          if(_this.data.buttonOperationValue==1)
+          {
+            let createData={
+              userId:_this.data.userId,
+              description:_this.data.partyDetailContent,
+              images:_this.data.imgUrls,
+              peopleCnt:_this.data.memNum,
+              partyTypeId:0
+            }
+            request({
+            url: app.globalData.baseUrl+'/api/party/insert',
+            method:"POST",
+            data:createData,
+            success(res)
+            {
+              console.log(res);
+              Dialog.alert({
+                message: '发布成功',
+              }).then(() => {
+                // on close
+                wx.switchTab({
+                  url: '../index/index',
+                })
+              });
+            },
+            fail:function(res)
+            {
+              console.log(res);
+            }
+    
+          })
+        }
+        else{
+          _this.editParty();
+        }
         }).catch(
           reason=>{
             console.log(reason)
           }
         )
-       console.log(_this.data.buttonOperationValue);
-        if(_this.data.buttonOperationValue==1)
-        {
-          let createData={
-            userId:_this.data.userId,
-            description:_this.data.partyDetailContent,
-            images:_this.data.imgUrls,
-            peopleCnt:_this.data.memNum,
-            partyTypeId:0
-          }
-          request({
-          url: app.globalData.baseUrl+'/api/party/insert',
-          method:"POST",
-          data:createData,
-          success(res)
-          {
-            console.log(res);
-            Dialog.alert({
-              message: '发布成功',
-            }).then(() => {
-              // on close
-              wx.switchTab({
-                url: '../index/index',
-              })
-            });
-          },
-          fail:function(res)
-          {
-            console.log(res);
-          }
-  
-        })
-      }
-      else{
-        this.editParty();
-      }
+       
    
   }
 
@@ -238,7 +238,7 @@ Page({
     let editData={
       partyId:this.data.partyId,
       description:this.data.partyDetailContent,
-      imageUrls:this.data.imgUrls,
+      images:this.data.imgUrls,
       peopleCnt:this.data.memNum,
       partyTypeID:0
     }
