@@ -88,7 +88,7 @@ public enum ExceptionInfo {
   PARTY_PEOPLECNT_NULL(6202, "组局人数限制为空"),
   PARTY_PARTYTYPEID_NULL(6203, "组局类型ID为空"),
   PARTY_ID_NULL(6204, "组局ID为空"),
-  PARTY_NOT_EXISTED(6205, "该组局记录不存在"),
+  PARTY_NOT_EXISTED(6205, "该组局记录不存在或已经被删除"),
   PARTY_TYPE_NOT_EXISTED(6206, "不存在该组局类型"),
   PARTY_NOT_AVAILABLE(6207, "该组局已满员"),
   PARTY_NOTCONTAIN_USER(6208, "当前用户没有参与该组局"),
@@ -97,9 +97,9 @@ public enum ExceptionInfo {
   PARTY_INSERT_FAIL(6211, "组局创建失败"),
   PARTY_RELATED_NULL(6212, "无相关搜索记录"),
   //组局评论
-  PARTY_COMMENT_INFO_LOST(6213, "组局评论信息缺失"),
-  PARTY_COMMENT_POST_FAIL(6214, "评论组局失败，请检查参数"),
-  PARTY_COMMENT_NULL(6215, "组局评论为空");
+  PARTY_COMMENT_INFO_LOST(6214, "组局评论信息缺失"),
+  PARTY_COMMENT_POST_FAIL(6215, "评论组局失败，请检查参数"),
+  PARTY_COMMENT_NULL(6216, "组局评论为空");
   private Integer code;
   private String message;
 

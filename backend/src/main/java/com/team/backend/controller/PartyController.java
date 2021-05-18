@@ -200,8 +200,10 @@ public class PartyController {
       return result;
     }
     Long partyIdLong = partyId.longValue();
+//    Long userIdLong = userId.longValue();
+//    return partyService.deleteParty(userIdLong, partyIdLong);//测试
     return partyService.deleteParty(user.getId(), partyIdLong);
-//    return partyService.deleteParty(userId, partyId);//测试
+
   }
 
   /**
