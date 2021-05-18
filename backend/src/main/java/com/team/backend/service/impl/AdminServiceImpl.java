@@ -137,7 +137,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     return postMapper.selectMaps(wrapper);
 
   }
-  public void confirmPost(long id,int pass){
+  public void confirmPost(long id,int pass) throws Exception {
     int status;
     int deleted = 0;
     if(pass==1){
@@ -147,6 +147,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
       deleted = 1;
     }
     Post post = postMapper.selectById(id);
+    if(post == null){
+      throw new Exception("Post("+String.valueOf(id)+") not found");
+    }
     post.setStatus(status);
     post.setDeleted(deleted);
     postMapper.updateById(post);
@@ -167,7 +170,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     return partyMapper.selectMaps(wrapper);
   }
 
-  public void confirmParty(long id,int pass){
+  public void confirmParty(long id,int pass) throws Exception {
     int status;
     int deleted = 0;
     if(pass==1){
@@ -177,6 +180,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
       deleted = 1;
     }
     Party party = partyMapper.selectById(id);
+    if(party==null){
+      throw new Exception("Party(id:"+String.valueOf(id)+") not found");
+    }
     party.setStatus(status);
     party.setDeleted(deleted);
     partyMapper.updateById(party);
@@ -197,7 +203,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     return userMapper.selectMaps(wrapper);
   }
 
-  public void confirmUser(long id,int pass){
+  public void confirmUser(long id,int pass) throws Exception {
     int status;
     int deleted = 0;
     if(pass==1){
@@ -207,6 +213,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
       deleted = 1;
     }
     User user = userMapper.selectById(id);
+    if(user==null){
+      throw new Exception("User(id:"+String.valueOf(id)+") not found");
+    }
     user.setStatus(status);
     user.setDeleted(deleted);
     userMapper.updateById(user);
