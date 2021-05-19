@@ -83,6 +83,10 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
       result = ExceptionInfo.PARTY_PARTYTYPEID_NULL;
       return result;
     }
+    if (userMapper.selectById(id) == null) {//新建组局是看userId是否已注册（即数据库user表是否存在改userId）
+      result = ExceptionInfo.USER_NOT_EXISTED;
+      return result;
+    }
     Party party = new Party();
     party.setPublisherId(id);
     party.setDescription(description);
