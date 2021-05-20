@@ -349,7 +349,8 @@ public class PartyServiceImpl extends ServiceImpl<PartyMapper, Party> implements
       return result;
     }
     // 判断该组局是否属于当前用户
-    if (!dlParty.getPublisherId().equals(userId)) {
+    Long dlPartyPublisherIdLong = dlParty.getPublisherId().longValue();
+    if (!dlPartyPublisherIdLong.equals(userId)) {
       result.setCode(ExceptionInfo.valueOf("PARTY_NOTBELONGTO_USER").getCode());
       result.setMessage(ExceptionInfo.valueOf("PARTY_NOTBELONGTO_USER").getMessage());
       result.setData(0);
