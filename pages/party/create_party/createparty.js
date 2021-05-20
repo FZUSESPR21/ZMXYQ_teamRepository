@@ -262,11 +262,21 @@ Page({
       success(res)
       {
         console.log(res);
-        Dialog.alert({
+        if(res.statusCode==200)
+        {Dialog.alert({
           message: '修改拼局成功',
         }).then(() => {
           // on close
-        });
+        });}
+        else
+        {
+          Dialog.alert({
+            message: '修改拼局失败',
+          }).then(() => {
+            // on close
+          });
+        }
+        
       },
       fail:function(res)
       {

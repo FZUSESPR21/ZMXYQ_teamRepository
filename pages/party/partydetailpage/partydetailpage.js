@@ -210,16 +210,19 @@ Page({
   },
   // 发送评论函数
   sendComment: function (e) {
-    let commentData={
-      information: this.data.commentInputText,
-        userId: this.data.userId,
-        partyId: this.data.partyID,
-        preId: this.data.partyPublisherID
-    }
+    let _this=this;
     request({
-      url: "http://192.168.50.167:8088/api/party-comment/comment",
+      url: app.globalData.baseUrl+"/api/party-comment/comment",
       method: "POST",
-      data: commentData,
+      data: {
+        information: _this.data.commentInputText.toString(),
+          userId: parseInt (_this.data.userId),
+          partyId:parseInt (_this.data.partyID),
+          preId: _this.data.partyPublisherID
+      },
+      header:{
+        'content-type': 'application/x-www-form-urlencoded'
+      },
       success: function (res) {
         console.log(res);
         Notify({
@@ -229,7 +232,7 @@ Page({
 
       },
       fail:function (res) {
-        
+        console.log(res);
       }
 
     })
