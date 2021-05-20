@@ -38,14 +38,6 @@ const request = function (obj) {
             obj.success(res);
         },
         fail: err => {
-            if (res.header) {
-                if ('Set-Cookie' in res.header) {
-                    wx.setStorageSync(key, res.header['Set-Cookie'].split(";")[0]);
-                }
-                else if ('set-cookie' in res.header) {
-                    wx.setStorageSync(key, res.header['set-cookie'].split(";")[0])
-                }
-            }
             obj.fail(err);
         },
         complete: res => {

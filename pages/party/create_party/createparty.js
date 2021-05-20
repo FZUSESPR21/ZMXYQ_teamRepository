@@ -146,7 +146,7 @@ Page({
                encoding: "base64",
                success: function (data) {
                      wx.request({
-                       url: 'http://ccreater.top:61112/api/posts/imgupload',
+                       url: app.globalData.baseUrl+'/api/posts/imgupload',
                        method: "POST",
                        data: {
                          base64Str: imageType + data.data,

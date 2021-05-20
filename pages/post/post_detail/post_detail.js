@@ -96,7 +96,7 @@ Page({
   sendComment:function(e)
   {
     wx.request({
-      url: 'http://ccreater.top:61112/api/alumnicycle/party-comment/comment',
+      url: app.globalData.baseUrl+'/api/alumnicycle/party-comment/comment',
       method:"POST",
       data:{
         content:"",

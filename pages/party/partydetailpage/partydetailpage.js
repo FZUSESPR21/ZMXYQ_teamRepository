@@ -148,7 +148,7 @@ Page({
     let _this = this;
     console.log(1);
     request({
-      url: 'http://ccreater.top:61112/api/party/partymes',
+      url: app.globalData.baseUrl+'/api/party/partymes',
       method: 'GET',
       data: {
         partyId: parseInt(_this.data.partyID)
@@ -253,7 +253,7 @@ Page({
     this.data.partyDetailImageUrls.forEach(function(e)
     {
       newFileList.push({
-        url:'http://ccreater.top:61112/static/'+e,
+        url:app.globalData.baseUrl+'/static/'+e,
         name: '图片2',
         isImage: true,
         deletable: true,

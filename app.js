@@ -11,7 +11,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    baseUrl:"http://ccreater.top:61112",
+    baseUrl:"https://feifeilong.work",
     // baseUrl:"http://192.168.50.167:8088"
   },
   getImageType: function (src) {
