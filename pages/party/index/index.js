@@ -122,7 +122,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getData(6);
+    this.getData(-1);
   },
 
     // 下拉刷新实现

@@ -29,14 +29,13 @@ Page({
     select: false,
     memNum:1,
     tihuoWay: '全部主题',
-    fileList: [{
+    fileList: [
+      {
         url: 'http://iph.href.lu/60x60?text=default',
         name: '图片2',
         isImage: true,
         deletable: true,
       },
-
-
     ],
     base64fileList: [],
     partyDetailContent: "",
@@ -50,15 +49,19 @@ Page({
    */
   onLoad: function (options) {
     // console.log(options.partyDetailContent)
+    if(Object.getOwnPropertyNames(options).length!=0)
+    {
     this.setData({
       partyDetailContent: options.partyDetailContent,
-      memberNum: options.partyMemberCnt,
+      memNum: options.partyMemberCnt,
       buttonOperation: options.operation,
-      partyId:parseInt(options.partyID)
+      partyId:parseInt(options.partyID),
+      fileList:JSON.parse(options.fileList)
     })
+  }
   },
   onReady:function(e){
-    if(this.data.buttonOperation.trim()=="修改拼局".trim())
+    if(this.data.buttonOperation=="修改拼局")
     {
       this.setData({
         buttonOperationValue:2
@@ -205,6 +208,8 @@ Page({
             success(res)
             {
               console.log(res);
+              if(res.data.status=200)
+              {
               Dialog.alert({
                 message: '发布成功',
               }).then(() => {
@@ -213,6 +218,14 @@ Page({
                   url: '../index/index',
                 })
               });
+            }
+            else{
+              Dialog.alert({
+                message: '发布失败',
+              }).then(() => {
+                // on close
+              });
+            }
             },
             fail:function(res)
             {
@@ -236,7 +249,7 @@ Page({
   },
   editParty:function (e) {
     let editData={
-      partyId:this.data.partyId,
+      partyId:parseInt(this.data.partyId),
       description:this.data.partyDetailContent,
       images:this.data.imgUrls,
       peopleCnt:this.data.memNum,

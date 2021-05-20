@@ -50,6 +50,7 @@
 }
 .comment-content-view-text{
   word-wrap: break-word;
+  margin-bottom: 2px;
 }
 .comment-content-main{
   margin-left: 80rpx;

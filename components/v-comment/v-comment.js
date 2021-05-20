@@ -21,7 +21,7 @@ Component({
     "1","2","3"
   ],
     hasMoreComments:true,
-    isMoreCommentsShowed:false,
+    isMoreCommentsShowed:[],
     moreButtonContent:"查看更多回复",
     iconSrc:"../../static/icons/down arrow.png",
     showInput:true,
@@ -33,21 +33,39 @@ Component({
   methods: {
   showMoreContents:function(e)
   {
+    console.log(e.currentTarget.dataset.index);
+    if(this.data.isMoreCommentsShowed==false)
+    {
+      for (let index = 0; index < this.data.commentListData.length; index++) {
+        this.data.isMoreCommentsShowed[index]={
+          state:false,
+          moreButtonContent:"收起更多回复",
+          iconSrc:"../../static/icons/up.png"
+        };
+      }
+      this.setData({
+        isMoreCommentsShowed:this.data.isMoreCommentsShowed
+      })
+    }
+    console.log(this.data.isMoreCommentsShowed)
+    this.data.isMoreCommentsShowed[e.currentTarget.dataset.index].state=!this.data.isMoreCommentsShowed[e.currentTarget.dataset.index].state;
    this.setData({
-     isMoreCommentsShowed:!this.data.isMoreCommentsShowed
+     isMoreCommentsShowed:this.data.isMoreCommentsShowed
    });
-   if(this.data.isMoreCommentsShowed==true)
+   if(this.data.isMoreCommentsShowed[e.currentTarget.dataset.index].state==true)
    {
+    this.data.isMoreCommentsShowed[e.currentTarget.dataset.index].moreButtonContent="收起更多回复";
+    this.data.isMoreCommentsShowed[e.currentTarget.dataset.index].iconSrc="../../static/icons/up.png"
      this.setData({
-       moreButtonContent:"收起更多回复",
-       iconSrc:"../../static/icons/up.png"
+      isMoreCommentsShowed:this.data.isMoreCommentsShowed
      })
    }
    else
    {
+    this.data.isMoreCommentsShowed[e.currentTarget.dataset.index].moreButtonContent="查看更多回复";
+    this.data.isMoreCommentsShowed[e.currentTarget.dataset.index].iconSrc="../../static/icons/down arrow.png"
      this.setData({
-       moreButtonContent:"查看更多回复",
-       iconSrc:"../../static/icons/down arrow.png"
+      isMoreCommentsShowed:this.data.isMoreCommentsShowed
      })
    }
   },
@@ -56,8 +74,5 @@ Component({
     let item = {publisherName:'测试',preID:8}
     this.triggerEvent('showCommentBox',item);
   },
-  getPartyComments:function (params) {
-    
-  }
-  }
+  },
 })

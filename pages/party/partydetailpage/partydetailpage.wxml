@@ -33,8 +33,7 @@
   <text class="party-detail-title2">局内成员</text>
   <button class="party-moveoff-button" wx:if="{{partyOwner}}" bindtap="showMoveOff">{{moveOffButtonText}}</button>
   <view class="partymemberlist">
-    <view class="partymemberlistitem" wx:for="{{partyMemberList}}" wx:for-item='item' wx:for-index='index' wx:key="key">
-      <!-- {{item.userName}} -->
+    <view class="partymemberlistitem">
       <van-image
   round
   width="3rem"
@@ -44,6 +43,18 @@
 </van-image>
 <view class="partyMemberListitemlabel">
   局长
+</view>
+    </view>
+    <view class="partymemberlistitem" wx:for="{{partyMemberList}}" wx:for-item='item' wx:for-index='index' wx:key="key">
+      <van-image
+  round
+  width="3rem"
+  height="3rem"
+  src="{{item.state?'https://img.yzcdn.cn/vant/cat.jpeg':'../../../static/icons/add_post.png'}}"
+>
+</van-image>
+<view class="partyMemberListitemlabel">
+  成员
 </view>
 <view class="delete-button" wx:if="{{!item.isPartyOwner}}" ><image src="../../../static/icons/delete.png" class="delete-button-icon" bindtap="moveOffMember" data-index="{{index}}"></image></view>
     </view>

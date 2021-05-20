@@ -1,7 +1,7 @@
 <!--components/v-name-card.wxml-->
-<view class="name-card-view" bindtap="getPublisherMessage">
-  <van-image round width="2.8rem" height="2.8rem" src="https://img.yzcdn.cn/vant/cat.jpeg"
-    class="comment-publisher-view-head" />
+<view class="name-card-view">
+  <van-image round width="2.8rem" height="2.8rem" src="{{publisherMsg.iconUrl}}"
+    class="comment-publisher-view-head" bindtap="getPublisherMessage"/>
   <view class="comment-publisher-view-message">
     <view class="comment-publisher-view-message-name">{{publisherMsg.userName}}</view>
     <view class="comment-publisher-view-message-time">{{publisherTime}}</view>
@@ -9,7 +9,7 @@
       <view class="popup-publisher-detail">
         <view class="popup-publisher-detail-message">
           <view class="popup-publisher-detail-message-row">
-            <view class="popup-publisher-detail-message-name">{{publisherMsg.userName}}11111111</view>
+            <view class="popup-publisher-detail-message-name">{{publisherMsg.userName}}</view>
             <view class="popup-publisher-detail-message-gender">{{publisherMsg.province}}{{publisherMsg.city}}</view>
           </view>
 

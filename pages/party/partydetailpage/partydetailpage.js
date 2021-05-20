@@ -60,7 +60,7 @@ Page({
   // 加入或退出组局函数
   joinParty: function (e) {
     //  
-    console.log(app.globalData.userInfo)
+    // console.log(app.globalData.userInfo)
     let _this = this;
     if (this.data.hasjoined == false) {
       if (this.data.partyMemmberCntNow < this.data.partyMemmberCnt) {
@@ -69,7 +69,7 @@ Page({
           url: app.globalData.baseUrl +"/api/party/join",
           method: "post",
           data: {
-            partyId: 106,
+            partyId: parseInt(_this.data.partyID),
           },
           header:{
             'content-type': 'application/x-www-form-urlencoded'
@@ -104,7 +104,7 @@ Page({
         url: app.globalData.baseUrl + "/api/party/exit",
         method: "POST",
         data: {
-          partyId: 107,
+          partyId: parseInt(_this.data.partyID),
         },
         header:{
           'content-type': 'application/x-www-form-urlencoded'
@@ -158,7 +158,7 @@ Page({
       url: 'http://ccreater.top:61112/api/party/partymes',
       method: 'GET',
       data: {
-        partyId: 106
+        partyId: parseInt(_this.data.partyID)
       },
       success: function (res) {
         let data = res.data.data;
@@ -176,7 +176,7 @@ Page({
             partyMemmberCntNow:data.nowPeopleCnt
           })
         }
-        console.log(_this.data.partyDetailImageUrls)
+        // console.log(_this.data.partyDetailImageUrls)
         _this.getPublisherMessage();
       },
       fail: function (res) {
@@ -193,7 +193,7 @@ Page({
       url: app.globalData.baseUrl+'/api/party-comment/commentlsit',
       method: 'POST',
       data: {
-        partyId: "106",
+        partyId: _this.data.partyID,
       },
       header:{
         'content-type': 'application/x-www-form-urlencoded'
@@ -203,6 +203,7 @@ Page({
        _this.setData({
          partyCommentList:res.data.data
        })
+       console.log(_this.data.partyCommentList)
       },
       fail:function (res) {
         console.log(res);
@@ -252,8 +253,19 @@ Page({
 
   // 编辑拼局函数
   editParty: function (e) {
+    let newFileList=[]
+    this.data.partyDetailImageUrls.forEach(function(e)
+    {
+      newFileList.push({
+        url:'http://ccreater.top:61112/static/'+e,
+        name: '图片2',
+        isImage: true,
+        deletable: true,
+      })
+    })
+    console.log(newFileList);
     wx.navigateTo({
-      url: '../create_party/createparty?partyDetailContent=' + this.data.partyDetailContent + '&partyMemberCnt=' + this.data.partyMemmberCnt + '&operation=修改拼局'+'&partyID='+this.data.partyID,
+      url: '../create_party/createparty?partyDetailContent=' + this.data.partyDetailContent + '&partyMemberCnt=' + this.data.partyMemmberCnt + '&operation=修改拼局'+'&partyID='+this.data.partyID+'&fileList='+JSON.stringify(newFileList),
     });
     // 调用自定义组件 popover 中的 onHide 方法
     this.popover.onHide();
@@ -269,7 +281,7 @@ Page({
           url: app.globalData.baseUrl+'/api/party/delete',
           method: "POST",
           data: {
-            partyId: "106",
+            partyId:parseInt(_this.data.partyID),
           },
           header:{
             'content-type': 'application/x-www-form-urlencoded'
@@ -278,7 +290,7 @@ Page({
             console.log(res)
             if(res.data.status=200){
               Dialog.alert({
-                message: res.data.data.message,
+                message: res.data.message,
               }).then(() => {
                 // on close
               });

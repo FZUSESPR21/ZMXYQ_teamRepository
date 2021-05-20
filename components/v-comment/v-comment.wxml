@@ -1,19 +1,21 @@
 <view class="main">
   <view class="comment-area">
-    <view class="parentComment-view" wx:for="{{commentListData}}" wx:key="key">
+    <view class="parentComment-view" wx:for="{{commentListData}}" wx:key="key" wx:for-item='item' wx:for-index='index'>
       <view class="comment-content-view">
-        <v-name-card></v-name-card>
+        <v-name-card publisherTime="{{item.gmtCreate}}" userId="{{item.commentUserId}}"></v-name-card>
         <view class="comment-content-main">
           <view class="comment-content-view-text" bindtap="showCommentBox">
-            {{}}</view>
+            {{item.message}}</view>
           <view class="comment-content-more">
-            <view wx:if="{{hasMoreComments}}" bindtap="showMoreContents" class="comment-content-more-button">
-              {{moreButtonContent}}<image src="{{iconSrc}}" class="down"></image>
+            <view wx:if="{{item.childrenComments!=false}}" bindtap="showMoreContents" class="comment-content-more-button" wx:for-item='item' wx:for-index='index' wx:key="key" data-index="{{index}}">
+              {{isMoreCommentsShowed==false?'查看更多内容':isMoreCommentsShowed[index].moreButtonContent}}<image src="{{isMoreCommentsShowed==false?'../../static/icons/down arrow.png':isMoreCommentsShowed[index].iconSrc}}" class="down"></image>
             </view>
-            <view wx:if="{{isMoreCommentsShowed}}" class="more-comment-view" wx:for="{{childComments}}" wx:key="key">
-              <v-name-card></v-name-card>
+            <view wx:if="{{isMoreCommentsShowed[index].state}}" class="more-comment-view" wx:for="{{item.childrenComments}}"
+            wx:for-item="childItem" wx:key="key" wx:for-index='childIndex'>
+              <v-name-card userId="{{childItem.commentUserId}}" ></v-name-card>
               <view class="comment-content-view-text" bindtap="showCommentBox">
-            11111111111111111111111111111111111111111111111111111111111111111</view>
+              {{childItem.message}}
+            </view>
             </view>
           </view>
         </view>
