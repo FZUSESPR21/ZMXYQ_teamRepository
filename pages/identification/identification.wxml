@@ -63,7 +63,7 @@
          <view class='line'></view>         
     </view>
     <view >
-      <button class="send_button"  style="position: relative; left: 0rpx; top: 2rpx">下一步</button>
+      <button class="send_button"  bindtap='homePage' style="position: relative; left: 0rpx; top: 2rpx">下一步</button>
     </view>
 </view>
 

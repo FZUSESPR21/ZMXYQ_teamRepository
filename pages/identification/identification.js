@@ -298,5 +298,10 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  homePage:function(){
+    wx.switchTab({
+      url: '../post/index/index',
+    })
   }
 })
