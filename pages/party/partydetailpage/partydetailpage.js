@@ -23,13 +23,6 @@ Page({
     partyMemberList: [{
         participantsID: 0,
       },
-      {
-        participantsID: 0,
-      
-      },
-      {
-        participantsID: 0,
-      },
 
     ],
     partyCommentList: [],
