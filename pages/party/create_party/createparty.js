@@ -30,12 +30,6 @@ Page({
     memNum:1,
     tihuoWay: '全部主题',
     fileList: [
-      {
-        url: 'http://iph.href.lu/60x60?text=default',
-        name: '图片2',
-        isImage: true,
-        deletable: true,
-      },
     ],
     base64fileList: [],
     partyDetailContent: "",
@@ -194,21 +188,23 @@ Page({
           console.log(_this.data.imgUrls)
           if(_this.data.buttonOperationValue==1)
           {
-            let createData={
+            request({
+            url: app.globalData.baseUrl+'/api/party/insert',
+            method:"POST",
+            data:{
               userId:_this.data.userId,
               description:_this.data.partyDetailContent,
               images:_this.data.imgUrls,
               peopleCnt:_this.data.memNum,
               partyTypeId:0
-            }
-            request({
-            url: app.globalData.baseUrl+'/api/party/insert',
-            method:"POST",
-            data:createData,
+            },
+            header:{
+              'content-type': 'application/x-www-form-urlencoded'
+            },
             success(res)
             {
               console.log(res);
-              if(res.data.status=200)
+              if(res.data.status==200)
               {
               Dialog.alert({
                 message: '发布成功',
