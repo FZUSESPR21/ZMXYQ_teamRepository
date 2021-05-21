@@ -56,7 +56,7 @@
 <view class="partyMemberListitemlabel">
   成员
 </view>
-<view class="delete-button" wx:if="{{!item.isPartyOwner}}" ><image src="../../../static/icons/delete.png" class="delete-button-icon" bindtap="moveOffMember" data-index="{{index}}"></image></view>
+<view class="delete-button" wx:if="{{!item.deletable}}" ><image src="../../../static/icons/delete.png" class="delete-button-icon" bindtap="moveOffMember" data-index="{{index}}"></image></view>
     </view>
   </view>
   </view>

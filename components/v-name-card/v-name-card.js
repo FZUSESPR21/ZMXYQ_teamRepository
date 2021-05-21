@@ -57,6 +57,9 @@ Component({
         }
       })
     },
+    onClose() {
+      this.setData({ showPopUp: false });
+    },
     noPopUpGetPublisherMessage:function(e)
     {
       let data={

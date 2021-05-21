@@ -20,10 +20,7 @@ Page({
     partyPublisherMsg:{},
     partyCreateTime: "",
     partyParticipantsId:[],
-    partyMemberList: [{
-        participantsID: 0,
-      },
-
+    partyMemberList: [
     ],
     partyCommentList: [],
     partyMemmberCntNow: 1,
@@ -69,9 +66,16 @@ Page({
           },
           success: function (res) {
             console.log(res);
+            let memberList=_this.data.partyParticipantsId;
+            memberList.push({
+              participantsId:_this.data.userId,
+              deletable:true
+            }
+            );
             _this.setData({
               buttonContent: "退出组局",
-              hasjoined: true
+              hasjoined: true,
+              partyMemberList:memberList
             });
             Notify({
               type: 'success',
@@ -118,30 +122,6 @@ Page({
         } 
       })
     }
-    // wx.request({
-    //   url: 'http://xx.com/api/alumnicycle/party/partymes',
-    //   methods:"get",
-    //   data:{
-    //     'partyId':1
-    //   },
-    //   success:function(res)
-    //   {
-    //     Notify({ type: 'success', message: '加入拼局成功' });
-    //   }
-
-    // })
-    // wx.request({
-    //   url: 'http://xx.com/api/alumnicycle/party/exit',
-    //   methods:"POST",
-    //   data:{
-    //     'partyId':1
-    //   },
-    //   success:function(res)
-    //   {
-    //     Notify({ type: 'success', message: '退出拼局成功' });
-    //   }
-
-    // })
   },
   // 获取组局详情
   getPartyDetail: function (e) {
@@ -169,6 +149,19 @@ Page({
             partyMemmberCntNow:data.nowPeopleCnt
           })
         }
+        let participantsId=_this.data.partyParticipantsId;
+        let arr=[];
+        participantsId.forEach(
+          function (e) {
+              arr.push({
+                participantsId:e,
+                deletable:true
+              })
+          }
+        )
+        _this.setData({
+          partyMemberList:arr
+        })
         // console.log(_this.data.partyDetailImageUrls)
         _this.getPublisherMessage();
       },
@@ -212,16 +205,14 @@ Page({
   sendComment: function (e) {
     let _this=this;
     request({
-      url: app.globalData.baseUrl+"/api/party-comment/comment",
+      // url: app.globalData.baseUrl+"/api/party-comment/comment",
+      url:'http://192.168.50.136:8088/api/party-comment/comment',
       method: "POST",
       data: {
         information: _this.data.commentInputText.toString(),
           userId: parseInt (_this.data.userId),
           partyId:parseInt (_this.data.partyID),
-          preId: _this.data.partyPublisherID
-      },
-      header:{
-        'content-type': 'application/x-www-form-urlencoded'
+          preId: -1
       },
       success: function (res) {
         console.log(res);
@@ -229,7 +220,7 @@ Page({
           type: 'success',
           message: '评论成功'
         });
-
+        _this.getPartyCommentList()
       },
       fail:function (res) {
         console.log(res);
@@ -273,15 +264,12 @@ Page({
         message: '确定要解散拼局吗',
       })
       .then(() => {
+        console.log(parseInt(_this.data.partyID));
         request({
-          url: app.globalData.baseUrl+'/api/party/delete',
+          url: 'http://192.168.50.136:8088/api/party/delete',
           method: "POST",
-          data: {
-            partyId:parseInt(_this.data.partyID),
-          },
-          header:{
-            'content-type': 'application/x-www-form-urlencoded'
-          },
+          data:parseInt(_this.data.partyID),
+        
           success: function (res) {
             console.log(res)
             if(res.data.status=200){
@@ -328,21 +316,13 @@ Page({
           moveOffButtonText:"取消"
         }
       ),
+      console.log(this.data.partyParticipantsId)
       participantsId.forEach(
         function (e) {
-          if(e==_this.data.userId)
-          {
             arr.push({
               participantsId:e,
-              isPartyOwner:true
+              deletable:false
             })
-          }
-          else{
-            arr.push({
-              participantsId:e,
-              isPartyOwner:false
-            })
-          }
         }
       )
       
@@ -357,14 +337,14 @@ Page({
           if(e==_this.data.userId)
           {
             arr.push({
-              participantsId:e,
-              isPartyOwner:true
+              participantsId:e.participantsId,
+              deletable:true
             })
           }
           else{
             arr.push({
-              participantsId:e,
-              isPartyOwner:false
+              participantsId:e.participantsId,
+              deletable:false
             })
           }
         }

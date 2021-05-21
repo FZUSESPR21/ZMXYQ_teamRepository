@@ -12,10 +12,12 @@
   max-width: 400rpx;
   overflow: hidden;
   font-size: 14px;
+  margin-left: 2px;
 }
 .comment-publisher-view-message-time{
   font-size: 14px;
   color: gray;
+  margin-left: 2px;
 }
 .popup-publisher-detail
 {

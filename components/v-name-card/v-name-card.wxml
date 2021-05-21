@@ -5,7 +5,7 @@
   <view class="comment-publisher-view-message">
     <view class="comment-publisher-view-message-name">{{publisherMsg.userName}}</view>
     <view class="comment-publisher-view-message-time">{{publisherTime}}</view>
-    <van-popup show="{{ showPopUp }}" position="bottom" custom-style="height: 30%;">
+    <van-popup show="{{ showPopUp }}" position="bottom" custom-style="height: 30%;" bind:close="onClose">
       <view class="popup-publisher-detail">
         <view class="popup-publisher-detail-message">
           <view class="popup-publisher-detail-message-row">

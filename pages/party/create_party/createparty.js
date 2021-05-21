@@ -70,7 +70,7 @@ Page({
 
   afterRead: function (event) {
     const _this = this;
-    console.log(event.detail.file[0].url);
+    // console.log(event.detail.file[0].url);
     this.setData({
       fileList: _this.data.fileList.concat(event.detail.file)
     });
@@ -125,11 +125,10 @@ Page({
   }
   else{
      let _this=this;
-     console.log(this.data.memNum);
        const file = _this.data.fileList;
        let promiseArr=[];
        let imgServerUrls=new Array();
-       console.log(_this.data.fileList);
+      //  console.log(_this.data.fileList);
        file.forEach(function (e) {
          var FSM = wx.getFileSystemManager();
          let imageType=getApp().getImageType(e.url);
@@ -175,9 +174,9 @@ Page({
          )
       })
         Promise.all(promiseArr).then(function (values) {
-          console.log(values);
+          // console.log(values);
           values.forEach(function (e) {
-            console.log(e);
+            // console.log(e);
             imgServerUrls.push(e.data.data)
           })
     
@@ -185,26 +184,24 @@ Page({
           _this.setData({
             imgUrls:imgServerUrls
           })
-          console.log(_this.data.imgUrls)
+          // console.log(_this.data.imgUrls)
           if(_this.data.buttonOperationValue==1)
           {
             request({
-            url: app.globalData.baseUrl+'/api/party/insert',
+            // url: app.globalData.baseUrl+'/api/party/insert',
+            url:'http://192.168.50.136:8088/api/party/insert',
             method:"POST",
             data:{
               userId:_this.data.userId,
-              description:_this.data.partyDetailContent,
+              description:_this.data.partyDetailContent.toString(),
               images:_this.data.imgUrls,
               peopleCnt:_this.data.memNum,
-              partyTypeId:0
-            },
-            header:{
-              'content-type': 'application/x-www-form-urlencoded'
+              partyTypeID:0
             },
             success(res)
             {
               console.log(res);
-              if(res.data.status==200)
+              if(res.data.code==200)
               {
               Dialog.alert({
                 message: '发布成功',
