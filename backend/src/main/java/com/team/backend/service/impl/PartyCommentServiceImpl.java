@@ -81,17 +81,40 @@ public class PartyCommentServiceImpl extends
       result.setData(null);
       return result;
     }
+    //组局评论分级展示
     for (PartyComment partyComment : partyComments) {
-      Map<String, Object> map = new HashMap<>();
-      map.put("commentId", partyComment.getId());
-      map.put("commentUserId", partyComment.getIdFrom());
-      User user = userMapper.selectById(partyComment.getIdFrom());
-      map.put("images", user.getUserIconUrl());//返回数组
-      map.put("commentUsername", user.getUsername());
-      map.put("message", partyComment.getInformation());
-      map.put("preId", partyComment.getPreId());
-      map.put("gmtCreate", partyComment.getGmtCreate());
-      mapList.add(map);
+      // 当前评论为父评论
+      if (partyComment.getId().equals(partyComment.getPreId())) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("commentId", partyComment.getId());
+        map.put("commentUserId", partyComment.getIdFrom());
+        User user = userMapper.selectById(partyComment.getIdFrom());
+        map.put("commentUsername", user.getUsername());
+        map.put("images", user.getUserIconUrl());
+        List<Map<String, Object>> childrenList = new LinkedList<>();
+        for (PartyComment comment : partyComments) {
+          // 当前评论不为父评论，且为当前父评论的子评论
+          if (!comment.getId().equals(partyComment.getId()) && comment.getPreId()
+              .equals(partyComment.getId())) {
+            Map<String, Object> childrenMap = new HashMap<>();
+            childrenMap.put("commentId", comment.getId());
+            childrenMap.put("commentUserId", comment.getIdFrom());
+            User user1 = userMapper.selectById(comment.getIdFrom());
+            childrenMap.put("commentUsername", user1.getUsername());
+            childrenMap.put("images", user1.getUserIconUrl());
+            childrenMap.put("message", comment.getInformation());
+            childrenMap.put("preId", comment.getPreId());
+            map.put("gmtCreate", comment.getGmtCreate());
+            childrenMap.put("replyId", partyComment.getIdFrom());
+            childrenList.add(childrenMap);
+          }
+        }
+        map.put("childrenComments", childrenList);
+        map.put("message", partyComment.getInformation());
+        map.put("preId", partyComment.getPreId());
+        map.put("gmtCreate", partyComment.getGmtCreate());
+        mapList.add(map);
+      }
     }
 
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
@@ -99,5 +122,4 @@ public class PartyCommentServiceImpl extends
     result.setData(mapList);
     return result;
   }
-
 }
