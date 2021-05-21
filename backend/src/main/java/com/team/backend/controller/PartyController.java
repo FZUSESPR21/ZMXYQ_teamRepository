@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("${server.api-path}/party")
 public class PartyController {
+
   @Resource
   private PartyServiceImpl partyService;
 
@@ -84,7 +85,7 @@ public class PartyController {
    */
   @GetMapping("/myparty")
   public Result<List<Map<String, Object>>> getMyparty() {
-    System.out.println(user.toString());
+
     if (user == null) {
       Result<List<Map<String, Object>>> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -126,7 +127,6 @@ public class PartyController {
   @PostMapping("/join")
   public Result<Integer> joinParty(@RequestParam Number partyId) {
 
-    System.out.println(user.toString());
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -156,7 +156,6 @@ public class PartyController {
   @PostMapping("/exit")
   public Result<Integer> exitParty(@RequestParam Number partyId) {
 
-    System.out.println(user.toString());
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -184,9 +183,8 @@ public class PartyController {
    * @return the result
    */
   @PostMapping("/delete")
-  public Result<Integer> deleteParty(@RequestParam Number partyId) {
+  public Result<Integer> deleteParty(@RequestBody Number partyId) {
 
-    System.out.println(user.toString());
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());

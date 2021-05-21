@@ -1,4 +1,5 @@
 package com.team.backend.service.impl;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -49,9 +50,8 @@ public class PartyCommentServiceImpl extends
         partyComment.getPreId() != null && !StringUtils.isBlank(partyComment.getInformation())) {
       if (partyCommentMapper.insert(partyComment) == 1) {
         if (partyComment.getPreId() <= 0) {//preId传入小于等于0，表明是一级评论，数据库中preId与Id相同
-          UpdateWrapper<PartyComment> updateWrapper = new UpdateWrapper<>();
-          updateWrapper.eq("id", partyComment.getId());
-          updateWrapper.set("pre_id", partyComment.getId());
+          partyComment.setPreId(partyComment.getId());
+          partyCommentMapper.updateById(partyComment);
         }
         result = true;
       }
