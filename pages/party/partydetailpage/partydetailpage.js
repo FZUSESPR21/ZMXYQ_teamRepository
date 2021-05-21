@@ -205,8 +205,8 @@ Page({
   sendComment: function (e) {
     let _this=this;
     request({
-      // url: app.globalData.baseUrl+"/api/party-comment/comment",
-      url:'http://192.168.50.136:8088/api/party-comment/comment',
+      url: app.globalData.baseUrl+"/api/party-comment/comment",
+     
       method: "POST",
       data: {
         information: _this.data.commentInputText.toString(),
@@ -266,7 +266,7 @@ Page({
       .then(() => {
         console.log(parseInt(_this.data.partyID));
         request({
-          url: 'http://192.168.50.136:8088/api/party/delete',
+          url: app.globalData.baseUrl+'/api/party/delete',
           method: "POST",
           data:parseInt(_this.data.partyID),
         

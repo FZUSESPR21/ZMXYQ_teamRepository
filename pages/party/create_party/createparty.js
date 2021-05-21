@@ -188,8 +188,8 @@ Page({
           if(_this.data.buttonOperationValue==1)
           {
             request({
-            // url: app.globalData.baseUrl+'/api/party/insert',
-            url:'http://192.168.50.136:8088/api/party/insert',
+            url: app.globalData.baseUrl+'/api/party/insert',
+           
             method:"POST",
             data:{
               userId:_this.data.userId,
