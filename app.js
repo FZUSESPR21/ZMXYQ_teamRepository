@@ -6,12 +6,10 @@ App({
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
-   
   },
   globalData: {
     userInfo: null,
-    baseUrl:"https://feifeilong.work",
+    baseUrl:"https://test.childfly.cn",
     // baseUrl:"http://192.168.50.167:8088"
   },
   getImageType: function (src) {
