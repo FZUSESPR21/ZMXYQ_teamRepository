@@ -12,7 +12,8 @@ Page({
   },
 
     onShow: function() {
-      if(!app.globalData.userInfo)
+
+      // if(!app.globalData.userInfo)
       {
         let postsData = this.data.postsData;
         let that = this;

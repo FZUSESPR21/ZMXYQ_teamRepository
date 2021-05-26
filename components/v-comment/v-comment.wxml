@@ -4,7 +4,7 @@
       <view class="comment-content-view">
         <v-name-card publisherTime="{{item.gmtCreate}}" userId="{{item.commentUserId}}"></v-name-card>
         <view class="comment-content-main">
-          <view class="comment-content-view-text" bindtap="showCommentBox">
+          <view class="comment-content-view-text" bindtap="showCommentBox" data-message="{{item}}">
             {{item.message}}</view>
           <view class="comment-content-more">
             <view wx:if="{{item.childrenComments!=false}}" bindtap="showMoreContents" class="comment-content-more-button" wx:for-item='item' wx:for-index='index' wx:key="key" data-index="{{index}}">

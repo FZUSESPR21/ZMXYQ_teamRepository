@@ -71,7 +71,7 @@ Component({
   },
   showCommentBox:function(e)
   {
-    let item = {publisherName:'测试',preID:8}
+    let item = {publisherName:e.currentTarget.dataset.message.commentUsername,preID:e.currentTarget.dataset.message.commentId}
     this.triggerEvent('showCommentBox',item);
   },
   },

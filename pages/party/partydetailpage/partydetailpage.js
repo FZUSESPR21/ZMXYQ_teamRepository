@@ -363,7 +363,6 @@ Page({
         message: '确定要移除该成员吗',
       })
       .then(() => {
-        console.log(100000);
         console.log(e);
         let deleteIndex = e.currentTarget.dataset.index;
         console.log(deleteIndex);
@@ -407,7 +406,6 @@ Page({
       commentMessage: e.detail
     })
     console.log(this.data.commentMessage);
-    console.log(10);
   },
   bindTextAreaBlur: function (e) {
     this.setData({
