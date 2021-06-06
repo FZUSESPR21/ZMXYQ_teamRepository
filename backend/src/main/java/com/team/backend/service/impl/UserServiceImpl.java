@@ -76,7 +76,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   // 用户登录验证
   public Map<String, Object> login(String code) {
 
-    Result<Integer> result = new Result<>();
+    Result<String> result = new Result<>();
     Map<String, Object> map = new HashMap<>();
 
     if (code == null || code == "") {
@@ -111,7 +111,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if (user == null) {
       User newUser = new User();
       newUser.setOpenId(openId);
-      result.setData(userMapper.insert(newUser));
+      result.setData(openId);
       user = userMapper.selectOne(wrapper);
       map.put("result", result);
       map.put("user", user);
@@ -119,7 +119,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     // 当前用户已存在
-    result.setData(0);
+    result.setData(openId);
     map.put("result", result);
     map.put("user", user);
     return map;
