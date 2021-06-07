@@ -52,6 +52,12 @@ public enum ExceptionInfo {
   USER_CODE_NULL(6030, "微信授权码为空"),
   USER_ICON_URL_NULL(6031, "用户头像url为空"),
   USER_OPEN_ID_NULL(6032, "授权码错误，获取的openId为空"),
+  USER_DIALOG_ID_NULL(6033, "聊天对象ID为空"),
+  USER_SEND_MESSAGE_NULL(6034, "用户发送消息为空"),
+  USER_PAGE_NUM_NULL(6035, "页码为空"),
+  USER_PAGE_NUM_BELOW0(6036, "页码小于0"),
+  USER_PAGE_SIZE_NULL(6037, "页大小为空"),
+  USER_PAGE_SIZE_BELOW0(6038, "页大小为负"),
 
   POST_IMAGE_FOLDER_NOT_CREATED(6101, "文件夹未创建"),
   POST_IMAGE_CONTENT_EMPTY(6102, "Base64字符串或存储文件名为空"),
