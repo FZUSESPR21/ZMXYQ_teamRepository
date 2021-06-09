@@ -3,19 +3,23 @@
 <mapper namespace="com.team.backend.mapper.PostMapper">
 
     <select id="listPostPageOrderByGmtCreateDesc" parameterType="long" resultMap="postToShow">
-        select id,
-               publisher_id,
-               status,
-               post_type_id,
-               message,
-               image_urls,
-               gmt_create,
-               gmt_modified,
-               deleted,
+        select post.id as id,
+               post.publisher_id as publisher_id,
+               post.status as status,
+               post.post_type_id as post_type_id,
+               post.message as message,
+               post.image_urls as image_urls,
+               post.gmt_create as gmt_create,
+               post.gmt_modified as gmt_modified,
+               post.deleted as deleted,
+               user.username as username,
+               post_type.name as post_type_name,
                ${currentUserId} as currentUserId
-        from post
-        where deleted = 0
-        and status = 0
+        from post,user,post_type
+        where post.deleted = 0
+        and post.status = 0
+        and post.publisher_id = user.id
+        and post.post_type_id = post_type.id
         order by gmt_create desc,id desc
     </select>
     <select id="fuzzyListPostPageOrderByGmtCreateDesc" parameterType="map" resultMap="postToShow">
@@ -88,8 +92,8 @@
         <result property="gmtModified" column="gmt_modified"/>
         <result property="deleted" column="deleted"/>
         <result property="currentUserId" column="currentUserId"/>
-        <association property="publisherName" javaType="string" column="publisher_id" select="selectUserNameById"/>
-        <association property="postTypeName" javaType="string" column="post_type_id" select="selectPostTypeNameById"/>
+        <result property="publisherName" column="username"/>
+        <result property="postTypeName" column="post_type_name"/>
         <association property="eyeOnNum" javaType="integer" column="id" select="countPostEyeOnByPostId"/>
         <association property="likeNum" javaType="integer" column="id" select="countPostLikeByPostId"/>
         <association property="isEyeOn" javaType="integer" column="{id=id,currentUserId=currentUserId}"
