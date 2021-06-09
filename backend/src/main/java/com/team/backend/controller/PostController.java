@@ -121,8 +121,7 @@ public class PostController {
     Long postTheme = postThemeNumber.longValue();
     String message = (String) requestMap.get("message");
     String imgUrls = (String) requestMap.get("imgUrls");
-    Number userIdNum = (Number) requestMap.get("userId");
-    Long userId = userIdNum.longValue();
+    Long userId = user.getId();
     ExceptionInfo exceptionInfo;
     try {
         exceptionInfo = postService.publishPost(userId,postTheme,message,imgUrls);

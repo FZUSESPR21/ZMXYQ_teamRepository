@@ -42,6 +42,7 @@ public class PartyCommentServiceImpl extends
   private UserMapper userMapper;
 
   //  评论组局
+  @Override
   public boolean commentParty(PartyComment partyComment) {
     boolean result = false;
     if (partyComment.getIdFrom() != null && partyComment.getPartyId() != null &&
