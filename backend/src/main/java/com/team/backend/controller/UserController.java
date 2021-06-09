@@ -2,29 +2,19 @@ package com.team.backend.controller;
 
 
 import com.team.backend.exception.ExceptionInfo;
-import com.team.backend.model.PartyComment;
-import com.team.backend.model.PersonalBlackItem;
-import com.team.backend.model.PersonalCollection;
-import com.team.backend.model.Post;
-import com.team.backend.model.PostComment;
-import com.team.backend.model.Result;
-import com.team.backend.model.TreeHole;
-import com.team.backend.model.User;
+import com.team.backend.model.*;
 import com.team.backend.service.impl.TreeHoleServiceImpl;
 import com.team.backend.service.impl.UserServiceImpl;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -38,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("${server.api-path}/user")
 public class UserController {
 
+  User user = null;
   @Autowired
   UserServiceImpl userService;
 
@@ -45,12 +36,12 @@ public class UserController {
   TreeHoleServiceImpl treeHoleService;
 
   @PostMapping("/login")
-  public Result<Integer> login(HttpServletRequest request, @RequestBody String code) {
+  public Result<String> login(HttpServletRequest request, @RequestBody String code) {
 
     HttpSession session = request.getSession();
     Map<String, Object> map = userService.login(code);
     User user = (User) map.get("user");
-    Result<Integer> result = (Result<Integer>) map.get("result");
+    Result<String> result = (Result<String>) map.get("result");
 
     session.setAttribute("user", user);
     return result;
@@ -66,8 +57,6 @@ public class UserController {
   @PostMapping("/identify/submit")
   public Result<Integer> identifySubmit(@RequestBody User user1) {
 
-    User user = null;
-
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -82,8 +71,6 @@ public class UserController {
   @PostMapping("/identify/status")
   public Result<Integer> identifyStatus() {
 
-    User user = null;
-
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -95,24 +82,38 @@ public class UserController {
   }
 
   @GetMapping("/data/select")
-  public Result<User> queryUser() {
+  public Result<Map<String, Object>> queryUser() {
 
-    User user = null;
+    Result<Map<String, Object>> result = new Result<>();
+    Map<String, Object> resultMap = new HashMap<>();
+    Map<String, Integer> map = new HashMap<>();
 
     if (user == null) {
-      Result<User> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
       return result;
     }
 
-    return userService.queryUser(user.getId());
+    resultMap.put("user", userService.queryUser(user.getId()).getData());
+
+    Result<List<Post>> postResult = userService.postList(user.getId());
+    map.put("postNumber", postResult.getData().size());
+    Result<List<PostComment>> postCommentResult = userService.PostCommentList(user.getId());
+    map.put("postCommentNumber", postCommentResult.getData().size());
+    Result<List<PartyComment>> partyCommentResult = userService.PartyCommentList(user.getId());
+    map.put("partyCommentNumber", partyCommentResult.getData().size());
+    Result<List<PersonalCollection>> collectionResult = userService.listCollection(user.getId());
+    map.put("collectionNumber", collectionResult.getData().size());
+    resultMap.put("numberList", map);
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(resultMap);
+    return result;
   }
 
   @PostMapping("/data/update")
   public Result<Integer> updateUser(@RequestBody User user1) {
-
-    User user = null;
 
     if (user == null) {
       Result<Integer> result = new Result<>();
@@ -128,8 +129,6 @@ public class UserController {
   @GetMapping("/collect/list")
   public Result<List<PersonalCollection>> listCollection() {
 
-    User user = null;
-
     if (user == null) {
       Result<List<PersonalCollection>> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -142,8 +141,6 @@ public class UserController {
 
   @PostMapping("/collect/deleted")
   public Result<Integer> deleteCollection(@RequestBody Long id) {
-
-    User user = null;
 
     if (user == null) {
       Result<Integer> result = new Result<>();
@@ -158,8 +155,6 @@ public class UserController {
   @GetMapping("/post/list")
   public Result<List<Post>> postList() {
 
-    User user = null;
-
     if (user == null) {
       Result<List<Post>> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -172,8 +167,6 @@ public class UserController {
 
   @PostMapping("/post/deleted")
   public Result<Integer> postDeleted(@RequestBody Long id) {
-
-    User user = null;
 
     if (user == null) {
       Result<Integer> result = new Result<>();
@@ -188,8 +181,6 @@ public class UserController {
   @GetMapping("/postcomment/list")
   public Result<List<PostComment>> PostCommentList() {
 
-    User user = null;
-
     if (user == null) {
       Result<List<PostComment>> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -202,8 +193,6 @@ public class UserController {
 
   @GetMapping("/partycomment/list")
   public Result<List<PartyComment>> PartyCommentList() {
-
-    User user = null;
 
     if (user == null) {
       Result<List<PartyComment>> result = new Result<>();
@@ -218,8 +207,6 @@ public class UserController {
   @PostMapping("/postcomment/deleted")
   public Result<Integer> PostCommentDeleted(@RequestBody Long id) {
 
-    User user = null;
-
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -232,8 +219,6 @@ public class UserController {
 
   @PostMapping("/partycomment/deleted")
   public Result<Integer> PartyCommentDeleted(@RequestBody Long id) {
-
-    User user = null;
 
     if (user == null) {
       Result<Integer> result = new Result<>();
@@ -248,8 +233,6 @@ public class UserController {
   @GetMapping("/black/list")
   public Result<List<PersonalBlackItem>> listBlack() {
 
-    User user = null;
-
     if (user == null) {
       Result<List<PersonalBlackItem>> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -262,8 +245,6 @@ public class UserController {
 
   @PostMapping("/black/deleted")
   public Result<Integer> deleteBlack(@RequestBody Long id) {
-
-    User user = null;
 
     if (user == null) {
       Result<Integer> result = new Result<>();
@@ -278,8 +259,6 @@ public class UserController {
   @GetMapping("/treehole/content")
   public Result<List<TreeHole>> queryTreeHole() {
 
-    User user = null;
-
     if (user == null) {
       Result<List<TreeHole>> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -292,8 +271,6 @@ public class UserController {
 
   @PostMapping("/treehole/update")
   public Result<Integer> updateTreeHole(@RequestBody TreeHole treeHole) {
-
-    User user = null;
 
     if (user == null) {
       Result<Integer> result = new Result<>();
@@ -309,8 +286,6 @@ public class UserController {
   @PostMapping("/treehole/deleted")
   public Result<Integer> deleteTreeHole(@RequestBody Long id) {
 
-    User user = null;
-
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -324,8 +299,6 @@ public class UserController {
   @PostMapping("/treehole/new")
   public Result<Integer> insertTreeHole(@RequestBody String content) {
 
-    User user = null;
-
     if (user == null) {
       Result<Integer> result = new Result<>();
       result.setCode(ExceptionInfo.valueOf("USER_NOT_LOGIN").getCode());
@@ -335,5 +308,6 @@ public class UserController {
 
     return treeHoleService.insertTreeHole(user.getId(), content);
   }
+
 }
 

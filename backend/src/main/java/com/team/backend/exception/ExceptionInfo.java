@@ -52,6 +52,12 @@ public enum ExceptionInfo {
   USER_CODE_NULL(6030, "微信授权码为空"),
   USER_ICON_URL_NULL(6031, "用户头像url为空"),
   USER_OPEN_ID_NULL(6032, "授权码错误，获取的openId为空"),
+  USER_DIALOG_ID_NULL(6033, "聊天对象ID为空"),
+  USER_SEND_MESSAGE_NULL(6034, "用户发送消息为空"),
+  USER_PAGE_NUM_NULL(6035, "页码为空"),
+  USER_PAGE_NUM_BELOW0(6036, "页码小于0"),
+  USER_PAGE_SIZE_NULL(6037, "页大小为空"),
+  USER_PAGE_SIZE_BELOW0(6038, "页大小为负"),
 
   POST_IMAGE_FOLDER_NOT_CREATED(6101, "文件夹未创建"),
   POST_IMAGE_CONTENT_EMPTY(6102, "Base64字符串或存储文件名为空"),
@@ -82,24 +88,27 @@ public enum ExceptionInfo {
   POST_REPORT_INFO_INVALID(6127, "举报帖子失败，请检查参数合法性或稍后再试"),
 
 
-  //组局6
+  //组局
   PARTY_DESCRIPTION_NULL(6200, "组局描述为空"),
   PARTY_IMAGEURLS_NULL(6201, "组局图片为空"),
   PARTY_PEOPLECNT_NULL(6202, "组局人数限制为空"),
   PARTY_PARTYTYPEID_NULL(6203, "组局类型ID为空"),
   PARTY_ID_NULL(6204, "组局ID为空"),
-  PARTY_NOT_EXISTED(6205, "该组局记录不存在"),
+  PARTY_NOT_EXISTED(6205, "该组局记录不存在或已经被删除"),
   PARTY_TYPE_NOT_EXISTED(6206, "不存在该组局类型"),
   PARTY_NOT_AVAILABLE(6207, "该组局已满员"),
-  PARTY_NOTCONTAIN_USER(6208, "当前用户没有参与该组局"),
+  PARTY_NOTCONTAIN_USER(6208, "当前用户没有参与该组局或该用户已被移出该组局"),
   PARTY_NOTBELONGTO_USER(6209, "该组局不属于当前用户"),
   PARTY_SEARCHMAS_NULL(6210, "组局搜索条件为空"),
   PARTY_INSERT_FAIL(6211, "组局创建失败"),
   PARTY_RELATED_NULL(6212, "无相关搜索记录"),
-  //组局评论
-  PARTY_COMMENT_INFO_LOST(6213, "组局评论信息缺失"),
-  PARTY_COMMENT_POST_FAIL(6214, "评论组局失败，请检查参数"),
-  PARTY_COMMENT_NULL(6215, "组局评论为空");
+  PARTY_COMMENT_INFO_LOST(6214, "组局评论信息缺失"),
+  PARTY_COMMENT_POST_FAIL(6215, "评论组局失败，请检查参数"),
+  PARTY_COMMENT_NULL(6216, "组局评论为空"),
+  PARTY_COMMENT_DELETE_FAIL(6217, "组局的评论删除失败"),
+  PARTY_PARTICIPANTS_DELETE_FAIL(6218, "组局参与者删除失败"),
+  PARTY_PARTICIPANTS_IS_MOVED(6219, "该参与者已经被移出当前组局"),
+  USER_NOT_HAVE_PARTY(6220, "您从未发起组局");
   private Integer code;
   private String message;
 

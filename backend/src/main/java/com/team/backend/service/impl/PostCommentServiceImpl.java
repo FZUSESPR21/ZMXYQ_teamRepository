@@ -51,7 +51,7 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
   @Override
   public boolean commentPost(PostComment postComment) {
     boolean result = false;
-    if (postComment !=null && postComment.getIdFrom() != null && postComment.getIdTo() != null
+    if (postComment != null && postComment.getIdFrom() != null && postComment.getIdTo() != null
         && postComment.getPostId() != null && postComment.getPreId() != null
         && !StringUtils.isBlank(postComment.getMessage())) {
       postComment.setStatus(0);
@@ -61,7 +61,7 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
           updateWrapper.eq("id", postComment.getId());
           postComment.setPreId(postComment.getId());
           postComment.setIdTo(-1L);
-          postCommentMapper.update(postComment,updateWrapper);
+          postCommentMapper.update(postComment, updateWrapper);
         }
         //添加评论消息记录
         Notification notification = new Notification();
@@ -69,12 +69,12 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
         notification.setIsRead(0);
         notification.setSourceId(postComment.getId());
         QueryWrapper<Post> postWrapper = new QueryWrapper<>();
-        postWrapper.eq("id",postComment.getPostId());
+        postWrapper.eq("id", postComment.getPostId());
         postWrapper.select("publisher_id");
         Post post = postMapper.selectOne(postWrapper);
         if (postComment.getIdTo() == -1) {
           notification.setUserId(post.getPublisherId());
-        }else {
+        } else {
           notification.setUserId(postComment.getIdTo());
         }
         if (notificationMapper.insert(notification) == 1) {
@@ -109,23 +109,44 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
     wrapper.eq("post_id", postId);
     List<PostComment> postComments = postCommentMapper.selectList(wrapper);
     for (PostComment postComment : postComments) {
-      Map<String, Object> map = new HashMap<>();
-      map.put("commentId", postComment.getId());
-      map.put("commentUserId", postComment.getIdFrom());
-      User user = userMapper.selectById(postComment.getIdFrom());
-      map.put("commentUsername", user.getUsername());
-      map.put("replyUserId", postComment.getIdTo());
-      if (!postComment.getIdTo().equals(-1L)) {
-        User user1 = userMapper.selectById(postComment.getIdTo());
-        map.put("replyUsername", user1.getUsername());
-        map.put("iconUrl", user1.getUserIconUrl());
-      } else {
-        map.put("replyUsername", "");
-        map.put("iconUrl", "");
+      // 当前评论为父评论
+      if (postComment.getId().equals(postComment.getPreId())) {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("commentId", postComment.getId());
+        map.put("commentUserId", postComment.getIdFrom());
+        User user = userMapper.selectById(postComment.getIdFrom());
+        map.put("commentUsername", user.getUsername());
+        map.put("iconUrl", user.getUserIconUrl());
+        List<Map<String, Object>> childrenList = new LinkedList<>();
+        for (PostComment comment : postComments) {
+          // 当前评论不为父评论，且为当前父评论的子评论
+          if (!comment.getId().equals(postComment.getId()) && comment.getPreId()
+              .equals(postComment.getId())) {
+            Map<String, Object> childrenMap = new HashMap<>();
+            childrenMap.put("commentId", comment.getId());
+            childrenMap.put("commentUserId", comment.getIdFrom());
+            User user1 = userMapper.selectById(comment.getIdFrom());
+            childrenMap.put("commentUsername", user1.getUsername());
+            childrenMap.put("iconUrl", user1.getUserIconUrl());
+            childrenMap.put("message", comment.getMessage());
+            childrenMap.put("preId", comment.getPreId());
+            childrenMap.put("replyId", comment.getIdTo());
+            if (!comment.getIdTo().equals(-1L)) {
+              User user2 = userMapper.selectById(comment.getIdTo());
+              childrenMap.put("replyName", user2.getUsername());
+            } else {
+              childrenMap.put("replyName", "");
+            }
+            childrenList.add(childrenMap);
+          }
+        }
+
+        map.put("childrenComments", childrenList);
+        map.put("message", postComment.getMessage());
+        map.put("preId", postComment.getPreId());
+        mapList.add(map);
       }
-      map.put("message", postComment.getMessage());
-      map.put("preId", postComment.getPreId());
-      mapList.add(map);
     }
 
     result.setCode(ExceptionInfo.valueOf("OK").getCode());

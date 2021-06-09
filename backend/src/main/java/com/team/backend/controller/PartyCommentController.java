@@ -2,6 +2,8 @@ package com.team.backend.controller;
 
 
 import com.team.backend.exception.ExceptionInfo;
+import com.team.backend.mapper.PartyMapper;
+import com.team.backend.model.Party;
 import com.team.backend.model.PartyComment;
 import com.team.backend.model.Result;
 import com.team.backend.service.impl.PartyCommentServiceImpl;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,6 +36,9 @@ public class PartyCommentController {
 
   @Resource
   private PartyCommentServiceImpl partyCommentService;
+
+  @Resource
+  private PartyMapper partyMapper;
 
   /**
    * 评论组局接口Controller
@@ -62,9 +68,14 @@ public class PartyCommentController {
     partyComment.setStatus(0);
     partyComment.setDeleted(0);
 
-    boolean isComSuccess = false;
-
+    Party party = partyMapper.selectById(partyId);
     com.team.backend.util.Result result;
+    if (party == null || party.getDeleted() == 1) {
+      result = com.team.backend.util.Result.error(ExceptionInfo.PARTY_NOT_EXISTED.getCode()
+          , ExceptionInfo.PARTY_NOT_EXISTED.getMessage());
+      return result;
+    }
+    boolean isComSuccess;
     try {
       isComSuccess = partyCommentService.commentParty(partyComment);
       if (isComSuccess) {
@@ -91,9 +102,15 @@ public class PartyCommentController {
    * @return the result
    */
   @PostMapping("/commentlsit")
-  public Result<List<Map<String, Object>>> getCommentList(Long partyId) {
-
-    return partyCommentService.PartyCommentList(partyId);
+  public Result<List<Map<String, Object>>> getCommentList(@RequestParam Number partyId) {
+    if (partyId == null) {
+      Result<List<Map<String, Object>>> result = new Result<>();
+      result.setCode(ExceptionInfo.PARTY_ID_NULL.getCode());
+      result.setMessage(ExceptionInfo.PARTY_ID_NULL.getMessage());
+      return result;
+    }
+    Long partyIdLong = partyId.longValue();
+    return partyCommentService.PartyCommentList(partyIdLong);
   }
 
 

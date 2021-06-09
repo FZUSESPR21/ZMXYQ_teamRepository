@@ -16,4 +16,6 @@ import java.util.List;
 public interface PartyTypeMapper extends BaseMapper<PartyType> {
 
   List<Party> selectByMyWrapper();
+
+  List<Party> selectAllPartyOrderByGmtCreate();
 }
