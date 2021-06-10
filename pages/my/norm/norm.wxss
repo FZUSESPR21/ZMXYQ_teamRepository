@@ -1,0 +1,51 @@
+/* pages/my/norm/norm.wxss */
+.h1{
+  margin-left: 5%;
+  margin-top: 3%;
+  font-size: 18px;
+  font-weight:bold;
+}
+
+.h2{
+  color:#505050;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 2%;
+  font-size: 14px;
+}
+
+.h3{
+  color:#505050;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-size: 14px;
+}
+.h4{
+  font-size: 18px;
+  font-weight:bold;
+}
+.h5{
+  margin-left: 3%;
+  margin-right: 3%;
+}
+.h6{
+  color:  #f2774d;
+  font-size: 14px;
+}
+.answerer-wrp{
+  width: 750rpx;
+  height: 80%;
+  background: #f0f0f0;
+}
+.answerer {
+  margin-left: 4%;
+  width: 630rpx;
+  height: 80%;
+  padding: 30rpx;
+  background: #fff;
+  border: solid 1px #ebebeb;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px #bebebe;
+}
+
+
