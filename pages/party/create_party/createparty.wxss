@@ -31,7 +31,7 @@ page{
 .select_box {
   background-color: #fff;
   width: 93%;
-  height: 180rpx;
+  height: 240rpx;
   z-index:9999; 
   animation: myfirst 0.5s;
   border-bottom-right-radius: 0.4rem;
@@ -39,6 +39,17 @@ page{
   position: fixed;
   border-bottom: 4rpx solid black;
 }
+
+@keyframes myfirst {
+  from {
+      height: 0rpx;
+  }
+
+  to {
+      height: 240rpx;
+  }
+}
+
 .select_one:last-child
 {
   border-bottom: none;
@@ -51,6 +62,7 @@ page{
   width: 100%;
   border-left: 4rpx solid black;
   border-right: 4rpx solid black;
+  padding-left: 15rpx;
 }
 .party-view-title
 {
@@ -140,6 +152,9 @@ page{
   font-weight: bold;
   box-shadow: 2rpx 2rpx gray ;
 }
+.hover-button{
+  background-color: rgb(202, 200, 200);
+}
 .member-stepper-content{
   width: 40%;
   display: flex;
@@ -151,13 +166,4 @@ page{
   border-radius: 0.4rem;
   box-shadow: 2rpx 2rpx gray ;
   margin-bottom: 50rpx;
-}
-@keyframes myfirst {
-  from {
-      height: 0rpx;
-  }
-
-  to {
-      height: 180rpx;
-  }
 }
