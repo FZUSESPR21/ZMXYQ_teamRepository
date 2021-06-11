@@ -1,0 +1,9 @@
+/* pages/message/index/chat_list.wxss */
+.scroll_item{
+  height: 100rpx;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: larger;
+  margin: 10rpx
+}

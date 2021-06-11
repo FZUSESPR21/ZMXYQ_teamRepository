@@ -1,11 +1,26 @@
-// pages/message/index/index.js
+// pages/message/index/chat_list.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    list: [{
+      id: 0,
+      value: '同学甲'
+    }, {
+      id: 1,
+      value: '同学乙'
+    }, {
+      id: 2,
+      value: '同学丁'
+    }]
+  },
 
+  handleTap: function(e) {
+    wx.navigateTo({
+      url: '../chat/chat'
+    })
   },
 
   /**

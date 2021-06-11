@@ -2,35 +2,37 @@
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import {request} from "../../../utils/request"
 const timeago = require("timeago.js");
-const app=getApp()
+const app = getApp()
+const baseUrl = app.globalData.baseUrl;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    userId:123456,
-    partyId:0,
-    option1: [{
-        text: '主题1',
-        value: 0
-      },
-      {
-        text: '主题2',
-        value: 1
-      },
-      {
-        text: '主题3',
-        value: 2
-      },
+    userId: 123456,
+    partyId: 0,
+    option1: [      
+    { text: '自习', value: 0 },
+    { text: '电影', value: 1 },
+    { text: '聚餐', value: 2 },
+    { text: '拼车', value: 3 },
+    { text: '拼单', value: 4 },
+    { text: '运动', value: 5 },
+    { text: '游戏', value: 6 },
+    { text: '旅行', value: 7 },
+    { text: '其他', value: 8 },
     ],
-    themeArray: ["主题1", "主题2", "主题3", "主题4"],
+    // 下拉菜单选项列表
+    themeArray: ["自习", "电影", "聚餐", "拼车", "拼单", "运动", "游戏", "旅行", "其他"],
+    // 还没有用到
     value1: 0,
     select: false,
     memNum:1,
     tihuoWay: '全部主题',
-    fileList: [
-    ],
+    // 图片文件列表
+    fileList: [],
+    // 
     base64fileList: [],
     partyDetailContent: "",
     buttonOperation:"创建组局(消耗50人品)",
@@ -42,17 +44,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // console.log(options.partyDetailContent)
-    if(Object.getOwnPropertyNames(options).length!=0)
-    {
-    this.setData({
-      partyDetailContent: options.partyDetailContent,
-      memNum: options.partyMemberCnt,
-      buttonOperation: options.operation,
-      partyId:parseInt(options.partyID),
-      fileList:JSON.parse(options.fileList)
-    })
-  }
+    if (Object.getOwnPropertyNames(options).length != 0) {
+      console.log(options.partyDetailContent)
+      this.setData({
+        partyDetailContent: options.partyDetailContent,
+        memNum: options.partyMemberCnt,
+        buttonOperation: options.operation,
+        partyId: parseInt(options.partyID),
+        fileList: JSON.parse(options.fileList),
+      })
+    }
   },
   onReady:function(e){
     if(this.data.buttonOperation=="修改拼局")
@@ -107,27 +108,39 @@ Page({
     })
   },
   createParty: function (e) {
-  if(this.data.partyDetailContent=="")//判断拼局内容是否为空
-  {
-    Dialog.alert({
-      message: '活动详情不能为空',
-    }).then(() => {
-      // on close
-    });
-  }
-  else if(this.data.memNum==0)//判断拼局人数是否为空
-  {
-    Dialog.alert({
-      message: '拼局人数不能为空',
-    }).then(() => {
-      // on close
-    });
-  }
-  else{
-     let _this=this;
-       const file = _this.data.fileList;
-       let promiseArr=[];
-       let imgServerUrls=new Array();
+    console.log('用户信息：' + wx.getStorageSync('openid'))
+
+    if (this.data.partyDetailContent == "")//判断拼局内容是否为空
+    {
+      Dialog.alert({
+        message: '活动详情不能为空',
+      }).then(() => {
+        // on close
+      });
+    }
+    else if (this.data.memNum == 0)//判断拼局人数是否为空
+    {
+      Dialog.alert({
+        message: '拼局人数不能为空',
+      }).then(() => {
+        // on close
+      });
+    }
+    else {
+      // 新增代码：传递用户openid；传递正确partType
+      this.data.option1.forEach((i) => {
+        if(i.text == this.data.tihuoWay) {
+          this.setData({
+            value1: i.value
+          })
+        }
+      })
+      // 新增代码结束
+
+      let _this = this;
+      const file = _this.data.fileList;
+      let promiseArr = [];
+      let imgServerUrls = new Array();
       //  console.log(_this.data.fileList);
        file.forEach(function (e) {
          var FSM = wx.getFileSystemManager();
@@ -173,52 +186,49 @@ Page({
            })
          )
       })
-        Promise.all(promiseArr).then(function (values) {
-          // console.log(values);
-          values.forEach(function (e) {
-            // console.log(e);
-            imgServerUrls.push(e.data.data)
-          })
-    
-          // console.log(imgServerUrls);
-          _this.setData({
-            imgUrls:imgServerUrls
-          })
-          // console.log(_this.data.imgUrls)
-          if(_this.data.buttonOperationValue==1)
-          {
-            request({
-            url: app.globalData.baseUrl+'/api/party/insert',
-           
-            method:"POST",
-            data:{
-              userId:_this.data.userId,
-              description:_this.data.partyDetailContent.toString(),
-              images:_this.data.imgUrls,
-              peopleCnt:_this.data.memNum,
-              partyTypeID:0
+      Promise.all(promiseArr).then(function (values) {
+        // console.log(values);
+        values.forEach(function (e) {
+          // console.log(e);
+          imgServerUrls.push(e.data.data)
+        })
+
+        // console.log(imgServerUrls);
+        _this.setData({
+          imgUrls: imgServerUrls
+        })
+        // console.log(_this.data.imgUrls)
+        if (_this.data.buttonOperationValue == 1) {
+          request({
+            url: app.globalData.baseUrl + '/api/party/insert',
+            method: "POST",
+            data: {
+              userId: _this.data.userId,
+              description: _this.data.partyDetailContent.toString(),
+              images: _this.data.imgUrls,
+              peopleCnt: _this.data.memNum,
+              partyTypeID: _this.data.value1
             },
             success(res)
             {
               console.log(res);
-              if(res.data.code==200)
-              {
-              Dialog.alert({
-                message: '发布成功',
-              }).then(() => {
-                // on close
-                wx.switchTab({
-                  url: '../index/index',
-                })
-              });
-            }
-            else{
-              Dialog.alert({
-                message: '发布失败',
-              }).then(() => {
-                // on close
-              });
-            }
+              if (res.data.code == 200) {
+                Dialog.alert({
+                  message: '发布成功',
+                }).then(() => {
+                  // on close
+                  wx.switchTab({
+                    url: '../index/index',
+                  })
+                });
+              }
+              else {
+                Dialog.alert({
+                  message: '发布失败\n' + res.data.message,
+                }).then(() => {
+                  // on close
+                });
+              }
             },
             fail:function(res)
             {
@@ -240,13 +250,16 @@ Page({
   }
 
   },
-  editParty:function (e) {
-    let editData={
-      partyId:parseInt(this.data.partyId),
-      description:this.data.partyDetailContent,
-      images:this.data.imgUrls,
-      peopleCnt:this.data.memNum,
-      partyTypeID:0
+  /**
+   * 修改组局
+   */
+  editParty: function (e) {
+    let editData = {
+      partyId: parseInt(this.data.partyId),
+      description: this.data.partyDetailContent,
+      images: this.data.imgUrls,
+      peopleCnt: this.data.memNum,
+      partyTypeID: this.data.value1
     }
     request({
       url: app.globalData.baseUrl+'/api/party/update',
@@ -264,7 +277,7 @@ Page({
         else
         {
           Dialog.alert({
-            message: '修改拼局失败',
+            message: '修改拼局失败\n' + res.data.message,
           }).then(() => {
             // on close
           });

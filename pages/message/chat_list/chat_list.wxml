@@ -1,0 +1,8 @@
+<!--pages/message/index/chat_list.wxml-->
+<view class="main">
+  <scroll-view class="scroll_box">
+    <button class="scroll_item" wx:for="{{list}}" wx:key="id" catchtap="handleTap">
+    {{item.value}}
+    </button>
+  </scroll-view>
+</view>

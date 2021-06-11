@@ -1,15 +1,20 @@
 // app.js
 import {request} from "./utils/request"
 App({
+  /**
+   * 小程序生命周期之一，初始化完成时调用
+   */
   onLaunch() {
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+    //初始化，获取openid，存储到缓存中
+    this.init()
   },
   globalData: {
     userInfo: null,
-    baseUrl:"https://test.childfly.cn",
+    baseUrl:"http://ccreater.top:61112",
     // baseUrl:"http://192.168.50.167:8088"
   },
   getImageType: function (src) {
@@ -124,5 +129,29 @@ App({
       })
     })
     return promise;    
+  },
+
+/**
+ * 初始化，获取openid，存储到缓存中
+ */
+  init:function() {
+    wx.login({
+      success: res => {
+        wx.request({
+          url: this.globalData.baseUrl + '/api/user/login',
+          method: 'POST',
+          data: res.code,
+          success: res => {
+            wx.setStorage({
+              key: "openid",
+              data: res.data.data
+            })
+          },
+          fail:(err) => {
+            console.log('失败')
+          }
+        })
+      }
+    })
   }
 })

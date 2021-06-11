@@ -31,7 +31,7 @@ page{
 .select_box {
   background-color: #fff;
   width: 93%;
-  height: 180rpx;
+  height: 240rpx;
   z-index:9999; 
   animation: myfirst 0.5s;
   border-bottom-right-radius: 0.4rem;
@@ -140,6 +140,9 @@ page{
   font-weight: bold;
   box-shadow: 2rpx 2rpx gray ;
 }
+.hover-btn {
+  background-color: rgb(206, 203, 203);
+}
 .member-stepper-content{
   width: 40%;
   display: flex;
@@ -158,6 +161,6 @@ page{
   }
 
   to {
-      height: 180rpx;
+      height: 240rpx;
   }
 }
