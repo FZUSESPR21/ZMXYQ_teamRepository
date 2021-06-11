@@ -3,25 +3,26 @@
     <block>
         <view class="feed-item">
             <view class="feed-source">
-                <v-name-card userId="{{publisherId}}" publisherTime="{{}}"></v-name-card>
+                <v-name-card></v-name-card>
                 <image class="morebutton" mode="aspectFit" src="../../static/icons/moreInfo.png" bindtap="onTap" id="{{'morebutton'}}{{idx}}" data-idName="{{'morebutton'}}{{idx}}"></image>
                 <v-popover id='popover'>
-                    <v-popover-item bindtap="handleReport" data-id="{{postId}}" hasline>举报</v-popover-item>
-                </v-popover>
+                <v-popover-item bindtap='editParty' hasline>举报</v-popover-item>
+                    </v-popover>
             </view>
+
             <view class="feed-content">
-                <view class="question"  bindtap="goToDetail" data-id="{{postId}}">
-                    <a class="question-link">
-                        <text class = "v-post-list-title" decode="{{true}}">{{postType}}&emsp;&emsp;{{gmtCreate}}\n</text>
-                        <text class = "message"> {{message}}\n</text>
-                        <van-image wx:for="{{imageUrls}}" wx:key = "key" width="100" height="100" custom-class="image" src="{{item}}"></van-image>
-                        <!-- <image class="v-post-list-img" src="../../static/icons/img.png"  ></image> -->
-                    </a>
-                </view>
+            <view class="question" qid="1">
+                <a class="question-link">
+                    <text class = "v-post-list-title" decode="{{true}}">{{postType}}&emsp;&emsp;{{gmtCreate}}\n</text>
+                    <text class = "message"> {{message}}\n</text>
+                    <van-image wx:for="{{imageUrls}}" wx:key = "key" width="100" height="100" custom-class="image" src="{{item}}"></van-image>
+                    <!-- <image class="v-post-list-img" src="../../static/icons/img.png"  ></image> -->
+                </a>
+            </view>
         
                 <!-- goto_postdetail -->
                 <view class="answer-body">
-                    <view class="answer-actions">
+                    <view class="answer-actions" bindtap="bindItemTap">
                         <view class="bar">
                             <image wx:if="{{isEyeOn == 0}}" class="mark" src="../../static/icons/mark.png" bindtap="handleMark" data-id="{{postId}}"></image>
                             <image wx:if="{{isEyeOn != 0}}" class="mark" src="../../static/icons/mark-active.png"></image>
@@ -39,7 +40,10 @@
                             <image wx:if="{{isLike != 0}}" class="agree" src="../../static/icons/agree-active.png"></image>
                             <!-- <a class="iconIntro">{{likeNum}}</a> -->
                             <input class="iconIntro" model:value="{{likeNum}}" disabled="{{true}}"/>
-                        </view>              
+                        </view>     
+                        <view class="bar">
+                            <van-button type="warning" size="small"  bindtap="goToDetail" data-id="{{postId}}">去评论</van-button>
+                        </view>         
                     </view>    
                 </view>
             </view>

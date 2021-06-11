@@ -3,6 +3,7 @@
   "usingComponents": {
     "van-image": "@vant/weapp/image/index",
     "v-popover": "/components/v-popover/v-popover",
-    "v-popover-item": "/components/v-popover/v-popover-item"
+    "v-popover-item": "/components/v-popover/v-popover-item",
+    "van-button": "@vant/weapp/button/index"  
   }
 }

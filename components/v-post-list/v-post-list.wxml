@@ -1,11 +1,13 @@
 <!--pages/post_list/post_list.wxml-->
 <view class="container">
 <!-- <scroll-view scroll-y="true" class="container"  refresher-enabled="true" bindrefresherrefresh="refresh"> -->
-    <view class="section">
+    <!-- <view class="section">
         <picker class="picker1" title="选择主题" mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
             <van-cell icon="flag-o" is-link arrow-direction="down" is-link title= "{{multiArray1[0][multiIndex[0]]}}  {{multiArray[1][multiIndex[1]]}}" bindtap="listenerButton"/>  
         </picker>
-    </view>
+    </view> -->
+    <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;"
+    class="list" bindscrolltolower="bindDownLoad" bindscroll="scroll" bindscrolltoupper="refresh"> 
             <v-post-item wx:for="{{postsData}}"  wx:key="key"
                 eyeOnNum= "{{item.eyeOnNum}}"
                 gmtCreate= "{{item.gmtCreate}}"
@@ -21,6 +23,10 @@
                 rewardNum= "{{item.rewardNum}}"
             >
             </v-post-item>
+    </scroll-view>
+     <loading hidden="{{hidden}}" bindchange="loadingChange"> 
+        加载中... 
+    </loading> 
 <!-- </scroll-view>  -->
 </view>
 

@@ -11,6 +11,10 @@ Component({
     postsData: [],
     pageSize: 10,
     pageNum: 0,
+    nowPage: 1,  //当前页面
+    hidden: true, 
+    scrollTop: 0, 
+    scrollHeight: 0,
     fileList: [
       {
         url: 'https://img.yzcdn.cn/vant/leaf.jpg',
@@ -112,8 +116,6 @@ Component({
     hasLike:true
   },
 
-
-
     attached: function() {
       if(!app.globalData.userInfo)
       {
@@ -121,7 +123,7 @@ Component({
         let that = this;
         app.userLogin().then(function (res) {
           let baseUrl = app.globalData.baseUrl;
-          let jsonStr = '{"pageSize": 50,"pageNum": 1}';
+          let jsonStr = '{"pageSize": 10,"pageNum": 1}';
           let jsonValue = JSON.parse(jsonStr);
           console.log(jsonValue);
           request({
@@ -159,6 +161,17 @@ Component({
                 console.log("that.data.postsData[0].imageUrls");
                 console.log(that.data.postsData[0].imageUrls);
              }
+
+             //设置高度
+             wx.getSystemInfo({ 
+             success: function (res) { 
+             console.info(res.windowHeight); 
+             that.setData({ 
+             scrollHeight: res.windowHeight 
+             }); 
+             } 
+             }); 
+
             },
             fail:function(res)
             {
@@ -173,16 +186,19 @@ Component({
       }
     },
 
-    detached: function() {
-      // 在组件实例被从页面节点树移除时执行
-    },
 
   methods: {
     getPostsData(pageNum){
-        let postsData = [];
+        let postsData = this.data.postsData;
+        if(pageNum == 1)
+        {
+          postsData = [];
+          this.setData({nowPage: 1});
+        }
         let that = this;
         let baseUrl = app.globalData.baseUrl;
-        let jsonStr = '{"pageSize": 50,"pageNum": 1}';
+        let jsonStr = '{"pageSize": 10,"pageNum":' + pageNum + '}';
+        console.log(pageNum);
         let jsonValue = JSON.parse(jsonStr);
         console.log(jsonValue);
         request({
@@ -194,7 +210,6 @@ Component({
           data: jsonValue,
           success:function(res)
           {
-            console.log("初始页面");
             console.log(res);
             let midPostsData = res.data.data;
             if(midPostsData!= null){
@@ -212,10 +227,18 @@ Component({
                 }
               }
               for(var m in midPostsData)
-                postsData.push(midPostsData[m]);
-                that.setData({
-                  postsData  
-              });
+              {
+                if(midPostsData[m] != undefined)
+                {
+                  postsData.push(midPostsData[m]);
+                  that.setData({
+                    postsData  
+                  });
+                }
+              }
+              //改变当前页数
+              if(midPostsData.length != 0)
+                that.setData({nowPage: pageNum});
             }
           },
           fail:function(res)
@@ -224,14 +247,20 @@ Component({
           }
         });
     },
-    refresh: function(){
-      this.methods.getPostsData(1);
-  },
-  },
 
-    
+  //下拉刷新函数定义开始
+  bindDownLoad: function () { 
+      console.log("到底部了");
+      let m = this.data.nowPage + 1;
+      this.getPostsData(m);
+    }, 
+    //下拉刷新函数定义结束
+    scroll: function (event) { 
+    this.setData({ 
+    scrollTop: event.detail.scrollTop 
+    }); 
+    }, 
 
-  // method: {
     bindPickerChange: function(e) {
       console.log('picker发送选择改变，携带值为', e.detail.value)
       this.setData({
@@ -292,114 +321,6 @@ Component({
       }
       console.log(data.multiIndex);
       this.setData(data);
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-  
-    },
-
-    // getCommentBox:function(e)
-    // {
-    //   this.setData({
-    //     commentMessage:e.detail
-    //   })
-    //   console.log(this.data.commentMessage);
-    //   console.log(10);
-    // },
-
-    // bindTextAreaBlur:function(e)
-    // {
-    //   this.setData({
-    //     commentInputText:e.detail.value
-    //   })
-    //   console.log(this.data.commentInputText)
-    // },
-
-    // getRewardBox:function(e)
-    // {
-    //   this.setData({
-    //     showRewardBox:true
-    //   })
-    // },
-    // onClose() {
-    //   this.setData({ showRewardBox: false });
-    // },
-
-
-      /*获取页面数据*/
-    // /**
-  //  * 页面相关事件处理函数--监听用户下拉动作
-  //  */
-  // onPullDownRefresh() {
-  //   // 上拉刷新
-  //   if (!this.loading) {
-  //     this. getInfoListData(1, true).then(() => {
-  //       // 处理完成后，终止下拉刷新
-  //       wx.stopPullDownRefresh()
-  //     })
-  //   }
-  // },
-  
-  //   getInfoListData(pageNo, over) {
-  //     this.loading = true
-  
-  //     return getArticles(pageNo).then(res => {
-  //       const articles = res.items
-  //       this.setData({
-  //         page: pageNo,     //当前的页号
-  //         pages: res.pages,  //总页数
-  //         articles: over ? articles : this.data.articles.concat(articles)
-  //       })
-  //     }).catch(err => {
-  //       console.log( err)
-  //     }).then(() => {
-  //       this.loading = false
-  //     })
-  // },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  // onReachBottom: () =>{
-  //   // 下拉触底，先判断是否有请求正在进行中
-  //   // 以及检查当前请求页数是不是小于数据总页数，如符合条件，则发送请求
-  //   if (!this.loading && this.data.page < this.data.pages) {
-  //     this.getInfoListData(this.data.page + 1)
-  //   }
-  // },
-  // getArticles(pageNum){
-    
-  // },
-  // getInfoListData(pageNo, over) {
-  //   this.loading = true;
-
-  //   // 向后端请求指定页码的数据
-  //   return this.getArticles(pageNo).then(res => {
-  //     const articles = res.items
-  //     this.setData({
-  //       page: pageNo,     //当前的页号
-  //       pages: res.pages,  //总页数
-  //       articles: over ? articles : this.data.articles.concat(articles)
-  //     })
-  //   }).catch(err => {
-  //     console.log( err)
-  //   }).then(() => {
-  //     this.loading = false
-  //   })
-  // },
-
-  // /**
-  //  * 用户点击右上角分享
-  //  */
-  // onShareAppMessage: function () {
-
-  // },
-  // goto_postdetail:function(param){
-  //   wx.navigateTo({
-  //     url: '../post_detail/post_detail',
-  //     })
-  // }
+    }
+  }
 })
