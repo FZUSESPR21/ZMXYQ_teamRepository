@@ -1,9 +1,12 @@
 {
   "pages": [
+
     "pages/post/index/index",
     "pages/party/partydetailpage/partydetailpage",
     "pages/name_card/name_card",
     "pages/party/index/index",
+    
+    
     "pages/party/create_party/createparty",
     "pages/post/post_publish/post_publish",
     "pages/message/chat/chat",
@@ -12,8 +15,7 @@
     "pages/my/index/index",
     "pages/party/my_party/my_party",
     "pages/party/search_party/search_party",
-    "pages/post/top_ten_posts/top_ten_posts",
-    "pages/message/index/index"
+    "pages/post/top_ten_posts/top_ten_posts"
   ],
   "window": {
     "backgroundTextStyle": "light",
