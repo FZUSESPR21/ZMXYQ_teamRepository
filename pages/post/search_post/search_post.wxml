@@ -1,2 +1,34 @@
 <!--pages/post/search_post/search_post.wxml-->
-<text>pages/post/search_post/search_post.wxml</text>
+<page>
+    <view class="search-view">
+      <van-toast id="van-toast" />
+      <van-search
+        model:value="{{ value }}"
+        background="#ffe680"
+        label=""
+        placeholder="请输入搜索关键词"
+        use-action-slot
+      >
+      <van-button round type="info" size="small" slot="action" bind:tap="searchPost">搜索</van-button>
+      </van-search>
+    </view>
+    <!-- 文章搜索列表开始 -->
+    <scroll-view>
+            <v-post-item wx:for="{{postsData}}"  wx:key="key"
+                eyeOnNum= "{{item.eyeOnNum}}"
+                gmtCreate= "{{item.gmtCreate}}"
+                imageUrls= "{{item.imageUrls}}"
+                isEyeOn= "{{item.isEyeOn}}"
+                isLike= "{{item.isLike}}"
+                likeNum= "{{item.likeNum}}"
+                message= "{{item.message}}"
+                postId= "{{item.postId}}"
+                postType= "{{item.postType}}"
+                publisherId= "{{item.publisherId}}"
+                pubulisherName= "{{item.pubulisherName}}"
+                rewardNum= "{{item.rewardNum}}"
+            >
+            </v-post-item>
+    </scroll-view> 
+      <!--  文章搜索列表结束 -->
+</page>

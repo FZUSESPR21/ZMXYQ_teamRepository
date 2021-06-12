@@ -1,66 +1,76 @@
 // pages/post/search_post/search_post.js
+const app = getApp();
+import {request} from "../../../utils/request"
+const timeago = require("timeago.js");
+import Toast from '@vant/weapp/toast/toast';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    postsData: [],
+    value: ""
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  searchPost: function(){
+    if(this.data.value != null && this.data.value.length != 0){
+      let content = this.data.value.trim();
+      let postsData = [];
+      let that = this;
+      console.log(this);
+      app.userLogin().then(function (res) {
+        let baseUrl = app.globalData.baseUrl;
+        let jsonStr = '{"pageSize": 100,"pageNum": 1,"content": "' + content +  '"}';
+        let jsonValue = JSON.parse(jsonStr);
+        console.log(jsonValue);
+        request({
+          url:  baseUrl + '/api/posts/search',
+          method:'POST',
+          Headers: {
+            'content-type': 'application/json'
+          },
+          data: jsonValue,
+          success:function(res)
+          {
+           console.log(res);
+           let midPostsData = res.data.data;
+           if(midPostsData!= null){
+              for(let i = 0; i < midPostsData.length; i++){
+                midPostsData[i].gmtCreate = timeago.format(new Date(midPostsData[i].gmtCreate),'zh_CN');
+                let midImageUrls = midPostsData[i].imageUrls;
+                if(midPostsData[i].imageUrls != "" && midPostsData[i].imageUrls != null){
+                  midPostsData[i].imageUrls = midPostsData[i].imageUrls.split(';');
+                  if(midPostsData[i].imageUrls.length == 0)
+                    midPostsData[i].imageUrls.push(midImageUrls);
+                }
+                //图片最终url
+                for(let imageIndex = 0; imageIndex < midPostsData[i].imageUrls.length; imageIndex++){
+                  midPostsData[i].imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData[i].imageUrls[imageIndex];
+                }
+              }
+              for(var m in midPostsData)
+               postsData.push(midPostsData[m]);
+               that.setData({
+                 postsData 
+              });
+              console.log(that.data.postsData);
+           }
+          },
+          fail:function(res)
+          {
+            console.log(res);
+          }
+        });
+      }).catch(
+      reason=>{
+        console.log(reason)
+      }
+    )
+    }
+    else{
+      Toast('搜索条件为空');
+    }
   }
+
 })

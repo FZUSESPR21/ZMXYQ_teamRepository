@@ -21,7 +21,6 @@
   bottom: 50rpx;
   left: 600rpx;
 }
-
 .line{
   height: 8rpx;
   background:#eee;
