@@ -74,17 +74,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   private String secret;
 
   // 用户登录验证
-  public Map<String, Object> login(String code) {
+  public Result<User> login(String code) {
 
-    Result<String> result = new Result<>();
-    Map<String, Object> map = new HashMap<>();
+    Result<User> result = new Result<>();
 
     if (code == null || code == "") {
       result.setCode(ExceptionInfo.valueOf("USER_CODE_NULL").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_CODE_NULL").getMessage());
-      map.put("result", result);
-      map.put("user", new User());
-      return map;
+      result.setData(new User());
+      return result;
     }
     String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appId + "&secret=" + secret
         + "&js_code=" + code + "&grant_type=authorization_code";
@@ -95,9 +93,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if (openId == null) {
       result.setCode(ExceptionInfo.valueOf("USER_OPEN_ID_NULL").getCode());
       result.setMessage(ExceptionInfo.valueOf("USER_OPEN_ID_NULL").getMessage());
-      map.put("result", result);
-      map.put("user", new User());
-      return map;
+      result.setData(new User());
+      return result;
     }
 
     QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -111,18 +108,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if (user == null) {
       User newUser = new User();
       newUser.setOpenId(openId);
-      result.setData(openId);
+      userMapper.insert(newUser);
       user = userMapper.selectOne(wrapper);
-      map.put("result", result);
-      map.put("user", user);
-      return map;
+      result.setData(user);
+      return result;
     }
 
     // 当前用户已存在
-    result.setData(openId);
-    map.put("result", result);
-    map.put("user", user);
-    return map;
+    result.setData(user);
+    return result;
   }
 
   // 用户上传图片
