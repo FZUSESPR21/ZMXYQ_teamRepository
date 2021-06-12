@@ -1,0 +1,114 @@
+package com.team.backend.util;
+
+import com.huawei.ais.common.AuthInfo;
+import com.huawei.ais.common.ProxyHostInfo;
+import com.huawei.ais.sdk.AisAccess;
+import com.huawei.ais.sdk.AisAccessWithProxy;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class ServiceAccessBuilder {
+    private static Map<String, String> endponitMap = new ConcurrentHashMap<>();
+    static {
+        /*  内容审核服务的区域和终端节点信息可以从如下地址查询
+         *  http://developer.huaweicloud.com/dev/endpoint
+         * */
+        endponitMap.put("cn-north-1", "https://moderation.cn-north-1.myhuaweicloud.com");
+        endponitMap.put("cn-north-4", "https://moderation.cn-north-4.myhuaweicloud.com");
+        endponitMap.put("ap-southeast-1", "https://moderation.ap-southeast-1.myhuaweicloud.com");
+        endponitMap.put("cn-east-3", "https://moderation.cn-east-3.myhuaweicloud.com");
+        endponitMap.put("ap-southeast-3", "https://moderation.ap-southeast-3.myhuaweicloud.com");
+    }
+
+    private String region;
+
+    private String endpoint;
+
+    private String ak;
+
+    private String sk;
+
+    private ProxyHostInfo proxy = null;
+
+    private int connectionTimeout = 5000;
+
+    private int connectionRequestTimeout = 1000;
+
+    private int socketTimeout = 5000;
+
+    private int retryTimes = 3;
+
+    public static ServiceAccessBuilder builder() {
+        return new ServiceAccessBuilder();
+    }
+
+    public AisAccess build() {
+        if (proxy == null) {
+            return new AisAccess(new AuthInfo(endpoint, region, ak, sk), connectionTimeout, connectionRequestTimeout, socketTimeout, retryTimes);
+        } else {
+            return new AisAccessWithProxy(new AuthInfo(endpoint, region, ak, sk), proxy, connectionTimeout, connectionRequestTimeout, socketTimeout, retryTimes);
+        }
+    }
+
+    public  ServiceAccessBuilder ak(String ak) {
+        this.ak = ak;
+        return this;
+    }
+
+    public  ServiceAccessBuilder sk(String sk) {
+        this.sk = sk;
+        return this;
+    }
+
+    public  ServiceAccessBuilder region(String region) {
+        this.region = region;
+        this.endpoint = getCurrentEndpoint(region);
+        return this;
+    }
+
+    public  ServiceAccessBuilder proxy(ProxyHostInfo proxy) {
+        this.proxy = proxy;
+        return this;
+    }
+
+    public ServiceAccessBuilder connectionTimeout(int connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+        return this;
+    }
+
+    public ServiceAccessBuilder connectionRequestTimeout(int connectionRequestTimeout) {
+        this.connectionRequestTimeout = connectionRequestTimeout;
+        return this;
+    }
+
+    public ServiceAccessBuilder socketTimeout(int socketTimeout) {
+        this.socketTimeout = socketTimeout;
+        return this;
+    }
+
+    public ServiceAccessBuilder retryTimes(int retryTimes) {
+        this.retryTimes = retryTimes;
+        return this;
+    }
+
+    /**
+     * 用于支持使用代理模式访问网络， 此时使用的代理主机配置信息
+     */
+    public static ProxyHostInfo getProxyHost() {
+
+        return new ProxyHostInfo("proxycn2.***.com", /* 代理主机信息 */
+                8080,        /* 代理主机的端口 */
+                "china/***", /* 代理的用户名 */
+                "***"        /* 代理用户对应的密码 */
+        );
+    }
+
+    /**
+     * 用于根据服务的区域信息获取服务域名
+     */
+    public static String getCurrentEndpoint(String region){
+        return endponitMap.get(region);
+    }
+
+}
