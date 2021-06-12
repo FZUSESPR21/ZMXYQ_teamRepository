@@ -36,12 +36,11 @@ public class UserController {
   TreeHoleServiceImpl treeHoleService;
 
   @PostMapping("/login")
-  public Result<String> login(HttpServletRequest request, @RequestBody String code) {
+  public Result<User> login(HttpServletRequest request, @RequestBody String code) {
 
     HttpSession session = request.getSession();
-    Map<String, Object> map = userService.login(code);
-    User user = (User) map.get("user");
-    Result<String> result = (Result<String>) map.get("result");
+    Result<User> result = userService.login(code);
+    User user = result.getData();
 
     session.setAttribute("user", user);
     return result;
