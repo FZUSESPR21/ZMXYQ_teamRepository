@@ -12,10 +12,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //当前小程序使用者userid
     userId: 123456,
     partyID: "",
+    partyTypeId: -2,
     partyDetailContent: "你们好",
     partyDetailImageUrls: ["https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG","https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG","https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG","https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG"],
+    //组局创建者的ID
     partyPublisherID: 0,
     partyPublisherMsg:{},
     partyCreateTime: "",
@@ -35,16 +38,17 @@ Page({
     moveOffButtonText:"移除成员"
   },
 
-  /*
-  生命周期函数
+  /** 
+  * 生命周期函数
+  * 页面加载时将组局列表传过来的partyID赋值给data中的partyID
   */
   onLoad: function (options) {
-    // console.log(options.partyID);
     this.setData({
       partyID: options.partyID
     });
-    // console.log(this.data.partyID);
-
+    this.getPartyDetail();//获取组局详情
+    this.getPartyCommentList();//获取组局评论列表
+    this.popover = this.selectComponent('#popover');
   },
 
   // 加入或退出组局函数
@@ -126,7 +130,6 @@ Page({
   // 获取组局详情
   getPartyDetail: function (e) {
     let _this = this;
-    console.log(1);
     request({
       url: app.globalData.baseUrl+'/api/party/partymes',
       method: 'GET',
@@ -135,7 +138,7 @@ Page({
       },
       success: function (res) {
         let data = res.data.data;
-        console.log(res);
+        console.log('success-------res=\n',res);
         console.log(data);
         if (data != null) {
           _this.setData({
@@ -146,7 +149,8 @@ Page({
             partyCreateTime: timeago.format(new Date(data.gmtCreate),'zh_CN'),
             partyParticipantsId: data.participantsID,
             partyDetailImageUrls: data.images,
-            partyMemmberCntNow:data.nowPeopleCnt
+            partyMemmberCntNow:data.nowPeopleCnt,
+            partyTypeId: data.partyType
           })
         }
         let participantsId=_this.data.partyParticipantsId;
@@ -197,9 +201,7 @@ Page({
     })
   },
   onReady: function () {
-    this.getPartyDetail();//获取组局详情
-    this.getPartyCommentList();//获取组局评论列表
-    this.popover = this.selectComponent('#popover');
+    
   },
   // 发送评论函数
   sendComment: function (e) {
@@ -252,7 +254,7 @@ Page({
     })
     console.log(newFileList);
     wx.navigateTo({
-      url: '../create_party/createparty?partyDetailContent=' + this.data.partyDetailContent + '&partyMemberCnt=' + this.data.partyMemmberCnt + '&operation=修改拼局'+'&partyID='+this.data.partyID+'&fileList='+JSON.stringify(newFileList),
+      url: '../create_party/createparty?partyDetailContent=' + this.data.partyDetailContent + '&partyMemberCnt=' + this.data.partyMemmberCnt + '&operation=修改拼局'+'&partyID='+this.data.partyID+'&fileList='+JSON.stringify(newFileList) + '&partyTypeId=' + this.data.partyTypeId,
     });
     // 调用自定义组件 popover 中的 onHide 方法
     this.popover.onHide();

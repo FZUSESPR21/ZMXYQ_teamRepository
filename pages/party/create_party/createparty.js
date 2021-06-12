@@ -12,6 +12,7 @@ Page({
   data: {
     userId: 123456,
     partyId: 0,
+    partyTypeId: -2,
     option1: [      
     { text: '自习', value: 0 },
     { text: '电影', value: 1 },
@@ -29,6 +30,7 @@ Page({
     value1: 0,
     select: false,
     memNum:1,
+    // 当前选中项
     tihuoWay: '全部主题',
     // 图片文件列表
     fileList: [],
@@ -36,6 +38,7 @@ Page({
     base64fileList: [],
     partyDetailContent: "",
     buttonOperation:"创建组局(消耗50人品)",
+    //
     buttonOperationValue:1,
     imgUrls:[],
   },
@@ -45,16 +48,28 @@ Page({
    */
   onLoad: function (options) {
     if (Object.getOwnPropertyNames(options).length != 0) {
-      console.log(options.partyDetailContent)
+      // console.log(options.partyDetailContent)
       this.setData({
         partyDetailContent: options.partyDetailContent,
         memNum: options.partyMemberCnt,
         buttonOperation: options.operation,
         partyId: parseInt(options.partyID),
         fileList: JSON.parse(options.fileList),
+        partyTypeId: options.partyTypeId
+      })
+      // partyTypeId：从组局详情传过来的组局类型id。这里将它映射成具体的类型名称
+      let {option1} = this.data;
+      let {partyTypeId} = this.data;
+      option1.forEach((item) => {
+        if(item.value == partyTypeId) {
+          this.setData({
+            tihuoWay: item.text
+          })
+        }
       })
     }
   },
+
   onReady:function(e){
     if(this.data.buttonOperation=="修改拼局")
     {
@@ -91,7 +106,13 @@ Page({
         memNum: this.data.memNum + 1
       })
     }
-
+    else {
+      wx.showToast({
+        title: '人数限制',
+        icon: 'error',
+        duration: 1000
+      })
+    }
   },
   delmemberOp(e) {
     if (this.data.memNum > 0) {
@@ -108,8 +129,6 @@ Page({
     })
   },
   createParty: function (e) {
-    console.log('用户信息：' + wx.getStorageSync('openid'))
-
     if (this.data.partyDetailContent == "")//判断拼局内容是否为空
     {
       Dialog.alert({

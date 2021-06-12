@@ -5,4 +5,7 @@
     {{item.value}}
     </button>
   </scroll-view>
+
+  <image class="avatar" bindtap="setAvatarUrl" src="{{url}}"> </image>
+
 </view>
