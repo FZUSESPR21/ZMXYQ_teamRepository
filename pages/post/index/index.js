@@ -177,5 +177,12 @@ Page({
     let postList=this.selectComponent('#postList');
     console.log("下拉刷新");
     postList.getPostsData(1);
-  }
+  },
+
+  //导航至搜索界面
+  searchPost:function(){
+    wx.navigateTo({
+      url: '../search_post/search_post'
+    });
+  },
 })

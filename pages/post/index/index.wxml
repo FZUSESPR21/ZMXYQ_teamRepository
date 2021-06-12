@@ -1,5 +1,14 @@
 <!--pages/post/index/index.wxml-->
 <view>
+    <!-- 搜索图标 -->
+    <van-image
+      round
+      width="100rpx"
+      height="100rpx"
+      src="/static/icons/search.png"
+      catchtap="searchPost"
+      class="search-image"
+    />
     <v-top-ten></v-top-ten>
     <view class="line"></view>
     <v-post-list id="postList"></v-post-list>

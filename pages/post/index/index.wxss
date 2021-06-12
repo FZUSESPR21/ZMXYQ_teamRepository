@@ -14,6 +14,14 @@
   /*padding: 200rpx 0;*/
   box-sizing: border-box;
 }
+/* 搜索图标样式 */
+.search-image{
+  position: fixed;
+  z-index: 100;
+  bottom: 50rpx;
+  left: 600rpx;
+}
+
 .line{
   height: 8rpx;
   background:#eee;
