@@ -8,6 +8,7 @@
     
     
     "pages/party/create_party/createparty",
+    "pages/party/edit_party/edit_party",
     "pages/post/post_publish/post_publish",
     "pages/message/chat/chat",
     "pages/message/chat_list/chat_list",

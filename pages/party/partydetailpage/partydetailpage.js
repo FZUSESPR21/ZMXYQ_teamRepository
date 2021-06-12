@@ -254,7 +254,7 @@ Page({
     })
     console.log(newFileList);
     wx.navigateTo({
-      url: '../create_party/createparty?partyDetailContent=' + this.data.partyDetailContent + '&partyMemberCnt=' + this.data.partyMemmberCnt + '&operation=修改拼局'+'&partyID='+this.data.partyID+'&fileList='+JSON.stringify(newFileList) + '&partyTypeId=' + this.data.partyTypeId,
+      url: '../edit_party/edit_party?partyDetailContent=' + this.data.partyDetailContent + '&partyMemberCnt=' + this.data.partyMemmberCnt + '&operation=修改拼局'+'&partyID='+this.data.partyID+'&fileList='+JSON.stringify(newFileList) + '&partyTypeId=' + this.data.partyTypeId,
     });
     // 调用自定义组件 popover 中的 onHide 方法
     this.popover.onHide();

@@ -19,8 +19,8 @@ Page({
       "其他"
     ],
     option1: [
-      { text: '所有组局', value: -2 },
-      { text: '非空组局', value: -1 },
+      { text: '所有组局', value: -1 },
+      { text: '非空组局', value: -2 },
       { text: '自习', value: 0 },
       { text: '电影', value: 1 },
       { text: '聚餐', value: 2 },
@@ -31,11 +31,11 @@ Page({
       { text: '旅行', value: 7 },
       { text: '其他', value: 8 },
     ],
-    value1: -2,
+    value1: -1,
     partyList: [],
     zIndex: -1,
     show: false,
-    nowType: -2
+    nowType: -1
   },
 
   goToMyParty: function(){
@@ -57,8 +57,12 @@ Page({
   },
 
   onChange: function ({detail}) {
-      this.setData({nowType: detail + 0});
-      this.getData(detail + 0);
+      this.setData(
+        {
+          nowType: parseInt(detail)
+        });
+        let {nowType} = this.data
+      this.getData(nowType);
    },
 
    onClose: function () {
@@ -122,7 +126,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getData(4);
+    let {nowType} = this.data;
+    this.getData(nowType);
   },
 
     // 下拉刷新实现
