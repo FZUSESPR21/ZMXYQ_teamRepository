@@ -58,5 +58,4 @@ public class Notification implements Serializable {
   @ApiModelProperty(value = "接收消息的用户ID")
   private Long userId;
 
-
 }

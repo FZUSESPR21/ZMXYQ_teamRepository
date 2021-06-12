@@ -13,7 +13,6 @@ target
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -121,4 +120,3 @@ backend/src/test/java/com/team/backend/PostMapperTest.java
 run.sh
 /backend/target/classes/
 backend/src/test/**
-
