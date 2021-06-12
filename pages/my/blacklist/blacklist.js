@@ -1,18 +1,108 @@
 // pages/my/blacklist/blacklist.js
+import Dialog from "../../../miniprogram_npm/@vant/weapp/dialog/dialog";
+
+const app = getApp();
+import {request} from "../../../utils/request";
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    blackList:[],
+    currentId:0,
   },
+
+  getBlackList() {
+    let that = this;
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/user/black/list',
+      method: 'GET',
+      success(res) {
+        console.log(1);
+        console.log(res);
+        that.setData({
+          blackList: res.data.data.reverse(),
+        })
+      }
+    })
+  },
+
+  //touchstart
+  handleTouchStart:function(e){
+    this.startTime=e.timeStamp;
+    //console.log(" startTime="+e.timeStamp);
+  },
+
+//touchend
+  handleTouchEnd:function(e){
+    this.endTime=e.timeStamp;
+    //console.log(" endTime="+e.timeStamp);
+  },
+
+  //单击
+  handleClick:function(event){
+    //console.log("endTime-startTime="+(this.endTime-this.startTime));
+    let id = event.currentTarget.dataset.id
+    if(this.endTime-this.startTime<350){
+      this.setData({
+        currentId:id,
+      });
+      this.showDialog();
+    }
+  },
+
+  //长按
+  handleLongPress:function(event){
+//console.log("endTime-startTime="+(this.endTime-this.startTime));
+//     let id = event.currentTarget.dataset.id
+//     this.setData({
+//       show: true,
+//       currentId:id,
+//     });
+    // console.log(this.data.currentId);
+  },
+
+  deleteBlack(ID){
+    let that = this;
+    let id = this.data.currentId - 0;
+    let baseUrl = app.globalData.baseUrl;
+    // console.log(id)
+    request({
+      url: baseUrl + '/api/user/black/deleted',
+      method: 'POST',
+      data:id,
+      // header: {
+      // 'content-type': 'application/x-www-form-urlencoded'
+      // },
+      success(res){
+        // console.log(res)
+        that.getBlackList();
+      }
+    })
+  },
+
+  showDialog:function(e)
+  {
+    Dialog.confirm({
+      message: '确定移出黑名单吗？',
+    })
+        .then(() => {
+          this.deleteBlack();
+        })
+        .catch(() => {
+          // on cancel
+        });
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getBlackList()
   },
 
   /**
