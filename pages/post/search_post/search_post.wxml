@@ -13,6 +13,10 @@
       </van-search>
     </view>
     <!-- 文章搜索列表开始 -->
+    <!-- 搜索结果为空提示 -->
+    <view class = "noneView" wx:if="{{isResultNone}}">
+      <text class = "noneText">搜索结果为空！！！</text>
+    </view>
     <scroll-view>
             <v-post-item wx:for="{{postsData}}"  wx:key="key"
                 eyeOnNum= "{{item.eyeOnNum}}"

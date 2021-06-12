@@ -1,1 +1,14 @@
-/* pages/post/search_post/search_post.wxss */
+/* pages/party/search-party/search-party.wxss */
+page{
+    background-color: #ffe680;
+    height: 100%;
+  }
+
+  .noneView{
+    margin-top: 30%;
+  }
+  
+  .noneText{
+    display: block;
+    text-align: center;
+  }

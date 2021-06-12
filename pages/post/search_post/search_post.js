@@ -10,7 +10,8 @@ Page({
    */
   data: {
     postsData: [],
-    value: ""
+    value: "",
+    isResultNone: false
   },
 
   searchPost: function(){
@@ -18,7 +19,6 @@ Page({
       let content = this.data.value.trim();
       let postsData = [];
       let that = this;
-      console.log(this);
       app.userLogin().then(function (res) {
         let baseUrl = app.globalData.baseUrl;
         let jsonStr = '{"pageSize": 100,"pageNum": 1,"content": "' + content +  '"}';
@@ -36,6 +36,7 @@ Page({
            console.log(res);
            let midPostsData = res.data.data;
            if(midPostsData!= null){
+              if(midPostsData.length == 0)  that.setData({isResultNone: true});  //搜索结果为空
               for(let i = 0; i < midPostsData.length; i++){
                 midPostsData[i].gmtCreate = timeago.format(new Date(midPostsData[i].gmtCreate),'zh_CN');
                 let midImageUrls = midPostsData[i].imageUrls;
@@ -54,8 +55,9 @@ Page({
                that.setData({
                  postsData 
               });
-              console.log(that.data.postsData);
            }
+           else //搜索结果为空
+            that.setData({isResultNone: true});   //标志位设为true
           },
           fail:function(res)
           {
