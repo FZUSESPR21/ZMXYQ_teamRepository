@@ -7,3 +7,10 @@
   font-size: larger;
   margin: 10rpx
 }
+
+.avatar{
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 50%;
+  border:2rpx solid #ccc;
+}

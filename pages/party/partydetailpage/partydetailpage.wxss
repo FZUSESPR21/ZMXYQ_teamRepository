@@ -209,6 +209,15 @@ page{
   width: 40%;
   font-size: 36rpx;
 }
+.max_num{
+  position: absolute;
+  top: 12%;
+  left: 30%;
+  font-weight: bold;
+  width: auto;
+  font-size: 30rpx;
+  color: rgb(145, 144, 144);
+}
 .delete-button-icon{
   height: 20px;
   width: 20px;

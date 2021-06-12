@@ -1,14 +1,17 @@
 <page>
     <view>
-        <navigator class="item" wx:for="{{5}}"
+        <navigator class="item" wx:for="{{blackList}}" wx:key="{{index}}"
                    bindtouchstart="handleTouchStart"
                    bindtouchend="handleTouchEnd"
                    bindlongpress="handleLongPress"
-                   bindtap="handleClick">
+                   bindtap="handleClick"
+                   data-id="{{item.id}}">
         <view class="user" >
-            <van-image round width="2.5rem" height="2.5rem" src="https://img.yzcdn.cn/vant/cat.jpeg"></van-image>
-            <view class="nickname">Camou</view>
+            <van-image round width="2.5rem" height="2.5rem" src="{{item.iconUrl}}"></van-image>
+            <view class="nickname">{{item.nickName}}</view>
         </view>
         </navigator>
     </view>
 </page>
+
+<van-dialog id="van-dialog" />

@@ -1,0 +1,36 @@
+<!--pages/party/edit_party/edit_party.wxml-->
+<view class="main">
+  <form action="">
+    <view class="party-theme-view">
+      <view class="party-view-title">拼局主题</view>
+    <view class='list-msg2' bindtap='bindShowMsg'>
+        <text>{{tihuoWay}}</text>
+        <image style='height:30rpx;width:30rpx;' src='../../../static/icons/down.png'></image>
+    </view>
+    <scroll-view scroll-y="true" class="select_box" wx:if="{{select}}">
+        <view class="select_one" bindtap="mySelect" data-name="{{item}}" wx:for="{{themeArray}}">{{item}}</view>
+    </scroll-view>
+    </view>
+    <view class="party-detail-view">
+    <view class="party-view-title">活动详情</view>
+    <view class="party-detail-content">
+      <textarea class="party-detaile-content-input" placeholder="在此输入活动详情" value="{{partyDetailContent}}" bindinput="getValue"></textarea>
+      <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" deletable="{{ true }}" max-count="9" class="party-detail-content-image" multiple="{{true}}" bind:delete="deleteImage"/>
+    </view>
+    
+    </view>
+    <view class="party-member-limited-view">
+      <view class="party-view-title">拼局人员</view>
+      <view class="party-member-view">
+        <view class="member-title"> 拼局人数</view>
+        <view class="member-stepper">
+          <view class="member-stepper-button" hover-class="hover-btn" bindtap="delmemberOp">-</view>
+          <view class="member-stepper-content">{{memNum}}</view>
+          <view class="member-stepper-button" hover-class="hover-btn" bindtap="addmemberOp">+</view>
+        </view>
+      </view>
+    </view>
+    <button class="create-button" bindtap="editParty">修改拼局</button>
+    <van-dialog id="van-dialog" />
+  </form>
+</view>

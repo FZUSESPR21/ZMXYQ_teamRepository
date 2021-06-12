@@ -16,7 +16,7 @@
     <!-- 下拉框开始 -->
     <view class = "dropdown-menu" style="z-index: {{zIndex}}">
       <van-dropdown-menu>
-        <van-dropdown-item  bind:open="onOpen" bind:closed="onClose" bind:change="onChange" value="{{ value1 }}" options="{{ option1 }}" />
+        <van-dropdown-item  bind:open="onOpen" bind:closed="onClose" bind:change="onChange" value="{{ nowType }}" options="{{ option1 }}" />
     </van-dropdown-menu>
     </view>
     <!-- 下拉框结束 -->

@@ -14,7 +14,8 @@ Page({
     }, {
       id: 2,
       value: '同学丁'
-    }]
+    }],
+    url: '../../../static/icons/avatar_default.png'
   },
 
   handleTap: function(e) {
@@ -23,11 +24,27 @@ Page({
     })
   },
 
+  setAvatarUrl: function(e) {
+    wx.getUserProfile({
+      desc: '获取用户头像等信息',
+      success: res => {
+        this.setData({
+          url: res.userInfo.avatarUrl
+        })
+        console.log('url------' , res.userInfo.avatarUrl)
+      },
+      fail: err => {
+        wx.showToast({
+          title: '失败了，淦',
+          icon: 'error'
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
   },
 
   /**

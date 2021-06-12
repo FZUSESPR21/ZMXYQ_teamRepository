@@ -1,4 +1,4 @@
-// pages/party/create_party/createparty.js
+// pages/party/edit_party/edit_party.js
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import { request } from "../../../utils/request"
 const timeago = require("timeago.js");
@@ -39,7 +39,8 @@ Page({
     partyDetailContent: "",
     buttonOperation: "创建组局(消耗50人品)",
     //
-    buttonOperationValue: 1,
+    buttonOperationValue: 2,
+    //party表中的image_urls
     imgUrls: [],
   },
 
@@ -47,8 +48,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (Object.getOwnPropertyNames(options).length != 0) {
-      // console.log(options.partyDetailContent)
       this.setData({
         partyDetailContent: options.partyDetailContent,
         memNum: parseInt(options.partyMemberCnt),
@@ -57,6 +56,7 @@ Page({
         fileList: JSON.parse(options.fileList),
         partyTypeId: options.partyTypeId
       })
+      console.log('fileList--------', this.data.fileList)
       // partyTypeId：从组局详情传过来的组局类型id。这里将它映射成具体的类型名称
       let { option1 } = this.data;
       let { partyTypeId } = this.data;
@@ -67,16 +67,14 @@ Page({
           })
         }
       })
-    }
   },
 
   onReady: function (e) {
-    if (this.data.buttonOperation == "修改拼局") {
-      this.setData({
-        buttonOperationValue: 2
-      })
-    }
+
   },
+  /**
+   * 下拉框显示/隐藏切换
+   */
   bindShowMsg: function () {
     this.setData({
       select: !this.data.select
@@ -99,42 +97,10 @@ Page({
       fileList: deletImageList
     })
   },
-  addmemberOp(e) {
-    if (this.data.memNum < 12) {
-      this.setData({
-        memNum: this.data.memNum + 1
-      })
-    }
-    else {
-      wx.showToast({
-        title: '人数限制',
-        icon: 'error',
-        duration: 1000
-      })
-    }
-  },
-  delmemberOp(e) {
-    if (this.data.memNum > 1) {
-      this.setData({
-        memNum: this.data.memNum - 1
-      })
-    }
-    else {
-      wx.showToast({
-        title: '人数不能少于1',
-        icon: 'error',
-        duration: 1000
-      })
-    }
-  },
-  mySelect(e) {
-    var name = e.currentTarget.dataset.name
-    this.setData({
-      tihuoWay: name,
-      select: false
-    })
-  },
-  createParty: function (e) {
+  /**
+   * 修改组局
+   */
+  editParty: function (e) {
     if (this.data.partyDetailContent == "")//判断拼局内容是否为空
     {
       Dialog.alert({
@@ -161,7 +127,6 @@ Page({
         }
       })
       // 新增代码结束
-
       let _this = this;
       const file = _this.data.fileList;
       let promiseArr = [];
@@ -199,12 +164,9 @@ Page({
                     return reject(e)
                   },
                   complete: function (complete) {
-
                     return complete;
                   }
                 })
-
-
               }
             });
           })
@@ -221,47 +183,41 @@ Page({
         _this.setData({
           imgUrls: imgServerUrls
         })
-        // console.log(_this.data.imgUrls)
-        if (_this.data.buttonOperationValue == 1) {
-          request({
-            url: app.globalData.baseUrl + '/api/party/insert',
-            method: "POST",
-            data: {
-              userId: _this.data.userId,
-              description: _this.data.partyDetailContent.toString(),
-              images: _this.data.imgUrls,
-              peopleCnt: _this.data.memNum,
-              partyTypeID: _this.data.value1
-            },
-            success(res) {
-              console.log(res);
-              if (res.data.code == 200) {
-                Dialog.alert({
-                  message: '发布成功',
-                }).then(() => {
-                  // on close
-                  wx.switchTab({
-                    url: '../index/index',
-                  })
-                });
-              }
-              else {
-                Dialog.alert({
-                  message: '发布失败\n' + res.data.message,
-                }).then(() => {
-                  // on close
-                });
-              }
-            },
-            fail: function (res) {
-              console.log(res);
+        //发送修改请求
+        let editData = {
+          partyId: parseInt(this.data.partyId),
+          description: this.data.partyDetailContent,
+          images: this.data.imgUrls,
+          peopleCnt: this.data.memNum,
+          partyTypeID: this.data.value1
+        }
+        request({
+          url: app.globalData.baseUrl + '/api/party/update',
+          method: "POST",
+          data: editData,
+          success(res) {
+            console.log(res);
+            if (res.statusCode == 200) {
+              Dialog.alert({
+                message: '修改拼局成功',
+              }).then(() => {
+                // on close
+              });
             }
-
-          })
-        }
-        else {
-          _this.editParty();
-        }
+            else {
+              Dialog.alert({
+                message: '修改拼局失败\n' + res.data.message,
+              }).then(() => {
+                // on close
+              });
+            }
+    
+          },
+          fail: function (res) {
+            console.log(res);
+          }
+    
+        })
       }).catch(
         reason => {
           console.log(reason)
@@ -273,48 +229,48 @@ Page({
 
   },
   /**
-   * 修改组局
+   * 获取活动详情输入框的值
    */
-  editParty: function (e) {
-    let editData = {
-      partyId: parseInt(this.data.partyId),
-      description: this.data.partyDetailContent,
-      images: this.data.imgUrls,
-      peopleCnt: this.data.memNum,
-      partyTypeID: this.data.value1
-    }
-    request({
-      url: app.globalData.baseUrl + '/api/party/update',
-      method: "POST",
-      data: editData,
-      success(res) {
-        console.log(res);
-        if (res.statusCode == 200) {
-          Dialog.alert({
-            message: '修改拼局成功',
-          }).then(() => {
-            // on close
-          });
-        }
-        else {
-          Dialog.alert({
-            message: '修改拼局失败\n' + res.data.message,
-          }).then(() => {
-            // on close
-          });
-        }
-
-      },
-      fail: function (res) {
-        console.log(res);
-      }
-
-    })
-  },
   getValue: function (e) {
     var _this = this;
     this.setData({
       partyDetailContent: e.detail.value
+    })
+  },
+
+  addmemberOp(e) {
+    if (this.data.memNum < 12) {
+      this.setData({
+        memNum: this.data.memNum + 1
+      })
+    }
+    else {
+      wx.showToast({
+        title: '人数限制',
+        icon: 'error',
+        duration: 1000
+      })
+    }
+  },
+  delmemberOp(e) {
+    if (this.data.memNum > 1) {
+      this.setData({
+        memNum: this.data.memNum - 1
+      })
+    }
+    else {
+      wx.showToast({
+        title: '人数不能少于1',
+        icon: 'error',
+        duration: 1000
+      })
+    }
+  },
+  mySelect(e) {
+    var name = e.currentTarget.dataset.name
+    this.setData({
+      tihuoWay: name,
+      select: false
     })
   }
 })

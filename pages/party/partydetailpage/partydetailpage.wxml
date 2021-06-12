@@ -31,6 +31,7 @@
   </view>
 <view class="partymemberview">
   <text class="party-detail-title2">局内成员</text>
+  <text class="max_num">({{partyMemmberCntNow}}/{{partyMemmberCnt}})</text>
   <button class="party-moveoff-button" wx:if="{{partyOwner}}" bindtap="showMoveOff">{{moveOffButtonText}}</button>
   <view class="partymemberlist">
     <view class="partymemberlistitem">

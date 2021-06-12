@@ -1,4 +1,4 @@
-/* pages/party/edit_party/edit_party.wxss */
+/* pages/party/create_party/createparty.wxss */
 page{
   background-color: #1a237e;
 }
