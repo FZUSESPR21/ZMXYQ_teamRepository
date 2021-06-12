@@ -189,7 +189,7 @@ Component({
 
   methods: {
     getPostsData(pageNum){
-        let postsData = this.data.postsData;
+        let postsData = [];
         if(pageNum == 1)
         {
           postsData = [];

@@ -71,7 +71,7 @@ Component({
         method:"POST",
         data:data,
         success:function (res) {
-          // console.log(res.data.data)
+          console.log(res.data.data)
           _this.setData({
             publisherMsg:res.data.data
           })
@@ -84,7 +84,14 @@ Component({
   },
   lifetimes:{
     ready(){
-      this.noPopUpGetPublisherMessage()
-    }
+      console.log(this.data.userId)
+      this.noPopUpGetPublisherMessage();
+      console.log(this.data.userId)
+    },
+    // attached: function() {
+    //   console.log(this.data.userId)
+    //   // 在组件实例进入页面节点树时执行
+    //   this.noPopUpGetPublisherMessage();
+    // },
   },
 })

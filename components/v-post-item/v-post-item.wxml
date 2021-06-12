@@ -3,7 +3,7 @@
     <block>
         <view class="feed-item">
             <view class="feed-source">
-                <v-name-card></v-name-card>
+                <v-name-card publisherMsg="{{postType}}" userId="{{publisherId}}"></v-name-card>
                 <image class="morebutton" mode="aspectFit" src="../../static/icons/moreInfo.png" bindtap="onTap" id="{{'morebutton'}}{{idx}}" data-idName="{{'morebutton'}}{{idx}}"></image>
                 <v-popover id='popover'>
                 <v-popover-item bindtap='editParty' hasline>举报</v-popover-item>

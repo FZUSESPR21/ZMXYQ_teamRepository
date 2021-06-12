@@ -234,16 +234,19 @@ Page({
           _this.setData({
             imgUrls:imgServerUrls
           })
-          console.log(_this.data.imgUrls)
+          console.log(_this.data.imgUrls);
+          let jsonStr = '{"userId":123456, "postTheme":3, "message": "111", "imageUrls": ""}';
+          let jsonValue = JSON.parse(jsonStr);
           wx.request({//创建组局请求
             url: app.globalData.baseUrl+'/api/posts/publish',
             method:'POST',
-            data:{
-              userId:123456,
-              postTheme:1,
-              message:_this.data.postContent,
-              imgUrls:_this.data.imgUrls.join(";")
-            },
+            // data:{
+            //   userId:123456,
+            //   postTheme:3,
+            //   message:_this.data.postContent,
+            //   imgUrls:_this.data.imgUrls.join(";")
+            // },
+            data: jsonValue,
             success:function(res)
             {
               console.log(_this.data.imgUrls)
