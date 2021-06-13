@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+
+import com.team.backend.util.ContentFilterUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author yangyu
  * @author Tars
- * @since 2021-04-28
+ * @since 2021 -04-28
  */
 @Service
 @Transactional
@@ -67,7 +69,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
       post.setMessage(message);
       post.setPostTypeId(postTheme);
       post.setPublisherId(userId);
-      post.setStatus(0);
+      post.setStatus(ContentFilterUtil.assumeContentStatus(message));
       postMapper.insert(post);
       info = ExceptionInfo.OK;
     }
