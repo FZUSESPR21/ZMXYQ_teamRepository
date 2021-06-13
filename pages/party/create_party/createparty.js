@@ -57,6 +57,7 @@ Page({
         fileList: JSON.parse(options.fileList),
         partyTypeId: options.partyTypeId
       })
+
       // partyTypeId：从组局详情传过来的组局类型id。这里将它映射成具体的类型名称
       let { option1 } = this.data;
       let { partyTypeId } = this.data;
@@ -89,7 +90,6 @@ Page({
     this.setData({
       fileList: _this.data.fileList.concat(event.detail.file)
     });
-
   },
   deleteImage: function (e) {
     const index = e.detail.index; //获取到点击要删除的图片的下标
@@ -152,7 +152,7 @@ Page({
       });
     }
     else {
-      // 新增代码：传递用户openid；传递正确partType
+      // 传递正确partType
       this.data.option1.forEach((i) => {
         if (i.text == this.data.tihuoWay) {
           this.setData({
@@ -160,7 +160,6 @@ Page({
           })
         }
       })
-      // 新增代码结束
 
       let _this = this;
       const file = _this.data.fileList;
@@ -195,7 +194,7 @@ Page({
                   },
                   fail: function (e) {
                     console.log(e);
-                    console.log("上传图片失败");
+                    console.log("上传图片失败\n" + res.data.message);
                     return reject(e)
                   },
                   complete: function (complete) {
@@ -211,9 +210,8 @@ Page({
         )
       })
       Promise.all(promiseArr).then(function (values) {
-        // console.log(values);
+        console.log('values-------\n',values);
         values.forEach(function (e) {
-          // console.log(e);
           imgServerUrls.push(e.data.data)
         })
 
@@ -249,14 +247,22 @@ Page({
                 Dialog.alert({
                   message: '发布失败\n' + res.data.message,
                 }).then(() => {
-                  // on close
+                  wx.switchTab({
+                    url: '../index/index',
+                  })
                 });
               }
             },
             fail: function (res) {
-              console.log(res);
+              Dialog.alert({
+                message: 'fail\n' + res ,
+              }).then(() => {
+                wx.switchTab({
+                  url: '../index/index',
+                })
+              })
+              console.log('发布失败原因----', res);
             }
-
           })
         }
         else {
@@ -267,10 +273,7 @@ Page({
           console.log(reason)
         }
       )
-
-
     }
-
   },
   /**
    * 修改组局
