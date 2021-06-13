@@ -158,6 +158,9 @@ Page({
       else {
         // 判断:图片有修改过
         if (isImageEdited) {
+          let _this = this
+          let promiseArray = []
+          const FSM = wx.getFileSystemManager();
           let imgUrls = []
           let {fileList} = this.data;
           let {originalFileList} = this.data;
@@ -187,8 +190,8 @@ Page({
           }
           //判断：图片列表不为空
           else {
-              pendingList.forEach( (file, index) => {
-                const FSM = wx.getFileSystemManager();
+            pendingList.forEach( (file, index) => {
+              let promise = new Promise(function(resolve, reject) {
                 let imageType = getApp().getImageType(file.url);
                 FSM.readFile({
                   filePath: file.url,
@@ -203,6 +206,7 @@ Page({
                       },
                       success(res) {
                         imgUrls.push(res.data.data)
+                        resolve()
                       },
                       fail(err) {
                         Dialog.alert({
@@ -217,56 +221,61 @@ Page({
                     Dialog.alert({
                       message: '接口readFile调用失败' + err.errMsg
                     }).then(()=> {
-  
                     })
                   }
                 })
               })
+              promiseArray.push(promise)
+            })
           }
           // 获得了所有图片的url后缀后,将party修改提交
-          this.setData({
-            imgUrls: imgUrls
-          })
-          let editData = {
-            partyId: parseInt(this.data.partyId),
-            description: this.data.partyDetailContent,
-            images: this.data.imgUrls,
-            peopleCnt: this.data.memNum,
-            partyTypeID: this.data.partyTypeId
-          }
-          wx.request({
-            url: baseUrl + '/api/party/update',
-            method: 'POST',
-            data: editData,
-            success(res) {
-              console.log('修改提交到服务器返回res---------', res);
-              if(res.statusCode == 200) {
-                Dialog.alert({
-                  message: '修改拼局成功'
-                }).then(() =>{
-                  wx.navigateBack({
-                    delta: 0,
-                  })
-                })
-              }
-              else {
-                Dialog.alert({
-                  message: '修改拼局失败\n' + res.statusCode
-                }).then(() => {
-
-                })
-              }
-            },
-            fail(err){
-              console.log('组局修改失败--------', err)
-              Dialog.alert({
-                message: '组局修改失败'
-              }).then(() => {
-
-              })
+          Promise.all(promiseArray).then(() => {
+            console.log('------------有没有进来啊')
+            _this.setData({
+              imgUrls: imgUrls
+            })
+            let editData = {
+              partyId: parseInt(this.data.partyId),
+              description: this.data.partyDetailContent,
+              images: this.data.imgUrls,
+              peopleCnt: parseInt(this.data.memNum),
+              partyTypeID: parseInt(this.data.partyTypeId)
             }
+            console.log('editData---------------\n', editData)
+            wx.request({
+              url: baseUrl + '/api/party/update',
+              method: 'POST',
+              data: editData,
+              success(res) {
+                console.log('修改提交到服务器返回res---------', res);
+              console.log('editData---------------\n', editData)
+                if(res.statusCode == 200) {
+                  Dialog.alert({
+                    message: '修改拼局成功'
+                  }).then(() =>{
+                    wx.navigateBack({
+                      delta: 0,
+                    })
+                  })
+                }
+                else {
+                  Dialog.alert({
+                    message: '修改拼局失败\n' + res.statusCode
+                  }).then(() => {
+  
+                  })
+                }
+              },
+              fail(err){
+                console.log('组局修改失败--------', err)
+                Dialog.alert({
+                  message: '组局修改失败'
+                }).then(() => {
+  
+                })
+              }
+            })
           })
-          console.log('editData=----------\n', editData)
         }
         // 判断:图片没有修改过,直接将原来的图片url的后缀作为参数传递
         else {
@@ -278,16 +287,17 @@ Page({
             partyId: parseInt(this.data.partyId),
             description: this.data.partyDetailContent,
             images: this.data.imgUrls,
-            peopleCnt: this.data.memNum,
-            partyTypeID: this.data.partyTypeId
+            peopleCnt: parseInt(this.data.memNum),
+            partyTypeID: parseInt(this.data.partyTypeId)
           }
-          console.log('editData=----------\n', editData)
+          console.log('editData=----------\n', JSON.stringify(editData))
           wx.request({
             url: baseUrl + '/api/party/update',
             method: 'POST',
             data: editData,
             success(res) {
               console.log('修改提交到服务器返回res---------', res);
+              console.log('editData---------------\n', editData)
               if(res.statusCode == 200) {
                 Dialog.alert({
                   message: '修改拼局成功'
