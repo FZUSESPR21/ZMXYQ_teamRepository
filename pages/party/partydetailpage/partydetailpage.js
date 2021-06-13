@@ -35,7 +35,8 @@ Page({
      publisherName:"楼主"
     },
     commentInputText: "",
-    moveOffButtonText:"移除成员"
+    moveOffButtonText:"移除成员",
+    isFirstEnter: true
   },
 
   /** 
@@ -44,13 +45,19 @@ Page({
   */
   onLoad: function (options) {
     this.setData({
-      partyID: options.partyID
+      partyID: options.partyID,
+      isFirstEnter: false
     });
     this.getPartyDetail();//获取组局详情
     this.getPartyCommentList();//获取组局评论列表
     this.popover = this.selectComponent('#popover');
   },
 
+  onShow: function () {
+    if(!this.data.isFirstEnter) {
+      this.getPartyDetail()
+    }
+  },
   // 加入或退出组局函数
   joinParty: function (e) {
     //  
@@ -138,8 +145,8 @@ Page({
       },
       success: function (res) {
         let data = res.data.data;
-        console.log('success-------res=\n',res);
-        console.log(data);
+        // console.log('success-------res=\n',res);
+        // console.log(data);
         if (data != null) {
           _this.setData({
             partyID: data.partyID,

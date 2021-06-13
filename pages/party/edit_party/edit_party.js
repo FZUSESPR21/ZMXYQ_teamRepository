@@ -32,10 +32,11 @@ Page({
     memNum: 1,
     // 当前选中项
     tihuoWay: '全部主题',
-    // 图片文件列表
+    // 图片文件列表，从详情页传过来的
     fileList: [],
-    // 
-    base64fileList: [],
+    // 图片文件初始列表
+    originalFileList: [],
+
     partyDetailContent: "",
     buttonOperation: "创建组局(消耗50人品)",
     //
@@ -57,6 +58,7 @@ Page({
         buttonOperation: options.operation,
         partyId: parseInt(options.partyID),
         fileList: JSON.parse(options.fileList),
+        originalFileList: JSON.parse(options.fileList),
         partyTypeId: options.partyTypeId
       })
       console.log('fileList--------', this.data.fileList)
@@ -104,13 +106,9 @@ Page({
       isEdited: true,
       isImageEdited: true
     });
-
+    console.log('new fileList=---------\n', this.data.fileList)
   },
   deleteImage: function (e) {
-    this.setData({
-      isEdited: true,
-      isImageEdited: true
-    })
     const index = e.detail.index; //获取到点击要删除的图片的下标
     const deletImageList = this.data.fileList //用一个变量将本地的图片数组保存起来
     Dialog.confirm({
@@ -118,7 +116,9 @@ Page({
     }).then( () => {
       deletImageList.splice(index, 1) //删除下标为index的元素，splice的返回值是被删除的元素
       this.setData({
-        fileList: deletImageList
+        fileList: deletImageList,
+        isImageEdited: true,
+        isEdited: true
       })
     }).catch( () => {
       //close
@@ -129,6 +129,8 @@ Page({
    */
   editParty: function (e) {
     let {isEdited} = this.data
+    let {isImageEdited} = this.data
+    //判断：如果没有修改过，发出提示
     if (!isEdited) {
       Dialog.confirm({
         message: '没有改动，是否返回？'
@@ -141,17 +143,178 @@ Page({
         //close
       })
     }
+    // 判断：有修改过组局
     else {
-      wx.showToast({
-        title: 'hhhhhh'
-      })
-      if (this.data.partyDetailContent == "")//判断拼局内容是否为空
+      // 判断:拼局内容是否为空
+      if (this.data.partyDetailContent == "")
       {
         Dialog.alert({
           message: '活动详情不能为空',
         }).then(() => {
           // on close
         });
+      }
+      // 判断:内容不为空
+      else {
+        // 判断:图片有修改过
+        if (isImageEdited) {
+          let imgUrls = []
+          let {fileList} = this.data;
+          let {originalFileList} = this.data;
+          // 待处理的图片列表
+          let pendingList = []
+          // 最终图片列表与初始图片列表相交的图片
+          let intersectingList = []
+          // 存储以上两个列表
+          let pendingAndIntersectingList = []
+            pendingAndIntersectingList = processFileList(originalFileList, fileList)
+            intersectingList = pendingAndIntersectingList[0]
+            pendingList = pendingAndIntersectingList[1]
+            // 获取初始图片列表相交的图片的url的后缀
+            if(intersectingList.length != 0) {
+              imgUrls = getSuffix(intersectingList);
+              console.log('intersectingList---------', intersectingList)
+              console.log('suffix---------', imgUrls)
+            }
+            console.log('函数返回值为-------\n', pendingAndIntersectingList)
+            //判断：如果图片列表为空
+          if(pendingList.length == 0 && intersectingList.length == 0) {
+            Dialog.alert({
+              message: '图片不能为空！'
+            }).then(() => {
+              //关闭
+            })
+          }
+          //判断：图片列表不为空
+          else {
+              pendingList.forEach( (file, index) => {
+                const FSM = wx.getFileSystemManager();
+                let imageType = getApp().getImageType(file.url);
+                FSM.readFile({
+                  filePath: file.url,
+                  encoding: 'base64',
+                  success(res) {
+                    wx.request({
+                      url: baseUrl + '/api/posts/imgupload',
+                      method: 'POST',
+                      data: {
+                        base64Str: imageType +  res.data,
+                        filename: "111"
+                      },
+                      success(res) {
+                        imgUrls.push(res.data.data)
+                      },
+                      fail(err) {
+                        Dialog.alert({
+                          message: '请求失败,图片上传失败'
+                        }).then( () => {
+                          //close
+                        })
+                      }
+                    })
+                  },
+                  fail(err) {
+                    Dialog.alert({
+                      message: '接口readFile调用失败' + err.errMsg
+                    }).then(()=> {
+  
+                    })
+                  }
+                })
+              })
+          }
+          // 获得了所有图片的url后缀后,将party修改提交
+          this.setData({
+            imgUrls: imgUrls
+          })
+          let editData = {
+            partyId: parseInt(this.data.partyId),
+            description: this.data.partyDetailContent,
+            images: this.data.imgUrls,
+            peopleCnt: this.data.memNum,
+            partyTypeID: this.data.partyTypeId
+          }
+          wx.request({
+            url: baseUrl + '/api/party/update',
+            method: 'POST',
+            data: editData,
+            success(res) {
+              console.log('修改提交到服务器返回res---------', res);
+              if(res.statusCode == 200) {
+                Dialog.alert({
+                  message: '修改拼局成功'
+                }).then(() =>{
+                  wx.navigateBack({
+                    delta: 0,
+                  })
+                })
+              }
+              else {
+                Dialog.alert({
+                  message: '修改拼局失败\n' + res.statusCode
+                }).then(() => {
+
+                })
+              }
+            },
+            fail(err){
+              console.log('组局修改失败--------', err)
+              Dialog.alert({
+                message: '组局修改失败'
+              }).then(() => {
+
+              })
+            }
+          })
+          console.log('editData=----------\n', editData)
+        }
+        // 判断:图片没有修改过,直接将原来的图片url的后缀作为参数传递
+        else {
+          let suffixList = getSuffix(this.data.originalFileList)
+          this.setData({
+            imgUrls: suffixList
+          })
+          let editData = {
+            partyId: parseInt(this.data.partyId),
+            description: this.data.partyDetailContent,
+            images: this.data.imgUrls,
+            peopleCnt: this.data.memNum,
+            partyTypeID: this.data.partyTypeId
+          }
+          console.log('editData=----------\n', editData)
+          wx.request({
+            url: baseUrl + '/api/party/update',
+            method: 'POST',
+            data: editData,
+            success(res) {
+              console.log('修改提交到服务器返回res---------', res);
+              if(res.statusCode == 200) {
+                Dialog.alert({
+                  message: '修改拼局成功'
+                }).then(() =>{
+                  wx.navigateBack({
+                    delta: 0,
+                  })
+                })
+              }
+              else {
+                Dialog.alert({
+                  message: '修改拼局失败\n' + res.statusCode
+                }).then(() => {
+
+                })
+              }
+            },
+            fail(err){
+              console.log('组局修改失败--------', err)
+              Dialog.alert({
+                message: '组局修改失败'
+              }).then(() => {
+
+              })
+            }
+          })
+        }
       }
     }
   },
@@ -212,3 +375,44 @@ Page({
     } )
   }
 })
+/**
+ * 图片列表处理函数，最开始的就有的图片不用处理，新增的图片要进行处理
+ * @param {'图片的最终列表'} final 
+ * @param {'图片的初始列表'} original 
+ */
+function processFileList(original, final) {
+  //待处理的 和 与初始列表相交的图片列表
+  let pendingAndIntersectingList = [];
+  let pendingList = [];
+  let intersectingList = []
+  final.forEach((item) => {
+    let flag = true
+    original.forEach((i) => {
+      if(item.url == i.url) {
+        intersectingList.push(item)
+        flag = false
+      }
+    })
+    if(flag) {
+      pendingList.push(item)
+    }
+  })
+  pendingAndIntersectingList.push(intersectingList);
+  pendingAndIntersectingList.push(pendingList);
+  return pendingAndIntersectingList;
+}
+/**
+ * 
+ * @param {'获得url的后缀'} 
+ */
+function getSuffix(interList) {
+  let interUrls = []
+  interList.forEach((item, index) => {
+    let array = item.url.split('/')
+    let suffix = array[array.length - 1]
+    console.log(index , '-----------\n',  item)
+    interUrls.push(suffix)
+  })
+  console.log('interUrls---------', interUrls)
+  return interUrls;
+}
