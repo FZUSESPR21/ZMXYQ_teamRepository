@@ -14,7 +14,7 @@
     <view class="party-detail-view">
     <view class="party-view-title">活动详情</view>
     <view class="party-detail-content">
-      <textarea class="party-detaile-content-input" placeholder="在此输入活动详情" value="{{partyDetailContent}}" bindinput="getValue"></textarea>
+      <textarea class="party-detaile-content-input" placeholder="在此输入活动详情" value="{{partyDetailContent}}" bindinput="getValue" hidden="{{select}}"></textarea>
       <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" deletable="{{ true }}" max-count="9" class="party-detail-content-image" multiple="{{true}}" bind:delete="deleteImage"/>
     </view>
     

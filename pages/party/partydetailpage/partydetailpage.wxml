@@ -73,7 +73,7 @@
 </view>
 <view class="comment-box">
 <form action="" class="input-form">
-  <textarea  bindblur="bindTextAreaBlur" confirm-type="send" class="message-area" placeholder="{{'请输入回复'+commentMessage.publisherName+'的评论'}}" focus="true" value="{{commentInputText}}" bindinput="getValue"></textarea>
+  <textarea  bindblur="bindTextAreaBlur" confirm-type="send" class="message-area" placeholder="{{'请输入回复'+commentMessage.publisherName+'的评论'}}" value="{{commentInputText}}" bindinput="getValue" fixed="true" cursor-spacing="30"></textarea>
   <button class="send-button" bindtap="sendComment">发送</button>
 </form>
   

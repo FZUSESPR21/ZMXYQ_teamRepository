@@ -16,6 +16,7 @@ App({
     userInfo: null,
     baseUrl:"http://ccreater.top:61112",
     // baseUrl:"http://192.168.50.167:8088"
+    // baseUrl: "http://192.168.50.167:8088"
   },
   getImageType: function (src) {
     let imageType = "";

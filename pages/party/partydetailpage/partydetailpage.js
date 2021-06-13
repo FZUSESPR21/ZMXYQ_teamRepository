@@ -229,6 +229,9 @@ Page({
           type: 'success',
           message: '评论成功'
         });
+        _this.setData({
+          commentInputText:""
+        })
         _this.getPartyCommentList()
       },
       fail:function (res) {
