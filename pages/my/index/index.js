@@ -46,6 +46,12 @@ Page({
     })
   },
 
+  goToRegulation(){
+    wx.navigateTo({
+      url: '../norm/norm'
+    })
+  },
+
   goToMyCollection(){
     wx.navigateTo({
       url: '../my_collection/my_collection'
