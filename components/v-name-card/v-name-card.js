@@ -62,6 +62,7 @@ Component({
     },
     noPopUpGetPublisherMessage:function(e)
     {
+      console.log(this.data.userId)
       let data={
         publisherId:this.data.userId
       };
@@ -71,27 +72,22 @@ Component({
         method:"POST",
         data:data,
         success:function (res) {
-          console.log(res.data.data)
+          // console.log(res.data.data)
           _this.setData({
             publisherMsg:res.data.data
           })
-          _this.setData({
-            publisherTime:timeago.format(new Date(_this.data.publisherTime),'zh_CN'),
-          })
+          if(_this.data.publisherTime){
+            _this.setData({
+              publisherTime:timeago.format(new Date(_this.data.publisherTime),'zh_CN'),
+            })
+          }
         }
       })
     },
   },
   lifetimes:{
     ready(){
-      console.log(this.data.userId)
       this.noPopUpGetPublisherMessage();
-      console.log(this.data.userId)
-    },
-    // attached: function() {
-    //   console.log(this.data.userId)
-    //   // 在组件实例进入页面节点树时执行
-    //   this.noPopUpGetPublisherMessage();
-    // },
+    }
   },
 })
