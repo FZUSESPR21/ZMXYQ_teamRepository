@@ -21,6 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+
+import com.team.backend.util.ContentFilterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +56,7 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
     if (postComment != null && postComment.getIdFrom() != null && postComment.getIdTo() != null
         && postComment.getPostId() != null && postComment.getPreId() != null
         && !StringUtils.isBlank(postComment.getMessage())) {
-      postComment.setStatus(0);
+      postComment.setStatus(ContentFilterUtil.assumeContentStatus(postComment.getMessage()));
       if (postCommentMapper.insert(postComment) == 1) {
         if (postComment.getIdTo() <= 0) {//idTo传入小于等于0，表明是一级评论，数据库中preId与Id相同
           UpdateWrapper<PostComment> updateWrapper = new UpdateWrapper<>();
@@ -63,22 +65,24 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
           postComment.setIdTo(-1L);
           postCommentMapper.update(postComment, updateWrapper);
         }
-        //添加评论消息记录
-        Notification notification = new Notification();
-        notification.setType(0);//消息对应类型(0:评论,1:点赞,2:赞赏,3:收藏)
-        notification.setIsRead(0);
-        notification.setSourceId(postComment.getId());
-        QueryWrapper<Post> postWrapper = new QueryWrapper<>();
-        postWrapper.eq("id", postComment.getPostId());
-        postWrapper.select("publisher_id");
-        Post post = postMapper.selectOne(postWrapper);
-        if (postComment.getIdTo() == -1) {
-          notification.setUserId(post.getPublisherId());
-        } else {
-          notification.setUserId(postComment.getIdTo());
-        }
-        if (notificationMapper.insert(notification) == 1) {
-          result = true;
+        //若通过审核，添加评论消息记录
+        if (postComment.getStatus() == 0) {
+          Notification notification = new Notification();
+          notification.setType(0);//消息对应类型(0:评论,1:点赞,2:赞赏,3:收藏)
+          notification.setIsRead(0);
+          notification.setSourceId(postComment.getId());
+          QueryWrapper<Post> postWrapper = new QueryWrapper<>();
+          postWrapper.eq("id", postComment.getPostId());
+          postWrapper.select("publisher_id");
+          Post post = postMapper.selectOne(postWrapper);
+          if (postComment.getIdTo() == -1) {
+            notification.setUserId(post.getPublisherId());
+          } else {
+            notification.setUserId(postComment.getIdTo());
+          }
+          if (notificationMapper.insert(notification) == 1) {
+            result = true;
+          }
         }
       }
     }
