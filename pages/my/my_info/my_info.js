@@ -28,7 +28,7 @@ Page({
         console.log(res);
         if (res.data.code === 200){
           let tempData = res.data.data;
-          console.log(tempData);
+          // console.log(tempData);
           tempData.user.userIconUrl = baseUrl + "/static/" + tempData.user.userIconUrl;
           that.setData({
             UserInfo:res.data.data.user,
