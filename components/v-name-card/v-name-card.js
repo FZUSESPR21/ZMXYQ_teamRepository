@@ -29,6 +29,7 @@ Component({
     publisherGender:"",
     publisherHeadUrl:"",
     showPopUp:false,
+    baseUrl: app.globalData.baseUrl
   },
 
   /**
@@ -87,6 +88,7 @@ Component({
   },
   lifetimes:{
     ready(){
+      console.log(this.data.baseUrl);
       this.noPopUpGetPublisherMessage();
     }
   },
