@@ -15,7 +15,7 @@
                     <view class="nickname">{{item.nickName}}</view>
                 </view>
 
-                <view class="time">24分钟前</view>
+                <view class="time">{{item.postTime}}</view>
             </view>
         </view>
     </navigator>

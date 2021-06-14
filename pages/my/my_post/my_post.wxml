@@ -11,7 +11,7 @@
             </view>
             <view class="info">
                 <view class="nickname">{{item.publisherName}}</view>
-                <view class="time">24分钟前</view>
+                <view class="time">{{item.gmtCreate}}</view>
             </view>
         </view>
     </navigator>
