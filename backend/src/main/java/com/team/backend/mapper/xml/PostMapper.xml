@@ -2,42 +2,330 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.backend.mapper.PostMapper">
 
-    <select id="listPostPageOrderByGmtCreateDesc" parameterType="long" resultMap="postToShowOptimized">
-        select post.id as id,
-               post.publisher_id as publisher_id,
-               post.status as status,
-               post.post_type_id as post_type_id,
-               post.message as message,
-               post.image_urls as image_urls,
-               post.gmt_create as gmt_create,
-               post.gmt_modified as gmt_modified,
-               post.deleted as deleted,
-               user.username as username,
-               post_type.name as post_type_name,
-               ${currentUserId} as currentUserId
-        from post,user,post_type
-        where post.deleted = 0
-        and post.status = 0
-        and post.publisher_id = user.id
-        and post.post_type_id = post_type.id
-        order by gmt_create desc,id desc
+    <select id="listPostPageOrderByGmtCreateDesc" parameterType="long" resultMap="postToShowOptimized2">
+        SELECT
+            posts.*,
+            comments.*
+        FROM
+            (
+                SELECT
+                    posts.*,
+                    IFNULL(reward.reward_num,0) AS reward_num
+                FROM
+                    (
+                        SELECT
+                            posts.*,
+                            count(liked.user_liked) AS is_liked
+                        FROM
+                            (
+                                SELECT
+                                    posts.*,
+                                    COUNT(post_like.id) AS like_num
+                                FROM
+                                    (
+                                        SELECT
+                                            posts.*,
+                                            COUNT(is_eye_on) AS is_eye_on
+                                        FROM
+                                            (
+                                                SELECT
+                                                    posts.*,
+                                                    count(post_eye_on.id) AS eye_on_num
+                                                FROM
+                                                    (
+                                                        SELECT
+                                                            post.id AS id,
+                                                            post.publisher_id AS publisher_id,
+                                                            post.`status` AS `status`,
+                                                            post.post_type_id AS post_type_id,
+                                                            post.message AS message,
+                                                            post.image_urls AS image_urls,
+                                                            post.gmt_create AS gmt_create,
+                                                            post.gmt_modified AS gmt_modified,
+                                                            post.deleted AS deleted,
+                                                            `user`.username AS username,
+                                                            post_type.`name` AS post_type_name,
+                                                            #{currentUserId} AS currentUserId
+                                                        FROM
+                                                            post,
+                                                            `user`,
+                                                            post_type
+                                                        WHERE
+                                                            post.deleted = 0 AND
+                                                            post.`status` = 0 AND
+                                                            post.publisher_id = `user`.id AND
+                                                            post.post_type_id = post_type.id
+                                                        ORDER BY
+                                                            gmt_create DESC,
+                                                            id DESC
+                                                    ) AS posts
+                                                        LEFT JOIN
+                                                    post_eye_on
+                                                    ON
+                                                        (
+                                                            posts.id = post_eye_on.post_id
+                                                            )
+                                                GROUP BY
+                                                    posts.id
+                                            ) AS posts
+                                                LEFT JOIN
+                                            (
+                                                SELECT
+                                                    post_eye_on.post_id,
+                                                    count(distinct id) AS is_eye_on
+                                                FROM
+                                                    post_eye_on
+                                                WHERE
+                                                    deleted = 0 AND
+                                                    id_from = #{currentUserId}
+                                                GROUP BY
+                                                    post_eye_on.post_id
+                                            ) AS eye_on
+                                            ON
+                                                (
+                                                    posts.id = eye_on.post_id
+                                                    )
+                                        GROUP BY
+                                            posts.id
+                                    ) AS posts
+                                        LEFT JOIN
+                                    post_like
+                                    ON
+                                        (
+                                            post_like.post_id = posts.id
+                                            )
+                                GROUP BY
+                                    posts.id
+                            ) AS posts
+                                LEFT JOIN
+                            (
+                                SELECT
+                                    post_id,
+                                    count(distinct id) AS user_liked
+                                FROM
+                                    post_like
+                                WHERE
+                                    deleted = 0 AND
+                                    id_from = #{currentUserId}
+                                GROUP BY
+                                    post_id
+                            ) AS liked
+                            ON
+                                (
+                                    posts.id = liked.post_id
+                                    )
+                        GROUP BY
+                            posts.id
+                    ) AS posts
+                        LEFT JOIN
+                    (
+                        SELECT
+                            post_id,
+                            sum(amount) AS reward_num
+                        FROM
+                            post_reward
+                        WHERE
+                            deleted = 0 AND
+                            id_from = #{currentUserId}
+                        GROUP BY
+                            post_id
+                    ) AS reward
+                    ON
+                        (
+                            posts.id = reward.post_id
+                            )
+            ) AS posts
+                LEFT JOIN
+            (
+                SELECT
+                    post_comment.id AS comment_id,
+                    post_comment.gmt_create AS comment_gmt_create,
+                    post_comment.gmt_modified AS comment_gmt_modified,
+                    post_comment.deleted AS comment_deleted,
+                    pre_id AS comment_pre_id,
+                    post_id AS comment_post_id,
+                    id_from AS comment_id_from,
+                    post_comment.`status` AS comment_status,
+                    message AS comment_message,
+                    id_to AS comment_id_to,
+                    `user`.username AS comment_name_from
+                FROM
+                    post_comment,
+                    `user`
+                WHERE
+                    post_comment.deleted = 0 AND
+                    post_comment.id_from = `user`.id AND
+                        post_comment.id IN ((SELECT min(post_comment.id) from post_comment WHERE deleted=0 and status=0 GROUP BY post_id))
+                ORDER BY
+                    post_comment.gmt_create ASC
+            ) AS comments
+            ON
+                (
+                    comments.comment_post_id = posts.id
+                    )
     </select>
-    <select id="fuzzyListPostPageOrderByGmtCreateDesc" parameterType="map" resultMap="postToShow">
-        select id,
-               publisher_id,
-               status,
-               post_type_id,
-               message,
-               image_urls,
-               gmt_create,
-               gmt_modified,
-               deleted,
-               ${queryMap.currentUserId} as currentUserId
-        from post
-        where deleted = 0
-          and status = 0
-          and message like concat('%',#{queryMap.content},'%')
-        order by gmt_create desc,id desc
+    <select id="fuzzyListPostPageOrderByGmtCreateDesc" parameterType="map" resultMap="postToShowOptimized2">
+        SELECT
+            posts.*,
+            comments.*
+        FROM
+            (
+                SELECT
+                    posts.*,
+                    IFNULL(reward.reward_num,0) AS reward_num
+                FROM
+                    (
+                        SELECT
+                            posts.*,
+                            count(liked.user_liked) AS is_liked
+                        FROM
+                            (
+                                SELECT
+                                    posts.*,
+                                    COUNT(post_like.id) AS like_num
+                                FROM
+                                    (
+                                        SELECT
+                                            posts.*,
+                                            COUNT(is_eye_on) AS is_eye_on
+                                        FROM
+                                            (
+                                                SELECT
+                                                    posts.*,
+                                                    count(post_eye_on.id) AS eye_on_num
+                                                FROM
+                                                    (
+                                                        SELECT
+                                                            post.id AS id,
+                                                            post.publisher_id AS publisher_id,
+                                                            post.`status` AS `status`,
+                                                            post.post_type_id AS post_type_id,
+                                                            post.message AS message,
+                                                            post.image_urls AS image_urls,
+                                                            post.gmt_create AS gmt_create,
+                                                            post.gmt_modified AS gmt_modified,
+                                                            post.deleted AS deleted,
+                                                            `user`.username AS username,
+                                                            post_type.`name` AS post_type_name,
+                                                            #{currentUserId} AS currentUserId
+                                                        FROM
+                                                            post,
+                                                            `user`,
+                                                            post_type
+                                                        WHERE
+                                                            post.message LIKE concat('%',#{content},'%') AND
+                                                            post.deleted = 0 AND
+                                                            post.`status` = 0 AND
+                                                            post.publisher_id = `user`.id AND
+                                                            post.post_type_id = post_type.id
+                                                        ORDER BY
+                                                            gmt_create DESC,
+                                                            id DESC
+                                                    ) AS posts
+                                                        LEFT JOIN
+                                                    post_eye_on
+                                                    ON
+                                                        (
+                                                            posts.id = post_eye_on.post_id
+                                                            )
+                                                GROUP BY
+                                                    posts.id
+                                            ) AS posts
+                                                LEFT JOIN
+                                            (
+                                                SELECT
+                                                    post_eye_on.post_id,
+                                                    count(distinct id) AS is_eye_on
+                                                FROM
+                                                    post_eye_on
+                                                WHERE
+                                                    deleted = 0 AND
+                                                    id_from = #{currentUserId}
+                                                GROUP BY
+                                                    post_eye_on.post_id
+                                            ) AS eye_on
+                                            ON
+                                                (
+                                                    posts.id = eye_on.post_id
+                                                    )
+                                        GROUP BY
+                                            posts.id
+                                    ) AS posts
+                                        LEFT JOIN
+                                    post_like
+                                    ON
+                                        (
+                                            post_like.post_id = posts.id
+                                            )
+                                GROUP BY
+                                    posts.id
+                            ) AS posts
+                                LEFT JOIN
+                            (
+                                SELECT
+                                    post_id,
+                                    count(distinct id) AS user_liked
+                                FROM
+                                    post_like
+                                WHERE
+                                    deleted = 0 AND
+                                    id_from = #{currentUserId}
+                                GROUP BY
+                                    post_id
+                            ) AS liked
+                            ON
+                                (
+                                    posts.id = liked.post_id
+                                    )
+                        GROUP BY
+                            posts.id
+                    ) AS posts
+                        LEFT JOIN
+                    (
+                        SELECT
+                            post_id,
+                            sum(amount) AS reward_num
+                        FROM
+                            post_reward
+                        WHERE
+                            deleted = 0 AND
+                            id_from = #{currentUserId}
+                        GROUP BY
+                            post_id
+                    ) AS reward
+                    ON
+                        (
+                            posts.id = reward.post_id
+                            )
+            ) AS posts
+                LEFT JOIN
+            (
+                SELECT
+                    post_comment.id AS comment_id,
+                    post_comment.gmt_create AS comment_gmt_create,
+                    post_comment.gmt_modified AS comment_gmt_modified,
+                    post_comment.deleted AS comment_deleted,
+                    pre_id AS comment_pre_id,
+                    post_id AS comment_post_id,
+                    id_from AS comment_id_from,
+                    post_comment.`status` AS comment_status,
+                    message AS comment_message,
+                    id_to AS comment_id_to,
+                    `user`.username AS comment_name_from
+                FROM
+                    post_comment,
+                    `user`
+                WHERE
+                    post_comment.deleted = 0 AND
+                    post_comment.id_from = `user`.id AND
+                        post_comment.id IN ((SELECT min(post_comment.id) from post_comment WHERE deleted=0 and status=0 GROUP BY post_id))
+                ORDER BY
+                    post_comment.gmt_create ASC
+            ) AS comments
+            ON
+                (
+                    comments.comment_post_id = posts.id
+                    )
     </select>
 
     <select id="listPostPageByTypeId" parameterType="long" resultMap="postToShow">
@@ -132,6 +420,40 @@
         <collection property="comments" ofType="com.team.backend.model.PostComment" column="id"
                     select="selectPostCommentByPostId">
                 <result property="nameFrom" column="name_from"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="postToShowOptimized2" type="com.team.backend.model.Post">
+        <id column="id" property="id"/>
+        <result property="publisherId" column="publisher_id"/>
+        <result property="status" column="status"/>
+        <result property="postTypeId" column="post_type_id"/>
+        <result property="message" column="message"/>
+        <result property="imageUrls" column="image_urls"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="deleted" column="deleted"/>
+        <result property="currentUserId" column="currentUserId"/>
+        <result property="publisherName" column="username"/>
+        <result property="postTypeName" column="post_type_name"/>
+        <result property="eyeOnNum" column="eye_on_num" />
+        <result property="likeNum" column="like_num" />
+        <result property="isEyeOn" column="is_eye_on" />
+        <result property="isLike" column="is_liked" />
+        <result property="rewardNum" column="reward_num" />
+        <collection property="comments" ofType="com.team.backend.model.PostComment" >
+            <id property="id" column="comment_id"/>
+            <result property="nameFrom" column="name_from"/>
+            <result property="gmtCreate" column="comment_gmt_create"/>
+            <result property="gmtModified" column="comment_gmt_modified"/>
+            <result property="deleted" column="comment_deleted"/>
+            <result property="preId" column="comment_pre_id"/>
+            <result property="postId" column="comment_post_id"/>
+            <result property="idFrom" column="comment_id_from"/>
+            <result property="status" column="comment_status"/>
+            <result property="message" column="comment_message"/>
+            <result property="idTo" column="comment_id_to"/>
+            <result property="nameFrom" column="comment_name_from"/>
         </collection>
     </resultMap>
     

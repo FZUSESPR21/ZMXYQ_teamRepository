@@ -28,8 +28,8 @@ public class ContentFilterUtil {
         uri = "/v1.0/moderation/text";
     }
 
-    public static boolean isContentLegal(String content) throws IOException {
-        boolean result = false;
+    public static int assumeContentStatus(String content){
+        int result = 1;
         try {
             JSONObject json = new JSONObject();
 
@@ -52,9 +52,12 @@ public class ContentFilterUtil {
 
             JSONObject jsonObject = JSON.parseObject(HttpClientUtils.convertStreamToString(response.getEntity().getContent()));
 
-            result = "pass".equals(jsonObject.getJSONObject("result").get("suggestion"));
-
-            System.out.println(JSON.toJSONString(jsonObject, SerializerFeature.PrettyFormat));
+            String contentType = (String) jsonObject.getJSONObject("result").get("suggestion");
+            if("pass".equals(contentType)) {
+                result = 0;
+            }else if ("block".equals(contentType)) {
+                result = 2;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
