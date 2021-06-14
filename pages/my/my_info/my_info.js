@@ -26,12 +26,18 @@ Page({
       method:'GET',
       success(res){
         console.log(res);
-        that.setData({
-          UserInfo:res.data.data.user,
-          headSrc:res.data.data.user.userIconUrl,
-          nickname:res.data.data.user.username,
-          currentId:res.data.data.user.id
-        })
+        if (res.data.code === 200){
+          let tempData = res.data.data;
+          console.log(tempData);
+          tempData.user.userIconUrl = baseUrl + "/static/" + tempData.user.userIconUrl;
+          that.setData({
+            UserInfo:res.data.data.user,
+            headSrc:tempData.user.userIconUrl,
+            nickname:res.data.data.user.username,
+            currentId:res.data.data.user.id
+          })
+
+        }
         // console.log(that.data.UserInfo.username);
       }
     })
@@ -103,23 +109,23 @@ Page({
   },
 
   afterRead: function (event) {
-    const _this = this;
-    // console.log(event.detail.file[0].url);
+    const that = this;
+    console.log(event.detail.file.url);
     this.setData({
       fileList: [event.detail.file],
-      headSrc:event.detail.file
+      // headSrc:event.detail.file
     });
-    // console.log(this.data.fileList)
+    console.log(this.data.fileList)
 
     this.submitImage();
   },
 
   submitImage:function (e) {
-    let _this=this;
-    const file = _this.data.fileList;
+    let that=this;
+    const file = that.data.fileList;
     let promiseArr=[];
     let imgServerUrls=new Array();
-    console.log(_this.data.fileList);
+    console.log(that.data.fileList);
     file.forEach(function (e) {
       var FSM = wx.getFileSystemManager();
       let imageType=getApp().getImageType(e.url);
@@ -130,7 +136,7 @@ Page({
               encoding: "base64",
               success: function (data) {
                 wx.request({
-                  url: 'http://192.168.5.219:8088/api/posts/imgupload',
+                  url: app.globalData.baseUrl+'/api/posts/imgupload',
                   method: "POST",
                   data: {
                     base64Str: imageType + data.data,
@@ -153,12 +159,9 @@ Page({
                     return reject(e)
                   },
                   complete: function (complete) {
-
                     return complete;
                   }
                 })
-
-
               }
             });
           })
@@ -171,15 +174,26 @@ Page({
         imgServerUrls.push(e.data.data)
       })
       // console.log(imgServerUrls);
-      _this.setData({
+      that.setData({
         imgUrls:imgServerUrls,
-        headSrc:_this.data.fileList[0].url
       })
-      console.log(_this.data.imgUrls)
+      let baseUrl = app.globalData.baseUrl;
+      request({
+        url: baseUrl + '/api/user/data/update',
+        method: 'POST',
+        data: {
+          userIconUrl:that.data.imgUrls[0],
+        },
+        success(res){
+          console.log(res);
+        }
+      })
+      console.log(that.data.imgUrls[0]);
     }).catch(
         reason=>{
           console.log(reason)
         }
     )
-  }
+  },
 })
+
