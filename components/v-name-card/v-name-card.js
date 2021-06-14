@@ -50,10 +50,14 @@ Component({
         method:"POST",
         data:data,
         success:function (res) {
-          // console.log(res.data.data)
-          _this.setData({
-            publisherMsg:res.data.data
-          })
+          if (res.data.code === 200) {
+            let tempData = res.data.data;
+            // console.log(tempData);
+            tempData.iconUrl = app.globalData.baseUrl + "/static/" + tempData.iconUrl;
+            _this.setData({
+              publisherMsg:tempData,
+            })
+          }
         }
       })
     },
@@ -72,14 +76,19 @@ Component({
         method:"POST",
         data:data,
         success:function (res) {
-          // console.log(res.data.data)
-          _this.setData({
-            publisherMsg:res.data.data
-          })
-          if(_this.data.publisherTime){
+          if (res.data.code === 200){
+
+            let tempData = res.data.data;
+            // console.log(tempData);
+            tempData.iconUrl = app.globalData.baseUrl + "/static/" + tempData.iconUrl;
             _this.setData({
-              publisherTime:timeago.format(new Date(_this.data.publisherTime),'zh_CN'),
+              publisherMsg:tempData,
             })
+            if(_this.data.publisherTime){
+              _this.setData({
+                publisherTime:timeago.format(new Date(_this.data.publisherTime),'zh_CN'),
+              })
+            }
           }
         }
       })
