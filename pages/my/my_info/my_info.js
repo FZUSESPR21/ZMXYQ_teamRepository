@@ -185,6 +185,7 @@ Page({
           userIconUrl:that.data.imgUrls[0],
         },
         success(res){
+          that.getUserInfo();
           console.log(res);
         }
       })
