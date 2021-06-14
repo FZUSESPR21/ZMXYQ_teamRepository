@@ -6,6 +6,7 @@ import {
 } from "../../../utils/request"
 const timeago = require("timeago.js");
 const app = getApp();
+const baseUrl = app.globalData.baseUrl
 Page({
 
   /**
@@ -36,7 +37,9 @@ Page({
     },
     commentInputText: "",
     moveOffButtonText:"移除成员",
-    isFirstEnter: true
+    isFirstEnter: true,
+    // 存放图片的url(不是后缀)的数组
+    imageUrlsArr: []
   },
 
   /** 
@@ -137,50 +140,57 @@ Page({
   // 获取组局详情
   getPartyDetail: function (e) {
     let _this = this;
-    request({
-      url: app.globalData.baseUrl+'/api/party/partymes',
-      method: 'GET',
-      data: {
-        partyId: parseInt(_this.data.partyID)
-      },
-      success: function (res) {
-        let data = res.data.data;
-        // console.log('success-------res=\n',res);
-        // console.log(data);
-        if (data != null) {
-          _this.setData({
-            partyID: data.partyID,
-            partyDetailContent: data.context,
-            partyPublisherID:data.publisherID,
-            partyMemmberCnt: data.peopleCnt,
-            partyCreateTime: timeago.format(new Date(data.gmtCreate),'zh_CN'),
-            partyParticipantsId: data.participantsID,
-            partyDetailImageUrls: data.images,
-            partyMemmberCntNow:data.nowPeopleCnt,
-            partyTypeId: data.partyType
-          })
-        }
-        let participantsId=_this.data.partyParticipantsId;
-        let arr=[];
-        participantsId.forEach(
-          function (e) {
-              arr.push({
-                participantsId:e,
-                deletable:true
-              })
+    new Promise(function(resolve, reject) {
+      request({
+        url: app.globalData.baseUrl+'/api/party/partymes',
+        method: 'GET',
+        data: {
+          partyId: parseInt(_this.data.partyID)
+        },
+        success: function (res) {
+          let data = res.data.data;
+          // console.log('success-------res=\n',res);
+          // console.log(data);
+          if (data != null) {
+            _this.setData({
+              partyID: data.partyID,
+              partyDetailContent: data.context,
+              partyPublisherID:data.publisherID,
+              partyMemmberCnt: data.peopleCnt,
+              partyCreateTime: timeago.format(new Date(data.gmtCreate),'zh_CN'),
+              partyParticipantsId: data.participantsID,
+              partyDetailImageUrls: data.images,
+              partyMemmberCntNow:data.nowPeopleCnt,
+              partyTypeId: data.partyType
+            })
           }
-        )
-        _this.setData({
-          partyMemberList:arr
-        })
-        // console.log(_this.data.partyDetailImageUrls)
-        _this.getPublisherMessage();
-      },
-      fail: function (res) {
-        console.log(res);
-      }
-
-    });
+          let participantsId=_this.data.partyParticipantsId;
+          let arr=[];
+          participantsId.forEach(
+            function (e) {
+                arr.push({
+                  participantsId:e,
+                  deletable:true
+                })
+            }
+          )
+          _this.setData({
+            partyMemberList:arr
+          })
+          // console.log(_this.data.partyDetailImageUrls)
+          _this.getPublisherMessage();
+          resolve(data.images);
+        },
+        fail: function (res) {
+          console.log(res);
+          reject()
+        }
+      });
+    }).then((images) => {
+      this.setData({
+        imageUrlsArr: processSuffix(images)
+      })
+    })
   },
   // 获取评论列表函数
   getPartyCommentList: function (e) {
@@ -449,5 +459,35 @@ Page({
     this.setData({
       commentInputText:e.detail.value
     })
+  },
+  /**
+   * 预览图片
+   */
+  previewImage:function(e) {
+    wx.previewImage({
+      urls: this.data.imageUrlsArr,
+      showmenu: true,
+      current: e.currentTarget.dataset.url,
+      success(res){
+
+      },
+      fail(err){
+        Dialog.alert({
+          message: '图片预览失败\n' + 'wx.previewImage调用失败'
+        }).then(() => {
+
+        })
+        console.log('调用失败原因', err.errMsg)
+      }
+    })
   }
 })
+
+function processSuffix(suffix) {
+  let imageUrlsArr = []
+  suffix.forEach((item) => {
+    let url = baseUrl + '/static/' + item
+    imageUrlsArr.push(url)
+  })
+  return imageUrlsArr
+}

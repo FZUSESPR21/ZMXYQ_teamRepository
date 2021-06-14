@@ -21,7 +21,8 @@
       {{partyDetailContent}}
     </view>
     <view class="party-detail-img-view">
-      <image class="party-detail-img" src="https://feifeilong.work/static/{{item}}" wx:for="{{partyDetailImageUrls}}" wx:for-item='item' wx:for-index='index' wx:key="key">
+      <image class="party-detail-img" src="http://ccreater.top:61112/static/{{item}}" wx:for="{{partyDetailImageUrls}}" wx:for-item='item' wx:for-index='index' wx:key="key"  
+      data-url='http://ccreater.top:61112/static/{{item}}' catchtap="previewImage">
       </image>
     </view>
     <view class="party-detail-operation">
