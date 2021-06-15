@@ -96,7 +96,7 @@ public class PrivateChatController {
       return result;
     }
 
-    Long toId = (Long) map.get("userIdFrom");
+    Long toId = ((Number) map.get("userIdFrom")).longValue();
     Integer pageNum = (Integer) map.get("pageNum");
     Integer pageSize = (Integer) map.get("pageSize");
 
