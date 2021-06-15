@@ -23,36 +23,88 @@ public class PrivateChatServiceImplTest {
   PrivateChatServiceImpl privateChatService;
 
   @Test
-  void listChatTest(){
+  void listChatTest() {
 
     Result<List<Map<String, Object>>> result = privateChatService.listChat(123456L);
     System.out.println(result);
   }
 
   @Test
-  void clearListTest(){
+  void clearListTest() {
     Result<Integer> result = new Result<>();
 
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(3);
-    Assertions.assertEquals(result,privateChatService.clearList(123456L));
+    Assertions.assertEquals(result, privateChatService.clearList(123456L));
   }
 
   @Test
-  void deleteOneTest(){
+  void deleteOneTest() {
 
     Result<Integer> result = new Result<>();
 
     result.setCode(ExceptionInfo.valueOf("USER_DIALOG_ID_NULL").getCode());
     result.setMessage(ExceptionInfo.valueOf("USER_DIALOG_ID_NULL").getMessage());
-
-    Assertions.assertEquals(result,privateChatService.deleteOne(123456L,null));
+    Assertions.assertEquals(result, privateChatService.deleteOne(123456L, null));
 
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(1);
-    Assertions.assertEquals(result,privateChatService.deleteOne(123456L,3L));
+    Assertions.assertEquals(result, privateChatService.deleteOne(123456L, 3L));
+  }
+
+  @Test
+  void sendMessageTest() {
+
+    Result<Integer> result = new Result<>();
+
+    result.setCode(ExceptionInfo.valueOf("USER_DIALOG_ID_NULL").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_DIALOG_ID_NULL").getMessage());
+    Assertions.assertEquals(result, privateChatService.sendMessage(123456L, null, ""));
+
+    result.setCode(ExceptionInfo.valueOf("USER_SEND_MESSAGE_NULL").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_SEND_MESSAGE_NULL").getMessage());
+    Assertions.assertEquals(result, privateChatService.sendMessage(123456L, 3L, null));
+
+    result.setCode(ExceptionInfo.valueOf("USER_SEND_MESSAGE_NULL").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_SEND_MESSAGE_NULL").getMessage());
+    Assertions.assertEquals(result, privateChatService.sendMessage(123456L, 3L, ""));
+
+    result.setCode(ExceptionInfo.valueOf("OK").getCode());
+    result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
+    result.setData(1);
+    Assertions.assertEquals(result, privateChatService.sendMessage(123456L, 3L, "你好世界"));
+
+  }
+
+  @Test
+  void receiveMessageTest() {
+
+    Result<List<Map<String, Object>>> result = new Result<>();
+
+    result.setCode(ExceptionInfo.valueOf("USER_DIALOG_ID_NULL").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_DIALOG_ID_NULL").getMessage());
+    Assertions.assertEquals(result, privateChatService.receiveMessage(123456L, null, 1, 1));
+
+    result.setCode(ExceptionInfo.valueOf("USER_PAGE_NUM_NULL").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_PAGE_NUM_NULL").getMessage());
+    Assertions.assertEquals(result, privateChatService.receiveMessage(123456L, 3L, null, 1));
+
+    result.setCode(ExceptionInfo.valueOf("USER_PAGE_NUM_BELOW0").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_PAGE_NUM_BELOW0").getMessage());
+    Assertions.assertEquals(result, privateChatService.receiveMessage(123456L, 3L, -2, 1));
+
+    result.setCode(ExceptionInfo.valueOf("USER_PAGE_SIZE_NULL").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_PAGE_SIZE_NULL").getMessage());
+    Assertions.assertEquals(result, privateChatService.receiveMessage(123456L, 3L, 1, null));
+
+    result.setCode(ExceptionInfo.valueOf("USER_PAGE_SIZE_BELOW0").getCode());
+    result.setMessage(ExceptionInfo.valueOf("USER_PAGE_SIZE_BELOW0").getMessage());
+    Assertions.assertEquals(result, privateChatService.receiveMessage(123456L, 3L, 1, -1));
+
+    result = privateChatService.receiveMessage(123456L, 3L, 1, 2);
+    System.out.println(result);
   }
 
 }
