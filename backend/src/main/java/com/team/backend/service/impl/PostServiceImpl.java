@@ -108,6 +108,14 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     return pack(postMapper.selectTopTenLikedPost(currentUserId));
   }
 
+  @Override
+  public List<Map<String, Object>> selectPostById(Long postId, Long currentUserId) {
+    Map<String,Long> queryMap = new HashMap<>();
+    queryMap.put("currentUserId",currentUserId);
+    queryMap.put("postId",postId);
+    return pack(postMapper.selectPostByIdWithUserId(queryMap));
+  }
+
   private List<Map<String,Object> > pack(List<Post> posts) {
     List<Map<String,Object>> resultList;
     if (posts != null) {

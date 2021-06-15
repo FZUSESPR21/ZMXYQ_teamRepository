@@ -196,9 +196,8 @@ public class PostController {
   @PostMapping("/heatposts")
   public Result selectTopTenLikePost(@RequestBody Map<String,Object> requestMap,HttpServletRequest servletRequest) {
       Result result;
-      Number userId = (Number) requestMap.get("userId");
-      if (userId != null) {
-          Long id = userId.longValue();
+      if (user != null) {
+          Long id = user.getId();
           try {
               List<Map<String, Object>> postList = postService.selectTopTenLikePost(id);
               result = Result.success(postList);
@@ -210,6 +209,15 @@ public class PostController {
           result = Result.error(ExceptionInfo.POST_LIST_TOP_TEN_INFO_LOST.getCode()
                   ,ExceptionInfo.POST_LIST_TOP_TEN_INFO_LOST.getMessage());
       }
+      return result;
+  }
+
+  @PostMapping("/getById")
+  public Result selectPostById(@RequestBody Map<String,Number> queryMap) {
+      Result result;
+      Long userId = user.getId();
+      Long postId = queryMap.get("postId").longValue();
+      result = Result.success(postService.selectPostById(postId,userId));
       return result;
   }
 }
