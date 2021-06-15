@@ -18,7 +18,7 @@ Page({
     partyID: "",
     partyTypeId: -2,
     partyDetailContent: "你们好",
-    partyDetailImageUrls: ["https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG","https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG","https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG","https://www.fzu.edu.cn/attach/2021/04/29/419363.JPG"],
+    partyDetailImageUrls: [],
     //组局创建者的ID
     partyPublisherID: 0,
     partyPublisherMsg:{},
@@ -31,15 +31,20 @@ Page({
     partyMemmberCnt: 2,
     partyOwner:true,
     hasjoined: false,
+    isPublisher: false,
     buttonContent: "加入拼局",
     commentMessage: {
      publisherName:"楼主"
     },
     commentInputText: "",
     moveOffButtonText:"移除成员",
-    isFirstEnter: true,
-    // 存放图片的url(不是后缀)的数组
-    imageUrlsArr: []
+    isFirstOnShow: true,
+    // 存放图片的url(不是后缀)的数组，用于图片预览
+    imageUrlsArr: [],
+    // 组局成员信息列表，不包括局长的
+    membersInfoArr: [],
+    defaultIconUrl: '../../../../static/icons/add_post_active.png',
+    memberIconUrl:  'https://i.loli.net/2021/06/14/KoVSPTc1eyCpBgE.jpg'
   },
 
   /** 
@@ -48,18 +53,20 @@ Page({
   */
   onLoad: function (options) {
     this.setData({
-      partyID: options.partyID,
-      isFirstEnter: false
+      partyID: options.partyID
     });
-    this.getPartyDetail();//获取组局详情
+    this.init();//获取组局详情，同时异步获取创建者信息
     this.getPartyCommentList();//获取组局评论列表
     this.popover = this.selectComponent('#popover');
   },
 
   onShow: function () {
-    if(!this.data.isFirstEnter) {
+    if(!this.data.isFirstOnShow) {
       this.getPartyDetail()
     }
+    this.setData({
+      isFirstOnShow: false
+    })
   },
   // 加入或退出组局函数
   joinParty: function (e) {
@@ -177,8 +184,6 @@ Page({
           _this.setData({
             partyMemberList:arr
           })
-          // console.log(_this.data.partyDetailImageUrls)
-          _this.getPublisherMessage();
           resolve(data.images);
         },
         fail: function (res) {
@@ -329,54 +334,58 @@ Page({
   },
   showMoveOff:function(e){
     let _this=this;
-    let participantsId=this.data.partyParticipantsId;
+    let participantsId = this.data.partyParticipantsId;
+    let {membersInfoArr} = this.data
     let arr=[];
-    if(_this.data.moveOffButtonText=="移除成员")
+    if(_this.data.moveOffButtonText == "移除成员")
     {
       _this.setData(
         {
           moveOffButtonText:"取消"
         }
       ),
-      console.log(this.data.partyParticipantsId)
-      participantsId.forEach(
-        function (e) {
-            arr.push({
-              participantsId:e,
-              deletable:false
-            })
+      membersInfoArr.forEach((item) => {
+        if(item.isOccupied) {
+          item.ifShow = true
         }
-      )
-      
+      })
+      this.setData({
+        membersInfoArr: membersInfoArr
+      })
     }
     else
     {
       _this.setData({
         moveOffButtonText:"移除成员"
       })
-      participantsId.forEach(
-        function (e) {
-          if(e==_this.data.userId)
-          {
-            arr.push({
-              participantsId:e.participantsId,
-              deletable:true
-            })
-          }
-          else{
-            arr.push({
-              participantsId:e.participantsId,
-              deletable:false
-            })
-          }
-        }
-      )
-      
+      membersInfoArr.forEach((item) => {
+        item.ifShow = false
+      })
+      this.setData({
+        membersInfoArr: membersInfoArr
+      })
+      // participantsId.forEach(
+      //   function (e) {
+      //     if(e==_this.data.userId)
+      //     {
+      //       arr.push({
+      //         participantsId:e.participantsId,
+      //         deletable:true
+      //       })
+      //     }
+      //     else{
+      //       arr.push({
+      //         participantsId:e.participantsId,
+      //         deletable:false
+      //       })
+      //     }
+      //   }
+      // )
     }
-    _this.setData({
-      partyMemberList:arr
-    })
-    console.log(_this.data.partyMemberList);
+    // _this.setData({
+    //   partyMemberList:arr
+    // })
+    // console.log(_this.data.partyMemberList);
   },
   // 将参与者移除组局函数
   moveOffMember: function (e) {
@@ -437,23 +446,7 @@ Page({
     })
     console.log(this.data.commentInputText)
   },
-  getPublisherMessage:function (e) {
-    let data={
-      publisherId:this.data.partyPublisherID
-    };
-    let _this=this;
-    wx.request({
-      url: app.globalData.baseUrl+"/api/posts/publishermsg",
-      method:"POST",
-      data:data,
-      success:function (res) {
-        console.log(res.data.data)
-        _this.setData({
-          partyPublisherMsg:res.data.data
-        })
-      }
-    })
-  },
+
   getValue:function (e) {
     var _this=this;
     this.setData({
@@ -480,9 +473,250 @@ Page({
         console.log('调用失败原因', err.errMsg)
       }
     })
-  }
-})
-
+  },
+  /**
+   * 首次进入详情页时：获取组局详情；获取创建者信息；获得当前用户id
+   */
+  init: function() {
+    let _this = this;
+    new Promise(function(resolve, reject) {
+      request({
+        url: app.globalData.baseUrl+'/api/party/partymes',
+        method: 'GET',
+        data: {
+          partyId: parseInt(_this.data.partyID)
+        },
+        success: function (res) {
+          let data = res.data.data;
+          // console.log('success-------res=\n',res);
+          // console.log(data);
+          if (data != null) {
+            _this.setData({
+              partyID: data.partyID,
+              partyDetailContent: data.context,
+              partyPublisherID:data.publisherID,
+              partyMemmberCnt: data.peopleCnt,
+              partyCreateTime: timeago.format(new Date(data.gmtCreate),'zh_CN'),
+              partyParticipantsId: data.participantsID,
+              partyDetailImageUrls: data.images,
+              partyMemmberCntNow:data.nowPeopleCnt,
+              partyTypeId: data.partyType
+            })
+          }
+          let participantsId=_this.data.partyParticipantsId;
+          let arr=[];
+          participantsId.forEach(
+            function (e) {
+                arr.push({
+                  participantsId:e,
+                  deletable:true
+                })
+            }
+          )
+          _this.setData({
+            partyMemberList:arr
+          })
+          resolve(data.images);
+        },
+        fail: function (res) {
+          console.log(res);
+          reject()
+        }
+      });
+    }).then((images) => {// then
+      console.log('publisherID--------', this.data.partyPublisherID)
+      // 取到图片后缀，处理后缀存到imageUrlArr中
+      this.setData({
+        imageUrlsArr: processSuffix(images)
+      })
+      // 获取创建者的信息，包括年龄、头像url的后缀、昵称等
+      let promise = this.getPublisherMessage()
+      return promise
+    }).then(() => {// then
+      // 获取当前用户Id
+      return this.getUserId()
+    }).then(() => {// then
+      // 判断是否已经加入过，是否为局长
+      let {partyParticipantsId} = this.data
+      partyParticipantsId.forEach((item) => {
+        if(item == this.data.userId) {
+          this.setData({
+            hasjoined: true,
+            buttonContent: '退出拼局'
+          })
+          if(item == this.data.partyPublisherID) {
+            this.setData({
+              isPublisher: true
+            })
+          }
+        }
+      })
+      // 处理partyParticipantsId，获得membersInfoArr
+      this.getMembersInfoArr()
+    })
+  },
+  /**
+   * 获得组局创建者的信息
+   */
+  getPublisherMessage:function (e) {
+    let data = {
+      publisherId: parseInt(this.data.partyPublisherID)
+    };
+    let _this=this;
+    let promise = new Promise(function(resolve, reject){
+      wx.request({
+        url: app.globalData.baseUrl+"/api/posts/publishermsg",
+        method:"POST",
+        data: data,
+        success:function (res) {
+          console.log('请求参数data----------1', data)
+          console.log('返回的结果-------------1', res)
+          console.log('getPublisherMessage方法中的publisherMsg------1', res.data.data)
+          _this.setData({
+            partyPublisherMsg:res.data.data
+          })
+          resolve('222')
+        }
+      })
+    })
+    return promise
+  },
+  /**
+   * 获得
+   */
+  getMembersInfoArr: function() {
+    let {membersInfoArr} = this.data;
+    let {partyParticipantsId} = this.data;
+    let {partyMemmberCntNow} = this.data;
+    let {partyMemmberCnt} = this.data;
+    let {partyPublisherMsg} = this.data;
+    let {userId} = this.data
+    let {partyPublisherID} = this.data
+    for (let i = 0; i < partyMemmberCnt; i++) {
+      let member = {
+        index: i,
+        url: this.data.defaultIconUrl,
+        userId: 0,
+        // 用于判断是否 会 显示删除按钮，也可以用于判断是否是组员
+        isOccupied: false,
+        ifShow: false,
+        isPublisher: false,
+        myself: false,
+        text: '成员'
+      }
+      // 判断：把组员先存进去
+      if (i < partyMemmberCntNow) {
+        // 判断：如果是局长的话
+        if (partyParticipantsId[i] == partyPublisherID) {
+          member.url = baseUrl + '/static/' + partyPublisherMsg.iconUrl;
+          member.isPublisher = true;
+          member.text = '局长';
+          // 如果是自己
+          if (partyParticipantsId[i] == userId) {
+            member.myself = true;
+            member.text = '自己'
+          }
+        }
+        // 判断：是组员
+        else {
+          member = {
+            index: i,
+            url: this.data.memberIconUrl,
+            userId: participantsId[i],
+            // 用于判断是否 会 显示删除按钮，也可以用于判断是否是组员
+            isOccupied: true,
+            ifShow: false,
+            isPublisher: false,
+            myself: false,
+            text: '成员'
+          }
+          // 如果是自己
+          if (partyParticipantsId[i] == userId) {
+            member.myself = true;
+            member.text = '自己'
+          }
+        }
+        membersInfoArr.push(member)
+      }
+      // 判断：空位的默认信息,直接将默认的配置push
+      else {
+        membersInfoArr.push(member)
+      }
+    }
+    this.setData({
+      membersInfoArr: membersInfoArr
+    })
+  },
+    /**
+   * 获取当前用户id
+   */
+  getUserId: function() {
+    //缓存中的用户信息
+    let storageUserInfo = null
+    wx.getStorageSync({
+      key: 'userInfo',
+      success(res) {
+        storageUserInfo = res
+      }
+    })
+    // 如果缓存中用户信息为空，发送请求获取用户数据
+    if(storageUserInfo == null) {
+      let promise = new Promise(function(resolve, reject){
+        wx.login({
+          success: res => {
+            wx.request({
+              url: baseUrl + '/api/user/login',
+              method: 'POST',
+              data: res.code,
+              success: res => {
+                wx.setStorageSync({
+                  key: "userInfo",
+                  data: res.data.data
+                })
+                resolve(res.data.data)
+              },
+              fail:(err) => {
+                Dialog.alert({
+                  message: 'api/user/login接口调用失败' + err.errMsg
+                }).then(() => {
+                  // close
+                })
+                reject()
+              }
+            })
+          },
+          fail(err) {
+            Dialog.alert({
+              message: 'wx.login调用失败\n' + err.errMsg
+            }).then(() => {
+              // close
+            })
+            reject()
+          }
+        })
+      }).then((userInfo) => {
+        let userId = userInfo.id
+        this.setData({
+          userId: userId
+        })
+      })
+      return promise
+    }
+    // 缓存中有用户信息，直接拿来用
+    else {
+      let userId
+      wx.getStorageSync({
+        key: 'userInfo',
+        success(res) {
+          userid = res.id
+        }
+      })
+      this.setData({
+        userId: userId
+      })
+    }
+}
+})//Page END
 function processSuffix(suffix) {
   let imageUrlsArr = []
   suffix.forEach((item) => {

@@ -18,7 +18,8 @@ Component({
     postType: String,
     publisherId: Number,
     pubulisherName: String,
-    rewardNum: Number
+    rewardNum: Number,
+    publisherMsg: {type:Object, value:{}}
   },
 
   /**
@@ -192,6 +193,25 @@ Component({
         this.popover.onDisplay(res);
       }).exec();
     },
+
+    previewImage: function(e) {
+      wx.previewImage({
+        urls: this.data.imageUrls,
+        showmenu: true,
+        current: e.currentTarget.dataset.currentUrl,
+        success(res){
+  
+        },
+        fail(err){
+          Dialog.alert({
+            message: '图片预览失败\n' + 'wx.previewImage调用失败'
+          }).then(() => {
+  
+          })
+          console.log('调用失败原因', err.errMsg)
+        }
+      })
+    }
     
   }
 })

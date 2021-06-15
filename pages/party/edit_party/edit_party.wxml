@@ -1,4 +1,7 @@
 <!--pages/party/edit_party/edit_party.wxml-->
+<page-meta>
+  <navigation-bar background-color="#1a237e"></navigation-bar>
+</page-meta>
 <view class="main">
   <form action="">
     <view class="party-theme-view">

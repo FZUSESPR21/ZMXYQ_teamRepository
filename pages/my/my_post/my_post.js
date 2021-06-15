@@ -28,8 +28,14 @@ Page({
       success(res){
         console.log(res);
         if(res.data.code === 200){
+          let tempData = res.data.data.reverse();
+          if(tempData!= null) {
+            for (let i = 0; i < tempData.length; i++) {
+              tempData[i].gmtCreate = timeago.format(new Date(tempData[i].gmtCreate), 'zh_CN');
+            }
+          }
           that.setData({
-            postList:res.data.data.reverse()
+            postList:tempData,
           })
         }
       }

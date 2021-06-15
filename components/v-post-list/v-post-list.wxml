@@ -6,9 +6,10 @@
             <van-cell icon="flag-o" is-link arrow-direction="down" is-link title= "{{multiArray1[0][multiIndex[0]]}}  {{multiArray[1][multiIndex[1]]}}" bindtap="listenerButton"/>  
         </picker>
     </view> -->
-    <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style="height:{{scrollHeight}}px;"
-    class="list" bindscrolltolower="bindDownLoad" bindscroll="scroll" bindscrolltoupper="refresh"> 
-            <v-post-item wx:for="{{postsData}}"  wx:key="key"
+    <!-- <scroll-view> -->
+    <scroll-view scroll-top="{{scrollTop}}" scroll-y="{{true}}" style="height:{{scrollHeight}}px;"
+    class="list" bindscroll="scroll" bindscrolltolower="bindDownLoad" lower-threshold="100"> 
+            <v-post-item wx:for="{{postsData}}"  wx:key="postId"
                 eyeOnNum= "{{item.eyeOnNum}}"
                 gmtCreate= "{{item.gmtCreate}}"
                 imageUrls= "{{item.imageUrls}}"
@@ -19,8 +20,9 @@
                 postId= "{{item.postId}}"
                 postType= "{{item.postType}}"
                 publisherId= "{{item.publisherId}}"
-                pubulisherName= "{{item.pubulisherName}}"
+                publisherName= "{{item.publisherName}}"
                 rewardNum= "{{item.rewardNum}}"
+                publisherMsg= "{{item.publisherMsg}}"
             >
             </v-post-item>
     </scroll-view>

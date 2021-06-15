@@ -58,9 +58,40 @@ Page({
       method: 'GET',
       success(res){
         console.log(res);
-        that.setData({
-          collectionList:res.data.data.reverse(),
-        })
+        if(res.data.code === 200){
+          let tempData = res.data.data.reverse();
+          if(tempData!= null) {
+            for (let i = 0; i < tempData.length; i++) {
+              tempData[i].postTime = timeago.format(new Date(tempData[i].postTime), 'zh_CN');
+            }
+          }
+          that.setData({
+            collectionList:tempData,
+          })
+          console.log(tempData);
+        }
+      }
+    })
+  },
+
+
+  getPostList(){
+    let that = this;
+    let baseUrl = app.globalData.baseUrl;
+    let jsonStr = '{"pageSize": 10,"pageNum": 1}';
+    let jsonValue = JSON.parse(jsonStr);
+    request({
+      url: baseUrl + '/api/posts/all',
+      method: 'POST',
+      data:jsonValue,
+      Headers: {
+        'content-type': 'application/json'
+      },
+      success(res){
+        console.log(res);
+        // that.setData({
+        //   collectionList:res.data.data.reverse(),
+        // })
       }
     })
   },
@@ -111,6 +142,7 @@ Page({
    */
   onLoad: function (options) {
     this.getCollectionList();
+    this.getPostList();
   },
 
   /**

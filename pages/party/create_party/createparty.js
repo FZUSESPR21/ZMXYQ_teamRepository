@@ -5,7 +5,6 @@ const timeago = require("timeago.js");
 const app = getApp()
 const baseUrl = app.globalData.baseUrl;
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -55,9 +54,9 @@ Page({
         buttonOperation: options.operation,
         partyId: parseInt(options.partyID),
         fileList: JSON.parse(options.fileList),
-        partyTypeId: options.partyTypeId
+        partyTypeId: options.partyTypeId,
+        userId: options.partyTypeId
       })
-
       // partyTypeId：从组局详情传过来的组局类型id。这里将它映射成具体的类型名称
       let { option1 } = this.data;
       let { partyTypeId } = this.data;
@@ -69,6 +68,8 @@ Page({
         }
       })
     }
+    // 获取用户Id
+    this.getUserId()
   },
 
   onReady: function (e) {
@@ -150,6 +151,13 @@ Page({
       }).then(() => {
         // on close
       });
+    }
+    else if(this.data.fileList == 0) {
+      Dialog.alert({
+        message: '图片不能为空'
+      }).then(() => {
+
+      })
     }
     else {
       // 传递正确partType
@@ -319,5 +327,75 @@ Page({
     this.setData({
       partyDetailContent: e.detail.value
     })
+  },
+  /**
+   * 获取用户id
+   */
+  getUserId: function() {
+        //缓存中的用户信息
+        let storageUserInfo = null
+        wx.getStorageSync({
+          key: 'userInfo',
+          success(res) {
+            storageUserInfo = res
+          }
+        })
+        console.log('storageUserInfo------------', storageUserInfo)
+        // 如果缓存中用户信息为空，发送请求获取用户数据
+        if(storageUserInfo == null) {
+        console.log('storageUserInfo------------', storageUserInfo)
+          new Promise(function(resolve, reject){
+            wx.login({
+              success: res => {
+                wx.request({
+                  url: baseUrl + '/api/user/login',
+                  method: 'POST',
+                  data: res.code,
+                  success: res => {
+                    wx.setStorageSync({
+                      key: "userInfo",
+                      data: res.data.data
+                    })
+                    resolve(res.data.data)
+                  },
+                  fail:(err) => {
+                    Dialog.alert({
+                      message: 'api/user/login接口调用失败' + err.errMsg
+                    }).then(() => {
+                      // close
+                    })
+                    reject()
+                  }
+                })
+              },
+              fail(err) {
+                Dialog.alert({
+                  message: 'wx.login调用失败\n' + err.errMsg
+                }).then(() => {
+                  // close
+                })
+                reject()
+              }
+            })
+          }).then((userInfo) => {
+            let userId = userInfo.id
+            this.setData({
+              userId: userId
+            })
+          })
+        }
+        // 缓存中有用户信息，直接拿来用
+        else {
+          let userId
+          wx.getStorageSync({
+            key: 'userInfo',
+            success(res) {
+              userid = res.id
+            }
+          })
+          this.setData({
+            userId: userId
+          })
+        }
   }
 })

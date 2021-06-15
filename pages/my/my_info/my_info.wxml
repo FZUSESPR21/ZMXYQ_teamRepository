@@ -2,7 +2,7 @@
 <van-cell title="头像" is-link center border title-class="title">
     <view>
 
-        <van-uploader  maxcount="1" bind:after-read="afterRead" >
+        <van-uploader max-count="1"  bind:after-read="afterRead" multiple="{{false}}">
             <image class="img" src="{{headSrc}}"></image>
         </van-uploader>
     </view>

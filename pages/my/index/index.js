@@ -24,17 +24,21 @@ Page({
       url: baseUrl + '/api/user/data/select',
       success(res){
         // console.log(res);
-        that.setData({
-          UserInfo:res.data.data.user,
-          headSrc:res.data.data.user.userIconUrl,
-          nickname:res.data.data.user.username,
-          currentId:res.data.data.user.id,
-          school:res.data.data.user.school,
-          rpValue:res.data.data.user.rpValue,
-          postCount:res.data.data.numberList.postNumber - 0,
-          collectionCount:res.data.data.numberList.collectionNumber - 0,
-          commentCount:res.data.data.numberList.postCommentNumber + res.data.data.numberList.partyCommentNumber - 0,
-        })
+        if (res.data.code === 200){
+          let tempData = res.data.data;
+          tempData.user.userIconUrl = baseUrl + "/static/" + tempData.user.userIconUrl;
+          that.setData({
+            UserInfo:res.data.data.user,
+            headSrc:tempData.user.userIconUrl,
+            nickname:res.data.data.user.username,
+            currentId:res.data.data.user.id,
+            school:res.data.data.user.school,
+            rpValue:res.data.data.user.rpValue,
+            postCount:res.data.data.numberList.postNumber - 0,
+            collectionCount:res.data.data.numberList.collectionNumber - 0,
+            commentCount:res.data.data.numberList.postCommentNumber + res.data.data.numberList.partyCommentNumber - 0,
+          })
+        }
         // console.log(that.data.UserInfo.username);
       }
     })

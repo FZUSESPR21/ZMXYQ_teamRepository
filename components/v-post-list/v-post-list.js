@@ -13,8 +13,10 @@ Component({
     pageNum: 0,
     nowPage: 1,  //当前页面
     hidden: true, 
+    timer: null,
     scrollTop: 0, 
     scrollHeight: 0,
+    isLoading: false,  //防止触发多次加载
     fileList: [
       {
         url: 'https://img.yzcdn.cn/vant/leaf.jpg',
@@ -113,13 +115,14 @@ Component({
     showRewardBox:false,
     popularityNum:0,
     hasMark:false,
-    hasLike:true
+    hasLike:true,
+    publisherMsg: {}
   },
 
     attached: function() {
       if(!app.globalData.userInfo)
       {
-        let postsData = this.data.postsData;
+        let postsData = [];
         let that = this;
         app.userLogin().then(function (res) {
           let baseUrl = app.globalData.baseUrl;
@@ -148,6 +151,11 @@ Component({
                     if(midPostsData[i].imageUrls.length == 0)
                       midPostsData[i].imageUrls.push(midImageUrls);
                   }
+
+                  let publisherMsg = {};
+                  publisherMsg.userName = midPostsData[i].publisherName;
+                  midPostsData[i].publisherMsg = publisherMsg;
+                  console.log(midPostsData[i].publisherMsg);
                   //图片最终url
                   for(let imageIndex = 0; imageIndex < midPostsData[i].imageUrls.length; imageIndex++){
                     midPostsData[i].imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData[i].imageUrls[imageIndex];
@@ -167,7 +175,7 @@ Component({
              success: function (res) { 
              console.info(res.windowHeight); 
              that.setData({ 
-             scrollHeight: res.windowHeight 
+                scrollHeight: res.windowHeight 
              }); 
              } 
              }); 
@@ -189,10 +197,10 @@ Component({
 
   methods: {
     getPostsData(pageNum){
-        let postsData = [];
+        this.setData({isLoading: true});
         if(pageNum == 1)
         {
-          postsData = [];
+          this.setData({postsData: []});
           this.setData({nowPage: 1});
         }
         let that = this;
@@ -221,24 +229,27 @@ Component({
                   if(midPostsData[i].imageUrls.length == 0)
                     midPostsData[i].imageUrls.push(midImageUrls);
                 }
+                let publisherMsg = {};
+                publisherMsg.userName = midPostsData[i].publisherName;
+                midPostsData[i].publisherMsg = publisherMsg;
+                console.log(midPostsData[i].publisherMsg);
+                console.log("***");
                 //图片最终url
                 for(let imageIndex = 0; imageIndex < midPostsData[i].imageUrls.length; imageIndex++){
                   midPostsData[i].imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData[i].imageUrls[imageIndex];
                 }
               }
-              for(var m in midPostsData)
-              {
-                if(midPostsData[m] != undefined)
-                {
-                  postsData.push(midPostsData[m]);
-                  that.setData({
-                    postsData  
-                  });
-                }
-              }
+              //追加数据
+              that.setData({postsData: that.data.postsData.concat(midPostsData)});
+              // console.log(that.data.postsData);
               //改变当前页数
               if(midPostsData.length != 0)
-                that.setData({nowPage: pageNum});
+                that.setData(
+                  {
+                    nowPage: pageNum, 
+                    isLoading: false
+                  }
+                );
             }
           },
           fail:function(res)
@@ -250,16 +261,35 @@ Component({
 
   //下拉刷新函数定义开始
   bindDownLoad: function () { 
-      console.log("到底部了");
-      let m = this.data.nowPage + 1;
-      this.getPostsData(m);
+      //已经触发过
+      if(!this.data.isLoading){
+        this.setData({isLoading: true});
+        console.log("到底部了");
+        let m = this.data.nowPage + 1;
+        this.getPostsData(m);
+      }   
     }, 
-    //下拉刷新函数定义结束
-    scroll: function (event) { 
-    this.setData({ 
-    scrollTop: event.detail.scrollTop 
-    }); 
+
+    // 下拉刷新函数定义结束
+    scroll: function (e) { 
+      clearTimeout(this.timer)
+      if (e.detail.scrollTop < this.data.scrollTop) {     
+        this.timer = setTimeout( () => {
+          this.refresh()
+        }, 350)
+      }
     }, 
+
+    refresh() { // 函数式触发开始下拉刷新。如可以绑定按钮点击事件来触发下拉刷新
+      wx.startPullDownRefresh({
+        success(errMsg) {
+          console.log('开始下拉刷新', errMsg)
+        },
+        complete() {
+          console.log('下拉刷新完毕')
+        }
+      })
+    },
 
     bindPickerChange: function(e) {
       console.log('picker发送选择改变，携带值为', e.detail.value)
