@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -146,7 +147,7 @@ public class PostServiceTest {
     }
     @Test
     public void fuzzyListPostPageOrderByGmtCreateDescTest0(){
-        List<Map<String, Object>> mapList = postService.fuzzyListPostPageOrderByGmtCreateDesc("这",1
+        List<Map<String, Object>> mapList = postService.fuzzyListPostPageOrderByGmtCreateDesc("测试",1
                 , 10000, 123456L);
         System.out.println(mapList.toString());
         for (Map<String,Object> info :mapList) {
@@ -191,6 +192,27 @@ public class PostServiceTest {
     @Test
     public void selectTopTenLikePost() {
         List<Map<String, Object>> mapList = postService.selectTopTenLikePost(123456L);
+        System.out.println(mapList.toString());
+        for (Map<String, Object> info : mapList) {
+            Assertions.assertNotNull(info.get("postId"));
+            Assertions.assertNotNull(info.get("publisherId"));
+            Assertions.assertNotNull(info.get("publisherName"));
+            Assertions.assertNotNull(info.get("postType"));
+            Assertions.assertNotNull(info.get("message"));
+            Assertions.assertNotNull(info.get("imageUrls"));
+            Assertions.assertNotNull(info.get("gmtCreate"));
+            Assertions.assertNotNull(info.get("isEyeOn"));
+            Assertions.assertNotNull(info.get("eyeOnNum"));
+            Assertions.assertNotNull(info.get("isLike"));
+            Assertions.assertNotNull(info.get("likeNum"));
+            Assertions.assertNotNull(info.get("rewardNum"));
+            Assertions.assertNotNull(info.get("comments"));
+        }
+    }
+
+    @Test
+    public void selectPostByIdTest() {
+        List<Map<String, Object>> mapList = postService.selectPostById(3L,123456L);
         System.out.println(mapList.toString());
         for (Map<String, Object> info : mapList) {
             Assertions.assertNotNull(info.get("postId"));

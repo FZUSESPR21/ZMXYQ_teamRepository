@@ -116,18 +116,22 @@ public class PostController {
   @PostMapping("/publish")
   public Result publishPost(@RequestBody Map<String,Object> requestMap
       ,HttpServletRequest request) {
-
     Number postThemeNumber = (Number) requestMap.get("postTheme");
     Long postTheme = postThemeNumber.longValue();
     String message = (String) requestMap.get("message");
     String imgUrls = (String) requestMap.get("imgUrls");
-    Long userId = user.getId();
+    Long userId;
     ExceptionInfo exceptionInfo;
-    try {
-        exceptionInfo = postService.publishPost(userId,postTheme,message,imgUrls);
-    }catch (Exception e) {
-        e.printStackTrace();
-        exceptionInfo = ExceptionInfo.POST_PUBLISH_INSERT_FAIL;
+    if (user != null) {
+        userId = user.getId();
+        try {
+            exceptionInfo = postService.publishPost(userId, postTheme, message, imgUrls);
+        } catch (Exception e) {
+            e.printStackTrace();
+            exceptionInfo = ExceptionInfo.POST_PUBLISH_INSERT_FAIL;
+        }
+    }else {
+        exceptionInfo = ExceptionInfo.USER_NOT_LOGIN;
     }
     return Result.error(exceptionInfo.getCode(),exceptionInfo.getMessage());
   }

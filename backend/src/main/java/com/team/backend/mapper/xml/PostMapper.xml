@@ -163,6 +163,7 @@
                 (
                     comments.comment_post_id = posts.id
                     )
+            ORDER BY posts.gmt_modified DESC,id DESC
     </select>
     <select id="fuzzyListPostPageOrderByGmtCreateDesc" parameterType="map" resultMap="postToShowOptimized2">
         SELECT
@@ -207,13 +208,13 @@
                                                             post.deleted AS deleted,
                                                             `user`.username AS username,
                                                             post_type.`name` AS post_type_name,
-                                                            #{currentUserId} AS currentUserId
+                                                            #{queryMap.currentUserId} AS currentUserId
                                                         FROM
                                                             post,
                                                             `user`,
                                                             post_type
                                                         WHERE
-                                                            post.message LIKE concat('%',#{content},'%') AND
+                                                            post.message LIKE concat('%',#{queryMap.content},'%') AND
                                                             post.deleted = 0 AND
                                                             post.`status` = 0 AND
                                                             post.publisher_id = `user`.id AND
@@ -240,7 +241,7 @@
                                                     post_eye_on
                                                 WHERE
                                                     deleted = 0 AND
-                                                    id_from = #{currentUserId}
+                                                    id_from = #{queryMap.currentUserId}
                                                 GROUP BY
                                                     post_eye_on.post_id
                                             ) AS eye_on
@@ -269,7 +270,7 @@
                                     post_like
                                 WHERE
                                     deleted = 0 AND
-                                    id_from = #{currentUserId}
+                                    id_from = #{queryMap.currentUserId}
                                 GROUP BY
                                     post_id
                             ) AS liked
@@ -289,7 +290,7 @@
                             post_reward
                         WHERE
                             deleted = 0 AND
-                            id_from = #{currentUserId}
+                            id_from = #{queryMap.currentUserId}
                         GROUP BY
                             post_id
                     ) AS reward
