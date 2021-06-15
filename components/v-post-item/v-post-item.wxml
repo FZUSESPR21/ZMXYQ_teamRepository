@@ -16,8 +16,7 @@
                 <a class="question-link">
                     <text class = "v-post-list-title" decode="{{true}}">{{postType}}&emsp;&emsp;{{gmtCreate}}\n</text>
                     <text class = "message"> {{message}}\n</text>
-                    
-                    <van-image wx:for="{{imageUrls}}" wx:key = "key" width="100" height="100" custom-class="image" src="{{item}}"></van-image>
+                    <van-image wx:for="{{imageUrls}}" wx:key = "key" width="100" height="100" custom-class="image" src="{{item}}" data-currentUrl="{{item}}"catchtap="previewImage"></van-image>
                     <!-- <image class="v-post-list-img" src="../../static/icons/img.png"  ></image> -->
                 </a>
             </view>
