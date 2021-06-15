@@ -1,5 +1,8 @@
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import {request} from "../../../utils/request"
 const app=getApp();
+
+
 Page({
   data: {
     fileList: [
@@ -188,7 +191,7 @@ Page({
               filePath: e.url,
               encoding: "base64",
               success: function (data) {
-                    wx.request({
+                    request({
                       url: app.globalData.baseUrl+'/api/posts/imgupload',
                       method: "POST",
                       data: {
@@ -235,9 +238,10 @@ Page({
             imgUrls:imgServerUrls
           })
           console.log(_this.data.imgUrls);
-          let jsonStr = '{"userId":123456, "postTheme":3, "message": "111", "imageUrls": ""}';
+          console.log(app.globalData.userInfo);
+          let jsonStr = '{"userId":123456, "postTheme":3, "message": "丽丽SB", "imageUrls": ""}';
           let jsonValue = JSON.parse(jsonStr);
-          wx.request({//创建组局请求
+          request({//创建组局请求
             url: app.globalData.baseUrl+'/api/posts/publish',
             method:'POST',
             // data:{
