@@ -196,9 +196,8 @@ public class PostController {
   @PostMapping("/heatposts")
   public Result selectTopTenLikePost(@RequestBody Map<String,Object> requestMap,HttpServletRequest servletRequest) {
       Result result;
-      Number userId = (Number) requestMap.get("userId");
-      if (userId != null) {
-          Long id = userId.longValue();
+      if (user != null) {
+          Long id = user.getId();
           try {
               List<Map<String, Object>> postList = postService.selectTopTenLikePost(id);
               result = Result.success(postList);
