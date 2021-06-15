@@ -6,6 +6,6 @@
     </button>
   </scroll-view>
 
-  <image class="avatar" bindtap="setAvatarUrl" src="{{url}}"> </image>
+  <!-- <image class="avatar" bindtap="setAvatarUrl" src="{{url}}"> </image> -->
 
 </view>

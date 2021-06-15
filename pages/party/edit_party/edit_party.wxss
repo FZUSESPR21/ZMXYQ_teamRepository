@@ -82,7 +82,7 @@ page{
 }
 .party-detail-content-image
 {
-  margin-left: 40rpx;
+  margin-left: 90rpx;
 }
 .party-member-limited-view
 {

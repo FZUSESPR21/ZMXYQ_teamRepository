@@ -29,12 +29,12 @@ page{
 .partymemberlist{
   width: 100%; 
   margin-top:40rpx;
-  display: flex; 
   box-sizing: border-box; 
+  display: flex; 
   flex-direction: row;
   flex-wrap: wrap;
 }
-.partymemberlist .partymemberlistitem{
+.partymemberlist{
   height: 100%; 
   display: flex;
   margin-left: 25rpx;
@@ -67,6 +67,7 @@ page{
       text-align: center;
       margin-top: -10px;
       z-index: 1;
+      box-shadow: 4rpx 4rpx gray;
 }
 .delete-button{
   width:40rpx;
@@ -132,10 +133,6 @@ page{
   flex-direction: row;
   align-items: center;
   margin-top: 20rpx;
-}
-.user-message
-{
-  
 }
 .comment-box{
   width: 100%;
@@ -227,8 +224,8 @@ page{
   width: 170rpx;
   height: 50rpx;
   line-height: 50rpx;
-  right: 5%;
-  top: 10%;
+  right: 3%;
+  top: 5%;
   font-size: 14px;
 }
 .party-detail-img-view
@@ -237,7 +234,32 @@ page{
   margin-top: 20rpx;
 }
 .party-detail-img{
-  height: 100px;
-  width: 100px;
-  margin-right: 20rpx;
+  height: 196rpx;
+  width: 196rpx;
+  margin: 5rpx
+}
+.scroll{
+  height:250rpx;
+  width: 600rpx;
+  white-space: nowrap;
+  margin-left: -60rpx;
+  margin-top: 30rpx;
+}
+.scroll_item{
+  height: 100%; 
+  display: flex;
+  margin-left: 40rpx;
+  justify-content: center; 
+  flex-direction: column;
+  align-items:center;
+}
+.item-container{
+  height: 100%;
+  display: inline-block;
+}
+.publisher_label{
+  background: rgb(247, 230, 157)!important
+}
+.myself_label{
+  background: rgb(245, 185, 183)!important
 }
