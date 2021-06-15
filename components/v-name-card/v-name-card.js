@@ -70,6 +70,7 @@ Component({
       let data={
         publisherId:this.data.userId
       };
+
       let _this=this;
       wx.request({
         url: app.globalData.baseUrl+"/api/posts/publishermsg",
