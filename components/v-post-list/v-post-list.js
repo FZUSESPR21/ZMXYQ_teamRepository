@@ -154,6 +154,7 @@ Component({
 
                   let publisherMsg = {};
                   publisherMsg.userName = midPostsData[i].publisherName;
+                  publisherMsg.iconUrl = app.globalData.baseUrl + "/static/" + "4ef39be8ebb04b6ab81428405af7ce1b.jpeg";
                   midPostsData[i].publisherMsg = publisherMsg;
                   console.log(midPostsData[i].publisherMsg);
                   //图片最终url
@@ -231,6 +232,7 @@ Component({
                 }
                 let publisherMsg = {};
                 publisherMsg.userName = midPostsData[i].publisherName;
+                publisherMsg.iconUrl = app.globalData.baseUrl + "/static/" + "4ef39be8ebb04b6ab81428405af7ce1b.jpeg";
                 midPostsData[i].publisherMsg = publisherMsg;
                 console.log(midPostsData[i].publisherMsg);
                 console.log("***");
