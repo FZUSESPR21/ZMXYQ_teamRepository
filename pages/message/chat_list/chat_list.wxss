@@ -3,14 +3,72 @@
   height: 100rpx;
   width: 100%;
   display: flex;
-  justify-content: center;
   font-size: larger;
   margin: 10rpx
 }
 
-.avatar{
-  width: 300rpx;
-  height: 300rpx;
+.chat_item{
+  flex-direction: row;
+  display: flex;
+  flex-wrap: nowrap;
+  height: 150rpx;
+  justify-content: space-between;
+  align-items: center;
+}
+.message_bar {
+  display: flex;
+  flex-direction: column;
+  min-width: 580rpx;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.split_line{
+  position: relative;
+  width: 90%;
+  height: 1px;
+  background: #ccc;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 36rpx;
+}
+.red-point{
+  padding: 3px 6px;
+  line-height: 20rpx;
+  text-align: center;
+  background-color: red;
+  color: white;
+  font-size: 20rpx;
+  font-weight: 700;
   border-radius: 50%;
-  border:2rpx solid #ccc;
+  position: relative;
+  bottom: 130rpx;
+  left: 680rpx;
+}
+
+
+.username{
+  margin-top: 20rpx;
+}
+.message_preview {
+  margin-bottom: 15rpx;
+  font-size: small;
+  color: #888;
+}
+
+.datetime {
+  position: relative;
+  z-index: 1000;
+  font-size: xx-small;
+  bottom: 50rpx;
+  float: inline-end;
+  margin-right: 20rpx;
+}
+.avatar{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 2rpx solid #ccc;
+  align-items: center;
+  margin: 20rpx;
 }

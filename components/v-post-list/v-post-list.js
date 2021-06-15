@@ -135,7 +135,7 @@ Component({
             data: jsonValue,
             success:function(res)
             {
-              app.globalData.userInfo = "already";
+              // app.globalData.userInfo = "already";
              console.log("初始页面");
              console.log(res);
              let midPostsData = res.data.data;

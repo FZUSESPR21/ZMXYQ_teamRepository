@@ -1,11 +1,27 @@
 <!--pages/message/index/chat_list.wxml-->
 <view class="main">
   <scroll-view class="scroll_box">
-    <button class="scroll_item" wx:for="{{list}}" wx:key="id" catchtap="handleTap">
+  <view wx:for="{{history_list}}" catchtap="handleTap" data-userid="{{item.dialogUserId}}" data-iconUrl="{{item.iconUrl}}">
+    <view class="chat_item"  >
+      <image class="avatar" src="{{item.iconUrl}}"> </image>
+      <view class="message_bar">
+        <text class="username">{{item.dialogUserName}}</text>
+        <text class="message_preview">{{item.latestMessage}}</text>
+      </view>
+      
+    </view>
+    <!-- <text class="red-point"> {{item.message_count}} </text> -->
+    <text class="datetime">{{item.latestTime}}</text>
+    <view wx:if="{{index != history_list.length-1}}" class="split_line"></view>
+  </view>
+  
+  
+    
+    <!-- <button class="scroll_item" wx:for="{{list}}" wx:key="id" catchtap="handleTap">
     {{item.value}}
-    </button>
+    </button> -->
   </scroll-view>
 
-  <image class="avatar" bindtap="setAvatarUrl" src="{{url}}"> </image>
+  <!-- <image class="avatar" bindtap="setAvatarUrl" src="{{url}}"> </image> -->
 
 </view>
