@@ -212,5 +212,14 @@ public class PostController {
       }
       return result;
   }
+
+  @PostMapping("/getById")
+  public Result selectPostById(@RequestBody Map<String,Number> queryMap) {
+      Result result;
+      Long userId = user.getId();
+      Long postId = queryMap.get("postId").longValue();
+      result = Result.success(postService.selectPostById(postId,userId));
+      return result;
+  }
 }
 
