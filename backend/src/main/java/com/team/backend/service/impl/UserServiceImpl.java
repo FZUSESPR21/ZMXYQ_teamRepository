@@ -171,14 +171,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       return result;
     }
 
-    // 判断头像url是否合法
-    msg = userLegal.iconUrlLegal(user.getUserIconUrl());
-    if (!msg.equals("OK")) {
-      result.setCode(ExceptionInfo.valueOf(msg).getCode());
-      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
-      result.setData(0);
-      return result;
-    }
+//    // 判断头像url是否合法
+//    msg = userLegal.iconUrlLegal(user.getUserIconUrl());
+//    if (!msg.equals("OK")) {
+//      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+//      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+//      result.setData(0);
+//      return result;
+//    }
 
     // 判断证件照url是否合法
     msg = userLegal.imgUrlLegal(user.getCertificateImageUrl());
@@ -450,13 +450,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       return result;
     }
 
-    msg = userLegal.iconUrlLegal(user.getUserIconUrl());
-    if (!msg.equals("OK")) {
-      result.setCode(ExceptionInfo.valueOf(msg).getCode());
-      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
-      result.setData(0);
-      return result;
-    }
+//    msg = userLegal.iconUrlLegal(user.getUserIconUrl());
+//    if (!msg.equals("OK")) {
+//      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+//      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+//      result.setData(0);
+//      return result;
+//    }
 
     // 判断学校名是否合法
     msg = userLegal.schoolLegal(user.getSchool());
