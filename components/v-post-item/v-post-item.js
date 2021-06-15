@@ -18,7 +18,8 @@ Component({
     postType: String,
     publisherId: Number,
     pubulisherName: String,
-    rewardNum: Number
+    rewardNum: Number,
+    publisherMsg: {type:Object, value:{}}
   },
 
   /**
