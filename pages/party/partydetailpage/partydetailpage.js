@@ -878,7 +878,7 @@ Page({
       // 如果不为空，去除后面多余的
       if(membersInfoArr[i] != null) {
         let length = membersInfoArr.length
-        membersInfoArr = membersInfoArr.splice(i, length - partyMemmberCnt)
+        membersInfoArr.splice(i, length - partyMemmberCnt)
         this.setData({
           membersInfoArr: membersInfoArr
         })
@@ -1024,7 +1024,7 @@ Page({
       // 如果不为空，去除后面多余的
       if(membersInfoArr[i] != null) {
         let length = membersInfoArr.length
-        membersInfoArr = membersInfoArr.splice(i, length - partyMemmberCnt)
+        membersInfoArr.splice(i, length - partyMemmberCnt)
         this.setData({
           membersInfoArr: membersInfoArr
         })
