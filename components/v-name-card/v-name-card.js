@@ -1,5 +1,6 @@
 // components/v-name-card.js
 const app=getApp();
+import {request} from "../../utils/request"
 const timeago = require("timeago.js");
 Component({
   /**
@@ -27,7 +28,7 @@ Component({
     publisherName:"",
     publisherSchool:"",
     publisherGender:"",
-    publisherHeadUrl:"",
+    publisherHeadUrl:"../../../../static/icons/smile.png",
     showPopUp:false,
   },
 
@@ -45,7 +46,7 @@ Component({
         publisherId:this.data.userId
       };
       let _this=this;
-      wx.request({
+      request({
         url: app.globalData.baseUrl+"/api/posts/publishermsg",
         method:"POST",
         data:data,
@@ -70,8 +71,9 @@ Component({
       let data={
         publisherId:this.data.userId
       };
+
       let _this=this;
-      wx.request({
+      request({
         url: app.globalData.baseUrl+"/api/posts/publishermsg",
         method:"POST",
         data:data,
@@ -83,6 +85,7 @@ Component({
             tempData.iconUrl = app.globalData.baseUrl + "/static/" + tempData.iconUrl;
             _this.setData({
               publisherMsg:tempData,
+              publisherHeadUrl: tempData.iconUrl
             })
             if(_this.data.publisherTime){
               _this.setData({

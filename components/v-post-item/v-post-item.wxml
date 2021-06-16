@@ -4,7 +4,7 @@
         <view class="feed-item">
             <view class="feed-source">
                 <!-- publisherId -->
-                <v-name-card publisherMsg="{{publisherMsg}}" userId="{{3}}"></v-name-card>
+                <v-name-card publisherMsg="{{publisherMsg}}" userId="{{publisherId}}"></v-name-card>
                 <image class="morebutton" mode="aspectFit" src="../../static/icons/moreInfo.png" bindtap="onTap" id="{{'morebutton'}}{{idx}}" data-idName="{{'morebutton'}}{{idx}}"></image>
                 <v-popover id='popover'>
                 <v-popover-item bindtap='editParty' hasline>举报</v-popover-item>
@@ -20,6 +20,7 @@
                     <!-- <image class="v-post-list-img" src="../../static/icons/img.png"  ></image> -->
                 </a>
             </view>
+        
                 <!-- goto_postdetail -->
                 <view class="answer-body">
                     <view class="answer-actions">
@@ -42,7 +43,8 @@
                             <input class="iconIntro" model:value="{{likeNum}}" disabled="{{true}}"/>
                         </view>     
                         <view class="bar">
-                            <van-button type="warning" size="small"  bindItemTab= "goToDetail" bindtap="goToDetail" data-id="{{postId}}">去评论</van-button>
+                            <van-button wx:if="{{!isDetail}}" type="warning" size="small"  bindtap="goToDetail" data-id="{{postId}}"
+                            data->去评论</van-button>
                         </view>         
                     </view>    
                 </view>

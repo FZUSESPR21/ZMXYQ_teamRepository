@@ -1,6 +1,10 @@
 // pages/post_detail/post_detail.js
 import Notify from '../../../miniprogram_npm/@vant/weapp/notify/notify';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
+import {request} from "../../../utils/request"
+const app = getApp();
+const timeago = require("timeago.js");
+
 Page({
 
   /**
@@ -10,17 +14,61 @@ Page({
     commentMessage:{},
     commentInputText:"",
     postId:0,
+    publisherId:0,
+    postType:"",
+    publisherName:"",
+    message:"",
+    item:null,
     showRewardBox:false,
     popularityNum:0,
     hasMark:false,
     hasLike:true,
   },
 
+  getDetail(){
+    let that = this;
+    let baseUrl = app.globalData.baseUrl;
+    request({
+      url: baseUrl + '/api/posts/getById',
+      method: 'POST',
+      data:{
+        "postId":that.data.postId,
+      },
+      success(res){
+        if(res.data.code === 200){
+          console.log(res)
+          let midPostsData = res.data.data[0];
+          console.log(midPostsData);
+          if(midPostsData != null){
+            let imageStr = midPostsData.imageUrls;
+            if(imageStr === ""){
+              midPostsData.imageUrls = [];
+            }
+            else {
+              midPostsData.imageUrls = imageStr.split(';');
+            }
+            for(let imageIndex = 0; imageIndex < midPostsData.imageUrls.length; imageIndex++){
+              midPostsData.imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData.imageUrls[imageIndex];
+            }
+            midPostsData.gmtCreate = timeago.format(new Date(midPostsData.gmtCreate), 'zh_CN');
+          }
+          that.setData({
+            item:midPostsData,
+          })
+        }
+
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      postId:options.postId,
+    })
+    console.log(this.data.postId)
+    this.getDetail();
   },
 
   /**

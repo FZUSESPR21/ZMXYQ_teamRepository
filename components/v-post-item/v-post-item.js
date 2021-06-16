@@ -19,6 +19,7 @@ Component({
     publisherId: Number,
     pubulisherName: String,
     rewardNum: Number,
+    isDetail: {type:Boolean, value:false},
     publisherMsg: {type:Object, value:{}}
   },
 
@@ -140,8 +141,8 @@ Component({
     //跳转至详情界面函数
     goToDetail: function(event){
       let id = event.currentTarget.dataset.id;
-      console.log(event);
-      console.log(id);
+      // console.log(event);
+      // console.log(id);
       wx.navigateTo({
         url: '../post_detail/post_detail?postId=' + id,
       })
@@ -200,18 +201,18 @@ Component({
         showmenu: true,
         current: e.currentTarget.dataset.currentUrl,
         success(res){
-  
+
         },
         fail(err){
           Dialog.alert({
             message: '图片预览失败\n' + 'wx.previewImage调用失败'
           }).then(() => {
-  
+
           })
           console.log('调用失败原因', err.errMsg)
         }
       })
     }
-    
+
   }
 })

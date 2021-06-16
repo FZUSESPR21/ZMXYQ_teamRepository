@@ -34,8 +34,9 @@
       data-url='http://ccreater.top:61112/static/{{item}}' catchtap="previewImage"/>
     </view>
 
-    <view class="party-detail-operation" wx:if="{{!isPublisher}}">
-      <view class="joinbutton" bindtap="joinParty">{{buttonContent}}</view>
+    <view class="party-detail-operation">
+      <view wx:if="{{!isPublisher}}" class="joinbutton" bindtap="joinParty">{{buttonContent}}</view>
+      <view wx:else class="joinbutton-gray">劳资局长</view>
       <van-notify id="van-notify" />
     </view>
 
@@ -57,9 +58,10 @@
               <view class="partyMemberListitemlabel {{item.isPublisher?'publisher_label':''}} {{item.myself?'myself_label':''}}">
               {{item.text}}
               </view>
+              
               <view class="delete-button" wx:if="{{item.ifShow}}">
-                <image src="../../../static/icons/delete.png" class="delete-button-icon" bindtap="moveOffMember" data-index="{{index}}"></image>
-            </view>
+                <image src="../../../static/icons/delete.png" class="delete-button-icon" catchtap="moveOffMember" data-index="{{index}}"></image>
+              </view>
           </view>
           </view>
 
