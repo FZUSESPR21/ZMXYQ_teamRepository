@@ -28,7 +28,7 @@ Component({
     publisherName:"",
     publisherSchool:"",
     publisherGender:"",
-    publisherHeadUrl:"",
+    publisherHeadUrl:"../../../../static/icons/smile.png",
     showPopUp:false,
   },
 
@@ -85,6 +85,7 @@ Component({
             tempData.iconUrl = app.globalData.baseUrl + "/static/" + tempData.iconUrl;
             _this.setData({
               publisherMsg:tempData,
+              publisherHeadUrl: tempData.iconUrl
             })
             if(_this.data.publisherTime){
               _this.setData({
