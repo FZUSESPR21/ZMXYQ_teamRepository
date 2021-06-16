@@ -125,7 +125,6 @@ page{
   display: flex;
   justify-content: center;
   align-items:center;
-  
 }
 .party-detail-operation{
   height: 100rpx;
@@ -262,4 +261,15 @@ page{
 }
 .myself_label{
   background: rgb(245, 185, 183)!important
+}
+.joinbutton-gray{
+  width: 100px;
+  height: 60rpx;
+  margin-left: 50vw;
+  background-color: #5a5957;
+  border-radius: 3rem;
+ text-align: center;
+ color: #ffffff;
+ font-weight: bold;
+ line-height:60rpx;
 }

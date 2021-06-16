@@ -30,6 +30,7 @@ Page({
     value1: 0,
     select: false,
     memNum: 1,
+    partyMemberCntnow: 0,
     // 当前选中项
     tihuoWay: '全部主题',
     // 图片文件列表，从详情页传过来的
@@ -55,6 +56,7 @@ Page({
       this.setData({
         partyDetailContent: options.partyDetailContent,
         memNum: parseInt(options.partyMemberCnt),
+        partyMemberCntnow: parseInt(options.partyMemberCntnow),
         buttonOperation: options.operation,
         partyId: parseInt(options.partyID),
         fileList: JSON.parse(options.fileList),
@@ -354,7 +356,7 @@ Page({
     }
   },
   delmemberOp(e) {
-    if (this.data.memNum > 1) {
+    if (this.data.memNum > this.data.partyMemberCntnow) {
       this.setData({
         memNum: this.data.memNum - 1,
         isEdited: true
@@ -362,7 +364,7 @@ Page({
     }
     else {
       wx.showToast({
-        title: '人数不能少于1',
+        title: '小于组内人数！',
         icon: 'error',
         duration: 1000
       })
