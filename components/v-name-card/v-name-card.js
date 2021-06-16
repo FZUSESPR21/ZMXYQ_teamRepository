@@ -1,5 +1,6 @@
 // components/v-name-card.js
 const app=getApp();
+import {request} from "../../utils/request"
 const timeago = require("timeago.js");
 Component({
   /**
@@ -45,7 +46,7 @@ Component({
         publisherId:this.data.userId
       };
       let _this=this;
-      wx.request({
+      request({
         url: app.globalData.baseUrl+"/api/posts/publishermsg",
         method:"POST",
         data:data,
@@ -72,7 +73,7 @@ Component({
       };
 
       let _this=this;
-      wx.request({
+      request({
         url: app.globalData.baseUrl+"/api/posts/publishermsg",
         method:"POST",
         data:data,
