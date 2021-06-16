@@ -1,2 +1,10 @@
 <!--pages/my/certification/certification.wxml-->
-<text>pages/my/certification/certification.wxml</text>
+<view class="uploader">
+    <van-uploader max-count="1"  bind:after-read="afterRead" multiple="{{false}}">
+        <van-button icon="photo" type="small" color="#f2774d">上传身份认证图片</van-button>
+    </van-uploader>
+</view>
+
+<view >
+    <van-image wx:for="{{finalImageUrls}}" wx:key="" width="600rpx" height="600rpx" custom-class="image" src="{{item}}" data-currenturl="{{item}}" catchtap="previewImage"></van-image>
+</view>

@@ -178,6 +178,7 @@ Component({
         },
         fail:function(res)
         {
+          console.log(event);
           console.log(res);
         }
       });

@@ -35,11 +35,9 @@
 </view>
 
 <view>
-    <view class="uploader">
-    <van-uploader max-count="1"  bind:after-read="afterRead" multiple="{{false}}">
-  <van-button icon="photo" type="small" color="#f2774d">上传身份认证图片</van-button>
-</van-uploader>
-    </view>
+
+
+
     <van-cell-group style="margin:20rpx">
 <!--        <van-cell title="单元格" value="内容" />-->
 <!--        <van-cell title="单元格" is-link value="内容" arrow-direction="down" />-->

@@ -1,1 +1,16 @@
-/* pages/my/certification/certification.wxss */
+
+page{
+    height: 100%;
+    width: 100%;
+}
+
+
+.uploader{
+    margin-top: 100rpx;
+    margin-bottom: 100rpx;
+    margin-left: 200rpx;
+}
+
+.image{
+   margin: 0 50rpx;
+}
