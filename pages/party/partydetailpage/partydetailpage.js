@@ -44,7 +44,11 @@ Page({
     // 组局成员信息列表，不包括局长的
     membersInfoArr: [],
     defaultIconUrl: '../../../../static/icons/add_post_active.png',
-    memberIconUrl:  'https://i.loli.net/2021/06/14/KoVSPTc1eyCpBgE.jpg'
+    memberIconUrl:  'https://i.loli.net/2021/06/14/KoVSPTc1eyCpBgE.jpg',
+    // 是否是回复。
+    // false：在父评论中新增评论(preId使用-1) 
+    // true：在子评论中增加评论(preId使用组件中传来的preId，某个父评论的Id
+    isReply: false
   },
 
   /** 
@@ -56,7 +60,9 @@ Page({
       partyID: options.partyID
     });
     this.init();//获取组局详情，同时异步获取创建者信息
+
     this.getPartyCommentList();//获取组局评论列表
+
     this.popover = this.selectComponent('#popover');
   },
 
@@ -227,6 +233,12 @@ Page({
   // 发送评论函数
   sendComment: function (e) {
     let _this=this;
+    let {isReply} = this.data
+    let preId = -1
+    if(isReply) {
+      preId = parseInt(this.data.commentMessage.preId)
+      console.log('preId------------', preId)
+    }
     request({
       url: app.globalData.baseUrl+"/api/party-comment/comment",
      
@@ -235,7 +247,7 @@ Page({
         information: _this.data.commentInputText.toString(),
           userId: parseInt (_this.data.userId),
           partyId:parseInt (_this.data.partyID),
-          preId: -1
+          preId: preId
       },
       success: function (res) {
         console.log(res);
@@ -251,7 +263,6 @@ Page({
       fail:function (res) {
         console.log(res);
       }
-
     })
   },
   //气泡小组件获取位置函数
@@ -458,7 +469,8 @@ Page({
   getCommentBox: function (e) {
     this.setData({
       showCommentBox: true,
-      commentMessage: e.detail
+      commentMessage: e.detail,
+      isReply: true
     })
     console.log(this.data.commentMessage);
     console.log(10);

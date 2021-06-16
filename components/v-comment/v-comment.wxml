@@ -1,26 +1,55 @@
 <view class="main">
+
   <view class="comment-area">
-    <view class="parentComment-view" wx:for="{{commentListData}}" wx:key="key" wx:for-item='item' wx:for-index='index'>
+
+    <view class="parentComment-view" 
+          wx:for="{{commentListData}}" 
+          wx:key="key"         
+          wx:for-item='item' 
+          wx:for-index='index'>
+
       <view class="comment-content-view">
-        <v-name-card publisherTime="{{item.gmtCreate}}" userId="{{item.commentUserId}}"></v-name-card>
+
+        <!-- 父评论for -->
+        <v-name-card publisherTime="{{item.gmtCreate}}" userId="{{item.commentUserId}}">
+        </v-name-card>
         <view class="comment-content-main">
-          <view class="comment-content-view-text" bindtap="showCommentBox">
-            {{item.message}}</view>
+          <view class="comment-content-view-text" 
+                bindtap="showCommentBox"
+                data-username='{{item.commentUsername}}' 
+                data-preid='{{item.preId}}'>
+                {{item.message}}
+          </view>
+
           <view class="comment-content-more">
             <view wx:if="{{item.childrenComments!=false}}" bindtap="showMoreContents" class="comment-content-more-button" wx:for-item='item' wx:for-index='index' wx:key="key" data-index="{{index}}">
               {{isMoreCommentsShowed==false?'查看更多内容':isMoreCommentsShowed[index].moreButtonContent}}<image src="{{isMoreCommentsShowed==false?'../../static/icons/down arrow.png':isMoreCommentsShowed[index].iconSrc}}" class="down"></image>
             </view>
-            <view wx:if="{{isMoreCommentsShowed[index].state}}" class="more-comment-view" wx:for="{{item.childrenComments}}"
-            wx:for-item="childItem" wx:key="key" wx:for-index='childIndex'>
+            <!-- 子评论for -->
+            <view wx:if="{{isMoreCommentsShowed[index].state}}" 
+                  class="more-comment-view"       
+                  wx:for="{{item.childrenComments}}"
+                  wx:for-item="childItem" wx:key="key" 
+                  wx:for-index='childIndex'>
               <v-name-card userId="{{childItem.commentUserId}}" ></v-name-card>
-              <view class="comment-content-view-text" bindtap="showCommentBox">
-              {{childItem.message}}
+              <!-- 点击评论的文字时，触发点击事件，调用回调函数。回调函数中触发自定义事件 -->
+              <view class="comment-content-view-text" 
+                    bindtap="showCommentBox" 
+                    data-username='{{childItem.commentUsername}}' 
+                    data-preid='{{childItem.preId}}'>
+                    {{childItem.message}}
+              </view>
             </view>
-            </view>
+            <!-- 子评论for END -->
           </view>
+          
         </view>
-      </view>
-    </view>
-  </view>
-</view>
+
+      </view><!-- comment-content-view END 父评论for-->
+
+    </view><!-- parentComment-view END-->
+    
+  </view><!-- comment-area END -->
+
+</view><!-- main END -->
 

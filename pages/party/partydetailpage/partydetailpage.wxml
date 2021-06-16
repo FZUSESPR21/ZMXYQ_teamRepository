@@ -91,7 +91,9 @@
   <!-- 卡片：拼局评论 -->
   <view class="party-comment-list">
     <text class="partydetailtitle">拼局评论</text>
-    <scroll-view class="comment-list-scroll" scroll-y="true" bindscroll="onScroll" bindscrolltoupper="onTopRefresh" bindscrolltolower="onBottomRefresh">
+    <scroll-view class="comment-list-scroll" scroll-y="true">
+      <!-- 绑定自定义事件 showCommentBox ，回调函数为getCommentBox -->
+      <!-- 触发点击事件 → 回调函数 → 触发showCommentBox -> 回调函数 -->
       <v-comment bind:showCommentBox="getCommentBox" commentListData="{{partyCommentList}}">
       </v-comment>
     </scroll-view>
@@ -103,7 +105,7 @@
 <view class="comment-box">
 
   <form action="" class="input-form">
-    <textarea  bindblur="bindTextAreaBlur" confirm-type="send" class="message-area" placeholder="{{'请输入回复'+commentMessage.publisherName+'的评论'}}" value="{{commentInputText}}" bindinput="getValue" fixed="true" cursor-spacing="30"></textarea>
+    <textarea  bindblur="bindTextAreaBlur" confirm-type="send" class="message-area" placeholder="{{'请输入回复 @'+commentMessage.publisherName+' 的评论'}}" value="{{commentInputText}}" bindinput="getValue" fixed="true" cursor-spacing="30"></textarea>
     <button class="send-button" bindtap="sendComment">发送</button>
   </form>
   
