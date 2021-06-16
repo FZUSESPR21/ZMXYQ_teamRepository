@@ -73,9 +73,9 @@
     </van-cell-group>
 
     <van-cell-group>
-        <van-cell icon="shop" border is-link >
+        <van-cell icon="shop" border is-link bind:click="goToCertification">
             <view slot="title">
-                <view class="van-cell-text">意见反馈</view>
+                <view class="van-cell-text">身份认证</view>
             </view>
         </van-cell>
     </van-cell-group>
@@ -87,6 +87,8 @@
             </view>
         </van-cell>
     </van-cell-group>
+
+
 
 </view>
 </view>

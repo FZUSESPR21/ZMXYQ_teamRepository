@@ -78,6 +78,12 @@ Page({
     })
   },
 
+  goToCertification(){
+    wx.navigateTo({
+      url: '../certification/certification'
+    })
+  },
+
   goToMyInfo(){
     wx.navigateTo({
       url: '../my_info/my_info'
