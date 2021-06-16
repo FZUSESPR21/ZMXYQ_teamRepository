@@ -7,8 +7,9 @@ Page({
   data: {
     fileList: [
     ],
-    multiArray: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领'], ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐','求点评','求租/借','求购']],
-    multiArray1: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领','请设置主题'], ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐','求点评','求租/借','求购']],
+    partyTypeId: -1,  //选中的partyTypeId
+    multiArray: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领'], ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验']],
+    multiArray1: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领','请设置主题'], ['日常生活', '学业疑难', '求医问药', '找人帮忙']],
     objectMultiArray: [
       [
         {
@@ -71,22 +72,6 @@ Page({
         {
           id: 4,
           name: '攻略经验'
-        },
-        {
-          id: 5,
-          name: '求推荐'
-        },
-        {
-          id: 6,
-          name: '求点评'
-        },
-        {
-          id: 7,
-          name: '求租/借'
-        },
-        {
-          id: 8,
-          name: '求购'
         }
       ]
     ],
@@ -95,13 +80,25 @@ Page({
     imgUrls:[]
   },
   bindMultiPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+    let sonTypeCnt = [5,0,0,0,0,2,0,12,5,0];
+    let typeId = 1;
+    console.log('picker发送选择改变，携带值为', e.detail.value);
+    if(sonTypeCnt[e.detail.value[0]] === 0)
+      typeId = e.detail.value[0] + 1;
+    else{
+      typeId += 10;
+      for(let i = 0; i < e.detail.value[0]; i++)
+        typeId += sonTypeCnt[i];
+      typeId += e.detail.value[1];
+    }
+    console.log(typeId);
     this.setData({
-      multiIndex: e.detail.value
+      multiIndex: e.detail.value,
+      partyTypeId: typeId
     })
   },
   bindMultiPickerColumnChange: function (e) {
-    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
       multiArray: this.data.multiArray,
       multiIndex: this.data.multiIndex
@@ -111,13 +108,13 @@ Page({
       case 0:
         switch (data.multiIndex[0]) {
           case 0:
-            data.multiArray[1] = ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐','求点评','求租/借','求购'];
+            data.multiArray[1] = ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐'];
             break;
           case 1:
             data.multiArray[1] = [''];
             break;
           case 2:
-            data.multiArray[1] = ['身边趣事', '创作分享', '情感','吐槽爆料','时事新闻'];
+            data.multiArray[1] = [];
             break;
           case 3:
             data.multiArray[1] = [''];
@@ -126,23 +123,20 @@ Page({
             data.multiArray[1] = [''];
             break;
           case 5:
-            data.multiArray[1] = ['活动', '问卷'];
+            data.multiArray[1] = [];
              break;
           case 6:
             data.multiArray[1] = [''];
             break;
           case 7:
-            data.multiArray[1] = [''];
-            break;
-          case 8:
             data.multiArray[1] = ['书籍资料', '电子数码','洗漱日化','鞋服包饰','代步工具','票卡转让','仙女集市','食品','体育器材','学习用品','电器家具','其他'];
             break;
-          case 9:
+          case 8:
             data.multiArray[1] = ['家教','被试','实习','全职','其他兼职',];
-            break;       
-          case 10:
-            data.multiArray[1] = [''];
-            break;                               
+            break;      
+          case 9:
+            data.multiArray[1] = [];
+            break;                              
         }
         data.multiIndex[1] = 0;
         break;
@@ -172,6 +166,13 @@ Page({
     {
       Dialog.alert({
         message: '发布内容不能为空',
+      }).then(() => {
+        // on close
+      });
+    }
+    else if(this.data.partyTypeId === -1){
+      Dialog.alert({
+        message: '请选择标签',
       }).then(() => {
         // on close
       });
@@ -239,8 +240,9 @@ Page({
           })
           console.log(_this.data.imgUrls);
           console.log(app.globalData.userInfo);
-          let jsonStr = '{"userId":123456, "postTheme":3, "message": "丽丽SB", "imageUrls": ""}';
+          let jsonStr = '{"userId":123456, "postTheme":'+ _this.data.partyTypeId + ', "message": "'+ _this.data.postContent + '", "imageUrls": ""}';
           let jsonValue = JSON.parse(jsonStr);
+          console.log(jsonValue);
           request({//创建组局请求
             url: app.globalData.baseUrl+'/api/posts/publish',
             method:'POST',
