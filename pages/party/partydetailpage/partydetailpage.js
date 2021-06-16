@@ -63,7 +63,9 @@ Page({
   onShow: function () {
     if(!this.data.isFirstOnShow) {
       this.getPartyDetail()
+      this.updateMemberInfoArr()
     }
+    // this.updateMemberInfoArr()
     this.setData({
       isFirstOnShow: false
     })
@@ -75,7 +77,6 @@ Page({
     let _this = this;
     if (this.data.hasjoined == false) {
       if (this.data.partyMemmberCntNow < this.data.partyMemmberCnt) {
-
         request({
           url: app.globalData.baseUrl +"/api/party/join",
           method: "post",
@@ -102,13 +103,12 @@ Page({
               type: 'success',
               message: '加入拼局成功'
             });
+            _this.updateMemberInfoArr()
           },
           fail:function (e) {
             console.log(e);
           }
         })
-        _this.getPartyDetail();
-
       } else {
         Dialog.alert({
           message: '组局人数已经达到上限',
@@ -133,13 +133,12 @@ Page({
             buttonContent: "加入组局",
             hasjoined: false
           })
-
           Notify({
             type: 'success',
             message: '退出拼局成功'
           });
-          _this.getPartyDetail();   
-
+          // _this.getPartyDetail();
+          _this.updateMemberInfoArr()
         } 
       })
     }
@@ -267,69 +266,81 @@ Page({
 
   // 编辑拼局函数
   editParty: function (e) {
-    let newFileList=[]
-    this.data.partyDetailImageUrls.forEach(function(e)
-    {
-      newFileList.push({
-        url:app.globalData.baseUrl+'/static/'+e,
-        name: '图片2',
-        isImage: true,
-        deletable: true,
+    if(!this.data.isPublisher) {
+      wx.showToast({
+        title: '您没有权限',
+        icon: 'error',
+        duration: 1000
       })
-    })
-    console.log(newFileList);
-    wx.navigateTo({
-      url: '../edit_party/edit_party?partyDetailContent=' + this.data.partyDetailContent + '&partyMemberCnt=' + this.data.partyMemmberCnt + '&operation=修改拼局'+'&partyID='+this.data.partyID+'&fileList='+JSON.stringify(newFileList) + '&partyTypeId=' + this.data.partyTypeId,
-    });
-    // 调用自定义组件 popover 中的 onHide 方法
+    }
+    else {
+      let newFileList=[]
+      this.data.partyDetailImageUrls.forEach(function(e)
+      {
+        newFileList.push({
+          url:app.globalData.baseUrl+'/static/'+e,
+          name: '图片2',
+          isImage: true,
+          deletable: true,
+        })
+      })
+      console.log(newFileList);
+      wx.navigateTo({
+        url: '../edit_party/edit_party?partyDetailContent=' + this.data.partyDetailContent + '&partyMemberCnt=' + this.data.partyMemmberCnt + '&operation=修改拼局'+'&partyID='+this.data.partyID+'&fileList='+JSON.stringify(newFileList) + '&partyTypeId=' + this.data.partyTypeId + '&partyMemberCntnow=' + this.data.partyMemmberCntNow,
+      });
+      // 调用自定义组件 popover 中的 onHide 方法
+    }
     this.popover.onHide();
   },
   // 解散组局函数
   disbandParty: function (e) {
-    let _this=this;
-    Dialog.confirm({
-        message: '确定要解散拼局吗',
+    if(!this.data.isPublisher) {
+      wx.showToast({
+        title: '您没有权限',
+        icon: 'error',
+        duration: 1000
       })
-      .then(() => {
-        console.log(parseInt(_this.data.partyID));
-        request({
-          url: app.globalData.baseUrl+'/api/party/delete',
-          method: "POST",
-          data:parseInt(_this.data.partyID),
-        
-          success: function (res) {
-            console.log(res)
-            if(res.data.status=200){
-              Dialog.alert({
-                message: res.data.message,
-              }).then(() => {
-                // on close
-              });
-              wx.navigateTo({
-                url: '../index/index.wxml',
-                success: (result) => {
-  
-                },
-                fail: () => {},
-                complete: () => {}
-              });
-            }
-            else
-            {
-              Dialog.alert({
-                message: '解散拼局失败',
-              }).then(() => {
-                // on close
-              });
-            }
-            
-          }
+    }
+    else {
+      let _this=this;
+      Dialog.confirm({
+          message: '确定要解散拼局吗',
         })
-        // on confirm
-      })
-      .catch(() => {
-        // on cancel
-      });
+        .then(() => {
+          console.log(parseInt(_this.data.partyID));
+          request({
+            url: app.globalData.baseUrl+'/api/party/delete',
+            method: "POST",
+            data:parseInt(_this.data.partyID),
+          
+            success: function (res) {
+              console.log(res)
+              if(res.data.status != 200){
+                Dialog.alert({
+                  message: '失败原因：\n' + res.data.message,
+                }).then(() => {
+                  wx.navigateBack({
+                    delta: 0,
+                  })
+                });
+              }
+              else
+              {
+                Dialog.alert({
+                  message: '解散拼局失败',
+                }).then(() => {
+                  // on close
+                });
+              }
+              
+            }
+          })
+          // on confirm
+        })
+        .catch(() => {
+          // on cancel
+        });
+    }
     this.popover.onHide();
   },
   showMoveOff:function(e){
@@ -337,50 +348,59 @@ Page({
     let participantsId = this.data.partyParticipantsId;
     let {membersInfoArr} = this.data
     let arr=[];
-    if(_this.data.moveOffButtonText == "移除成员")
-    {
-      _this.setData(
-        {
-          moveOffButtonText:"取消"
-        }
-      ),
-      membersInfoArr.forEach((item) => {
-        if(item.isOccupied) {
-          item.ifShow = true
-        }
-      })
-      this.setData({
-        membersInfoArr: membersInfoArr
+    if(!this.data.isPublisher) {
+      wx.showToast({
+        title: '您没有权限',
+        icon: 'error',
+        duration: 1000
       })
     }
-    else
-    {
-      _this.setData({
-        moveOffButtonText:"移除成员"
-      })
-      membersInfoArr.forEach((item) => {
-        item.ifShow = false
-      })
-      this.setData({
-        membersInfoArr: membersInfoArr
-      })
-      // participantsId.forEach(
-      //   function (e) {
-      //     if(e==_this.data.userId)
-      //     {
-      //       arr.push({
-      //         participantsId:e.participantsId,
-      //         deletable:true
-      //       })
-      //     }
-      //     else{
-      //       arr.push({
-      //         participantsId:e.participantsId,
-      //         deletable:false
-      //       })
-      //     }
-      //   }
-      // )
+    else {
+      if(_this.data.moveOffButtonText == "移除成员")
+      {
+        _this.setData(
+          {
+            moveOffButtonText:"取消"
+          }
+        ),
+        membersInfoArr.forEach((item) => {
+          if(item.isOccupied) {
+            item.ifShow = true
+          }
+        })
+        this.setData({
+          membersInfoArr: membersInfoArr
+        })
+      }
+      else
+      {
+        _this.setData({
+          moveOffButtonText:"移除成员"
+        })
+        membersInfoArr.forEach((item) => {
+          item.ifShow = false
+        })
+        this.setData({
+          membersInfoArr: membersInfoArr
+        })
+        // participantsId.forEach(
+        //   function (e) {
+        //     if(e==_this.data.userId)
+        //     {
+        //       arr.push({
+        //         participantsId:e.participantsId,
+        //         deletable:true
+        //       })
+        //     }
+        //     else{
+        //       arr.push({
+        //         participantsId:e.participantsId,
+        //         deletable:false
+        //       })
+        //     }
+        //   }
+        // )
+      }
     }
     // _this.setData({
     //   partyMemberList:arr
@@ -392,38 +412,40 @@ Page({
     let _this=this;
     Dialog.confirm({
         message: '确定要移除该成员吗',
-      })
-      .then(() => {
-        console.log(100000);
-        console.log(e);
-        let deleteIndex = e.currentTarget.dataset.index;
-        console.log(deleteIndex);
-        console.log(_this.data.partyMemberList[deleteIndex]);
-        request({
-          url:app.globalData.baseUrl+"/api/party-participants/moveoff",
+      }).then(() => {
+        console.log('确认完毕-------------')
+        let index = e.currentTarget.dataset.index;
+        let {membersInfoArr} = this.data
+        let partyId = _this.data.partyID
+        let userId = membersInfoArr[index].userId
+        wx.request({
+          url: baseUrl + "/api/party-participants/moveoff",
           method:"POST",
           data:{
-            partyId:_this.data.partyID,
-            userId:123456
+            "partyId": partyId.toString(),
+            "userId": userId.toString()
           },
           header:{
             'content-type': 'application/x-www-form-urlencoded'
           },
-          success:function (res) {
-            console.log(res);
-            _this.moveOff(deleteIndex);
+          success(res) {
+            console.log('服务器返回----------', res);
+            // _this.moveOff(deleteIndex);
+            // _this.updateMemberInfoArr()
+            _this.updateMemberInfoArrVerMoveoff()
           },
-          fail:function(res)
-          {
-            console.log(res)
+          fail(res) {
+        console.log('收到响应-------------fail')
+            console.log('删除失败-----',res.errMsg)
           }
-          
         })
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log('关闭-----------------' + err)
         // on cancel
       });
   },
+
   moveOff: function (deleteIndex) {//直接回显的移除成员
     console.log(deleteIndex);
     let newMemberList = this.data.partyMemberList;
@@ -432,6 +454,7 @@ Page({
       partyMemberList: newMemberList
     });
   },
+
   getCommentBox: function (e) {
     this.setData({
       showCommentBox: true,
@@ -478,6 +501,14 @@ Page({
    * 首次进入详情页时：获取组局详情；获取创建者信息；获得当前用户id
    */
   init: function() {
+    wx.showLoading({
+      title: '加载中'
+    })
+    // wx.showToast({
+    //   title: '加载中',
+    //   icon: 'loading',
+    //   duration: 1000
+    // })
     let _this = this;
     new Promise(function(resolve, reject) {
       request({
@@ -553,6 +584,10 @@ Page({
       })
       // 处理partyParticipantsId，获得membersInfoArr
       this.getMembersInfoArr()
+    }).then(() => {
+      wx.hideLoading({
+        success: (res) => {},
+      })
     })
   },
   /**
@@ -569,9 +604,9 @@ Page({
         method:"POST",
         data: data,
         success:function (res) {
-          console.log('请求参数data----------1', data)
-          console.log('返回的结果-------------1', res)
-          console.log('getPublisherMessage方法中的publisherMsg------1', res.data.data)
+          // console.log('请求参数data----------1', data)
+          // console.log('返回的结果-------------1', res)
+          // console.log('getPublisherMessage方法中的publisherMsg------1', res.data.data)
           _this.setData({
             partyPublisherMsg:res.data.data
           })
@@ -622,7 +657,7 @@ Page({
           member = {
             index: i,
             url: this.data.memberIconUrl,
-            userId: participantsId[i],
+            userId: partyParticipantsId[i],
             // 用于判断是否 会 显示删除按钮，也可以用于判断是否是组员
             isOccupied: true,
             ifShow: false,
@@ -715,7 +750,294 @@ Page({
         userId: userId
       })
     }
-}
+  },
+  /**
+   * 更新局内成员列表
+   */
+  updateMemberInfoArr: function() {
+    let _this = this;
+    new Promise(function(resolve, reject) {
+      request({
+        url: app.globalData.baseUrl+'/api/party/partymes',
+        method: 'GET',
+        data: {
+          partyId: parseInt(_this.data.partyID)
+        },
+        success: function (res) {
+          let data = res.data.data;
+          // console.log('success-------res=\n',res);
+          // console.log(data);
+          if (data != null) {
+            _this.setData({
+              partyID: data.partyID,
+              partyDetailContent: data.context,
+              partyPublisherID:data.publisherID,
+              partyMemmberCnt: data.peopleCnt,
+              partyCreateTime: timeago.format(new Date(data.gmtCreate),'zh_CN'),
+              partyParticipantsId: data.participantsID,
+              partyDetailImageUrls: data.images,
+              partyMemmberCntNow:data.nowPeopleCnt,
+              partyTypeId: data.partyType
+            })
+          }
+          let participantsId=_this.data.partyParticipantsId;
+          let arr=[];
+          participantsId.forEach(
+            function (e) {
+                arr.push({
+                  participantsId:e,
+                  deletable:true
+                })
+            }
+          )
+          _this.setData({
+            partyMemberList:arr
+          })
+          resolve(data.images);
+        },
+        fail: function (res) {
+          console.log(res);
+          reject()
+        }
+      });
+    }).then(() => {
+      let {membersInfoArr} = this.data;
+      let {partyParticipantsId} = this.data;
+      let {partyMemmberCntNow} = this.data;
+      let {partyMemmberCnt} = this.data;
+      let {partyPublisherMsg} = this.data;
+      let {userId} = this.data
+      let {partyPublisherID} = this.data
+      let i = 0
+
+      // 索引不大于最大人数的部分
+      // 每次要放进数组时，都判断这个位置是不是空位。是就push，否则赋值
+      for (i = 0; i < partyMemmberCnt; i++) {
+        let member = {
+          index: i,
+          url: this.data.defaultIconUrl,
+          userId: 0,
+          // 用于判断是否 会 显示删除按钮，也可以用于判断是否是组员
+          isOccupied: false,
+          ifShow: false,
+          isPublisher: false,
+          myself: false,
+          text: '成员'
+        }
+        // 判断：把组员先存进去，再存空位
+        if (i < partyMemmberCntNow) {
+          // 判断：如果是局长的话
+          if (partyParticipantsId[i] == partyPublisherID) {
+            member.url = baseUrl + '/static/' + partyPublisherMsg.iconUrl;
+            member.isPublisher = true;
+            member.text = '局长';
+            // 如果是自己
+            if (partyParticipantsId[i] == userId) {
+              member.myself = true;
+              member.text = '自己'
+            }
+          }
+          // 判断：是组员
+          else {
+            member = {
+              index: i,
+              url: this.data.memberIconUrl,
+              userId: partyParticipantsId[i],
+              // 用于判断是否 会 显示删除按钮，也可以用于判断是否是组员
+              isOccupied: true,
+              ifShow: false,
+              isPublisher: false,
+              myself: false,
+              text: '成员'
+            }
+            // 如果是自己
+            if (partyParticipantsId[i] == userId) {
+              member.myself = true;
+              member.text = '自己'
+            }
+          }
+          if(membersInfoArr[i] == null) {
+            membersInfoArr.push(member)
+          }
+          else {
+            membersInfoArr[i] = member
+          }
+        }
+        // 存空位
+        else {
+          if(membersInfoArr[i] == null) {
+            membersInfoArr.push(member)
+          }
+          else {
+            membersInfoArr[i] = member
+          }
+        }
+
+      }
+      // 索引大于最大人数的部分。两种情况，刚好/有空位
+      // 如果不为空，去除后面多余的
+      if(membersInfoArr[i] != null) {
+        let length = membersInfoArr.length
+        membersInfoArr = membersInfoArr.splice(i, length - partyMemmberCnt)
+        this.setData({
+          membersInfoArr: membersInfoArr
+        })
+      }
+      else {
+        this.setData({
+          membersInfoArr: membersInfoArr
+        })
+      }
+    })
+    console.log('updateMemberInfo---------\n', this.data.membersInfoArr)
+  },
+    /**
+   * 更新局内成员列表,MoveOff版本
+   */
+  updateMemberInfoArrVerMoveoff: function() {
+    let _this = this;
+    new Promise(function(resolve, reject) {
+      request({
+        url: app.globalData.baseUrl+'/api/party/partymes',
+        method: 'GET',
+        data: {
+          partyId: parseInt(_this.data.partyID)
+        },
+        success: function (res) {
+          let data = res.data.data;
+          // console.log('success-------res=\n',res);
+          // console.log(data);
+          if (data != null) {
+            _this.setData({
+              partyID: data.partyID,
+              partyDetailContent: data.context,
+              partyPublisherID:data.publisherID,
+              partyMemmberCnt: data.peopleCnt,
+              partyCreateTime: timeago.format(new Date(data.gmtCreate),'zh_CN'),
+              partyParticipantsId: data.participantsID,
+              partyDetailImageUrls: data.images,
+              partyMemmberCntNow:data.nowPeopleCnt,
+              partyTypeId: data.partyType
+            })
+          }
+          let participantsId=_this.data.partyParticipantsId;
+          let arr=[];
+          participantsId.forEach(
+            function (e) {
+                arr.push({
+                  participantsId:e,
+                  deletable:true
+                })
+            }
+          )
+          _this.setData({
+            partyMemberList:arr
+          })
+          resolve(data.images);
+        },
+        fail: function (res) {
+          console.log(res);
+          reject()
+        }
+      });
+    }).then(() => {
+      let {membersInfoArr} = this.data;
+      let {partyParticipantsId} = this.data;
+      let {partyMemmberCntNow} = this.data;
+      let {partyMemmberCnt} = this.data;
+      let {partyPublisherMsg} = this.data;
+      let {userId} = this.data
+      let {partyPublisherID} = this.data
+      let i = 0
+
+      // 索引不大于最大人数的部分
+      // 每次要放进数组时，都判断这个位置是不是空位。是就push，否则赋值
+      for (i = 0; i < partyMemmberCnt; i++) {
+        let member = {
+          index: i,
+          url: this.data.defaultIconUrl,
+          userId: 0,
+          // 用于判断是否 会 显示删除按钮，也可以用于判断是否是组员
+          isOccupied: false,
+          ifShow: false,
+          isPublisher: false,
+          myself: false,
+          text: '成员'
+        }
+        // 判断：把组员先存进去，再存空位
+        if (i < partyMemmberCntNow) {
+          // 判断：如果是局长的话
+          if (partyParticipantsId[i] == partyPublisherID) {
+            member.url = baseUrl + '/static/' + partyPublisherMsg.iconUrl;
+            member.isPublisher = true;
+            member.text = '局长';
+            // 如果是自己
+            if (partyParticipantsId[i] == userId) {
+              member.myself = true;
+              member.text = '自己'
+            }
+          }
+          // 判断：是组员
+          else {
+            member = {
+              index: i,
+              url: this.data.memberIconUrl,
+              userId: partyParticipantsId[i],
+              // 用于判断是否 会 显示删除按钮，也可以用于判断是否是组员
+              isOccupied: true,
+              ifShow: false,
+              isPublisher: false,
+              myself: false,
+              text: '成员'
+            }
+            // 如果是自己
+            if (partyParticipantsId[i] == userId) {
+              member.myself = true;
+              member.text = '自己'
+            }
+          }
+          if(membersInfoArr[i] == null) {
+            membersInfoArr.push(member)
+          }
+          else {
+            membersInfoArr[i] = member
+          }
+        }
+        // 存空位
+        else {
+          if(membersInfoArr[i] == null) {
+            membersInfoArr.push(member)
+          }
+          else {
+            membersInfoArr[i] = member
+          }
+        }
+
+      }
+      // 保持踢人按钮显示状态
+      membersInfoArr.forEach((item) => {
+        if(item.isOccupied) {
+          item.ifShow = true
+        }
+      })
+      // 索引大于最大人数的部分。两种情况，刚好/有空位
+      // 如果不为空，去除后面多余的
+      if(membersInfoArr[i] != null) {
+        let length = membersInfoArr.length
+        membersInfoArr = membersInfoArr.splice(i, length - partyMemmberCnt)
+        this.setData({
+          membersInfoArr: membersInfoArr
+        })
+      }
+      else {
+        this.setData({
+          membersInfoArr: membersInfoArr
+        })
+      }
+    })
+    console.log('updateMemberInfo---------\n', this.data.membersInfoArr)
+  }
+
 })//Page END
 function processSuffix(suffix) {
   let imageUrlsArr = []
