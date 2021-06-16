@@ -121,6 +121,7 @@ page{
 }
 .comment-list-scroll{
   min-height: 100rpx;
+  height: 480rpx;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -256,11 +257,11 @@ page{
   height: 100%;
   display: inline-block;
 }
-.publisher_label{
-  background: rgb(247, 230, 157)!important
-}
 .myself_label{
   background: rgb(245, 185, 183)!important
+}
+.publisher_label{
+  background: rgb(247, 230, 157)!important
 }
 .joinbutton-gray{
   width: 100px;

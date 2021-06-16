@@ -69,9 +69,18 @@ Component({
      })
    }
   },
+  /**
+   * 触发自定义事件'showCommentBox'
+   */
   showCommentBox:function(e)
   {
-    let item = {publisherName:'测试',preID:8}
+    console.log('当前点击的评论-----\n', e)
+    let {preid} = e.currentTarget.dataset;
+    let {username} = e.currentTarget.dataset
+    let item = {
+      publisherName: username,
+      preId: preid
+    }
     this.triggerEvent('showCommentBox',item);
   },
   },
