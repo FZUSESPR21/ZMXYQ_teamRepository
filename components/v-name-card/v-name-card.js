@@ -144,7 +144,9 @@ Component({
        * 用户私聊
        * 
        */
-      
+      wx.navigateTo({
+        url: '/pages/message/chat/chat?userid='+this.data.userId+'&iconurl='+this.data.publisherMsg.iconUrl
+      })
     }
   },
   lifetimes:{

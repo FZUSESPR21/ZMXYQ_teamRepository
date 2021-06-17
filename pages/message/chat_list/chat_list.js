@@ -103,6 +103,7 @@ Page({
 
   },
   clearAllRecord:function(e){
+    let that = this
     wx.showModal({
       title: '提示',
       content: '您确定要清空所有聊天记录吗',
@@ -116,6 +117,9 @@ Page({
                 title: '已清除聊天记录',
                 icon:'success',
                 duration:1000
+              })
+              that.setData({
+                history_list : []
               })
             },
             fail : function(res){
