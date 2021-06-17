@@ -14,6 +14,7 @@ Page({
     imgUrls:[],
     finalImageUrls:[],
     imageUrls: { type:Array, value:[] },
+    userStatus: 0
   },
 
   /**
@@ -31,8 +32,10 @@ Page({
           let tempData = res.data.data;
           tempData.user.certificateImageUrl = baseUrl + "/static/" + tempData.user.certificateImageUrl;
           mid.push(tempData.user.certificateImageUrl);
+          console.log(tempData.user.status);
           that.setData({
-            finalImageUrls: mid
+            finalImageUrls: mid,
+            userStatus: tempData.user.status
           })
         }
         // console.log(that.data.UserInfo.username);
