@@ -34,7 +34,7 @@ Page({
     isPublisher: false,
     buttonContent: "加入拼局",
     commentMessage: {
-     publisherName:"楼主"
+      publisherName: '楼主'
     },
     commentInputText: "",
     moveOffButtonText:"移除成员",
@@ -43,7 +43,7 @@ Page({
     imageUrlsArr: [],
     // 组局成员信息列表，不包括局长的
     membersInfoArr: [],
-    defaultIconUrl: '../../../../static/icons/add_post_active.png',
+    defaultIconUrl: '../../../../static/icons/add_post.png',
     memberIconUrl:  'https://i.loli.net/2021/06/14/KoVSPTc1eyCpBgE.jpg',
     // 是否是回复。
     // false：在父评论中新增评论(preId使用-1) 
@@ -239,31 +239,39 @@ Page({
       preId = parseInt(this.data.commentMessage.preId)
       console.log('preId------------', preId)
     }
-    request({
-      url: app.globalData.baseUrl+"/api/party-comment/comment",
-     
-      method: "POST",
-      data: {
-        information: _this.data.commentInputText.toString(),
-          userId: parseInt (_this.data.userId),
-          partyId:parseInt (_this.data.partyID),
-          preId: preId
-      },
-      success: function (res) {
-        console.log(res);
-        Notify({
-          type: 'success',
-          message: '评论成功'
-        });
-        _this.setData({
-          commentInputText:""
-        })
-        _this.getPartyCommentList()
-      },
-      fail:function (res) {
-        console.log(res);
-      }
-    })
+    if(this.data.commentInputText != "") {
+      request({
+        url: app.globalData.baseUrl+"/api/party-comment/comment",
+       
+        method: "POST",
+        data: {
+          information: _this.data.commentInputText.toString(),
+            userId: parseInt (_this.data.userId),
+            partyId:parseInt (_this.data.partyID),
+            preId: preId
+        },
+        success: function (res) {
+          console.log(res);
+          Notify({
+            type: 'success',
+            message: '评论成功'
+          });
+          _this.setData({
+            commentInputText:""
+          })
+          _this.getPartyCommentList()
+        },
+        fail:function (res) {
+          console.log(res);
+        }
+      })
+    }
+    else {
+      Notify({
+        type: 'warning',
+        message: '评论不能为空'
+      })
+    }
   },
   //气泡小组件获取位置函数
   onTap: function (e) {
@@ -514,7 +522,8 @@ Page({
    */
   init: function() {
     wx.showLoading({
-      title: '加载中'
+      title: '加载中',
+      mask: true
     })
     // wx.showToast({
     //   title: '加载中',
@@ -1048,6 +1057,17 @@ Page({
       }
     })
     console.log('updateMemberInfo---------\n', this.data.membersInfoArr)
+  },
+  /**
+   * 改变为评论楼主
+   */
+  setComment: function() {
+    this.setData({
+      isReply: false,
+      commentMessage: {
+        publisherName: '楼主'
+      }
+    })
   }
 
 })//Page END

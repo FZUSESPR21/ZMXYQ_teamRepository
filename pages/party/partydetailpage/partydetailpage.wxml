@@ -30,7 +30,7 @@
 
     <!-- 图片 -->
     <view class="party-detail-img-view">
-      <image class="party-detail-img" src="http://ccreater.top:61112/static/{{item}}" wx:for="{{partyDetailImageUrls}}" wx:for-item='item' wx:for-index='index' wx:key="key"  
+      <image class="party-detail-img" mode="aspectFill" src="http://ccreater.top:61112/static/{{item}}" wx:for="{{partyDetailImageUrls}}" wx:for-item='item' wx:for-index='index' wx:key="key"  
       data-url='http://ccreater.top:61112/static/{{item}}' catchtap="previewImage"/>
     </view>
 
@@ -55,7 +55,7 @@
           <view class='item-container' wx:for="{{membersInfoArr}}" wx:for-item='item' wx:for-index='index' wx:key="index">
             <view class="scroll_item">
               <van-image round width="3rem" height="3rem" src="{{item.url}}"></van-image>
-              <view class="partyMemberListitemlabel {{item.isPublisher?'publisher_label':''}} {{item.myself?'myself_label':''}}">
+              <view class="partyMemberListitemlabel {{item.isPublisher?'publisher_label':''}} {{item.myself?'myself_label':''}} {{item.isOccupied?'member_label':''}}">
               {{item.text}}
               </view>
               
@@ -90,7 +90,10 @@
 
   <!-- 卡片：拼局评论 -->
   <view class="party-comment-list">
-    <text class="partydetailtitle">拼局评论</text>
+    <view class="partydetailtitle">
+      <text class="little-title">拼局评论</text>
+      <button class="comment_button" type='primary' size="mini" catchtap="setComment">评论楼主</button>
+    </view>
     <scroll-view class="comment-list-scroll" scroll-y="true">
       <!-- 绑定自定义事件 showCommentBox ，回调函数为getCommentBox -->
       <!-- 触发点击事件 → 回调函数 → 触发showCommentBox -> 回调函数 -->
