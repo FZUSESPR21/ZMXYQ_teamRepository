@@ -1,5 +1,7 @@
 <!--pages/message/index/chat_list.wxml-->
 <view class="main">
+  <view id="no-list" wx:if="{{history_list.length==0}}">还没有私聊内容哦</view>
+  <view id='clear-record' wx:else bind:tap="clearAllRecord">清空聊天记录</view>
   <scroll-view class="scroll_box">
   <view wx:for="{{history_list}}" catchtap="handleTap" data-userid="{{item.dialogUserId}}" data-iconUrl="{{item.iconUrl}}">
     <view class="chat_item"  >

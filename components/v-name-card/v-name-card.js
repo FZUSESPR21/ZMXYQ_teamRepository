@@ -97,6 +97,55 @@ Component({
         }
       })
     },
+    blackUser:function(e){
+      /**
+       * 拉黑用户
+       * 
+       */
+      console.log(this.data.publisherMsg)
+      let uid = this.data.userId
+      wx.showModal({
+        title: '提示',
+        content: 'QAQ您确定要拉黑该用户吗',
+        success (res) {
+          if (res.confirm) {
+            let jsonStr = '{"userIdTo":' + uid + ',"isBlock":'+ 1 +'}';
+            let jsonValue = JSON.parse(jsonStr);
+            request({
+              url : app.globalData.baseUrl + "/api/block",
+              method : "post",
+              Headers : {
+                'content-type': 'application/json'
+              },
+              data : jsonValue,
+              success:function(res){
+                wx.showToast({
+                  title: '成功拉黑',
+                  icon:'success',
+                  duration:1000
+                })
+              },
+              fail:function(res){
+                wx.showToast({
+                  title: '拉黑失败',
+                  icon:'error',
+                  duration:1000
+                })
+              }
+            })
+          } else if (res.cancel) {
+          }
+        }
+      })
+    },
+    goToChat:function(e){
+      /**
+       * 
+       * 用户私聊
+       * 
+       */
+      
+    }
   },
   lifetimes:{
     ready(){

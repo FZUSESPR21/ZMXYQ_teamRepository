@@ -1,5 +1,5 @@
 // pages/message/index/chat_list.js
-
+const app=getApp();
 import {request} from "../../../utils/request"
 const timeago = require("timeago.js");
 Page({
@@ -101,8 +101,37 @@ Page({
       ["history_list[" + this.data.history_list.length + "]"]: record
     })
 
-  }
-  ,
+  },
+  clearAllRecord:function(e){
+    wx.showModal({
+      title: '提示',
+      content: '您确定要清空所有聊天记录吗',
+      success (res) {
+        if (res.confirm) {
+          request({
+            url : app.globalData.baseUrl + "/api/message/chat/clearlist",
+            method : "POST",
+            success : function(res){
+              wx.showToast({
+                title: '已清除聊天记录',
+                icon:'success',
+                duration:1000
+              })
+            },
+            fail : function(res){
+              wx.showToast({
+                title: '清楚聊天记录失败，请稍后重试',
+                icon:'warn',
+                duration : 1000
+              })
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面隐藏

@@ -17,8 +17,8 @@
             class="popup-publisher-head" />
         </view>
         <view class="popup-publisher-operation">
-          <view class="popup-publisher-block">拉黑</view>
-          <view class="popup-publisher-chat">发起私聊</view>
+          <view class="popup-publisher-block" bindtap="blackUser">拉黑</view>
+          <view class="popup-publisher-chat" bindtap="goToChat">发起私聊</view>
           <view></view>
         </view>
       </view>

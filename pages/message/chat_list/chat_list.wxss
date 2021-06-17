@@ -1,4 +1,18 @@
 /* pages/message/index/chat_list.wxss */
+#no-list{
+  color:rgb(128,128,128);
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+#clear-record{
+  position: relative;
+  margin-left: 20rpx;
+  margin-top: 20rpx;
+  font-size:30rpx;
+  color:rgb(242,178,50)
+}
 .scroll_item{
   height: 100rpx;
   width: 100%;
