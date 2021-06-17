@@ -108,6 +108,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if (user == null) {
       User newUser = new User();
       newUser.setOpenId(openId);
+      newUser.setStatus(0);// 用户状态默认为未审核
+      newUser.setSex(2);// 性别默认为无
       userMapper.insert(newUser);
       user = userMapper.selectOne(wrapper);
       result.setData(user);
@@ -180,14 +182,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //      return result;
 //    }
 
-    // 判断证件照url是否合法
-    msg = userLegal.imgUrlLegal(user.getCertificateImageUrl());
-    if (!msg.equals("OK")) {
-      result.setCode(ExceptionInfo.valueOf(msg).getCode());
-      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
-      result.setData(0);
-      return result;
-    }
+//    // 判断证件照url是否合法
+//    msg = userLegal.imgUrlLegal(user.getCertificateImageUrl());
+//    if (!msg.equals("OK")) {
+//      result.setCode(ExceptionInfo.valueOf(msg).getCode());
+//      result.setMessage(ExceptionInfo.valueOf(msg).getMessage());
+//      result.setData(0);
+//      return result;
+//    }
 
     // 判断学校名是否合法
     msg = userLegal.schoolLegal(user.getSchool());
@@ -207,7 +209,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       return result;
     }
 
-    user.setStatus(0);// 用户状态默认为未审核
     result.setCode(ExceptionInfo.valueOf("OK").getCode());
     result.setMessage(ExceptionInfo.valueOf("OK").getMessage());
     result.setData(userMapper.updateById(user));
