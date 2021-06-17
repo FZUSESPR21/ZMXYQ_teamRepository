@@ -1,16 +1,35 @@
 <!--pages/my/certification/certification.wxml-->
 <!-- 已经认证则不显示上传按钮 -->
+<view>
+    <view class="notice" wx-if="{{userStatus == 0}}">
+    <van-notice-bar
+    left-icon="photo-o"
+  scrollable="{{ false }}"
+  text="请上传学生卡/学生证照片"
+/>  
+    </view>
+    <view wx-if="{{userStatus == 1}}">
+        <van-notice-bar
+    left-icon="photo-o"
+  scrollable="{{ false }}"
+  text="您已上传学生卡/学生证照片，正在等待管理员审核！"
+/>
+</view>
+    <view wx-if="{{userStatus == 2}}">    
+    <van-notice-bar
+    left-icon="photo-o"
+  scrollable="{{ false }}"
+  text="您已通过审核，欢迎加入逐梦校友圈！"
+/>
+</view>
+</view>
 <view class="uploader" wx-if="{{userStatus == 0}}">  
     <van-uploader max-count="1"  bind:after-read="afterRead" multiple="{{false}}">
         <van-button  icon="photo" type="small" color="#f2774d">上传身份认证图片</van-button>
     </van-uploader>
 </view>
 
-<view>
-    <text wx-if="{{userStatus == 0}}">请上传本人学生卡获学生证照片！</text>
-    <text wx-if="{{userStatus == 1}}">您已上传学生卡获学生证照片，正在等待管理员审核！</text>
-    <text wx-if="{{userStatus == 2}}">您已通过审核，欢迎加入逐梦校友圈！</text>
-</view>
+
 
 <view >
     <van-image wx:for="{{finalImageUrls}}" wx:key="" width="600rpx" height="600rpx" custom-class="image" src="{{item}}" data-currenturl="{{item}}" catchtap="previewImage"></van-image>

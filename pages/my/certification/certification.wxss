@@ -4,13 +4,16 @@ page{
     width: 100%;
 }
 
-
 .uploader{
-    margin-top: 100rpx;
-    margin-bottom: 100rpx;
-    margin-left: 200rpx;
+    margin-top: 8%;
+    margin-bottom: 8%;
+    margin-left: 30%;
 }
 
 .image{
    margin: 0 50rpx;
+}
+
+.notice{
+    margin-top: 5%;
 }

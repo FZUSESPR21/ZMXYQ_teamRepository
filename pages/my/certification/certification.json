@@ -8,6 +8,7 @@
     "van-cell-group": "@vant/weapp/cell-group/index",
     "van-tag": "@vant/weapp/tag/index",
     "van-image": "@vant/weapp/image/index",
-    "van-uploader": "@vant/weapp/uploader/index"
+    "van-uploader": "@vant/weapp/uploader/index",
+    "van-notice-bar": "@vant/weapp/notice-bar/index"
   }
 }
