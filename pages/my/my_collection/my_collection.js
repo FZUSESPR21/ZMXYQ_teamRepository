@@ -64,6 +64,9 @@ Page({
             for (let i = 0; i < tempData.length; i++) {
               tempData[i].postTime = timeago.format(new Date(tempData[i].postTime), 'zh_CN');
             }
+            for(let imageIndex = 0; imageIndex < tempData.length; imageIndex++){
+              tempData[imageIndex].iconUrl = baseUrl + "/static/" + tempData[imageIndex].iconUrl;
+            }
           }
           that.setData({
             collectionList:tempData,

@@ -21,11 +21,17 @@ Page({
       url: baseUrl + '/api/user/black/list',
       method: 'GET',
       success(res) {
-        console.log(1);
-        console.log(res);
-        that.setData({
-          blackList: res.data.data.reverse(),
-        })
+        if (res.data.code === 200){
+          let tempData = res.data.data.reverse();
+          if(tempData != null){
+            for(let imageIndex = 0; imageIndex < tempData.length; imageIndex++){
+              tempData[imageIndex].iconUrl = baseUrl + "/static/" + tempData[imageIndex].iconUrl;
+            }
+          }
+          that.setData({
+            blackList: tempData,
+          })
+        }
       }
     })
   },
