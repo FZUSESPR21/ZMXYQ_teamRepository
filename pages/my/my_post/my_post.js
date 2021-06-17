@@ -59,6 +59,10 @@ Page({
     //console.log("endTime-startTime="+(this.endTime-this.startTime));
     if(this.endTime-this.startTime<350){
       console.log("点击");
+      let id = e.currentTarget.dataset.id;
+      wx.navigateTo({
+        url:`../../post/post_detail/post_detail?postId=${id}`
+      })
     }
   },
 

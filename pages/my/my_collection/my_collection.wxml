@@ -4,7 +4,7 @@
                bindtouchend="handleTouchEnd"
                bindlongpress="handleLongPress"
                bindtap="handleClick"
-               data-id="{{item.id}}">
+               data-id="{{item.postId}}">
         <view class="txt">
             <view class="content">
                 {{item.postContent}}
