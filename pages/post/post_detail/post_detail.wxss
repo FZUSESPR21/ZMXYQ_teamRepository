@@ -14,6 +14,15 @@
   /*padding: 200rpx 0;*/
   box-sizing: border-box;
 }
+
+.comment-list-scroll{
+  min-height: 100rpx;
+  height: 580rpx;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+}
 .title{
   padding-left: 3px;
   padding-right: 3px;

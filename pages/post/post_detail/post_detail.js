@@ -11,7 +11,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    commentMessage:{},
     commentInputText:"",
     postId:0,
     publisherId:0,
@@ -23,6 +22,16 @@ Page({
     popularityNum:0,
     hasMark:false,
     hasLike:true,
+    userId:123457,
+
+    postCommentList:[],
+    commentMessage: {
+      publisherName:"楼主"
+    },
+    // 是否是回复。
+    // false：在父评论中新增评论(preId使用-1)
+    // true：在子评论中增加评论(preId使用组件中传来的preId，某个父评论的Id
+    isReply: false,
   },
 
   getDetail(){
@@ -60,6 +69,35 @@ Page({
       }
     })
   },
+
+  // 获取评论列表函数
+  getPostCommentList: function (e) {
+    let that=this;
+
+    request({
+      url: app.globalData.baseUrl+'/api/alumnicycle/posts/commentlist',
+      method: 'POST',
+      // data: jsonValue,
+      data:
+      that.data.postId,
+      // Headers: {
+      //   'content-type': 'application/json'
+      // },
+      success: function (res) {
+        if(res.data.code === 200){
+          console.log(res);
+          that.setData({
+            postCommentList:res.data.data
+          })
+          console.log(that.data.postCommentList)
+        }
+      },
+      fail:function (res) {
+        console.log(res);
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -69,6 +107,7 @@ Page({
     })
     console.log(this.data.postId)
     this.getDetail();
+    this.getPostCommentList();
   },
 
   /**
@@ -85,39 +124,6 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   onTap: function (e) {
     // 获取按钮元素的坐标信息
     var id = 'morebutton' // 或者 e.target.id 获取点击元素的 ID 值
@@ -126,90 +132,80 @@ Page({
       this.popover.onDisplay(res);
     }).exec();
   },
-  getCommentBox:function(e)
-  {
+
+  bindTextAreaBlur: function (e) {
     this.setData({
-      commentMessage:e.detail
+      commentInputText: e.detail.value
+    })
+    console.log(this.data.commentInputText)
+  },
+
+  getValue:function (e) {
+    let that=this;
+    this.setData({
+      commentInputText:e.detail.value
+    })
+  },
+
+  getCommentBox: function (e) {
+    this.setData({
+      showCommentBox: true,
+      commentMessage: e.detail,
+      isReply: true
     })
     console.log(this.data.commentMessage);
     console.log(10);
   },
-  bindTextAreaBlur:function(e)
-  {
-    this.setData({
-      commentInputText:e.detail.value
-    })
-    console.log(this.data.commentInputText)
-  },
-  sendComment:function(e)
-  {
-    wx.request({
-      url: app.globalData.baseUrl+'/api/alumnicycle/party-comment/comment',
-      method:"POST",
-      data:{
-        content:"",
-        userId:this.data.userId,
-        partyId:this.data.partyID,
-        preId:this.commentPreId
-      },
-      success:function(res)
-      {
-        Notify({ type: 'success', message: '评论成功' });
-      }
 
+  // 发送评论函数
+  sendComment: function (e) {
+    let that=this;
+    let {isReply} = this.data
+    let preId = -1
+    if(isReply) {
+      preId = parseInt(this.data.commentMessage.preId)
+      console.log('preId------------', preId)
+    }
+    request({
+      url: app.globalData.baseUrl+"/api/alumnicycle/posts/comment",
+      method: "POST",
+      data: {
+        message: that.data.commentInputText.toString(),
+        postId:parseInt (that.data.postId),
+        preId: preId,
+        idTo: parseInt (that.data.userId),
+      },
+      success: function (res) {
+        console.log(res);
+        Notify({
+          type: 'success',
+          message: '评论成功'
+        });
+        that.setData({
+          commentInputText:""
+        })
+        that.getPostCommentList()
+      },
+      fail:function (res) {
+        console.log(res);
+      }
     })
   },
+
   postMark:function(e)
   {
    this.setData({
      hasMark:!this.data.hasMark
    })
   },
-  postLike:function(e)
-  {
-    wx.request({
-      url: 'http://xx.com/api/alumnicycle/posts/like',
-      method:"POST",
-      data:{
-        postId:this.data.postId
-      },
-      success:function(e)
-      {
-        Toast('点赞成功');
-      }
-    })
-  },
-  postCollect:function(e)
-  {
-    wx.request({
-      url: 'http://xx.com/api/alumnicycle/posts/collect',
-      method:"POST",
-      data:{
-        postId:this.data.postId
-      },
-      success:function(e)
-      {
-        Notify({ type: 'success', message: '收藏成功' });
-      }
-    })
-  },
-  postReward:function(e)
-  {
-    wx.request({
-      url: 'http://xx.com/api/alumnicycle/posts/reward',
-      method:"POST",
-      data:{
-        postId:this.data.postId,
-        amount:0
-      }
-    })
-  },
+
   getRewardBox:function(e)
   {
     this.setData({
       showRewardBox:true
     })
   },
+
   onClose() {
     this.setData({ showRewardBox: false });
   },

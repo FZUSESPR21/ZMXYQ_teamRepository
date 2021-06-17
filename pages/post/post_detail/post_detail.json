@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "v-post-item":"/components/v-post-item/v-post-item"
+    "v-post-item":"/components/v-post-item/v-post-item",
+    "v-comment":"/components/v-comment/v-comment",
+    "van-popup": "@vant/weapp/popup/index"
   }
 }

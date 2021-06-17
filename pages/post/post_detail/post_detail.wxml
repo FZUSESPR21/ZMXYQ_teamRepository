@@ -19,18 +19,19 @@
     </v-post-item>
 </scroll-view>
 
-
-
-
-<view class="commentArea">
-    <v-comment bind:showCommentBox="getCommentBox"></v-comment>
-</view>
+    <scroll-view class="comment-list-scroll" scroll-y="true">
+        <v-comment bind:showCommentBox="getCommentBox" commentListData="{{postCommentList}}">
+        </v-comment>
+    </scroll-view>
 </view>
 <view class="comment-box">
-<form action="" class="input-form">
-  <textarea  bindblur="bindTextAreaBlur" confirm-type="send" class="message-area" placeholder="{{'请输入回复'+commentMessage.publisherName+'的评论'}}"></textarea>
-  <button class="send-button" bindtap="sendcomment">发送</button>
-</form>
+    <form action="" class="input-form">
+        <textarea  bindblur="bindTextAreaBlur" confirm-type="send" class="message-area" placeholder="{{'请输入回复'+commentMessage.publisherName+'的评论'}}" value="{{commentInputText}}" bindinput="getValue" fixed="true" cursor-spacing="30"></textarea>
+        <button class="send-button" bindtap="sendComment">发送</button>
+    </form>
+
+
+
 <van-popup
   show="{{ showRewardBox }}"
   position="bottom"
