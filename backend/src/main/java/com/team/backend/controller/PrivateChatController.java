@@ -79,8 +79,7 @@ public class PrivateChatController {
       result.setMessage(ExceptionInfo.valueOf("USER_NOT_LOGIN").getMessage());
       return result;
     }
-
-    Long userIdTo = (Long) map.get("userIdTo");
+    Long userIdTo = ((Number) map.get("userIdTo")).longValue();
     String content = map.get("content").toString();
 
     return privateChatService.sendMessage(user.getId(), userIdTo, content);
@@ -96,7 +95,7 @@ public class PrivateChatController {
       return result;
     }
 
-    Long toId = (Long) map.get("userIdFrom");
+    Long toId = ((Number) map.get("userIdFrom")).longValue();
     Integer pageNum = (Integer) map.get("pageNum");
     Integer pageSize = (Integer) map.get("pageSize");
 
