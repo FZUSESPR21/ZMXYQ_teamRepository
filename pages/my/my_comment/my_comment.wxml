@@ -9,6 +9,7 @@
                            bindlongpress="handleLongPress"
                            bindtap="handleClick"
                            data-id="{{item.id}}"
+                           data-pid="{{item.postId}}"
                            data-topic="post">
                     <view class="txt">
                         <view class="content">
@@ -31,6 +32,7 @@
                            bindlongpress="handleLongPress"
                            bindtap="handleClick"
                            data-id="{{item.id}}"
+                           data-pid="{{item.partyId}}"
                            data-topic="party">
                     <view class="txt">
                         <view class="content">

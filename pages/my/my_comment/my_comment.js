@@ -87,6 +87,19 @@ Page({
     //console.log("endTime-startTime="+(this.endTime-this.startTime));
     if(this.endTime-this.startTime<350){
       console.log("点击");
+      let pid = e.currentTarget.dataset.pid;
+      let topic = e.currentTarget.dataset.topic;
+      // console.log(pid);
+      if (topic === "post"){
+        wx.navigateTo({
+          url:`../../post/post_detail/post_detail?postId=${pid}`
+        })
+      }
+      else if(topic === "party"){
+        wx.navigateTo({
+          url:`../../party/partydetailpage/partydetailpage?partyID=${pid}`
+        })
+      }
     }
   },
 
