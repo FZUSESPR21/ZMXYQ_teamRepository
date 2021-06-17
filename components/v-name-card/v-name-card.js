@@ -30,7 +30,7 @@ Component({
     publisherGender:"",
     publisherHeadUrl:"../../../../static/icons/smile.png",
     showPopUp:false,
-    originalPublisherTime: '刚刚',
+    originalPublisherTime: '',
     isFirstReady: true
   },
 
