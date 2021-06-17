@@ -15,8 +15,8 @@
                             {{item.message}}
                         </view>
                         <view class="info">
-                            <view class="nickname">Camouflage</view>
-                            <view class="time">24分钟前</view>
+                            <view class="nickname">{{item.username}}</view>
+                            <view class="time">{{item.gmtCreate}}</view>
                         </view>
                     </view>
                 </navigator>
@@ -37,8 +37,8 @@
                             {{item.information}}
                         </view>
                         <view class="info">
-                            <view class="nickname">Camouflage</view>
-                            <view class="time">24分钟前</view>
+                            <view class="nickname">{{item.username}}</view>
+                            <view class="time">{{item.gmtCreate}}</view>
                         </view>
                     </view>
                 </navigator>

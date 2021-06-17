@@ -30,9 +30,16 @@ Page({
       success(res){
         console.log(res);
         if(res.data.code === 200){
+          let tempData = res.data.data.reverse();
+          if(tempData!= null) {
+            for (let i = 0; i < tempData.length; i++) {
+              tempData[i].gmtCreate = timeago.format(new Date(tempData[i].gmtCreate), 'zh_CN');
+            }
+          }
           that.setData({
-            postCommentsList:res.data.data.reverse()
+            postCommentsList:tempData,
           })
+          console.log(tempData);
         }
       }
     })
@@ -48,9 +55,16 @@ Page({
       success(res){
         console.log(res);
         if(res.data.code === 200){
+          let tempData = res.data.data.reverse();
+          if(tempData!= null) {
+            for (let i = 0; i < tempData.length; i++) {
+              tempData[i].gmtCreate = timeago.format(new Date(tempData[i].gmtCreate), 'zh_CN');
+            }
+          }
           that.setData({
-            partyCommentsList:res.data.data.reverse()
+            partyCommentsList:tempData,
           })
+          console.log(tempData);
         }
       }
     })
