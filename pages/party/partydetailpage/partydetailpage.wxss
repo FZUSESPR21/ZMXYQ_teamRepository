@@ -86,11 +86,16 @@ page{
    word-wrap:break-word
 }
 .partydetailtitle{
-  margin-right: 300rpx;
-  margin-bottom: 20rpx;
   font-weight: bold;
-  width: 40%;
+  width: 100%;
   font-size: 36rpx;
+  height: 80rpx;
+}
+
+.little-title{
+  margin-left: 25rpx;
+  margin-top: 10rpx;
+  position: absolute;
 }
 .joinbutton{
   width: 100px;
@@ -257,6 +262,9 @@ page{
   height: 100%;
   display: inline-block;
 }
+.member_label{
+  background: #73acf1 !important
+}
 .myself_label{
   background: rgb(245, 185, 183)!important
 }
@@ -273,4 +281,11 @@ page{
  color: #ffffff;
  font-weight: bold;
  line-height:60rpx;
+}
+.comment_button{
+  position: absolute;
+  margin-left: 60%;
+  font-size: 30rpx !important;
+  margin-top: 5rpx;
+  padding-bottom: 30rpx;
 }
