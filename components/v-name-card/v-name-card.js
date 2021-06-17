@@ -30,6 +30,8 @@ Component({
     publisherGender:"",
     publisherHeadUrl:"../../../../static/icons/smile.png",
     showPopUp:false,
+    originalPublisherTime: '刚刚',
+    isFirstReady: true
   },
 
   /**
@@ -90,7 +92,7 @@ Component({
             })
             if(_this.data.publisherTime){
               _this.setData({
-                publisherTime:timeago.format(new Date(_this.data.publisherTime),'zh_CN'),
+                originalPublisherTime: timeago.format(new Date(_this.data.publisherTime),'zh_CN'),
               })
             }
           }

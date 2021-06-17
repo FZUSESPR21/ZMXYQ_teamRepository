@@ -4,7 +4,7 @@
     class="comment-publisher-view-head" bindtap="getPublisherMessage"/>
   <view class="comment-publisher-view-message">
     <view class="comment-publisher-view-message-name">{{publisherMsg.userName}}</view>
-    <view class="comment-publisher-view-message-time">{{publisherTime}}</view>
+    <view class="comment-publisher-view-message-time">{{originalPublisherTime}}</view>
     <van-popup show="{{ showPopUp }}" position="bottom" custom-style="height: 30%;" bind:close="onClose">
       <view class="popup-publisher-detail">
         <view class="popup-publisher-detail-message">

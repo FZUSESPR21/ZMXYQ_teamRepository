@@ -548,7 +548,7 @@ Page({
               partyDetailContent: data.context,
               partyPublisherID:data.publisherID,
               partyMemmberCnt: data.peopleCnt,
-              partyCreateTime: timeago.format(new Date(data.gmtCreate),'zh_CN'),
+              partyCreateTime: data.gmtCreate,
               partyParticipantsId: data.participantsID,
               partyDetailImageUrls: data.images,
               partyMemmberCntNow:data.nowPeopleCnt,
