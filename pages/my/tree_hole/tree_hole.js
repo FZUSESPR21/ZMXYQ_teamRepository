@@ -1,5 +1,6 @@
 // pages/my/tree_hole/tree_hole.js
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
+const timeago = require("timeago.js");
 import {request} from "../../../utils/request"
 const app = getApp();
 
@@ -76,8 +77,14 @@ Page({
       success(res){
         // console.log(res.data.data);
         if(res.data.code === 200){
+          let tempData = res.data.data.reverse();
+          if(tempData!= null) {
+            for (let i = 0; i < tempData.length; i++) {
+              tempData[i].gmtCreate = timeago.format(new Date(tempData[i].gmtCreate), 'zh_CN');
+            }
+          }
           that.setData({
-            treeHoleList:res.data.data.reverse()
+            treeHoleList:tempData,
           })
         }
       }
