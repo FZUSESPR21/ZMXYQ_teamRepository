@@ -14,9 +14,10 @@ App({
   },
   globalData: {
     userInfo: null,
-    baseUrl:"http://ccreater.top:61112",
+    baseUrl1:"http://ccreater.top:61112",
+    // baseUrl:"http://localhost:8088"
+    baseUrl:"https://test.childfly.cn"
     // baseUrl:"http://192.168.50.167:8088"
-    // baseUrl: "http://192.168.50.167:8088"
   },
   getImageType: function (src) {
     let imageType = "";
@@ -53,7 +54,8 @@ App({
             encoding: "base64",
             success: function (data) {
                   wx.request({
-                    url: 'http://192.168.5.219:8088/api/posts/imgupload',
+                    // url: 'http://192.168.5.219:8088/api/posts/imgupload',
+                    url: app.globalData.baseUrl +"/api/posts/imgupload",
                     method: "POST",
                     data: {
                       base64Str: imageType + data.data,

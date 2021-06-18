@@ -56,7 +56,7 @@ Component({
           if (res.data.code === 200) {
             let tempData = res.data.data;
             // console.log(tempData);
-            tempData.iconUrl = app.globalData.baseUrl + "/static/" + tempData.iconUrl;
+            tempData.iconUrl = app.globalData.baseUrl1 + "/static/" + tempData.iconUrl;
             _this.setData({
               publisherMsg:tempData,
               publisherHeadUrl: tempData.iconUrl
@@ -85,7 +85,7 @@ Component({
 
             let tempData = res.data.data;
             // console.log(tempData);
-            tempData.iconUrl = app.globalData.baseUrl + "/static/" + tempData.iconUrl;
+            tempData.iconUrl = app.globalData.baseUrl1 + "/static/" + tempData.iconUrl;
             _this.setData({
               publisherMsg:tempData,
               publisherHeadUrl: tempData.iconUrl
