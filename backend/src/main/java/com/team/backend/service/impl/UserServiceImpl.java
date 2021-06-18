@@ -110,6 +110,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       newUser.setOpenId(openId);
       newUser.setStatus(0);// 用户状态默认为未审核
       newUser.setSex(2);// 性别默认为无
+      newUser.setRpValue(100L);// 初始人品值为100
       userMapper.insert(newUser);
       user = userMapper.selectOne(wrapper);
       result.setData(user);
