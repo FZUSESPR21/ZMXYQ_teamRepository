@@ -26,6 +26,7 @@ import com.team.backend.util.HttpRequestUtil;
 import com.team.backend.util.UserLegal;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -88,7 +89,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     String wxResult = HttpRequestUtil.httpRequest(url, "GET", null);
     JSONObject jsonObject = JSONObject.parseObject(wxResult);
     String openId = jsonObject.getString("openid");
-    String accessToken = jsonObject.getString("access_token");
 
     if (openId == null) {
       result.setCode(ExceptionInfo.valueOf("USER_OPEN_ID_NULL").getCode());
@@ -114,7 +114,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       newUser.setSchool("福州大学");// 默认学校福州大学
       newUser.setUsername("逐梦校友圈");// 默认用户名
       newUser.setUserIconUrl("7aa8edbfe60d4d47ae384e2394f8d760.jpeg");// 默认头像
-      newUser.setBirthday(new Date(2000,1,1));// 默认生日
+      newUser.setBirthday(new Date(2000, 1, 1));// 默认生日
       userMapper.insert(newUser);
       user = userMapper.selectOne(wrapper);
       user.setIsNewUser(1);
