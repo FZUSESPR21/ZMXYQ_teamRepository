@@ -167,8 +167,8 @@ Component({
                  that.setData({
                    postsData  
                 });
-                console.log("that.data.postsData[0].imageUrls");
-                console.log(that.data.postsData[0].imageUrls);
+                // console.log("that.data.postsData[0].imageUrls");
+                // console.log(that.data.postsData[0].imageUrls);
              }
 
              //设置高度
