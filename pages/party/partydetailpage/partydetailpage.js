@@ -7,6 +7,7 @@ import {
 const timeago = require("timeago.js");
 const app = getApp();
 const baseUrl = app.globalData.baseUrl
+const baseUrl1 = app.globalData.baseUrl1
 Page({
 
   /**
@@ -297,7 +298,7 @@ Page({
       this.data.partyDetailImageUrls.forEach(function(e)
       {
         newFileList.push({
-          url:app.globalData.baseUrl+'/static/'+e,
+          url:baseUrl1 +'/static/'+e,
           name: '图片2',
           isImage: true,
           deletable: true,
@@ -666,7 +667,7 @@ Page({
       if (i < partyMemmberCntNow) {
         // 判断：如果是局长的话
         if (partyParticipantsId[i] == partyPublisherID) {
-          member.url = baseUrl + '/static/' + partyPublisherMsg.iconUrl;
+          member.url = baseUrl1 + '/static/' + partyPublisherMsg.iconUrl;
           member.isPublisher = true;
           member.text = '局长';
           // 如果是自己
@@ -851,7 +852,7 @@ Page({
         if (i < partyMemmberCntNow) {
           // 判断：如果是局长的话
           if (partyParticipantsId[i] == partyPublisherID) {
-            member.url = baseUrl + '/static/' + partyPublisherMsg.iconUrl;
+            member.url = baseUrl1 + '/static/' + partyPublisherMsg.iconUrl;
             member.isPublisher = true;
             member.text = '局长';
             // 如果是自己
@@ -991,7 +992,7 @@ Page({
         if (i < partyMemmberCntNow) {
           // 判断：如果是局长的话
           if (partyParticipantsId[i] == partyPublisherID) {
-            member.url = baseUrl + '/static/' + partyPublisherMsg.iconUrl;
+            member.url = baseUrl1 + '/static/' + partyPublisherMsg.iconUrl;
             member.isPublisher = true;
             member.text = '局长';
             // 如果是自己
@@ -1076,7 +1077,7 @@ Page({
 function processSuffix(suffix) {
   let imageUrlsArr = []
   suffix.forEach((item) => {
-    let url = baseUrl + '/static/' + item
+    let url = baseUrl1 + '/static/' + item
     imageUrlsArr.push(url)
   })
   return imageUrlsArr
