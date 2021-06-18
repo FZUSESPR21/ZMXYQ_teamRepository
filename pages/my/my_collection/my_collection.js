@@ -35,10 +35,10 @@ Page({
     //console.log("endTime-startTime="+(this.endTime-this.startTime));
     if(this.endTime-this.startTime<350){
       console.log("点击");
-      let id = e.currentTarget.dataset.id;
-      console.log(id)
+      let pid = e.currentTarget.dataset.pid;
+      console.log(pid)
       wx.navigateTo({
-        url:`../../post/post_detail/post_detail?postId=${id}`
+        url:`../../post/post_detail/post_detail?postId=${pid}`
       })
     }
 
@@ -112,7 +112,7 @@ Page({
     let that = this;
     let id = this.data.currentId - 0
     let baseUrl = app.globalData.baseUrl;
-    // console.log(id)
+    console.log(id)
     request({
       url: baseUrl + '/api/user/collect/deleted',
       method: 'POST',
@@ -121,7 +121,7 @@ Page({
       // 'content-type': 'application/x-www-form-urlencoded'
       // },
       success(res){
-        // console.log(res)
+        console.log(res)
         that.getCollectionList();
       }
 
