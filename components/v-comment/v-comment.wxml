@@ -31,7 +31,7 @@
                   wx:for-item="childItem" wx:key="key" 
                   wx:for-index='childIndex'>
               <view class="divLine"></view>
-              <v-name-card userId="{{childItem.commentUserId}}" ></v-name-card>
+              <v-name-card publisherTime="{{childItem.gmtCreate}}" userId="{{childItem.commentUserId}}" ></v-name-card>
               <!-- 点击评论的文字时，触发点击事件，调用回调函数。回调函数中触发自定义事件 -->
               <view class="comment-content-view-text-child" 
                     bindtap="showCommentBox" 
