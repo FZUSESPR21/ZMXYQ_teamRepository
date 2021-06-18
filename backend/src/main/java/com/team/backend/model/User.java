@@ -88,4 +88,7 @@ public class User implements Serializable {
   @ApiModelProperty(value = "邮政编码")
   private String originCode;
 
+  @TableField(exist = false)
+  private Integer isNewUser;
+
 }
