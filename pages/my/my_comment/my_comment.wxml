@@ -3,6 +3,7 @@
 
         <van-tab title="校友圈">
             <view class="comment_main">
+                <view class="no-list" wx:if="{{postCommentsList.length==0}}">你怎么回事，都不给别人的帖文评论，快去留下自己的足迹吧</view>
                 <navigator class="comment_item" wx:for="{{postCommentsList}}" wx:key="{{index}}"
                            bindtouchstart="handleTouchStart"
                            bindtouchend="handleTouchEnd"
@@ -26,6 +27,7 @@
 
         <van-tab title="组团">
             <view class="comment_main">
+                <view class="no-list" wx:if="{{partyCommentsList.length==0}}">你怎么回事，都不给别人的组局评论，快去留下自己的足迹吧</view>
                 <navigator class="comment_item" wx:for="{{partyCommentsList}}" wx:key="{{index}}"
                            bindtouchstart="handleTouchStart"
                            bindtouchend="handleTouchEnd"

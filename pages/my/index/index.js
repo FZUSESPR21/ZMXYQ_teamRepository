@@ -102,6 +102,13 @@ Page({
   onLoad: function (options) {
     this.getUserInfo();
   },
+  invite:function(){
+    wx.showModal({
+      title : "提醒",
+      content : "请点击右上角的三个点进行分享哦~",
+      showCancel : false
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -148,6 +155,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    
   }
 })

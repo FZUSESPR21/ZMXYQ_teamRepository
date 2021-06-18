@@ -1,4 +1,5 @@
 <view class="post_main">
+    <view id="no-list" wx:if="{{collectionList.length==0}}">收藏夹空空如也，快去收藏吧</view>
     <navigator class="post_item" wx:for="{{collectionList}}" wx:key="{{index}}"
                bindtouchstart="handleTouchStart"
                bindtouchend="handleTouchEnd"

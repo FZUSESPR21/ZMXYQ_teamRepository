@@ -1,4 +1,5 @@
 <view class="post_main">
+    <view id="no-list" wx:if="{{postList.length==0}}">还没有发布过帖子,快去发布吧</view>
     <navigator class="post_item" wx:for="{{postList}}" wx:key="{{index}}"
                bindtouchstart="handleTouchStart"
                bindtouchend="handleTouchEnd"

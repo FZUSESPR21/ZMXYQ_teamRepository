@@ -1,3 +1,10 @@
+#no-list{
+    color:rgb(128,128,128);
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
 .post_main{
     padding: 0 25rpx;
 }
