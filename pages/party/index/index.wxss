@@ -45,7 +45,7 @@ page{
   margin-top: 300rpx;
   z-index: -1;
   width: 100%;
-  min-height: 100rpx;
+  /* min-height: 100rpx; */
 }
 
 

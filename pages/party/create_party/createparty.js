@@ -40,6 +40,7 @@ Page({
     //
     buttonOperationValue: 1,
     imgUrls: [],
+    rpValue: 0
   },
 
   /**
@@ -152,6 +153,13 @@ Page({
         // on close
       });
     }
+    else if(this.data.rpValue < 50){
+      Dialog.alert({
+        message: '创建失败\n人品值小于50',
+      }).then(() => {
+        // on close
+      });
+    }
     else if(this.data.fileList == 0) {
       Dialog.alert({
         message: '图片不能为空'
@@ -211,7 +219,6 @@ Page({
                   }
                 })
 
-
               }
             });
           })
@@ -250,6 +257,26 @@ Page({
                     url: '../index/index',
                   })
                 });
+                request({
+                  url: baseUrl + '/api/user/data/update',
+                  method: 'POST',
+                  data: {
+                    userId: _this.data.userId,
+                    rpValue: _this.data.rpValue - 50
+                  },
+                  success(res) {
+                    if(res.data.code != 200) {
+                      wx.showToast({
+                        title: '人品值失败',
+                      })
+                    }
+                    console.log('更新人品值成功---------', res);
+                    console.log('当前人品值为-------', _this.data.rpValue)
+                  },
+                  fail(err){
+                    console.log('更新人品值失败---------\n', err)
+                  }
+                })
               }
               else {
                 Dialog.alert({
@@ -379,22 +406,27 @@ Page({
             })
           }).then((userInfo) => {
             let userId = userInfo.id
+            let rpValue = userInfo.rpValue
             this.setData({
-              userId: userId
+              userId: userId,
+              rpValue: rpValue
             })
           })
         }
         // 缓存中有用户信息，直接拿来用
         else {
           let userId
+          let rpValue
           wx.getStorageSync({
             key: 'userInfo',
             success(res) {
-              userid = res.id
+              userid = res.id,
+              rpValue = res.rpValue
             }
           })
           this.setData({
-            userId: userId
+            userId: userId,
+            rpValue: rpValue
           })
         }
   }

@@ -334,7 +334,7 @@ Page({
           
             success: function (res) {
               console.log(res)
-              if(res.data.status != 200){
+              if(res.data.code != 200){
                 Dialog.alert({
                   message: '失败原因：\n' + res.data.message,
                 }).then(() => {
@@ -346,9 +346,11 @@ Page({
               else
               {
                 Dialog.alert({
-                  message: '解散拼局失败',
+                  message: '解散拼局成功',
                 }).then(() => {
-                  // on close
+                  wx.navigateBack({
+                    delta: 0,
+                  })
                 });
               }
               

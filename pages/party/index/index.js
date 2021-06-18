@@ -35,7 +35,8 @@ Page({
     partyList: [],
     zIndex: -1,
     show: false,
-    nowType: -1
+    nowType: -1,
+    isFirstOnShow: true
   },
 
   goToMyParty: function(){
@@ -130,6 +131,15 @@ Page({
     this.getData(nowType);
   },
 
+  onShow: function() {
+    if(!this.data.isFirstOnShow) {
+      let {nowType} = this.data;
+      this.getData(nowType);
+    }
+    this.setData({
+      isFirstOnShow: false
+    })
+  },
     // 下拉刷新实现
     onPullDownRefresh: function() {
       console.log("下拉刷新");
