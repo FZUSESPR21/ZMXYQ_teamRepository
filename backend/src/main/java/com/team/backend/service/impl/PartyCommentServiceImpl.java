@@ -104,7 +104,7 @@ public class PartyCommentServiceImpl extends
             childrenMap.put("images", user1.getUserIconUrl());
             childrenMap.put("message", comment.getInformation());
             childrenMap.put("preId", comment.getPreId());
-            map.put("gmtCreate", comment.getGmtCreate());
+            childrenMap.put("gmtCreate", comment.getGmtCreate());
             childrenMap.put("replyId", partyComment.getIdFrom());
             childrenList.add(childrenMap);
           }
