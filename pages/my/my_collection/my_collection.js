@@ -70,7 +70,7 @@ Page({
               tempData[i].postTime = timeago.format(new Date(tempData[i].postTime), 'zh_CN');
             }
             for(let imageIndex = 0; imageIndex < tempData.length; imageIndex++){
-              tempData[imageIndex].iconUrl = baseUrl + "/static/" + tempData[imageIndex].iconUrl;
+              tempData[imageIndex].iconUrl = app.globalData.baseUrl1 + "/static/" + tempData[imageIndex].iconUrl;
             }
           }
           that.setData({
