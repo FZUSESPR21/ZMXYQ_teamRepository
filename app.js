@@ -16,8 +16,9 @@ App({
     userInfo: null,
     baseUrl1:"http://ccreater.top:61112",
     // baseUrl:"http://localhost:8088"
-    baseUrl:"https://test.childfly.cn"
+    baseUrl:"https://test.childfly.cn",
     // baseUrl:"http://192.168.50.167:8088"
+    userId: -1
   },
   getImageType: function (src) {
     let imageType = "";
@@ -103,6 +104,7 @@ App({
   userLogin:function (e) {
     let that=this;
     let promise=new Promise(function (resolve,reject) {
+      let _that = that;
       wx.login({
         success: res => {
           // 发送 res.code 到后台换取 openId, sessionKey, unionId
@@ -118,6 +120,7 @@ App({
                that.globalData.userInfo=respond.data;
                console.log("登录成功");
                console.log(respond);
+               that.globalData.userId = respond.data.data.id;
                resolve(respond);
              },
              fail:function(respond)
