@@ -46,6 +46,7 @@ public class PostCommentController {
     Number postIdNum = (Number) requestMap.get("postId");
     Number preIdNum = (Number) requestMap.get("preId");
     Number idToNum = (Number) requestMap.get("idTo");
+    Number idFrom = (Number) requestMap.get("userId");
     Long postId = postIdNum.longValue();
     Long preId = preIdNum.longValue();
     Long idTo = idToNum.longValue();
@@ -56,9 +57,14 @@ public class PostCommentController {
     postComment.setPreId(preId);
     postComment.setIdTo(idTo);
 
-    postComment.setIdFrom(123456L);
+    if (idFrom != null) {
+      postComment.setIdFrom(idFrom.longValue());
+    }else {
+      return com.team.backend.util.Result.error(ExceptionInfo.USER_NOT_LOGIN.getCode()
+              ,ExceptionInfo.USER_NOT_LOGIN.getMessage());
+    }
 
-    boolean isSuccess = false;
+    boolean isSuccess;
 
     com.team.backend.util.Result result;
     try {
