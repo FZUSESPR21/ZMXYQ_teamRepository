@@ -1,3 +1,8 @@
+.no-list{
+    color:rgb(128,128,128);
+    margin:0 auto;
+    margin-top:30rpx;
+}
 .comment_main{
     padding: 0 25rpx;
 }

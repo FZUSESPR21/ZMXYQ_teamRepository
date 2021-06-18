@@ -52,7 +52,7 @@
                 <view class="van-cell-text">我的树洞</view>
             </view>
         </van-cell>
-        <van-cell icon="shop" border is-link >
+        <van-cell icon="shop" border is-link bind:tap="invite">
             <view slot="title">
                 <view class="van-cell-text">邀请校友</view>
             </view>
