@@ -25,7 +25,7 @@ Page({
           let tempData = res.data.data.reverse();
           if(tempData != null){
             for(let imageIndex = 0; imageIndex < tempData.length; imageIndex++){
-              tempData[imageIndex].iconUrl = baseUrl + "/static/" + tempData[imageIndex].iconUrl;
+              tempData[imageIndex].iconUrl = app.globalData.baseUrl1 + "/static/" + tempData[imageIndex].iconUrl;
             }
           }
           that.setData({

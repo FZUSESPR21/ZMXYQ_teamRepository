@@ -30,7 +30,7 @@ Page({
         let mid = [];
         if (res.data.code === 200){
           let tempData = res.data.data;
-          tempData.user.certificateImageUrl = baseUrl + "/static/" + tempData.user.certificateImageUrl;
+          tempData.user.certificateImageUrl = app.globalData.baseUrl1 + "/static/" + tempData.user.certificateImageUrl;
           mid.push(tempData.user.certificateImageUrl);
           console.log(tempData.user.status);
           that.setData({
@@ -118,7 +118,7 @@ Page({
           certificateImageUrl:that.data.imgUrls[0],
         },
         success(res){
-          let imageUrl = app.globalData.baseUrl + "/static/" + that.data.imgUrls[0];
+          let imageUrl = app.globalData.baseUrl1 + "/static/" + that.data.imgUrls[0];
           let mid = [];
           mid.push(imageUrl);
           that.setData({finalImageUrls: mid});
