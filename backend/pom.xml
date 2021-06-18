@@ -124,14 +124,12 @@
       <groupId>com.huawei</groupId>
       <artifactId>java-sdk-core</artifactId>
       <version>3.0.9</version>
-      <scope>system</scope>
       <systemPath>${project.basedir}/lib/java-sdk-core-3.0.9.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.huawei.ais</groupId>
       <artifactId>ais-java-client</artifactId>
       <version>2.0.1</version>
-      <scope>system</scope>
       <systemPath>${project.basedir}/lib/ais-java-client-2.0.1.jar</systemPath>
     </dependency>
 
