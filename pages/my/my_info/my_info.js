@@ -29,7 +29,7 @@ Page({
         if (res.data.code === 200){
           let tempData = res.data.data;
           // wconsole.log(tempData);
-          tempData.user.userIconUrl = baseUrl + "/static/" + tempData.user.userIconUrl;
+          tempData.user.userIconUrl = app.globalData.baseUrl1 + "/static/" + tempData.user.userIconUrl;
           that.setData({
             UserInfo:res.data.data.user,
             headSrc:tempData.user.userIconUrl,
