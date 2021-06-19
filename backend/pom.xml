@@ -124,8 +124,8 @@
       <groupId>com.huawei</groupId>
       <artifactId>java-sdk-core</artifactId>
       <version>3.0.9</version>
-      <systemPath>${project.basedir}/lib/java-sdk-core-3.0.9.jar</systemPath>
-      <scope>system</scope>
+<!--      <systemPath>${project.basedir}/lib/java-sdk-core-3.0.9.jar</systemPath>-->
+<!--      <scope>system</scope>-->
       <type>jar</type>
       <optional>true</optional>
     </dependency>
@@ -133,8 +133,8 @@
       <groupId>com.huawei.ais</groupId>
       <artifactId>ais-java-client</artifactId>
       <version>2.0.1</version>
-      <systemPath>${project.basedir}/lib/ais-java-client-2.0.1.jar</systemPath>
-      <scope>system</scope>
+<!--      <systemPath>${project.basedir}/lib/ais-java-client-2.0.1.jar</systemPath>-->
+<!--      <scope>system</scope>-->
       <type>jar</type>
       <optional>true</optional>
     </dependency>
@@ -265,6 +265,41 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.5.2</version>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <id>install-ais</id>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <configuration>
+              <file>lib/ais-java-client-2.0.1.jar</file>
+              <groupId>com.huawei.ais</groupId>
+              <artifactId>ais-java-client</artifactId>
+              <version>2.0.1</version>
+              <packaging>jar</packaging>
+            </configuration>
+          </execution>
+          <execution>
+            <phase>initialize</phase>
+            <id>install-sdk</id>
+            <goals>
+              <goal>install-file</goal>
+            </goals>
+            <configuration>
+              <file>lib/java-sdk-core-3.0.9.jar</file>
+              <groupId>com.huawei</groupId>
+              <version>3.0.9</version>
+              <packaging>jar</packaging>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
