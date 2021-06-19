@@ -47,7 +47,7 @@ Page({
                 }
                 //图片最终url
                 for(let imageIndex = 0; imageIndex < midPostsData[i].imageUrls.length; imageIndex++){
-                  midPostsData[i].imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData[i].imageUrls[imageIndex];
+                  midPostsData[i].imageUrls[imageIndex] = app.globalData.baseUrl1 + "/static/" + midPostsData[i].imageUrls[imageIndex];
                 }
               }
               for(var m in midPostsData)
