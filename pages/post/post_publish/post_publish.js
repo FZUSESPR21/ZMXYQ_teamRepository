@@ -267,7 +267,11 @@ Page({
                 // on close
                 wx.switchTab({
                   url: '../index/index',
-      
+                  success: function (e) {
+                    var page = getCurrentPages().pop();
+                    if (page == undefined || page == null) return;
+                    page.onPullDownRefresh();
+                  }
                 })
               });
              
