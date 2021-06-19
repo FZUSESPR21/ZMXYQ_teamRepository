@@ -154,12 +154,12 @@ Component({
 
                   let publisherMsg = {};
                   publisherMsg.userName = midPostsData[i].publisherName;
-                  publisherMsg.iconUrl = app.globalData.baseUrl + "/static/" + "4ef39be8ebb04b6ab81428405af7ce1b.jpeg";
+                  publisherMsg.iconUrl = app.globalData.baseUrl1 + "/static/" + "4ef39be8ebb04b6ab81428405af7ce1b.jpeg";
                   midPostsData[i].publisherMsg = publisherMsg;
                   console.log(midPostsData[i].publisherMsg);
                   //图片最终url
                   for(let imageIndex = 0; imageIndex < midPostsData[i].imageUrls.length; imageIndex++){
-                    midPostsData[i].imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData[i].imageUrls[imageIndex];
+                    midPostsData[i].imageUrls[imageIndex] = app.globalData.baseUrl1 + "/static/" + midPostsData[i].imageUrls[imageIndex];
                   }
                 }
                 for(var m in midPostsData)
@@ -232,13 +232,13 @@ Component({
                 }
                 let publisherMsg = {};
                 publisherMsg.userName = midPostsData[i].publisherName;
-                publisherMsg.iconUrl = app.globalData.baseUrl + "/static/" + "4ef39be8ebb04b6ab81428405af7ce1b.jpeg";
+                publisherMsg.iconUrl = app.globalData.baseUrl1 + "/static/" + "4ef39be8ebb04b6ab81428405af7ce1b.jpeg";
                 midPostsData[i].publisherMsg = publisherMsg;
                 console.log(midPostsData[i].publisherMsg);
                 console.log("***");
                 //图片最终url
                 for(let imageIndex = 0; imageIndex < midPostsData[i].imageUrls.length; imageIndex++){
-                  midPostsData[i].imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData[i].imageUrls[imageIndex];
+                  midPostsData[i].imageUrls[imageIndex] = app.globalData.baseUrl1 + "/static/" + midPostsData[i].imageUrls[imageIndex];
                 }
               }
               //追加数据

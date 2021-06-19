@@ -2,14 +2,13 @@ import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import {request} from "../../../utils/request"
 const app=getApp();
 
-
 Page({
   data: {
     fileList: [
     ],
     partyTypeId: -1,  //选中的partyTypeId
-    multiArray: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领'], ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验']],
-    multiArray1: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领','请设置主题'], ['日常生活', '学业疑难', '求医问药', '找人帮忙']],
+    multiArray: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领']],
+    multiArray1: [['求助', '找人', '投稿','投票','租房','帮转','公告','闲置','兼职招聘','寻物/招领','请设置主题']],
     objectMultiArray: [
       [
         {
@@ -52,27 +51,27 @@ Page({
           id: 9,
           name: '寻物/招领'
         },
-      ], [
-        {
-          id: 0,
-          name: '日常生活'
-        },
-        {
-          id: 1,
-          name: '学业疑难'
-        },
-        {
-          id: 2,
-          name: '求医问药'
-        },
-        {
-          id: 3,
-          name: '找人帮忙'
-        },
-        {
-          id: 4,
-          name: '攻略经验'
-        }
+      // ], [
+      //   {
+      //     id: 0,
+      //     name: '日常生活'
+      //   },
+      //   {
+      //     id: 1,
+      //     name: '学业疑难'
+      //   },
+      //   {
+      //     id: 2,
+      //     name: '求医问药'
+      //   },
+      //   {
+      //     id: 3,
+      //     name: '找人帮忙'
+      //   },
+      //   {
+      //     id: 4,
+      //     name: '攻略经验'
+      //   }
       ]
     ],
     multiIndex: [10,null],
@@ -81,69 +80,69 @@ Page({
   },
   bindMultiPickerChange: function (e) {
     let sonTypeCnt = [5,0,0,0,0,2,0,12,5,0];
-    let typeId = 1;
+    let typeId = e.detail.value[0] + 1;
     console.log('picker发送选择改变，携带值为', e.detail.value);
-    if(sonTypeCnt[e.detail.value[0]] === 0)
-      typeId = e.detail.value[0] + 1;
-    else{
-      typeId += 10;
-      for(let i = 0; i < e.detail.value[0]; i++)
-        typeId += sonTypeCnt[i];
-      typeId += e.detail.value[1];
-    }
+    // if(sonTypeCnt[e.detail.value[0]] === 0)
+    //   typeId = e.detail.value[0] + 1;
+    // else{
+    //   typeId += 10;
+    //   for(let i = 0; i < e.detail.value[0]; i++)
+    //     typeId += sonTypeCnt[i];
+    //   typeId += e.detail.value[1];
+    // }
     console.log(typeId);
     this.setData({
       multiIndex: e.detail.value,
       partyTypeId: typeId
     })
   },
-  bindMultiPickerColumnChange: function (e) {
-    // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
-    var data = {
-      multiArray: this.data.multiArray,
-      multiIndex: this.data.multiIndex
-    };
-    data.multiIndex[e.detail.column] = e.detail.value;
-    switch (e.detail.column) {
-      case 0:
-        switch (data.multiIndex[0]) {
-          case 0:
-            data.multiArray[1] = ['日常生活', '学业疑难', '求医问药', '找人帮忙', '攻略经验','求推荐'];
-            break;
-          case 1:
-            data.multiArray[1] = [''];
-            break;
-          case 2:
-            data.multiArray[1] = [];
-            break;
-          case 3:
-            data.multiArray[1] = [''];
-            break;
-          case 4:
-            data.multiArray[1] = [''];
-            break;
-          case 5:
-            data.multiArray[1] = [];
-             break;
-          case 6:
-            data.multiArray[1] = [''];
-            break;
-          case 7:
-            data.multiArray[1] = ['书籍资料', '电子数码','洗漱日化','鞋服包饰','代步工具','票卡转让','仙女集市','食品','体育器材','学习用品','电器家具','其他'];
-            break;
-          case 8:
-            data.multiArray[1] = ['家教','被试','实习','全职','其他兼职',];
-            break;      
-          case 9:
-            data.multiArray[1] = [];
-            break;                              
-        }
-        data.multiIndex[1] = 0;
-        break;
-    }
-    console.log(data.multiIndex);
-    this.setData(data);
-  },
+  // bindMultiPickerColumnChange: function (e) {
+  //   // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+  //   var data = {
+  //     multiArray: this.data.multiArray,
+  //     multiIndex: this.data.multiIndex
+  //   };
+  //   data.multiIndex[e.detail.column] = e.detail.value;
+  //   switch (e.detail.column) {
+  //     case 0:
+  //       switch (data.multiIndex[0]) {
+  //         case 0:
+  //           data.multiArray[1] = [];
+  //           break;
+  //         case 1:
+  //           data.multiArray[1] = [];
+  //           break;
+  //         case 2:
+  //           data.multiArray[1] = [];
+  //           break;
+  //         case 3:
+  //           data.multiArray[1] = [];
+  //           break;
+  //         case 4:
+  //           data.multiArray[1] = [];
+  //           break;
+  //         case 5:
+  //           data.multiArray[1] = [];
+  //            break;
+  //         case 6:
+  //           data.multiArray[1] = [];
+  //           break;
+  //         case 7:
+  //           data.multiArray[1] = [];
+  //           break;
+  //         case 8:
+  //           data.multiArray[1] = [];
+  //           break;      
+  //         case 9:
+  //           data.multiArray[1] = [];
+  //           break;                              
+  //       }
+  //       data.multiIndex[1] = 0;
+  //       break;
+  //   }
+  //   console.log(data.multiIndex);
+  //   this.setData(data);
+  // },
   afterRead: function (event) {
     const _this = this;
     console.log(event.detail.file[0].url);
@@ -217,11 +216,10 @@ Page({
                       },
                       complete: function (complete) {
           
+
                         return complete;
                       }
                     })
-                 
-                
               }
             });
           })
@@ -239,8 +237,14 @@ Page({
             imgUrls:imgServerUrls
           })
           console.log(_this.data.imgUrls);
+          let finalImageStr = "";
+          for(let j = 0; j < _this.data.imgUrls.length; j++){
+            finalImageStr += _this.data.imgUrls[j];
+            if(j != _this.data.imgUrls.length - 1)
+            finalImageStr += ";";
+          }
           console.log(app.globalData.userInfo);
-          let jsonStr = '{"userId":123456, "postTheme":'+ _this.data.partyTypeId + ', "message": "'+ _this.data.postContent + '", "imageUrls": ""}';
+          let jsonStr = '{"userId":'+ app.globalData.userId +', "postTheme":'+ _this.data.partyTypeId + ', "message": "'+ _this.data.postContent + '", "imageUrls": "'+finalImageStr+'"}';
           let jsonValue = JSON.parse(jsonStr);
           console.log(jsonValue);
           request({//创建组局请求
@@ -263,7 +267,7 @@ Page({
                 // on close
                 wx.switchTab({
                   url: '../index/index',
-  
+      
                 })
               });
              
@@ -275,6 +279,7 @@ Page({
           }
         )
     }
+
   },
   getValue:function (e) {
     var _this=this;
@@ -283,3 +288,5 @@ Page({
     })
   }
 })
+
+ 
