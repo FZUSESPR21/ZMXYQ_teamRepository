@@ -1,15 +1,14 @@
 package com.team.backend.util;
 
+import com.team.backend.util.ServiceAccessBuilder;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.huawei.ais.sdk.AisAccess;
 import com.huawei.ais.sdk.util.HttpClientUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.entity.StringEntity;
-
-import java.io.IOException;
 
 public class ContentFilterUtil {
     private static final AisAccess service;
