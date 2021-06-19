@@ -50,28 +50,7 @@ Page({
         {
           id: 9,
           name: '寻物/招领'
-        },
-      // ], [
-      //   {
-      //     id: 0,
-      //     name: '日常生活'
-      //   },
-      //   {
-      //     id: 1,
-      //     name: '学业疑难'
-      //   },
-      //   {
-      //     id: 2,
-      //     name: '求医问药'
-      //   },
-      //   {
-      //     id: 3,
-      //     name: '找人帮忙'
-      //   },
-      //   {
-      //     id: 4,
-      //     name: '攻略经验'
-      //   }
+        }
       ]
     ],
     multiIndex: [10,null],
@@ -82,67 +61,12 @@ Page({
     let sonTypeCnt = [5,0,0,0,0,2,0,12,5,0];
     let typeId = e.detail.value[0] + 1;
     console.log('picker发送选择改变，携带值为', e.detail.value);
-    // if(sonTypeCnt[e.detail.value[0]] === 0)
-    //   typeId = e.detail.value[0] + 1;
-    // else{
-    //   typeId += 10;
-    //   for(let i = 0; i < e.detail.value[0]; i++)
-    //     typeId += sonTypeCnt[i];
-    //   typeId += e.detail.value[1];
-    // }
     console.log(typeId);
     this.setData({
       multiIndex: e.detail.value,
       partyTypeId: typeId
     })
   },
-  // bindMultiPickerColumnChange: function (e) {
-  //   // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
-  //   var data = {
-  //     multiArray: this.data.multiArray,
-  //     multiIndex: this.data.multiIndex
-  //   };
-  //   data.multiIndex[e.detail.column] = e.detail.value;
-  //   switch (e.detail.column) {
-  //     case 0:
-  //       switch (data.multiIndex[0]) {
-  //         case 0:
-  //           data.multiArray[1] = [];
-  //           break;
-  //         case 1:
-  //           data.multiArray[1] = [];
-  //           break;
-  //         case 2:
-  //           data.multiArray[1] = [];
-  //           break;
-  //         case 3:
-  //           data.multiArray[1] = [];
-  //           break;
-  //         case 4:
-  //           data.multiArray[1] = [];
-  //           break;
-  //         case 5:
-  //           data.multiArray[1] = [];
-  //            break;
-  //         case 6:
-  //           data.multiArray[1] = [];
-  //           break;
-  //         case 7:
-  //           data.multiArray[1] = [];
-  //           break;
-  //         case 8:
-  //           data.multiArray[1] = [];
-  //           break;      
-  //         case 9:
-  //           data.multiArray[1] = [];
-  //           break;                              
-  //       }
-  //       data.multiIndex[1] = 0;
-  //       break;
-  //   }
-  //   console.log(data.multiIndex);
-  //   this.setData(data);
-  // },
   afterRead: function (event) {
     const _this = this;
     console.log(event.detail.file[0].url);
@@ -215,8 +139,6 @@ Page({
                         return reject(e)
                       },
                       complete: function (complete) {
-          
-
                         return complete;
                       }
                     })
@@ -250,17 +172,18 @@ Page({
           request({//创建组局请求
             url: app.globalData.baseUrl+'/api/posts/publish',
             method:'POST',
-            // data:{
-            //   userId:123456,
-            //   postTheme:3,
-            //   message:_this.data.postContent,
-            //   imgUrls:_this.data.imgUrls.join(";")
-            // },
             data: jsonValue,
             success:function(res)
             {
               console.log(_this.data.imgUrls)
               console.log(res);
+              //发帖成功清除数据
+              _this.setData({
+                postContent:"",
+                imgUrls: [],
+                fileList: []
+              });
+              imgServerUrls = [];
               Dialog.alert({
                 message: '发布成功',
               }).then(() => {
