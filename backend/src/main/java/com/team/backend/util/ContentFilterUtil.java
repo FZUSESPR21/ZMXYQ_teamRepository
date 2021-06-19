@@ -1,7 +1,5 @@
 package com.team.backend.util;
 
-import com.team.backend.util.ServiceAccessBuilder;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -11,10 +9,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.entity.StringEntity;
 
 public class ContentFilterUtil {
-    private static final AisAccess service;
-    private static final String uri;
-    static {
-        service = ServiceAccessBuilder.builder()
+    private static AisAccess service;
+    private static String uri;
+
+    public static int assumeContentStatus(String content){
+        if(service==null){
+            service = ServiceAccessBuilder.builder()
                 .ak("YCAYWOS9LXLWVU7SVIJJ")
                 .sk("0znCA3FKJvKwCIK6dz5Uk4F5sYPFIwg4aBaMcqZd")
                 .region("cn-east-3")               // 内容审核服务目前支持华北-北京(cn-north-4)、华东上海一(cn-east-3)、亚太-新加坡(ap-southeast-3)以及亚太-香港(ap-southeast-1)
@@ -23,11 +23,8 @@ public class ContentFilterUtil {
                 .socketTimeout(20000)               // 获取服务器响应数据超时限制
                 .retryTimes(3)                      // 请求异常时的重试次数
                 .build();
-
-        uri = "/v1.0/moderation/text";
-    }
-
-    public static int assumeContentStatus(String content){
+            uri = "/v1.0/moderation/text";
+        }
         int result = 1;
         try {
             JSONObject json = new JSONObject();
