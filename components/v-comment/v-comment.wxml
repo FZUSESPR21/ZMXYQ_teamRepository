@@ -16,7 +16,8 @@
           <view class="comment-content-view-text" 
                 bindtap="showCommentBox"
                 data-username='{{item.commentUsername}}' 
-                data-preid='{{item.preId}}'>
+                data-preid='{{item.preId}}'
+                data-userid='{{item.commentUserId}}'>
                 {{item.message}}
           </view>
 
@@ -35,8 +36,9 @@
               <!-- 点击评论的文字时，触发点击事件，调用回调函数。回调函数中触发自定义事件 -->
               <view class="comment-content-view-text-child" 
                     bindtap="showCommentBox" 
-                    data-username='{{childItem.commentUsername}}' 
-                    data-preid='{{childItem.preId}}'>
+                    data-username='{{childItem.commentUsername}}'
+                    data-preid='{{childItem.preId}}'
+                    data-userid='{{childItem.commentUserId}}'>
                     {{childItem.message}}
               </view>
             </view>

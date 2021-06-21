@@ -57,7 +57,7 @@ Page({
               midPostsData.imageUrls = imageStr.split(';');
             }
             for(let imageIndex = 0; imageIndex < midPostsData.imageUrls.length; imageIndex++){
-              midPostsData.imageUrls[imageIndex] = baseUrl + "/static/" + midPostsData.imageUrls[imageIndex];
+              midPostsData.imageUrls[imageIndex] = app.globalData.baseUrl1 + "/static/" + midPostsData.imageUrls[imageIndex];
             }
             midPostsData.gmtCreate = timeago.format(new Date(midPostsData.gmtCreate), 'zh_CN');
           }
@@ -141,6 +141,7 @@ Page({
   },
 
   getValue:function (e) {
+    console.log(e);
     let that=this;
     this.setData({
       commentInputText:e.detail.value
@@ -148,6 +149,7 @@ Page({
   },
 
   getCommentBox: function (e) {
+    console.log(e);
     this.setData({
       showCommentBox: true,
       commentMessage: e.detail,
@@ -162,8 +164,10 @@ Page({
     let that=this;
     let {isReply} = this.data
     let preId = -1
+    let publisherId = -1
     if(isReply) {
       preId = parseInt(this.data.commentMessage.preId)
+      publisherId = parseInt(this.data.commentMessage.publisherId)
       console.log('preId------------', preId)
     }
     request({
@@ -173,14 +177,12 @@ Page({
         message: that.data.commentInputText.toString(),
         postId:parseInt (that.data.postId),
         preId: preId,
-        idTo: parseInt (that.data.userId),
+        idTo: publisherId,
+        userId: parseInt(app.globalData.userId),
       },
       success: function (res) {
         console.log(res);
-        Notify({
-          type: 'success',
-          message: '评论成功'
-        });
+
         that.setData({
           commentInputText:""
         })
