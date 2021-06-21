@@ -114,7 +114,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       newUser.setSchool("福州大学");// 默认学校福州大学
       newUser.setUsername("逐梦校友圈");// 默认用户名
       newUser.setUserIconUrl("7aa8edbfe60d4d47ae384e2394f8d760.jpeg");// 默认头像
-      newUser.setBirthday(new Date(2000, 1, 1));// 默认生日
+      newUser.setBirthday(new Date(100, 1, 1));// 默认生日
       userMapper.insert(newUser);
       user = userMapper.selectOne(wrapper);
       user.setUsername("用户" + user.getId());
