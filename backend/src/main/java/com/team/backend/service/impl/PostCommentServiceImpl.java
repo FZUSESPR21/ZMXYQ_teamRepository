@@ -119,6 +119,7 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
 
         map.put("commentId", postComment.getId());
         map.put("commentUserId", postComment.getIdFrom());
+        map.put("gmtCreate", postComment.getGmtCreate());
         User user = userMapper.selectById(postComment.getIdFrom());
         map.put("commentUsername", user.getUsername());
         map.put("iconUrl", user.getUserIconUrl());
@@ -130,6 +131,7 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
             Map<String, Object> childrenMap = new HashMap<>();
             childrenMap.put("commentId", comment.getId());
             childrenMap.put("commentUserId", comment.getIdFrom());
+            childrenMap.put("gmtCreate", comment.getGmtCreate());
             User user1 = userMapper.selectById(comment.getIdFrom());
             childrenMap.put("commentUsername", user1.getUsername());
             childrenMap.put("iconUrl", user1.getUserIconUrl());
