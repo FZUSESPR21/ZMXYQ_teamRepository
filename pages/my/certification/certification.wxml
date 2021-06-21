@@ -32,5 +32,5 @@
 
 
 <view >
-    <van-image wx:for="{{finalImageUrls}}" wx:key="" width="600rpx" height="600rpx" custom-class="image" src="{{item}}" data-currenturl="{{item}}" catchtap="previewImage"></van-image>
+    <van-image wx:for="{{finalImageUrls}}" wx:key="" width="600rpx" fit="widthFix" custom-class="image" src="{{item}}" data-currenturl="{{item}}" catchtap="previewImage"></van-image>
 </view>
