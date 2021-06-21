@@ -75,7 +75,7 @@
   z-index: 1000;
   font-size: xx-small;
   bottom: 50rpx;
-  float: inline-end;
+  float: right;
   margin-right: 20rpx;
 }
 .avatar{
