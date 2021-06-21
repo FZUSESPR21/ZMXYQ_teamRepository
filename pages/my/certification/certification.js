@@ -136,7 +136,7 @@ Page({
   //预览图片
   previewImage: function(e) {
     wx.previewImage({
-      urls: this.data.imageUrls,
+      urls: this.data.finalImageUrls,
       showmenu: true,
       current: e.currentTarget.dataset.currenturl,
       success(res){

@@ -166,7 +166,7 @@ Page({
             finalImageStr += ";";
           }
           console.log(app.globalData.userInfo);
-          let jsonStr = '{"userId":'+ app.globalData.userId +', "postTheme":'+ _this.data.partyTypeId + ', "message": "'+ _this.data.postContent + '", "imageUrls": "'+finalImageStr+'"}';
+          let jsonStr = '{"userId":'+ app.globalData.userId +', "postTheme":'+ _this.data.partyTypeId + ', "message": "'+ _this.data.postContent + '", "imgUrls": "'+finalImageStr+'"}';
           let jsonValue = JSON.parse(jsonStr);
           console.log(jsonValue);
           request({//创建组局请求

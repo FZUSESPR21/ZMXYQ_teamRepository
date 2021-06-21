@@ -200,7 +200,7 @@ Component({
       wx.previewImage({
         urls: this.data.imageUrls,
         showmenu: true,
-        current: e.currentTarget.dataset.currentUrl,
+        current: e.currentTarget.dataset.currenturl,
         success(res){
 
         },
