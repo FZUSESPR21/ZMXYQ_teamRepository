@@ -29,7 +29,7 @@ Page({
   data: {
     scrollHeight: '100vh',
     inputBottom: 0,
-    myicon:"",
+    myicon: "",
     targeticon:"",
     waitTimes:0,//超时变量
     timeList:[]//定时器列表
@@ -40,7 +40,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onUnload:function(){
-    clearTimeout()
+    clearTimeout();
   },
   processHistorys:function(res){
 
@@ -49,6 +49,7 @@ Page({
       msgList = res.data.data
       this.setData({
         msgList:msgList.slice().reverse(),
+        myicon: app.globalData.baseUrl1 + '/static/' + app.globalData.userInfo.userIconUrl
       })
 
     }else{
@@ -78,7 +79,6 @@ Page({
     this.loadHistorys(0)
     console.log(app.globalData)
     this.setData({
-      myicon:app.globalData.userInfo.data.userIconUrl,
       targeticon:options.iconurl
     });
       console.log(app.globalData.userInfo.avatarUrl,options.iconurl)

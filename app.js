@@ -117,7 +117,7 @@ App({
                res.code,
              success:function(respond)
              {
-               that.globalData.userInfo=respond.data;
+               that.globalData.userInfo = respond.data.data;
                console.log("登录成功");
                console.log(respond);
                that.globalData.userId = respond.data.data.id;

@@ -76,6 +76,7 @@ Page({
             let historys = res.data.data
             historys.forEach(history => {
               history.latestTime = timeago.format(new Date(history.latestTime),'zh_CN');
+              history.iconUrl = app.globalData.baseUrl1 + '/static/' + history.iconUrl;
             });
             that.setData({
               history_list:historys
