@@ -117,6 +117,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
       newUser.setBirthday(new Date(2000, 1, 1));// 默认生日
       userMapper.insert(newUser);
       user = userMapper.selectOne(wrapper);
+      user.setUsername("用户" + user.getId());
+      userMapper.updateById(user);
       user.setIsNewUser(1);
       result.setData(user);
       return result;
