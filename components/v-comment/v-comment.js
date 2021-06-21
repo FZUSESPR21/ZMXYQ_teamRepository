@@ -77,9 +77,11 @@ Component({
     console.log('当前点击的评论-----\n', e)
     let {preid} = e.currentTarget.dataset;
     let {username} = e.currentTarget.dataset
+    let {userid} = e.currentTarget.dataset
     let item = {
       publisherName: username,
-      preId: preid
+      publisherId: userid,
+      preId: preid,
     }
     this.triggerEvent('showCommentBox',item);
   },
