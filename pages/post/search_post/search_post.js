@@ -33,10 +33,12 @@ Page({
           data: jsonValue,
           success:function(res)
           {
+           that.setData({isResultNone: false});
            console.log(res);
            let midPostsData = res.data.data;
            if(midPostsData!= null){
-              if(midPostsData.length == 0)  that.setData({isResultNone: true});  //搜索结果为空
+              if(midPostsData.length == 0)  that.setData({isResultNone: true});  //搜索结果不为空
+              else that.setData({isResultNone: false});
               for(let i = 0; i < midPostsData.length; i++){
                 midPostsData[i].gmtCreate = timeago.format(new Date(midPostsData[i].gmtCreate),'zh_CN');
                 let midImageUrls = midPostsData[i].imageUrls;
@@ -57,7 +59,7 @@ Page({
               });
            }
            else //搜索结果为空
-            that.setData({isResultNone: true});   //标志位设为true
+              that.setData({isResultNone: true});   //标志位设为true
           },
           fail:function(res)
           {
